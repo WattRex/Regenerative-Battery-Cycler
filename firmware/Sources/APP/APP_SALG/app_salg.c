@@ -18,12 +18,15 @@
 #include <string.h>
 
 #include "app_salg.h"
-#include "app_iface.h"
-#include "app_ctrl.h"
+//#include "app_iface.h"
+//#include "app_ctrl.h"
 
 #include "hal_sys.h"
-#include "hal_tmr.h"
-#include "hal_wdg.h"
+
+#ifdef EPC_CONF_TMR_ENABLED // TODO: remove it after integration
+	#include "hal_tmr.h"
+#endif
+//#include "hal_wdg.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */

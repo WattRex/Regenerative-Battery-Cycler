@@ -34,7 +34,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 	#else
-		#include "main.h"
 		#include "app_salg.h"
 	#endif
 /* USER CODE END Includes */
