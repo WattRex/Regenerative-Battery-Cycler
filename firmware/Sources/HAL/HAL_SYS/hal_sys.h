@@ -18,6 +18,8 @@
 /*                               Project Includes                                 */
 /**********************************************************************************/
 #include "epc_conf.h"
+#include "main.h"
+
 #ifdef EPC_CONF_PWM_ENABLED
 #include "hal_pwm.h"
 #endif
