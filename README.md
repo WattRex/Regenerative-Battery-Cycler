@@ -18,7 +18,7 @@ In order to run this code from the STM32 Cube IDE, the following steps must be f
 >- Path and Symbols
 >- Source Location
 >- Link folder
->- Check Link to folde in the file system
+>- Check Link to folder in the file system
 >- Select source code folder: `<repo_path>/firmware/Sources`
 >- Apply and Close
 - Build the project and ENJOY !!! :wink:
