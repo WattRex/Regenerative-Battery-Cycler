@@ -2,6 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,c
 
 ### STM32 CUBE IDE project ###
+*Release/
+*Debug/
 *.mxproject
 *.ioc
 *.metadata
