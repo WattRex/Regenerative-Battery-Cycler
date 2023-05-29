@@ -15,6 +15,10 @@
   *
   ******************************************************************************
   */
+
+	#include "epc_conf.h"
+
+	#ifndef EPC_CONF_USE_CUSTOM_HAL
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -29,7 +33,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+	#else
+		#include "main.h"
+		#include "app_salg.h"
+	#endif
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,7 +57,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+	uint8_t error_raised = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -72,7 +79,9 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
-  /* USER CODE END 1 */
+  #ifndef EPC_CONF_USE_CUSTOM_HAL
+
+	/* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -80,6 +89,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+	#endif // EPC_CONF_USE_CUSTOM_HAL
 
   /* USER CODE END Init */
 
@@ -88,6 +98,7 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
+	#ifndef EPC_CONF_USE_CUSTOM_HAL
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -103,6 +114,11 @@ int main(void)
   MX_WWDG_Init();
   /* USER CODE BEGIN 2 */
 
+  #endif // EPC_CONF_USE_CUSTOM_HAL
+
+
+  APP_SALG_result_e res = APP_SalgInit();
+  UNUSED(res);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -112,6 +128,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
   }
   /* USER CODE END 3 */
 }
@@ -175,10 +192,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
+	error_raised = 1;
   /* USER CODE END Error_Handler_Debug */
 }
 
