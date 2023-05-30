@@ -1,14 +1,6 @@
 /*********************************************************************************
-* @file           : hal_gpio.h
-* @brief          : HAL header file for testing
-**********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
+* @file           : test.h
+* @brief          : Header file for testing
 ***********************************************************************************/
 
 #ifndef TEST_H_
