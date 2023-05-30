@@ -101,7 +101,11 @@ const GPIO_pinout_config_t _GPIO_input_pins[]={
 /**********************************************************************************/
 
 HAL_GPIO_result_e HAL_GpioInit(void){
-	void MX_GPIO_Init(void);
+	error_raised = 0;
+	MX_GPIO_Init();
+	if (error_raised == 1){
+		return HAL_GPIO_RESULT_ERROR;
+	}
 	return HAL_GPIO_RESULT_SUCCESS;
 }
 
@@ -110,7 +114,7 @@ HAL_GPIO_result_e HAL_GpioSet(HAL_GPIO_output_e pin, HAL_GPIO_pin_value_e value)
 
 	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
 	if(pin < HAL_GPIO_OUT_COUNT){
-		HAL_GPIO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
+		HAL_IO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
 		res = HAL_GPIO_RESULT_SUCCESS;
 	}
 	return res;
