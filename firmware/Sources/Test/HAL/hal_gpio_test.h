@@ -1,9 +1,7 @@
-/*
- * TestingGpio.h
- *
- *  Created on: 25 may. 2023
- *      Author: Roberto Aldea
- */
+/*********************************************************************************
+* @file           : hal_gpio_test.h
+* @brief          : HAL header file for GPIO test
+***********************************************************************************/
 
 #ifndef HAL_GPIO_TEST_H_
 #define HAL_GPIO_TEST_H_
