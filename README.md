@@ -28,5 +28,5 @@ The control of TowerPower is accomplished through a CAN bus interface, providing
 In this particular version of the cycler, a low-cost power device with integrated driver and transistors has been chosen. This decision not only reduces costs but also enhances the miniaturization of the product. Furthermore, the switching frequency of the converter has been increased, resulting in a smaller coil size, contributing to the overall cost and compactness of the system.
 
 ### Acknowledgements
-This research has been developed within the CSIC Interdisciplinary Thematic Platform (PTI+) Transición Energética Sostenible+ (PTI-TRANSENER+) as part of the CSIC program for the Spanish Recovery, Transformation and Resilience Plan funded by the Recovery and Resilience Facility of the European Union, established by the Regulation (EU) 2020/2094.
+This research has been developed within the CSIC Interdisciplinary Thematic Platform (PTI+) Transición Energética Sostenible+ (PTI-TRANSENER+) as part of the CSIC program for the Spanish Recovery, Transformation and Resilience Plan funded by the Recovery and Resilience Facility of the European Union, established by the Regulation (EU) 2020/2094. Funding from the Spanish Ministry of Science and Innovation under project MAFALDA (PID2021-126001OB-C32) is also acknowledged.
 
