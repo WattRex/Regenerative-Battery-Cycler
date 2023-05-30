@@ -18,20 +18,20 @@
 	#include "epc_conf.h"
 
 	#ifndef EPC_CONF_USE_CUSTOM_HAL
-		/* USER CODE END Header */
-		/* Includes ------------------------------------------------------------------*/
-		#include "main.h"
-		#include "adc.h"
-		#include "can.h"
-		#include "dma.h"
-		#include "hrtim.h"
-		#include "i2c.h"
-		#include "tim.h"
-		#include "wwdg.h"
-		#include "gpio.h"
+/* USER CODE END Header */
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "adc.h"
+#include "can.h"
+#include "dma.h"
+#include "hrtim.h"
+#include "i2c.h"
+#include "iwdg.h"
+#include "tim.h"
+#include "gpio.h"
 
-		/* Private includes ----------------------------------------------------------*/
-		/* USER CODE BEGIN Includes */
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 	#else
 		#include "app_salg.h"
 	#endif
@@ -87,7 +87,7 @@ int main(void)
 
   #ifndef EPC_CONF_USE_CUSTOM_HAL
 
-	/* USER CODE END 1 */
+  /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -115,7 +115,7 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM3_Init();
   MX_TIM2_Init();
-  MX_WWDG_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
 
   #endif // EPC_CONF_USE_CUSTOM_HAL
@@ -128,12 +128,14 @@ int main(void)
 #else
 
   /* USER CODE END 2 */
-  TEST_result_e test_res = TEST_RESULT_SUCCESS;
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  TEST_result_e test_res = TEST_RESULT_SUCCESS;
   while (1)
   {
     /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
 		test_res |= TEST_main();
   }
@@ -154,10 +156,11 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
