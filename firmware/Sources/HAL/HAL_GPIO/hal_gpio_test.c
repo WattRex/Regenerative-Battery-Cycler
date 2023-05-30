@@ -18,7 +18,6 @@
 /**********************************************************************************/
 #include <stdint.h>
 
-
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
@@ -51,6 +50,7 @@
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
+
 HAL_GPIO_result_e TestPins(HAL_GPIO_output_e pinO, HAL_GPIO_input_e pinI, HAL_GPIO_pin_value_e value)
 {
 	HAL_GPIO_pin_value_e Ivalue;
@@ -74,7 +74,7 @@ HAL_GPIO_result_e TestPins(HAL_GPIO_output_e pinO, HAL_GPIO_input_e pinI, HAL_GP
 HAL_GPIO_result_e HAL_GPIO_Test(HAL_GPIO_output_e pinO, HAL_GPIO_input_e pinI)
 {
 	/* Check if the pins are in the list of inputs and outputs*/
-	if  (pinO>=HAL_GPIO_OUT_COUNT | pinO>=HAL_GPIO_IN_COUNT)
+	if  (pinO>=HAL_GPIO_OUT_COUNT || pinI>=HAL_GPIO_IN_COUNT)
 		{
 		return HAL_GPIO_RESULT_ERROR;
 		}

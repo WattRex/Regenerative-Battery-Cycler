@@ -114,7 +114,7 @@ HAL_GPIO_result_e HAL_GpioSet(HAL_GPIO_output_e pin, HAL_GPIO_pin_value_e value)
 
 	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
 	if(pin < HAL_GPIO_OUT_COUNT){
-		HAL_IO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
+		HAL_GPIO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
 		res = HAL_GPIO_RESULT_SUCCESS;
 	}
 	return res;
