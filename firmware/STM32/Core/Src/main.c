@@ -15,26 +15,29 @@
   *
   ******************************************************************************
   */
-
 	#include "epc_conf.h"
 
 	#ifndef EPC_CONF_USE_CUSTOM_HAL
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
-#include "main.h"
-#include "adc.h"
-#include "can.h"
-#include "dma.h"
-#include "hrtim.h"
-#include "i2c.h"
-#include "tim.h"
-#include "wwdg.h"
-#include "gpio.h"
+		/* USER CODE END Header */
+		/* Includes ------------------------------------------------------------------*/
+		#include "main.h"
+		#include "adc.h"
+		#include "can.h"
+		#include "dma.h"
+		#include "hrtim.h"
+		#include "i2c.h"
+		#include "tim.h"
+		#include "wwdg.h"
+		#include "gpio.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
+		/* Private includes ----------------------------------------------------------*/
+		/* USER CODE BEGIN Includes */
 	#else
 		#include "app_salg.h"
+	#endif
+
+	#ifdef TESTING
+		#include "Test.h"
 	#endif
 /* USER CODE END Includes */
 
@@ -56,13 +59,17 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
 	uint8_t error_raised = 0;
+	#ifndef EPC_CONF_USE_CUSTOM_HAL
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
+	#endif
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -88,7 +95,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-	#endif // EPC_CONF_USE_CUSTOM_HAL
 
   /* USER CODE END Init */
 
@@ -97,7 +103,6 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
-	#ifndef EPC_CONF_USE_CUSTOM_HAL
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -115,9 +120,13 @@ int main(void)
 
   #endif // EPC_CONF_USE_CUSTOM_HAL
 
-
   APP_SALG_result_e res = APP_SalgInit();
   UNUSED(res);
+
+#ifndef TESTING
+  res = APP_SalgStatusMachine();
+#else
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -125,10 +134,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
     /* USER CODE BEGIN 3 */
-
+  	Test_HAL();
+  	HAL_Delay(1000);
   }
+#endif
   /* USER CODE END 3 */
 }
 
@@ -191,7 +201,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-	error_raised = 1;
+	error_raised += 1;
   /* USER CODE END Error_Handler_Debug */
 }
 

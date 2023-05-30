@@ -105,8 +105,6 @@ APP_SALG_result_e APP_SalgInit(){
 
 APP_SALG_result_e APP_SalgStatusMachine(){
 
-
-
 	while(1){
 		// Enters in sleep mode, CPU is stopped and all peripherals continue to operate.
 		// When an interrupt occur wake up the CPU
@@ -115,8 +113,9 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		int_triggered = 0;
 
 
+	} // End while
+
 //		HAL_WdgRefresh();
 
-	}
 }
 

@@ -1,6 +1,6 @@
 /*********************************************************************************
-* @file           : epc_conf.h
-* @brief          : Project configuration variables
+* @file           : hal_gpio.h
+* @brief          : HAL header file for testing
 **********************************************************************************
 * @attention
 * Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
@@ -11,13 +11,12 @@
 *   written agreement of the owner prohibited.
 ***********************************************************************************/
 
-#ifndef EPC_CONF_H_
-#define EPC_CONF_H_
-
+#ifndef TEST_H_
+#define TEST_H_
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
-#include "stdint.h"
+#include "epc_conf.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -32,46 +31,21 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                         Definition of local functions                          */
+/*            Definition of exported types (typedef, enum, struct, union)         */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                        Definition of exported symbolic constants               */
+/*                        Definition of exported variables                        */
 /**********************************************************************************/
-
-/**********************************************************************************/
-/*                        				MIDDLEWARE								  */
-/**********************************************************************************/
-/**< Conversion factors and offset for analog values **/
-extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2], EPC_CONF_Hs_Volt[2], 
-    EPC_CONF_Status_3v3[2], EPC_CONF_Status_5v0[2], EPC_CONF_Ext_Tmp_1[2], EPC_CONF_Ext_Tmp_2[2], EPC_CONF_Ext_Tmp_3[2];
-
-/**********************************************************************************/
-/*                        				HAL 									  */
-/**********************************************************************************/
-/**< Run Test instead of machine status **/
-#define TESTING
-
-/**< Decomment to enable each HAL module **/
-#define EPC_CONF_USE_CUSTOM_HAL
-
-/**< CAN sender standard identifier **/
-#define EPC_CONF_CAN_ID 0x109
-
-//#define EPC_CONF_PWM_ENABLED
-#define EPC_CONF_GPIO_ENABLED
-//#define EPC_CONF_ADC_DMA_ENABLED
-//#define EPC_CONF_I2C_ENABLED
-//#define EPC_CONF_TMR_ENABLED
-//#define EPC_CONF_WDG_ENABLED
-//#define EPC_CONF_CAN_ENABLED
-
-
-/**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
-#define EPC_CONF_I2C_TIMEOUT 5
-
-/**< Timeout until ADC conversion is finished **/
-#define EPC_CONF_ADC_TIMEOUT 1
+/**
+ * @enum TEST_result_e
+ * @brief Structure for the result of the test operation.
+ */
+typedef enum
+{
+	TEST_RESULT_SUCCESS = 0x0U, /**< HAL_GPIO success operation result **/
+	TEST_RESULT_ERROR 			/**< HAL_GPIO error operation result **/
+}TEST_result_e;
 
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
@@ -85,5 +59,25 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
+/**********************************************************************************/
+/*                   Declaration of exported function prototypes                  */
+/**********************************************************************************/
 
-#endif /* EPC_CONF_H_ */
+TEST_result_e Test_PWM(void);
+
+TEST_result_e Test_GPIO(void);
+
+TEST_result_e Test_SlowAdc(void);
+
+TEST_result_e Test_FastAdc(void);
+
+TEST_result_e Test_I2C(void);
+
+TEST_result_e Test_Timers(void);
+
+TEST_result_e Test_WDG(void);
+
+TEST_result_e Test_Can(void);
+
+TEST_result_e Test_HAL(void);
+#endif /* TEST_H_ */

@@ -1,6 +1,6 @@
 /*********************************************************************************
-* @file           : hal_sys.c
-* @brief          : Implementation of HAL_SYS
+* @file           : test.c
+* @brief          : Implementation of testing file
 **********************************************************************************
 * @attention
 * Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
@@ -14,15 +14,45 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "main.h"
+#include "epc_conf.h"
+
+#ifdef EPC_CONF_PWM_ENABLED
+	#include "hal_pwm.h"
+#endif
+
+#ifdef EPC_CONF_GPIO_ENABLED
+	#include "hal_gpio_test.h"
+#endif
+
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+	#include "hal_adc.h"
+#endif
+
+#ifdef EPC_CONF_I2C_ENABLED
+	#include "hal_i2c.h"
+#endif
+
+#ifdef EPC_CONF_TMR_ENABLED
+	#include "hal_tmr.h"
+#endif
+
+#ifdef EPC_CONF_WDG_ENABLED
+	#include "hal_wdg.h"
+#endif
+
+#ifdef EPC_CONF_CAN_ENABLED
+	#include "hal_can.h"
+#endif
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "hal_sys.h"
+#include "Test.h"
+
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
+#include <stdint.h>
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -39,6 +69,32 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
+#ifdef EPC_CONF_PWM_ENABLED
+#endif
+
+#ifdef EPC_CONF_GPIO_ENABLED
+	#include "hal_gpio_test.h"
+#endif
+
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+#endif
+
+#ifdef EPC_CONF_I2C_ENABLED
+
+#endif
+
+#ifdef EPC_CONF_TMR_ENABLED
+#endif
+
+#ifdef EPC_CONF_WDG_ENABLED
+#endif
+
+#ifdef EPC_CONF_CAN_ENABLED
+		HAL_CAN_result_e res;
+		uint8_t dataR = 0;
+		uint8_t sizeR = 0;
+		uint32_t idR = 0;
+#endif
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -64,103 +120,89 @@
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-HAL_SYS_result_t HAL_SysInit(void){
-	//TODO: implement recovery mode if initialization fails.
-	HAL_SYS_result_t res = HAL_SYS_RESULT_SUCCESS;
-	/* Reset of all peripherals. */
-	res = HAL_Init();
-	if (res != HAL_SYS_RESULT_SUCCESS){
-		res = HAL_SYS_RESULT_ERROR_CRIT;
-	} else{
-		error_raised = 0;
-		SystemClock_Config();
-		if (error_raised){ // System clock initialization error
-			res = HAL_SYS_RESULT_ERROR_CRIT;
-		}else{
-
-		/* Initialize all configured peripherals */
+TEST_result_e Test_PWM(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_PWM_ENABLED
-			if (1){
-			}else{
+
 #endif
-
-#ifdef EPC_CONF_GPIO_ENABLED
-			if(HAL_GpioInit() != HAL_GPIO_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_GPIO;
-			}else{
-#endif
-
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-			if(HAL_AdcInit() != HAL_ADC_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_ADC;
-				// TODO: add dma
-			}else{
-#endif
-
-#ifdef EPC_CONF_I2C_ENABLED
-			if (HAL_I2cInit () != HAL_I2C_RESULT_SUCCESS){
-				res |= HAL_SYS_RESULT_ERROR_I2C;
-			}
-			else{
-#endif
-
-#ifdef EPC_CONF_TMR_ENABLED
-			res = HAL_TmrInit(HAL_TMR_CLOCK_RT);
-			if (HAL_TmrInit(HAL_TMR_CLOCK_RT) != HAL_TMR_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_CRIT;
-			}else{
-#endif
-
-#ifdef EPC_CONF_CAN_ENABLED
-			if (HAL_CanInit() != HAL_CAN_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_COMM;
-			}else{
-#endif
-
-
-// Close initialization }
-
-#ifdef EPC_CONF_CAN_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_TMR_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_I2C_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_GPIO_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_PWM_ENABLED
-		}
-#endif
-
-		} // end_if System clock initialization
-	} // end_if HAL_Init()
 	return res;
 }
 
-HAL_SYS_result_t HAL_SysPwrMode(const HAL_SYS_mode_t mode){
-	HAL_SYS_result_t res = HAL_SYS_RESULT_SUCCESS;
-	if(mode == HAL_SYS_MODE_SLEEP){
-		HAL_SuspendTick();
-		HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
-	}else{ // HAL_SYS_MODE_NORMAL
-	}
+TEST_result_e Test_GPIO(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_GPIO_ENABLED
+	 res = (TEST_result_e) HAL_GpioTest(HAL_GPIO_OUT_OutDisable, HAL_GPIO_IN_ThermalWarn);
+#endif
 	return res;
 }
 
-HAL_SYS_result_t HAL_SysReset (void){
-	HAL_SYS_result_t res = HAL_SYS_RESULT_SUCCESS;
-	// TODO: implement this function
+TEST_result_e Test_SlowAdc(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+
+#endif
 	return res;
+}
+
+TEST_result_e Test_FastAdc(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+
+#endif
+	return res;
+}
+
+TEST_result_e Test_I2C(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_I2C_ENABLED
+
+#endif
+	return res;
+}
+
+TEST_result_e Test_Timers(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_TMR_ENABLED
+
+#endif
+	return res;
+}
+
+TEST_result_e Test_WDG(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_WDG_ENABLED
+
+#endif
+	return res;
+}
+
+TEST_result_e Test_Can(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_CAN_ENABLED
+
+//		if (res == HAL_CAN_RESULT_SUCCESS){
+//			res = HAL_CanReceive (&idR, &dataR, &sizeR);
+//		}
+
+//		if (res == HAL_CAN_RESULT_SUCCESS){
+//			uint8_t data = 33;
+//			uint32_t id = 0x099;
+//			res = HAL_CanTransmit (id, &data, 1);
+//			}
+
+#endif
+	return res;
+}
+
+TEST_result_e Test_HAL(void){
+	TEST_result_e test_res = TEST_RESULT_SUCCESS;
+	test_res |= Test_PWM();
+	test_res |= Test_GPIO();
+	test_res |= Test_SlowAdc();
+	test_res |= Test_FastAdc();
+	test_res |= Test_I2C();
+	test_res |= Test_Timers();
+	test_res |= Test_WDG();
+	test_res |= Test_Can();
+	return test_res;
 }
