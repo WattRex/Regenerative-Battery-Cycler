@@ -14,13 +14,13 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "stm32f3xx_hal.h"
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "hal_gpio.h"
 #include "gpio.h"
+
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -101,8 +101,13 @@ const GPIO_pinout_config_t _GPIO_input_pins[]={
 /**********************************************************************************/
 
 HAL_GPIO_result_e HAL_GpioInit(void){
-	void MX_GPIO_Init(void);
-	return HAL_GPIO_RESULT_SUCCESS;
+	HAL_GPIO_result_e res = HAL_GPIO_RESULT_SUCCESS;
+	error_raised = 0;
+	MX_GPIO_Init();
+	if (error_raised){
+		res = HAL_GPIO_RESULT_ERROR;
+	}
+	return res;
 }
 
 
