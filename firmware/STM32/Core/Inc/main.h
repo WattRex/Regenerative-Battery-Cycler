@@ -56,7 +56,9 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+#ifdef EPC_CONF_USE_CUSTOM_HAL
+void SystemClock_Config(void);
+#endif
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

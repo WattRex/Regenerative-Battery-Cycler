@@ -1,6 +1,6 @@
 /*********************************************************************************
-* @file           : app_salg.c
-* @brief          : Implementation of APP SALG
+* @file           : epc_conf.h
+* @brief          : Project configuration variables
 **********************************************************************************
 * @attention
 * Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
@@ -11,22 +11,13 @@
 *   written agreement of the owner prohibited.
 ***********************************************************************************/
 
+#ifndef EPC_CONF_H_
+#define EPC_CONF_H_
+
 /**********************************************************************************/
-/*                  Include common and project definition header                  */
+/*                               Project Includes                                 */
 /**********************************************************************************/
-#include <stdlib.h>
-#include <string.h>
-
-#include "app_salg.h"
-//#include "app_iface.h"
-//#include "app_ctrl.h"
-
-#include "hal_sys.h"
-
-#ifdef EPC_CONF_TMR_ENABLED // TODO: remove it after integration
-	#include "hal_tmr.h"
-#endif
-//#include "hal_wdg.h"
+#include "stdint.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -36,19 +27,55 @@
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
 
-
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*            Definition of local types (typedef, enum, struct, union)            */
+/*                         Definition of local functions                          */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                         Definition of local variables                          */
+/*                        Definition of exported symbolic constants               */
 /**********************************************************************************/
-volatile uint8_t n_ints= 0, int_triggered = 0;
+
+/**********************************************************************************/
+/*                        				MIDDLEWARE								  */
+/**********************************************************************************/
+/**< Conversion factors and offset for analog values **/
+extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2], EPC_CONF_Hs_Volt[2], 
+    EPC_CONF_Status_3v3[2], EPC_CONF_Status_5v0[2], EPC_CONF_Ext_Tmp_1[2], EPC_CONF_Ext_Tmp_2[2], EPC_CONF_Ext_Tmp_3[2];
+
+/**********************************************************************************/
+/*                        				HAL 									  */
+/**********************************************************************************/
+/**< Run Test instead of machine status **/
+#define TESTING
+
+/**< Decomment to enable each HAL module **/
+#define EPC_CONF_USE_CUSTOM_HAL
+
+/**< CAN sender standard identifier **/
+#define EPC_CONF_CAN_ID 0x109
+
+//#define EPC_CONF_PWM_ENABLED
+//#define EPC_CONF_GPIO_ENABLED
+//#define EPC_CONF_ADC_DMA_ENABLED
+//#define EPC_CONF_I2C_ENABLED
+//#define EPC_CONF_TMR_ENABLED
+//#define EPC_CONF_WDG_ENABLED
+//#define EPC_CONF_CAN_ENABLED
+
+
+/**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
+#define EPC_CONF_I2C_TIMEOUT 5
+
+/**< Timeout until ADC conversion is finished **/
+#define EPC_CONF_ADC_TIMEOUT 1
+
+/**********************************************************************************/
+/*                       Definition of local constant data                        */
+/**********************************************************************************/
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -58,64 +85,5 @@ volatile uint8_t n_ints= 0, int_triggered = 0;
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
-/**********************************************************************************/
-/*                    Declaration of local function prototypes                    */
-/**********************************************************************************/
 
-/**********************************************************************************/
-/*                       Definition of local constant data                        */
-/**********************************************************************************/
-
-/**********************************************************************************/
-/*                         Definition of local functions                          */
-/**********************************************************************************/
-
-/**********************************************************************************/
-/*                        Definition of exported functions                        */
-/**********************************************************************************/
-
-void HAL_TMR_TIM2_Callback(){
-	HAL_ResumeTick();
-	n_ints += 1;
-	int_triggered += 1;
-}
-
-
-APP_SALG_result_e APP_SalgInit(){
-	/* Initialize HAL */
-	APP_SALG_result_e res= APP_SALG_RESULT_SUCCESS;
-	HAL_SYS_result_t sysRes = HAL_SysInit();
-	while(sysRes != HAL_SYS_RESULT_SUCCESS){
-		if(sysRes == HAL_SYS_RESULT_ERROR_CRIT || sysRes == HAL_SYS_RESULT_ERROR_COMM){
-			/* Try re-initialization due to critical error */
-			__disable_irq();
-		}else{
-			// Inform error on initialization
-			// TODO: inform error via CAN network
-		}
-//	 TODO: código de error de leds con funciones de bajo nivel
-		HAL_DeInit();
-		sysRes = HAL_SysInit();
-	}
-
-//	HAL_WdgInit();
-	return res;
-}
-
-
-APP_SALG_result_e APP_SalgStatusMachine(){
-
-	while(1){
-		// Enters in sleep mode, CPU is stopped and all peripherals continue to operate.
-		// When an interrupt occur wake up the CPU
-		if(int_triggered == 0){
-		}
-		int_triggered = 0;
-
-
-	} // End while
-
-//		HAL_WdgRefresh();
-
-}
-
+#endif /* EPC_CONF_H_ */

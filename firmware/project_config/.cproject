@@ -49,6 +49,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_CTRL}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_SALG}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_IFACE}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test/HAL}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.631332181" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -82,6 +84,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_CTRL}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_SALG}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_IFACE}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test/HAL}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1917081077" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -161,6 +165,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_CTRL}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_SALG}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_IFACE}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test/HAL}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input.245232077" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.assembler.input"/>
 							</tool>
@@ -194,6 +200,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_CTRL}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_SALG}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/APP/APP_IFACE}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/STM32/Sources/Test/HAL}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1814601692" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
