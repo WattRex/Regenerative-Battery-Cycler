@@ -63,21 +63,5 @@ typedef enum
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
 
-TEST_result_e Test_PWM(void);
-
-TEST_result_e Test_GPIO(void);
-
-TEST_result_e Test_SlowAdc(void);
-
-TEST_result_e Test_FastAdc(void);
-
-TEST_result_e Test_I2C(void);
-
-TEST_result_e Test_Timers(void);
-
-TEST_result_e Test_WDG(void);
-
-TEST_result_e Test_Can(void);
-
-TEST_result_e Test_HAL(void);
+TEST_result_e TEST_main(void);
 #endif /* TEST_H_ */

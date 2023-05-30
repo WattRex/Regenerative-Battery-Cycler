@@ -37,7 +37,7 @@
 	#endif
 
 	#ifdef TESTING
-		#include "Test.h"
+		#include "test.h"
 	#endif
 /* USER CODE END Includes */
 
@@ -128,15 +128,14 @@ int main(void)
 #else
 
   /* USER CODE END 2 */
-
+  TEST_result_e test_res = TEST_RESULT_SUCCESS;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-  	Test_HAL();
-  	HAL_Delay(1000);
+		test_res |= TEST_main();
   }
 #endif
   /* USER CODE END 3 */
