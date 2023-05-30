@@ -28,4 +28,8 @@ In order to run this code from the STM32 Cube IDE, the following steps must be f
 >- Select "Sources" folder
 
 >- Apply and Close
+
+- [OPTIONAL] If you want to update project configuration parameters you can also copy the folder `<repo_path>/firmware/project_config/EPC_CONF` to `<repo_path>/firmware/Sources` folder. 
+
 - Build the project and ENJOY !!! :wink:
+
