@@ -2,14 +2,6 @@
 * @file           : test.c
 * @brief          : Implementation of testing file
 **********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
-***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
@@ -69,28 +61,6 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-#ifdef EPC_CONF_PWM_ENABLED
-#endif
-
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-#endif
-
-#ifdef EPC_CONF_I2C_ENABLED
-
-#endif
-
-#ifdef EPC_CONF_TMR_ENABLED
-#endif
-
-#ifdef EPC_CONF_WDG_ENABLED
-#endif
-
-#ifdef EPC_CONF_CAN_ENABLED
-		HAL_CAN_result_e res;
-		uint8_t dataR = 0;
-		uint8_t sizeR = 0;
-		uint32_t idR = 0;
-#endif
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
