@@ -2,14 +2,6 @@
 * @file           : app_salg.c
 * @brief          : Implementation of APP SALG
 **********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
-***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
@@ -22,6 +14,7 @@
 //#include "app_ctrl.h"
 
 #include "hal_sys.h"
+#include "epc_conf.h"
 
 #ifdef EPC_CONF_TMR_ENABLED // TODO: remove it after integration
 	#include "hal_tmr.h"
@@ -35,7 +28,6 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -118,4 +110,3 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 //		HAL_WdgRefresh();
 
 }
-
