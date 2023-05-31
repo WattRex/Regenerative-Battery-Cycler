@@ -21,6 +21,7 @@
 /*                              Include other headers                             */
 /**********************************************************************************/
 #include <stdint.h>
+#include "can.h"
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -71,7 +72,7 @@ typedef enum
 /**********************************************************************************/
 
 /**
- * @fn HAL_CAN_result_e HAL_SpiInit(HAL_CAN_port_t)
+ * @fn HAL_CAN_result_e HAL_CanInit(HAL_CAN_port_t)
  * @brief Configures the CAN peripheral with the options provided by the
  * manufacturer provided functions.
  *
@@ -83,9 +84,25 @@ typedef enum
  */
 HAL_CAN_result_e HAL_CanInit();
 
+
 /**
- * @fn HAL_CAN_result_e HAL_CanSendMsg(uint8_t*, const uint8_t)
- * @brief Send data through CAN 1 interface using APP_CONF_CAN_ID
+ * @fn HAL_CAN_result_e HAL_CanFilters(const uint16_t id, const uint16_t mask)
+ * @brief Configure the CAN filter with the options provided by the
+ * manufacturer provided functions. This will have a id and a mask aplied to the id.
+ * Every time the function is called will set a filter in a bank up to 14
+ *
+ * @param id ID reference that will have the messages in order to receive them
+ * @param mask With a negative logic, the bits set to a 1 will have to match the id.
+ * @return HAL_CAN_RESULT_SUCCESS if interface was initialized correctly,
+ * HAL_CAN_RESULT_BUSY if the peripheral is not ready,
+ * HAL_CAN_result_eIMEOUT if the CAN_TIMEOUT timeout has expired and
+ * HAL_CAN_RESULT_ERROR otherwise
+ */
+HAL_CAN_result_e HAL_CanFilters(const uint16_t id, const uint16_t mask);
+
+/**
+ * @fn HAL_CAN_result_e HAL_CanTransmit(const uint32_t id, const uint8_t* data, const uint8_t size)
+ * @brief Send data through CAN interface using the id provided
  * as standard id.
  * @param id Identifier of the message
  * @param data Data to be send.
@@ -97,7 +114,7 @@ HAL_CAN_result_e HAL_CanInit();
  */
 HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const uint8_t size);
 /**
- * @fn HAL_CAN_result_e HAL_CanReceiveMsg(uint8_t*, uint8_t*)
+ * @fn HAL_CAN_result_e HAL_CanReceive(uint32_t* id, uint8_t* data, uint8_t* size)
  * @brief Checks if there are any messages pending on reception FIFO.
  * If so, it saves it in data.
  * @param id Pointer to the identifier of the message

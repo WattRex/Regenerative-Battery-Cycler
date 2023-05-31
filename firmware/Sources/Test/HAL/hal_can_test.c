@@ -55,21 +55,23 @@
 HAL_CAN_result_e HAL_CanTest(void)
 {
 	/* Start the Transmission process */
-	uint8_t data= 1, i= 1;
+
+	uint8_t data= 1, i= 1, size;
 	uint8_t dataR[8]={0,0,0,0,0,0,0,0};
-	uint32_t id, size;
-	HAL_CAN_result_e res = HAL_CAN_RESULT_ERROR;
+	uint32_t id;
+	HAL_CAN_result_e res;
+	res = HAL_CanFilters(0x130, 0x7F0);
 	res = HAL_CanTransmit(0x102, &data, 1);
 	if (res == HAL_CAN_RESULT_SUCCESS){
 		while (i<5){
-			res = HAL_CanReceive(&id, &dataR, &size);
+			res = HAL_CanReceive(&id, dataR, &size);
 			if (res == HAL_CAN_RESULT_SUCCESS) break;
 			HAL_Delay(1000);
 			i++;
 		}
 		if (res == HAL_CAN_RESULT_SUCCESS){
 			dataR[7]++;
-			res = HAL_CanTransmit(0x102, &dataR, 8);
+			res = HAL_CanTransmit(0x102, dataR, 8);
 		}
 	}
 	return res;

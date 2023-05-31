@@ -5,8 +5,6 @@
 In order to be able to test the HAL CAN is mandatory to connect the transciever and the PCanViewer.
 You should be aware of the PCanViewer app configuration as it must be the same as the one in the device.
 Once the message has been received in the PCanViewer you have 5 seconds to send manually a message and receive back a new message.
-It can not be sent before as the filters won´t be active and it will be able to receive all messages. 
-After the filters are active only the messages with a StdId between 0x130 and 0x13F will be received.
 
 ### Previus actions in SW enviroment to use CAN
 

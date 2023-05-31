@@ -46,6 +46,7 @@ CAN_TxHeaderTypeDef   TxHeader;
 CAN_RxHeaderTypeDef   RxHeader;
 /** Pointer to Mailbox used to store the Tx message **/
 uint32_t              TxMailbox;
+uint8_t				  filterBank=0;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -84,13 +85,14 @@ HAL_CAN_result_e HAL_CanInit (){
     	res = HAL_CAN_RESULT_ERROR;
     }
     else{
+    	/* Initialize to receive all messages */
   		sFilterConfig.FilterBank = 0;
   		sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-  		sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+  		sFilterConfig.FilterScale = CAN_FILTERSCALE_16BIT;
   		sFilterConfig.FilterIdHigh = 0x000;	// STDID[15:8] STD[7:5] RTR IDE EXID[2:0] - STDID = 4
   		sFilterConfig.FilterIdLow = 0x000;		// STDID = 3
-  		sFilterConfig.FilterMaskIdHigh=0x00;//filter mask number or identification number,according to the mode - MSBs for a 32-bit configuration
-			sFilterConfig.FilterMaskIdLow=0x7FF;//filter mask number or identification number,according to the mode - LSBs for a 32-bit configuration
+  		sFilterConfig.FilterMaskIdHigh=0x000;//filter mask number or identification number,according to the mode - MSBs for a 32-bit configuration
+  		sFilterConfig.FilterMaskIdLow=0x000;//filter mask number or identification number,according to the mode - LSBs for a 32-bit configuration
 
   		sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
   		sFilterConfig.FilterActivation = ENABLE;
@@ -104,12 +106,40 @@ HAL_CAN_result_e HAL_CanInit (){
     return res;
 }
 
+HAL_CAN_result_e HAL_CanFilters(const uint16_t id, const uint16_t mask){
+	if (filterBank >13){
+		filterBank=0;
+	}
+	HAL_CAN_result_e res = HAL_CAN_Stop(&hcan);
+	CAN_FilterTypeDef  sFilterConfig;
+	sFilterConfig.FilterBank = filterBank;
+	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+	sFilterConfig.FilterScale = CAN_FILTERSCALE_16BIT; // STID[10:3] STID[2:0] RTR IDE EXID[17:15]
+	sFilterConfig.FilterIdHigh = id << 5; // STDID + RTR=0 IDE=0 EXID = 00
+	/* In list mode the Mask also works as part of the list.
+	 * In the 16bit scale you have 4 ids per filter bank
+	 */
+	sFilterConfig.FilterIdLow = 0x000;
+	sFilterConfig.FilterMaskIdHigh= mask << 5;
+	sFilterConfig.FilterMaskIdLow=0xFFFF;
+	sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
+	sFilterConfig.FilterActivation = ENABLE;
+	sFilterConfig.SlaveStartFilterBank = 14;
+	res = HAL_CAN_ConfigFilter(&hcan, &sFilterConfig);
+	if (res == HAL_CAN_RESULT_SUCCESS){
+		res = HAL_CAN_Start(&hcan);
+	}
+	filterBank++;
+	return res;
+}
+
+
 HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const uint8_t size)
 {
 	/* Start the Transmission process */
 	HAL_CAN_result_e res = HAL_CAN_RESULT_ERROR;
 	if (size <= 8){
-		TxHeader.DLC=size;
+		TxHeader.DLC =size;
 		TxHeader.StdId = id;
 		res = HAL_CAN_AddTxMessage(&hcan, &TxHeader, data, &TxMailbox);
 	}
@@ -117,11 +147,11 @@ HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const 
 }
 
 
-HAL_CAN_result_e HAL_CanReceive (uint32_t* id, uint8_t* data, uint8_t* size)
+HAL_CAN_result_e HAL_CanReceive (uint32_t* const id, uint8_t* data, uint8_t* const size)
 {
 	/* Get RX message */
 	HAL_CAN_result_e res = HAL_CAN_GetRxMessage(&hcan, CAN_RX_FIFO0, &RxHeader, data);
-	id = &RxHeader.StdId;
-	size = (uint8_t *) &RxHeader.DLC;
+	*id = RxHeader.StdId;
+	*size = RxHeader.DLC;
 	return res;
 }

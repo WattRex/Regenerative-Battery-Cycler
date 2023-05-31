@@ -61,7 +61,7 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 //#define EPC_CONF_I2C_ENABLED
 //#define EPC_CONF_TMR_ENABLED
 //#define EPC_CONF_WDG_ENABLED
-//#define EPC_CONF_CAN_ENABLED
+#define EPC_CONF_CAN_ENABLED
 
 
 /**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
