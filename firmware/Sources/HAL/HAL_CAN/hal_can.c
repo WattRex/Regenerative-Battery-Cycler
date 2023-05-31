@@ -104,7 +104,7 @@ HAL_CAN_result_e HAL_CanInit (){
     return res;
 }
 
-HAL_CAN_result_e HAL_CanTransmit (uint32_t id, uint8_t* data, uint8_t size)
+HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const uint8_t size)
 {
 	/* Start the Transmission process */
 	HAL_CAN_result_e res = HAL_CAN_RESULT_ERROR;

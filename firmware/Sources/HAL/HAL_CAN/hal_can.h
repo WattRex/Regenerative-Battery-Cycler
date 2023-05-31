@@ -95,7 +95,7 @@ HAL_CAN_result_e HAL_CanInit();
  * HAL_CAN_result_eIMEOUT if the CAN_TIMEOUT timeout has expired and
  * HAL_CAN_RESULT_ERROR otherwise.
  */
-HAL_CAN_result_e HAL_CanTransmit (uint32_t id, uint8_t* data, uint8_t size);
+HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const uint8_t size);
 /**
  * @fn HAL_CAN_result_e HAL_CanReceiveMsg(uint8_t*, uint8_t*)
  * @brief Checks if there are any messages pending on reception FIFO.
