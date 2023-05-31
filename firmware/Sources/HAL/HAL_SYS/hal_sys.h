@@ -79,7 +79,7 @@ typedef enum
  * and invokes the corresponding initialization functions of the used peripherals.
  * If any initialization fails, a recovery process is initiated.
  * @return 	@ref HAL_SYS_RESULT_SUCCESS, if the initialization was successful and
- * @ref HAL_SYS_RESULT_ERROR, @ref HAL_SYS_RESULT_BUSY or @ref HAL_SYS_result_eIMEOUT
+ * @ref HAL_SYS_RESULT_ERROR, @ref HAL_SYS_RESULT_BUSY or @ref HAL_SYS_result_TIMEOUT
  * if initialization and recovery of any peripheral failed.
  */
 HAL_SYS_result_e HAL_SysInit(void);
