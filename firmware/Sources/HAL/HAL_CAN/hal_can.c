@@ -76,7 +76,31 @@ uint32_t              TxMailbox;
  */
 HAL_CAN_result_e HAL_CanInit (){
     HAL_CAN_result_e res = HAL_CAN_RESULT_SUCCESS;
+    CAN_FilterTypeDef  sFilterConfig;
+
+    error_raised = 0;
     MX_CAN_Init();
+    if (error_raised){
+    	res = HAL_CAN_RESULT_ERROR;
+    }
+    else{
+  		sFilterConfig.FilterBank = 0;
+  		sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+  		sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+  		sFilterConfig.FilterIdHigh = 0x000;	// STDID[15:8] STD[7:5] RTR IDE EXID[2:0] - STDID = 4
+  		sFilterConfig.FilterIdLow = 0x000;		// STDID = 3
+  		sFilterConfig.FilterMaskIdHigh=0x00;//filter mask number or identification number,according to the mode - MSBs for a 32-bit configuration
+			sFilterConfig.FilterMaskIdLow=0x7FF;//filter mask number or identification number,according to the mode - LSBs for a 32-bit configuration
+
+  		sFilterConfig.FilterFIFOAssignment = CAN_RX_FIFO0;
+  		sFilterConfig.FilterActivation = ENABLE;
+  		sFilterConfig.SlaveStartFilterBank = 14;
+    	res = HAL_CAN_ConfigFilter(&hcan, &sFilterConfig);
+  		if (res == HAL_CAN_RESULT_SUCCESS){
+				/* Start the CAN peripheral */
+				res = HAL_CAN_Start(&hcan);
+  		}
+    }
     return res;
 }
 
@@ -98,6 +122,6 @@ HAL_CAN_result_e HAL_CanReceive (uint32_t* id, uint8_t* data, uint8_t* size)
 	/* Get RX message */
 	HAL_CAN_result_e res = HAL_CAN_GetRxMessage(&hcan, CAN_RX_FIFO0, &RxHeader, data);
 	id = &RxHeader.StdId;
-	size = &RxHeader.DLC;
+	size = (uint8_t *) &RxHeader.DLC;
 	return res;
 }
