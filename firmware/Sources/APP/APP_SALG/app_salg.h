@@ -2,22 +2,13 @@
 * @file           : app_salg.h
 * @brief          : APP header file for SALG
 **********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
-***********************************************************************************/
 
 #ifndef APP_SALG_H_
 #define APP_SALG_H_
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
-#include "epc_conf.h"
-#include "hal_sys.h"
+
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -35,7 +26,7 @@
 /**********************************************************************************/
 
 /**
- * @enum APP_SALG_result_t
+ * @enum APP_SALG_result_e
  * @brief Structure for the result of the APP SALG operation.
  */
 typedef enum
