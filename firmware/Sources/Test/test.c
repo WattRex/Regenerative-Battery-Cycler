@@ -1,7 +1,7 @@
 /*********************************************************************************
 * @file           : test.c
 * @brief          : Implementation of testing file
-**********************************************************************************
+**********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
@@ -129,7 +129,12 @@ TEST_result_e I2CTest(void){
 TEST_result_e TimersTest(void){
 	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_TMR_ENABLED
-
+	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
+	res |= TestRTTmr();
+	HAL_TmrStop(HAL_TMR_CLOCK_PWR_MEAS);
+	HAL_TmrStart(HAL_TMR_CLOCK_RT);
+	res |= TestPwrMeasTmr();
+	HAL_TmrStop(HAL_TMR_CLOCK_RT);
 #endif
 	return res;
 }
