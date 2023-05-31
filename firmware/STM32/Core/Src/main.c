@@ -34,9 +34,10 @@
 /* USER CODE BEGIN Includes */
 	#else
 		#include "app_salg.h"
+		#include "main.h"
 	#endif
 
-	#ifdef TESTING
+	#ifdef EPC_CONF_TESTING
 		#include "test.h"
 	#endif
 /* USER CODE END Includes */
@@ -123,7 +124,7 @@ int main(void)
   APP_SALG_result_e res = APP_SalgInit();
   UNUSED(res);
 
-#ifndef TESTING
+#ifndef EPC_CONF_TESTING
   res = APP_SalgStatusMachine();
 #else
 

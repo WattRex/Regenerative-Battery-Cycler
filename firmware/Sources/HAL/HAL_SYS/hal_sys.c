@@ -1,7 +1,7 @@
 /*********************************************************************************
 * @file           : hal_sys.c
 * @brief          : Implementation of HAL_SYS
-**********************************************************************************
+**********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
@@ -122,7 +122,8 @@ HAL_SYS_result_e HAL_SysInit(void){
 
 #ifdef EPC_CONF_TMR_ENABLED
 			res = HAL_TmrInit(HAL_TMR_CLOCK_RT);
-			if (HAL_TmrInit(HAL_TMR_CLOCK_RT) != HAL_TMR_RESULT_SUCCESS){
+			res |= HAL_TmrInit(HAL_TMR_CLOCK_PWR_MEAS);
+			if (res != HAL_TMR_RESULT_SUCCESS){
 				res = HAL_SYS_RESULT_ERROR_CRIT;
 			}else{
 #endif
@@ -165,7 +166,7 @@ HAL_SYS_result_e HAL_SysInit(void){
 	return res;
 }
 
-HAL_SYS_result_e HAL_SysPwrMode(const HAL_SYS_mode_t mode){
+HAL_SYS_result_e HAL_SysPwrMode(const HAL_SYS_mode_e mode){
 	HAL_SYS_result_e res = HAL_SYS_RESULT_SUCCESS;
 	if(mode == HAL_SYS_MODE_SLEEP){
 		HAL_SuspendTick();

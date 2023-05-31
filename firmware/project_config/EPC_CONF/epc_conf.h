@@ -50,7 +50,7 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 /*                        				HAL 									  */
 /**********************************************************************************/
 /**< Run Test instead of machine status **/
-#define TESTING
+#define EPC_CONF_TESTING
 
 /**< Decomment to enable each HAL module **/
 #define EPC_CONF_USE_CUSTOM_HAL

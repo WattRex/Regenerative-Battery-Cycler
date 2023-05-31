@@ -22,6 +22,9 @@
 #include "stm32f3xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+	#ifdef EPC_CONF_USE_CUSTOM_HAL
+		#include "hal_tmr.h"
+	#endif
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -226,7 +229,23 @@ void TIM2_IRQHandler(void)
   /* USER CODE END TIM2_IRQn 0 */
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */
-	#endif
+	#else
+  	/*
+  	 * IT routine invoked when the timer 2 counter overflows. It clears the
+  	 * overflow flags and invoke the user defined callback.
+  	 */
+		TIM_HandleTypeDef *handler = &htim2;
+		/** @arg TIM Update event **/
+		if (__HAL_TIM_GET_FLAG(handler, TIM_FLAG_UPDATE) != RESET)
+		{
+			if (__HAL_TIM_GET_IT_SOURCE(handler, TIM_IT_UPDATE) != RESET)
+			{
+				__HAL_TIM_CLEAR_IT(handler, TIM_IT_UPDATE);
+				/** @arg Run custom IT callback **/
+				HAL_TMR_RT_Callback();
+			}
+		}
+  #endif
   /* USER CODE END TIM2_IRQn 1 */
 }
 
@@ -237,10 +256,28 @@ void TIM3_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM3_IRQn 0 */
 
-  /* USER CODE END TIM3_IRQn 0 */
+	#ifndef EPC_CONF_USE_CUSTOM_HAL
+
+	/* USER CODE END TIM3_IRQn 0 */
   HAL_TIM_IRQHandler(&htim3);
   /* USER CODE BEGIN TIM3_IRQn 1 */
-
+	#else
+		/*
+		 * IT routine invoked when the timer 3 counter overflows. It clears the
+		 * overflow flags and invoke the user defined callback.
+		 */
+		TIM_HandleTypeDef *handler = &htim3;
+		/** @arg TIM Update event **/
+		if (__HAL_TIM_GET_FLAG(handler, TIM_FLAG_UPDATE) != RESET)
+		{
+			if (__HAL_TIM_GET_IT_SOURCE(handler, TIM_IT_UPDATE) != RESET)
+			{
+				__HAL_TIM_CLEAR_IT(handler, TIM_IT_UPDATE);
+				/** @arg Run custom IT callback **/
+				HAL_TMR_PWR_MEAS_Callback();
+			}
+		}
+	#endif
   /* USER CODE END TIM3_IRQn 1 */
 }
 
