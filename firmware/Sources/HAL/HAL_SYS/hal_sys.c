@@ -2,19 +2,35 @@
 * @file           : hal_sys.c
 * @brief          : Implementation of HAL_SYS
 **********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
-***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
 #include "main.h"
+#include "epc_conf.h"
+
+#ifdef EPC_CONF_PWM_ENABLED
+#include "hal_pwm.h"
+#endif
+#ifdef EPC_CONF_GPIO_ENABLED
+   #include "hal_gpio.h"
+#endif
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+   #include "hal_adc.h"
+   #include "hal_dma.h"
+#endif
+#ifdef EPC_CONF_I2C_ENABLED
+   #include "hal_i2c.h"
+#endif
+#ifdef EPC_CONF_TMR_ENABLED
+   #include "hal_tmr.h"
+#endif
+#ifdef EPC_CONF_WDG_ENABLED
+   #include "hal_wdg.h"
+#endif
+#ifdef EPC_CONF_CAN_ENABLED
+   #include "hal_can.h"
+#endif
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
@@ -64,9 +80,9 @@
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-HAL_SYS_result_t HAL_SysInit(void){
+HAL_SYS_result_e HAL_SysInit(void){
 	//TODO: implement recovery mode if initialization fails.
-	HAL_SYS_result_t res = HAL_SYS_RESULT_SUCCESS;
+	HAL_SYS_result_e res = HAL_SYS_RESULT_SUCCESS;
 	/* Reset of all peripherals. */
 	res = HAL_Init();
 	if (res != HAL_SYS_RESULT_SUCCESS){
@@ -149,8 +165,8 @@ HAL_SYS_result_t HAL_SysInit(void){
 	return res;
 }
 
-HAL_SYS_result_t HAL_SysPwrMode(const HAL_SYS_mode_t mode){
-	HAL_SYS_result_t res = HAL_SYS_RESULT_SUCCESS;
+HAL_SYS_result_e HAL_SysPwrMode(const HAL_SYS_mode_t mode){
+	HAL_SYS_result_e res = HAL_SYS_RESULT_SUCCESS;
 	if(mode == HAL_SYS_MODE_SLEEP){
 		HAL_SuspendTick();
 		HAL_PWR_EnterSLEEPMode(0, PWR_SLEEPENTRY_WFI);
@@ -159,8 +175,8 @@ HAL_SYS_result_t HAL_SysPwrMode(const HAL_SYS_mode_t mode){
 	return res;
 }
 
-HAL_SYS_result_t HAL_SysReset (void){
-	HAL_SYS_result_t res = HAL_SYS_RESULT_SUCCESS;
+HAL_SYS_result_e HAL_SysReset (void){
+	HAL_SYS_result_e res = HAL_SYS_RESULT_SUCCESS;
 	// TODO: implement this function
 	return res;
 }
