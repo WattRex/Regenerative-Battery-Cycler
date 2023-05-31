@@ -15,12 +15,13 @@
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
 #include "main.h"
+#include "hal_tmr.h"
+#include "gpio.h"
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "hal_tmr.h"
-#include "tim.h"
+#include "hal_tmr_test.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -29,7 +30,8 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-#define MAX_TICKS_RT 1000
+#define N_SAMPLES 10
+#define DELAY_TIME 1000 // ms
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -42,15 +44,12 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-/** Array with a @ref HAL_TMR_config_t struct for each available timer **/
-static TIM_HandleTypeDef* _htim[HAL_TMR_CLOCK_COUNT];
+volatile uint32_t n_ints_rt= 0, n_ints_pwr_meas = 0, gen_ints = 0;
+uint16_t ticks[N_SAMPLES];
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
-
-extern TIM_HandleTypeDef htim2;
-extern TIM_HandleTypeDef htim3;
 
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
@@ -67,84 +66,81 @@ extern TIM_HandleTypeDef htim3;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
+static HAL_TMR_result_e TestOneTmr(const HAL_TMR_clock_e clock){
+	HAL_TMR_result_e res = HAL_TMR_RESULT_SUCCESS;
+	uint32_t expect_ints = 0;
+	uint16_t offset_ints = 10;
+
+	if (clock == HAL_TMR_CLOCK_RT){
+		expect_ints = 10*DELAY_TIME;
+		offset_ints = 10;
+	}else if (clock == HAL_TMR_CLOCK_PWR_MEAS){
+		expect_ints = 100*DELAY_TIME;
+		offset_ints = 100;
+	}
+
+	if (HAL_TmrStart(clock) !=  HAL_TMR_RESULT_SUCCESS ){
+		res = HAL_TMR_RESULT_ERROR;
+	} else {
+
+		for(uint8_t i = 0; i< N_SAMPLES; i++){
+			HAL_TmrGet(clock, &ticks[i]);
+			// Wait until ticks have changed
+			while(i>0 && ticks[i] == ticks[i-1]){
+				HAL_TmrGet(clock, &ticks[i]);
+			}
+		}
+
+		n_ints_rt = 0;
+		n_ints_pwr_meas = 0;
+		HAL_Delay(DELAY_TIME);
+		if (clock == HAL_TMR_CLOCK_RT){
+			gen_ints = n_ints_rt;
+		}else if (clock == HAL_TMR_CLOCK_PWR_MEAS){
+			gen_ints = n_ints_pwr_meas;
+		}
+		res = HAL_TmrStop(clock);
+
+		if(res != HAL_TMR_RESULT_SUCCESS || (gen_ints < expect_ints - offset_ints) || (gen_ints > expect_ints + offset_ints) ){
+			res = HAL_TMR_RESULT_ERROR;
+		} else {
+			n_ints_rt = 98765;
+			HAL_Delay(DELAY_TIME);
+			if(n_ints_rt != 98765){
+				res = HAL_TMR_RESULT_ERROR;
+			}
+		}
+	}
+	return res;
+}
 
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-__weak void HAL_TMR_RT_Callback(void){}
 
-__weak void HAL_TMR_PWR_MEAS_Callback(void){}
-
-HAL_TMR_result_e HAL_TmrInit (const HAL_TMR_clock_e clock){
-	HAL_TMR_result_e res = HAL_TMR_RESULT_SUCCESS;
-	switch (clock){
-		case HAL_TMR_CLOCK_RT:
-			_htim[HAL_TMR_CLOCK_RT]= &htim2;
-			error_raised = 0;
-			MX_TIM2_Init();
-			if (error_raised){
-				res = HAL_TMR_RESULT_ERROR;
-			}
-			break;
-		case HAL_TMR_CLOCK_PWR_MEAS:
-			_htim[HAL_TMR_CLOCK_PWR_MEAS]= &htim3;
-			error_raised = 0;
-			MX_TIM3_Init();
-			if (error_raised){
-				res = HAL_TMR_RESULT_ERROR;
-			}
-			break;
-		default:
-			break;
-	}
-	return res;
+void HAL_TMR_RT_Callback(void)
+{
+	n_ints_rt += 1;
+#ifdef EPC_CONF_GPIO_ENABLED
+	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+#endif
 }
 
-HAL_TMR_result_e HAL_TmrStart (const HAL_TMR_clock_e clock){
-	HAL_TMR_result_e res = HAL_TMR_RESULT_ERROR;
-	if(clock < HAL_TMR_CLOCK_COUNT){
-		res = HAL_TIM_Base_Start_IT(_htim[clock]);
-	}
-	return res;
+void HAL_TMR_PWR_MEAS_Callback(void)
+{
+	n_ints_pwr_meas += 1;
+#ifdef EPC_CONF_GPIO_ENABLED
+	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+#endif
 }
 
-HAL_TMR_result_e HAL_TmrStop (const HAL_TMR_clock_e clock){
-	HAL_TMR_result_e res = HAL_TMR_RESULT_ERROR;
-	if(clock < HAL_TMR_CLOCK_COUNT){
-		res = HAL_TIM_Base_Stop_IT(_htim[clock]);
-	}
-	return res;
+
+HAL_TMR_result_e TestRTTmr(void){
+	return TestOneTmr(HAL_TMR_CLOCK_RT);
 }
 
-HAL_TMR_result_e HAL_TmrGet (const HAL_TMR_clock_e clock, uint16_t *value){
-	HAL_TMR_result_e res = HAL_TMR_RESULT_ERROR;
-	if(clock < HAL_TMR_CLOCK_COUNT){
-		*value = __HAL_TIM_GET_COUNTER(_htim[clock]);
-	}
-	return res;
+HAL_TMR_result_e TestPwrMeasTmr(void){
+	return TestOneTmr(HAL_TMR_CLOCK_PWR_MEAS);
 }
 
-HAL_TMR_result_e HAL_TmrDelay(const HAL_TMR_clock_e clock, const uint16_t delay){
-	HAL_TMR_result_e res = HAL_TMR_RESULT_ERROR;
-	if(clock == HAL_TMR_CLOCK_COUNT){
-		uint16_t tickStart, tickNow, diff, wait;
-		HAL_TmrGet(clock, &tickStart);
-		wait = delay;
-//		wait *= 10;
-
-		if (wait < MAX_TICKS_RT)
-		{
-			do{
-				HAL_TmrGet(clock, &tickNow);
-				if (tickNow < tickStart){
-					diff = MAX_TICKS_RT - tickNow + tickStart;
-				} else{
-					diff = tickNow - tickStart;
-				}
-			}while ( diff < wait);
-			res = HAL_TMR_RESULT_SUCCESS;
-		}
-	}
-	return res;
-}
