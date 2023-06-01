@@ -121,9 +121,9 @@ HAL_SYS_result_e HAL_SysInit(void){
 #endif
 
 #ifdef EPC_CONF_TMR_ENABLED
-			res = HAL_TmrInit(HAL_TMR_CLOCK_RT);
-			res |= HAL_TmrInit(HAL_TMR_CLOCK_PWR_MEAS);
-			if (res != HAL_TMR_RESULT_SUCCESS){
+			HAL_TMR_result_e tmr_res = HAL_TmrInit(HAL_TMR_CLOCK_RT);
+			tmr_res |= HAL_TmrInit(HAL_TMR_CLOCK_PWR_MEAS);
+			if (tmr_res != HAL_TMR_RESULT_SUCCESS){
 				res = HAL_SYS_RESULT_ERROR_CRIT;
 			}else{
 #endif
@@ -134,8 +134,16 @@ HAL_SYS_result_e HAL_SysInit(void){
 			}else{
 #endif
 
+#ifdef EPC_CONF_WDG_ENABLED
+			if (HAL_WdgInit() != HAL_WDG_RESULT_SUCCESS){
+				res = HAL_SYS_RESULT_ERROR_COMM;
+			}else{
+#endif
 
 // Close initialization }
+#ifdef EPC_CONF_WDG_ENABLED
+			}
+#endif
 
 #ifdef EPC_CONF_CAN_ENABLED
 		}
