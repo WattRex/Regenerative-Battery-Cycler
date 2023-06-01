@@ -36,8 +36,9 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-volatile uint32_t n_ints_rt= 0, n_ints_pwr_meas = 0, gen_ints = 0;
-uint16_t ticks[N_SAMPLES];
+static volatile uint32_t n_ints_pwr_meas = 0, gen_ints = 0;
+static uint16_t ticks[N_SAMPLES];
+volatile uint32_t n_ints_rt = 0;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -109,7 +110,6 @@ static HAL_TMR_result_e TestOneTmr(const HAL_TMR_clock_e clock){
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
-
 
 void HAL_TMR_RT_Callback(void)
 {
