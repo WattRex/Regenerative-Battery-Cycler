@@ -21,7 +21,7 @@
 	#include "hal_adc_test.h"
 #endif
 
-#ifdef EPC_CONF_SDS_ENABLED
+#ifdef EPC_CONF_STS_ENABLED
 	#include "hal_sts_test.h"
 #endif
 
@@ -118,11 +118,7 @@ TEST_result_e FastAdcMainTest(void){
 	return res;
 }
 
-<<<<<<< Updated upstream
-TEST_result_e I2CMainTest(void){
-=======
 TEST_result_e STSTest(void){
->>>>>>> Stashed changes
 	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_STS_ENABLED
 	res = (TEST_result_e) HAL_StsTest();
