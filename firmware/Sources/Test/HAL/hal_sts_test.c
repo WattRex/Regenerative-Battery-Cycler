@@ -57,14 +57,13 @@
 
 HAL_STS_result_e HAL_StsTest(void){
 	HAL_STS_result_e res = HAL_STS_RESULT_ERROR;
-	uint16_t temp;
+	int16_t temp;
 	uint8_t i=0;
-	while (i<5){
+	do{
 		res = HAL_StsReadTemperature(&temp);
-		if (res == HAL_STS_RESULT_ERROR) break;
 		HAL_Delay(1000);
 		i++;
-	}
+	}while (i<5 && res != HAL_STS_RESULT_ERROR);
 	return res;
 }
 

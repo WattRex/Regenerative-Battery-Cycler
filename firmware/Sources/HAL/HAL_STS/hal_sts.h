@@ -9,11 +9,10 @@
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
-#include "i2c.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-
+#include "stdint.h"
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
@@ -80,7 +79,7 @@ HAL_STS_result_e HAL_StsInit(void);
  * 		@ref HAL_STS_RESULT_SUCCESS if initialized correctly,
  * 		@ref HAL_STS_RESULT_ERROR otherwise
  */
-HAL_STS_result_e HAL_StsReadTemperature(uint16_t* temp);
+HAL_STS_result_e HAL_StsReadTemperature(int16_t* temp);
 
 #endif /* HAL_STS_H_ */
  

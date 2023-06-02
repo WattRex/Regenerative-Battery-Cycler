@@ -8,8 +8,6 @@
 /**********************************************************************************/
 #include "hal_sts.h"
 
-#include "stm32f3xx_hal.h"
-
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
@@ -89,7 +87,7 @@ static HAL_STS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *dataO ){
 /**********************************************************************************/
 
 HAL_STS_result_e HAL_StsInit (void){
-	HAL_STS_result_e res = HAL_STS_RESULT_SUCCESS;
+	HAL_STS_result_e res = HAL_STS_RESULT_ERROR;
 	error_raised = 0;
 	MX_I2C1_Init();
 	if (error_raised){
@@ -104,15 +102,15 @@ HAL_STS_result_e HAL_StsInit (void){
 	return res;
 }
 
-HAL_STS_result_e HAL_StsReadTemperature(uint16_t* temp){
+HAL_STS_result_e HAL_StsReadTemperature(int16_t* temp){
 
-	HAL_STS_result_e res = HAL_STS_RESULT_SUCCESS;
+	HAL_STS_result_e res = HAL_STS_RESULT_ERROR;
 	uint8_t command[]= {0xE0,0x00};
 	res = _I2cTransmit(devAddres, command);
 	if (res == HAL_STS_RESULT_SUCCESS){
 		uint16_t tempRaw;
 		res = _I2cReceive(devAddres, &tempRaw);
-		*temp = (uint16_t) ((int16_t) (((uint32_t) (1750*tempRaw)) >> 16)-450);
+		*temp = (int16_t) (((uint32_t) (1750*tempRaw)) >> 16)-450;
 	}
 	return res;
 }
