@@ -61,15 +61,9 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 //#define EPC_CONF_PWM_ENABLED
 #define EPC_CONF_GPIO_ENABLED
 //#define EPC_CONF_ADC_DMA_ENABLED
-<<<<<<< Updated upstream
-//#define EPC_CONF_I2C_ENABLED
-#define EPC_CONF_TMR_ENABLED
-#define EPC_CONF_WDG_ENABLED
-=======
 #define EPC_CONF_STS_ENABLED
 //#define EPC_CONF_TMR_ENABLED
 //#define EPC_CONF_WDG_ENABLED
->>>>>>> Stashed changes
 //#define EPC_CONF_CAN_ENABLED
 
 

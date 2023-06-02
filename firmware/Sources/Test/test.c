@@ -155,33 +155,14 @@ TEST_result_e WDGMainTest(void){
 TEST_result_e CanMainTest(void){
 	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_CAN_ENABLED
-
-//		if (res == HAL_CAN_RESULT_SUCCESS){
-//			res = HAL_CanReceive (&idR, &dataR, &sizeR);
-//		}
-
-//		if (res == HAL_CAN_RESULT_SUCCESS){
-//			uint8_t data = 33;
-//			uint32_t id = 0x099;
-//			res = HAL_CanTransmit (id, &data, 1);
-//			}
-
+	res = (TEST_result_e) HAL_CanTest();
 #endif
 	return res;
 }
 
 TEST_result_e HalMainTest(void){
 	TEST_result_e test_res = TEST_RESULT_SUCCESS;
-<<<<<<< Updated upstream
 	#ifndef EPC_CONF_WDG_ENABLED
-		test_res |= PWMMainTest();
-		test_res |= GpioMainTest();
-		test_res |= SlowAdcMainTest();
-		test_res |= FastAdcMainTest();
-		test_res |= I2CMainTest();
-		test_res |= TimersMainTest();
-		test_res |= CanMainTest();
-=======
 	test_res |= PWMTest();
 	test_res |= GpioTest();
 	test_res |= SlowAdcTest();
@@ -190,7 +171,6 @@ TEST_result_e HalMainTest(void){
 	test_res |= TimersTest();
 	test_res |= WDGTest();
 	test_res |= CanTest();
->>>>>>> Stashed changes
 
 		HAL_Delay(1000);
 	#else
