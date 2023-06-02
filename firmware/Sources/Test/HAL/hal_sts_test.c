@@ -1,15 +1,16 @@
 /*********************************************************************************
-* @file           : hal_sys.h
-* @brief          : HAL header file for SYS
+* @file           : hal_sts_test.c
+* @brief          : Implementation of HAL STS TEST
 ***********************************************************************************/
 
-#ifndef HAL_SDS_H_
-#define HAL_SDS_H_
+/**********************************************************************************/
+/*                  Include common and project definition header                  */
+/**********************************************************************************/
 
 /**********************************************************************************/
-/*                               Project Includes                                 */
+/*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "i2c.h"
+#include <hal_sts_test.h>
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -23,28 +24,11 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*            Definition of exported types (typedef, enum, struct, union)         */
-/**********************************************************************************/
-
-/**
- * @enum HAL_SDS_result_t
- * @brief Structure for the result of the SDS operation.
- */
-typedef enum
-{
-	HAL_SDS_RESULT_SUCCESS = 0x00U, 	/**< HAL_SYS success operation result **/
-	HAL_SDS_RESULT_ERROR = 0x01U,	/**< HAL_SYS error on GPIO operation **/
-	HAL_SDS_RESULT_BUSY  = 0x02U,	/**< HAL_SYS error on ADC operation  **/
-	HAL_SDS_RESULT_TIMEOUT  = 0x03U,	/**< HAL_SYS error on SDS operation  **/
-}HAL_SDS_result_e;
-
-
-/**********************************************************************************/
-/*                        Definition of exported variables                        */
+/*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                       Definition of local constant data                        */
+/*                         Definition of local variables                          */
 /**********************************************************************************/
 
 /**********************************************************************************/
@@ -56,31 +40,31 @@ typedef enum
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                   Declaration of local function prototypes                  */
+/*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                   Declaration of exported function prototypes                  */
+/*                       Definition of local constant data                        */
 /**********************************************************************************/
 
-/**
- * @fn HAL_SDS_result_t HAL_SdsInit()
- * @brief Configure and initializes the SDS
- *
- * @return
- * 		@ref HAL_SDS_RESULT_SUCCESS if initialized correctly,
- * 		@ref HAL_SDS_RESULT_ERROR otherwise
- */
-HAL_SDS_result_e HAL_SdsInit(void);
+/**********************************************************************************/
+/*                         Definition of local functions                          */
+/**********************************************************************************/
 
-/**
- * @fn HAL_SDS_result_t HAL_SdsReadTemperature(uint16_t* temp)
- * @brief Transfer the data
- * @return
- * 		@ref HAL_SDS_RESULT_SUCCESS if initialized correctly,
- * 		@ref HAL_SDS_RESULT_ERROR otherwise
- */
-HAL_SDS_result_e HAL_SdsReadTemperature(uint16_t* temp);
+/**********************************************************************************/
+/*                        Definition of exported functions                        */
+/**********************************************************************************/
 
-#endif /* HAL_SDS_H_ */
- 
+HAL_STS_result_e HAL_StsTest(void){
+	HAL_STS_result_e res = HAL_STS_RESULT_ERROR;
+	uint16_t temp;
+	uint8_t i=0;
+	while (i<5){
+		res = HAL_StsReadTemperature(&temp);
+		if (res == HAL_STS_RESULT_ERROR) break;
+		HAL_Delay(1000);
+		i++;
+	}
+	return res;
+}
+

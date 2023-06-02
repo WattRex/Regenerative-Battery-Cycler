@@ -1,12 +1,12 @@
 /*********************************************************************************
-* @file           : hal_i2c.c
-* @brief          : Implementation of HAL_SDS
+* @file           : hal_sts.c
+* @brief          : Implementation of HAL_STS
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "hal_sds.h"
+#include "hal_sts.h"
 
 #include "stm32f3xx_hal.h"
 
@@ -47,22 +47,22 @@ uint16_t devAddres = 0x4A; // Two options: 0x4A or 0x4B
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
 /**
- * @fn HAL_SDS_result_t _I2cTransfer()
+ * @fn HAL_STS_result_t _I2cTransfer()
  * @brief Transfer the data
  * @return
- * 		@ref HAL_SDS_RESULT_SUCCESS if initialized correctly,
- * 		@ref HAL_SDS_RESULT_ERROR otherwise
+ * 		@ref HAL_STS_RESULT_SUCCESS if initialized correctly,
+ * 		@ref HAL_STS_RESULT_ERROR otherwise
  */
-static HAL_SDS_result_e _I2cTransmit(const uint16_t devAddr, const uint8_t *comand);
+static HAL_STS_result_e _I2cTransmit(const uint16_t devAddr, const uint8_t *comand);
 
 /**
- * @fn HAL_SDS_result_t _I2cTransfer()
+ * @fn HAL_STS_result_t _I2cTransfer()
  * @brief Transfer the data
  * @return
- * 		@ref HAL_SDS_RESULT_SUCCESS if initialized correctly,
- * 		@ref HAL_SDS_RESULT_ERROR otherwise
+ * 		@ref HAL_STS_RESULT_SUCCESS if initialized correctly,
+ * 		@ref HAL_STS_RESULT_ERROR otherwise
  */
-static HAL_SDS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *data );
+static HAL_STS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *data );
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
@@ -70,17 +70,17 @@ static HAL_SDS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *data );
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
-static HAL_SDS_result_e _I2cTransmit(const uint16_t devAddr, const uint8_t *comand){
+static HAL_STS_result_e _I2cTransmit(const uint16_t devAddr, const uint8_t *command){
 	uint16_t header = devAddr << 1 | 1;
-	uint8_t* orders= &comand;
-	HAL_SDS_result_e res = HAL_I2C_Master_Transmit(&hi2c1, header, orders, 2, EPC_CONF_I2C_TIMEOUT);
+	// Warning suppression: the command variable is an input and should be constant.
+	HAL_STS_result_e res = HAL_I2C_Master_Transmit(&hi2c1, header, command, 2, EPC_CONF_I2C_TIMEOUT);
 	return res;
 }
 
-static HAL_SDS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *dataO ){
+static HAL_STS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *dataO ){
 	uint16_t header = devAddr << 1 | 1;
 	uint8_t data[4];
-	HAL_SDS_result_e res = HAL_I2C_Master_Receive(&hi2c1, header, data, 3, EPC_CONF_I2C_TIMEOUT);
+	HAL_STS_result_e res = HAL_I2C_Master_Receive(&hi2c1, header, data, 3, EPC_CONF_I2C_TIMEOUT);
 	*dataO = data[0]<<8 | data[1];
 	return res;
 }
@@ -88,12 +88,12 @@ static HAL_SDS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *dataO ){
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-HAL_SDS_result_e HAL_SdsInit (void){
-	HAL_SDS_result_e res = HAL_SDS_RESULT_SUCCESS;
+HAL_STS_result_e HAL_StsInit (void){
+	HAL_STS_result_e res = HAL_STS_RESULT_SUCCESS;
 	error_raised = 0;
 	MX_I2C1_Init();
 	if (error_raised){
-			res = HAL_SDS_RESULT_ERROR;
+			res = HAL_STS_RESULT_ERROR;
 	}
 	else{
 		// Start periodical measurement Low repeatability 10mps
@@ -103,15 +103,16 @@ HAL_SDS_result_e HAL_SdsInit (void){
 	return res;
 }
 
-HAL_SDS_result_e HAL_SdsReadTemperature(uint16_t* temp){
+HAL_STS_result_e HAL_StsReadTemperature(uint16_t* temp){
 
-	HAL_SDS_result_e res = HAL_SDS_RESULT_SUCCESS;
+	HAL_STS_result_e res = HAL_STS_RESULT_SUCCESS;
 	uint8_t command[]= {0xE0,0x00};
 	res = _I2cTransmit(devAddres, command);
-	if (res == HAL_SDS_RESULT_SUCCESS){
+	if (res == HAL_STS_RESULT_SUCCESS){
 		uint16_t tempRaw;
 		res = _I2cReceive(devAddres, &tempRaw);
-		*temp = (uint16_t) ((int16_t) ((uint16_t) (((uint32_t) (1750*tempRaw)) >> 16)+1)-450);
+		*temp = (uint16_t) ((int16_t) (((uint32_t) (1750*tempRaw)) >> 16)-450);
+//		*temp = (uint16_t) ((int16_t) (((uint32_t) (1750*tempRaw)) /65535)-450);
 	}
 	return res;
 }
