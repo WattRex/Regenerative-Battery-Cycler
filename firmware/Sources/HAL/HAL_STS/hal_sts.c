@@ -97,6 +97,7 @@ HAL_STS_result_e HAL_StsInit (void){
 	}
 	else{
 		// Start periodical measurement Low repeatability 10mps
+		/* Other possible modes are LowRep 4mps 0x23 0x29 // LowRep 2mps 0x22 0x2B */
 		uint8_t command[]= {0x27,0x2a};
 		res = _I2cTransmit(devAddres, command);
 	}
@@ -112,7 +113,6 @@ HAL_STS_result_e HAL_StsReadTemperature(uint16_t* temp){
 		uint16_t tempRaw;
 		res = _I2cReceive(devAddres, &tempRaw);
 		*temp = (uint16_t) ((int16_t) (((uint32_t) (1750*tempRaw)) >> 16)-450);
-//		*temp = (uint16_t) ((int16_t) (((uint32_t) (1750*tempRaw)) /65535)-450);
 	}
 	return res;
 }
