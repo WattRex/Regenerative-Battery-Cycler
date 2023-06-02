@@ -21,8 +21,8 @@
 	#include "hal_adc_test.h"
 #endif
 
-#ifdef EPC_CONF_I2C_ENABLED
-	#include "hal_i2c_test.h"
+#ifdef EPC_CONF_SDS_ENABLED
+	#include "hal_sts_test.h"
 #endif
 
 #ifdef EPC_CONF_TMR_ENABLED
@@ -118,10 +118,14 @@ TEST_result_e FastAdcMainTest(void){
 	return res;
 }
 
+<<<<<<< Updated upstream
 TEST_result_e I2CMainTest(void){
+=======
+TEST_result_e STSTest(void){
+>>>>>>> Stashed changes
 	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_I2C_ENABLED
-
+#ifdef EPC_CONF_STS_ENABLED
+	res = (TEST_result_e) HAL_StsTest();
 #endif
 	return res;
 }
@@ -172,6 +176,7 @@ TEST_result_e CanMainTest(void){
 
 TEST_result_e HalMainTest(void){
 	TEST_result_e test_res = TEST_RESULT_SUCCESS;
+<<<<<<< Updated upstream
 	#ifndef EPC_CONF_WDG_ENABLED
 		test_res |= PWMMainTest();
 		test_res |= GpioMainTest();
@@ -180,6 +185,16 @@ TEST_result_e HalMainTest(void){
 		test_res |= I2CMainTest();
 		test_res |= TimersMainTest();
 		test_res |= CanMainTest();
+=======
+	test_res |= PWMTest();
+	test_res |= GpioTest();
+	test_res |= SlowAdcTest();
+	test_res |= FastAdcTest();
+	test_res |= STSTest();
+	test_res |= TimersTest();
+	test_res |= WDGTest();
+	test_res |= CanTest();
+>>>>>>> Stashed changes
 
 		HAL_Delay(1000);
 	#else
