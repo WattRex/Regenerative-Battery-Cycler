@@ -61,7 +61,7 @@ HAL_TMR_result_e TestRTTmr(void);
 
 /**
  * @fn HAL_TMR_result_e TestPwrMeasTmr(void)
- * @brief Start the RT timer and uses the HAL_TmrGet to get multiple samples in order
+ * @brief Start the PwrMeas timer and uses the HAL_TmrGet to get multiple samples in order
  * to check that it works correctly. It must be incremental measures or overflow.
  * After waits 1000ms and count the generated interrupts
  * @note: If GPIO is used, toggle pin PB0
