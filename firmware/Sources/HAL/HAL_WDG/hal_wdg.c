@@ -6,7 +6,7 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-
+#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
@@ -61,9 +61,9 @@ extern IWDG_HandleTypeDef hiwdg;
 
 HAL_WDG_result_e HAL_WdgInit (void){
 	HAL_WDG_result_e res = HAL_WDG_RESULT_SUCCESS;
-	error_raised = 0;
+	EPC_ST_ERR_COUNTER = 0;
 	MX_IWDG_Init();
-	if (error_raised){
+	if (EPC_ST_ERR_COUNTER){
 		res = HAL_WDG_RESULT_ERROR;
 	}
 	return res;
