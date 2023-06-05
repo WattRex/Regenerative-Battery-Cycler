@@ -7,6 +7,7 @@
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
 #include "hal_sts.h"
+#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
@@ -88,9 +89,9 @@ static HAL_STS_result_e _I2cReceive(const uint16_t devAddr, uint16_t *dataO ){
 
 HAL_STS_result_e HAL_StsInit (void){
 	HAL_STS_result_e res = HAL_STS_RESULT_ERROR;
-	error_raised = 0;
+	EPC_ST_ERR_COUNTER = 0;
 	MX_I2C1_Init();
-	if (error_raised){
+	if (EPC_ST_ERR_COUNTER){
 			res = HAL_STS_RESULT_ERROR;
 	}
 	else{
