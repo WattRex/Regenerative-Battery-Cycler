@@ -21,8 +21,8 @@
 	#include "hal_adc_test.h"
 #endif
 
-#ifdef EPC_CONF_I2C_ENABLED
-	#include "hal_i2c_test.h"
+#ifdef EPC_CONF_STS_ENABLED
+	#include "hal_sts_test.h"
 #endif
 
 #ifdef EPC_CONF_TMR_ENABLED
@@ -118,10 +118,10 @@ TEST_result_e FastAdcMainTest(void){
 	return res;
 }
 
-TEST_result_e I2CMainTest(void){
+TEST_result_e STSTest(void){
 	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_I2C_ENABLED
-
+#ifdef EPC_CONF_STS_ENABLED
+	res = (TEST_result_e) HAL_StsTest();
 #endif
 	return res;
 }
@@ -155,17 +155,7 @@ TEST_result_e WDGMainTest(void){
 TEST_result_e CanMainTest(void){
 	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_CAN_ENABLED
-
-//		if (res == HAL_CAN_RESULT_SUCCESS){
-//			res = HAL_CanReceive (&idR, &dataR, &sizeR);
-//		}
-
-//		if (res == HAL_CAN_RESULT_SUCCESS){
-//			uint8_t data = 33;
-//			uint32_t id = 0x099;
-//			res = HAL_CanTransmit (id, &data, 1);
-//			}
-
+	res = (TEST_result_e) HAL_CanTest();
 #endif
 	return res;
 }
@@ -173,13 +163,14 @@ TEST_result_e CanMainTest(void){
 TEST_result_e HalMainTest(void){
 	TEST_result_e test_res = TEST_RESULT_SUCCESS;
 	#ifndef EPC_CONF_WDG_ENABLED
-		test_res |= PWMMainTest();
-		test_res |= GpioMainTest();
-		test_res |= SlowAdcMainTest();
-		test_res |= FastAdcMainTest();
-		test_res |= I2CMainTest();
-		test_res |= TimersMainTest();
-		test_res |= CanMainTest();
+	test_res |= PWMTest();
+	test_res |= GpioTest();
+	test_res |= SlowAdcTest();
+	test_res |= FastAdcTest();
+	test_res |= STSTest();
+	test_res |= TimersTest();
+	test_res |= WDGTest();
+	test_res |= CanTest();
 
 		HAL_Delay(1000);
 	#else
