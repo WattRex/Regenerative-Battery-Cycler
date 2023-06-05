@@ -47,7 +47,7 @@ typedef enum
 	HAL_SYS_RESULT_SUCCESS = 0x0U, 	/**< HAL_SYS success operation result **/
 	HAL_SYS_RESULT_ERROR_GPIO = 0x01U,	/**< HAL_SYS error on GPIO operation **/
 	HAL_SYS_RESULT_ERROR_ADC  = 0x02U,	/**< HAL_SYS error on ADC operation  **/
-	HAL_SYS_RESULT_ERROR_I2C  = 0x03U,	/**< HAL_SYS error on I2C operation  **/
+	HAL_SYS_RESULT_ERROR_STS  = 0x03U,	/**< HAL_SYS error on I2C operation  **/
 	HAL_SYS_RESULT_ERROR_COMM = 0x04U,	/**< HAL_SYS error on communication process, CAN or UART **/
 	HAL_SYS_RESULT_ERROR_CRIT = 0x05U,	/**< HAL_SYS critical error result **/
 }HAL_SYS_result_e;

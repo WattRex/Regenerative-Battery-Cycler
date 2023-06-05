@@ -20,8 +20,8 @@
    #include "hal_adc.h"
    #include "hal_dma.h"
 #endif
-#ifdef EPC_CONF_I2C_ENABLED
-   #include "hal_i2c.h"
+#ifdef EPC_CONF_STS_ENABLED
+   #include "hal_sts.h"
 #endif
 #ifdef EPC_CONF_TMR_ENABLED
    #include "hal_tmr.h"
@@ -114,9 +114,9 @@ HAL_SYS_result_e HAL_SysInit(void){
 			}else{
 #endif
 
-#ifdef EPC_CONF_I2C_ENABLED
-			if (HAL_I2cInit () != HAL_I2C_RESULT_SUCCESS){
-				res |= HAL_SYS_RESULT_ERROR_I2C;
+#ifdef EPC_CONF_STS_ENABLED
+			if (HAL_StsInit () != HAL_STS_RESULT_SUCCESS){
+				res |= HAL_SYS_RESULT_ERROR_STS;
 			}
 			else{
 #endif
@@ -154,7 +154,7 @@ HAL_SYS_result_e HAL_SysInit(void){
 		}
 #endif
 
-#ifdef EPC_CONF_I2C_ENABLED
+#ifdef EPC_CONF_STS_ENABLED
 		}
 #endif
 

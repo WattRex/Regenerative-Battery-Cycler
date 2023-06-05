@@ -54,7 +54,6 @@ ADC2.SamplingTime-0\#ChannelRegularConversion=ADC_SAMPLETIME_7CYCLES_5
 ADC2.SamplingTime-2\#ChannelRegularConversion=ADC_SAMPLETIME_61CYCLES_5
 ADC2.SamplingTime-3\#ChannelRegularConversion=ADC_SAMPLETIME_1CYCLE_5
 ADC2.SequencerNbRanks=1
-ADC2.SubFamily=STM32F334x8
 CAD.formats=
 CAD.pinconfig=
 CAD.provider=
