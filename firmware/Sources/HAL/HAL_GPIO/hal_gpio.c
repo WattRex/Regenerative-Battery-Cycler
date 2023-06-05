@@ -12,6 +12,7 @@
 /**********************************************************************************/
 #include "hal_gpio.h"
 #include "gpio.h"
+#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -94,9 +95,9 @@ const GPIO_pinout_config_t _GPIO_input_pins[]={
 
 HAL_GPIO_result_e HAL_GpioInit(void){
 	HAL_GPIO_result_e res = HAL_GPIO_RESULT_SUCCESS;
-	error_raised = 0;
+	EPC_ST_ERR_COUNTER = 0;
 	MX_GPIO_Init();
-	if (error_raised){
+	if (EPC_ST_ERR_COUNTER){
 		res = HAL_GPIO_RESULT_ERROR;
 	}
 	return res;

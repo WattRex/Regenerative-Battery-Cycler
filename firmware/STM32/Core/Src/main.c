@@ -16,6 +16,7 @@
   ******************************************************************************
   */
 	#include "epc_conf.h"
+	#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 
 	#ifndef EPC_CONF_USE_CUSTOM_HAL
 /* USER CODE END Header */
@@ -61,7 +62,6 @@
 
 /* USER CODE BEGIN PV */
 
-	uint8_t error_raised = 0;
 	#ifndef EPC_CONF_USE_CUSTOM_HAL
 
 /* USER CODE END PV */
@@ -204,7 +204,7 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-	error_raised += 1;
+	EPC_ST_ERR_COUNTER += 1;
   /* USER CODE END Error_Handler_Debug */
 }
 

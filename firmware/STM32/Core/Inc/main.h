@@ -32,7 +32,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-	#include "epc_conf.h"
+#include "epc_conf.h"
 
 /* USER CODE END Includes */
 
@@ -43,7 +43,6 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-	extern uint8_t error_raised;
 
 /* USER CODE END EC */
 

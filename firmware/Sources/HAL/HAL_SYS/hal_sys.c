@@ -6,8 +6,9 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "main.h"
 #include "epc_conf.h"
+#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+#include "stm32f3xx_hal.h"
 
 #ifdef EPC_CONF_PWM_ENABLED
 #include "hal_pwm.h"
@@ -88,9 +89,9 @@ HAL_SYS_result_e HAL_SysInit(void){
 	if (res != HAL_SYS_RESULT_SUCCESS){
 		res = HAL_SYS_RESULT_ERROR_CRIT;
 	} else{
-		error_raised = 0;
+		EPC_ST_ERR_COUNTER = 0;
 		SystemClock_Config();
-		if (error_raised){ // System clock initialization error
+		if (EPC_ST_ERR_COUNTER){ // System clock initialization error
 			res = HAL_SYS_RESULT_ERROR_CRIT;
 		}else{
 

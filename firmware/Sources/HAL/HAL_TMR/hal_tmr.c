@@ -6,7 +6,7 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "main.h"
+#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
@@ -73,17 +73,17 @@ HAL_TMR_result_e HAL_TmrInit (const HAL_TMR_clock_e clock){
 	switch (clock){
 		case HAL_TMR_CLOCK_RT:
 			_htim[HAL_TMR_CLOCK_RT]= &htim2;
-			error_raised = 0;
+			EPC_ST_ERR_COUNTER = 0;
 			MX_TIM2_Init();
-			if (error_raised){
+			if (EPC_ST_ERR_COUNTER){
 				res = HAL_TMR_RESULT_ERROR;
 			}
 			break;
 		case HAL_TMR_CLOCK_PWR_MEAS:
 			_htim[HAL_TMR_CLOCK_PWR_MEAS]= &htim3;
-			error_raised = 0;
+			EPC_ST_ERR_COUNTER = 0;
 			MX_TIM3_Init();
-			if (error_raised){
+			if (EPC_ST_ERR_COUNTER){
 				res = HAL_TMR_RESULT_ERROR;
 			}
 			break;
