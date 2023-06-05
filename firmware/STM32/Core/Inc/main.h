@@ -61,17 +61,15 @@ void SystemClock_Config(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define Ext_Tmp_1_Pin GPIO_PIN_0
-#define Ext_Tmp_1_GPIO_Port GPIOA
-#define Ext_Tmp_2_Pin GPIO_PIN_1
+#define Ext_Tmp_2_Pin GPIO_PIN_0
 #define Ext_Tmp_2_GPIO_Port GPIOA
+#define Ext_Tmp_1_Pin GPIO_PIN_1
+#define Ext_Tmp_1_GPIO_Port GPIOA
 #define Ls_Curr_Pin GPIO_PIN_4
 #define Ls_Curr_GPIO_Port GPIOA
 #define Ls_Volt_Pin GPIO_PIN_5
 #define Ls_Volt_GPIO_Port GPIOA
-#define Ls_Volt_Ext_Pin GPIO_PIN_6
-#define Ls_Volt_Ext_GPIO_Port GPIOA
-#define Hs_Volt_Pin GPIO_PIN_7
+#define Hs_Volt_Pin GPIO_PIN_6
 #define Hs_Volt_GPIO_Port GPIOA
 #define Led0_Pin GPIO_PIN_4
 #define Led0_GPIO_Port GPIOC
