@@ -29,11 +29,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>Sources</name>
-			<type>2</type>
-			<location>E:/git/epc/firmware/Sources</location>
-		</link>
-	</linkedResources>
 </projectDescription>

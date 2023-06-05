@@ -18,7 +18,6 @@
 #endif
 #ifdef EPC_CONF_ADC_DMA_ENABLED
    #include "hal_adc.h"
-   #include "hal_dma.h"
 #endif
 #ifdef EPC_CONF_STS_ENABLED
    #include "hal_sts.h"
@@ -97,7 +96,8 @@ HAL_SYS_result_e HAL_SysInit(void){
 
 		/* Initialize all configured peripherals */
 #ifdef EPC_CONF_PWM_ENABLED
-			if (1){
+			if (HAL_PwmInit() != HAL_PWM_RESULT_SUCCESS){
+				res = HAL_SYS_RESULT_ERROR_CRIT;
 			}else{
 #endif
 

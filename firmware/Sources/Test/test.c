@@ -118,7 +118,7 @@ TEST_result_e FastAdcMainTest(void){
 	return res;
 }
 
-TEST_result_e STSTest(void){
+TEST_result_e STSMainTest(void){
 	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_STS_ENABLED
 	res = (TEST_result_e) HAL_StsTest();
@@ -163,14 +163,13 @@ TEST_result_e CanMainTest(void){
 TEST_result_e HalMainTest(void){
 	TEST_result_e test_res = TEST_RESULT_SUCCESS;
 	#ifndef EPC_CONF_WDG_ENABLED
-	test_res |= PWMTest();
-	test_res |= GpioTest();
-	test_res |= SlowAdcTest();
-	test_res |= FastAdcTest();
-	test_res |= STSTest();
-	test_res |= TimersTest();
-	test_res |= WDGTest();
-	test_res |= CanTest();
+		test_res |= PWMMainTest();
+		test_res |= GpioMainTest();
+		test_res |= SlowAdcMainTest();
+		test_res |= FastAdcMainTest();
+		test_res |= STSMainTest();
+		test_res |= TimersMainTest();
+		test_res |= CanMainTest();
 
 		HAL_Delay(1000);
 	#else
