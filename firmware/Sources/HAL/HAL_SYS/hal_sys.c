@@ -8,7 +8,7 @@
 /**********************************************************************************/
 #include "epc_conf.h"
 #include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
-#include "main.h"
+#include "stm32f3xx_hal.h"
 
 #ifdef EPC_CONF_PWM_ENABLED
 #include "hal_pwm.h"
