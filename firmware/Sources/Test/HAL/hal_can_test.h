@@ -1,27 +1,20 @@
 /*********************************************************************************
-* @file           : epc_conf.h
-* @brief          : Project configuration variables
-**********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
+* @file           : hal_can.h
+* @brief          : HAL header file for CAN module
 ***********************************************************************************/
 
-#ifndef EPC_CONF_H_
-#define EPC_CONF_H_
+#ifndef HAL_CAN_TEST_H_
+#define HAL_CAN_TEST_H_
 
+#include "hal_can.h"
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
-#include "stdint.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
+#include <stdint.h>
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -32,46 +25,16 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
+/*            Definition of exported types (typedef, enum, struct, union)         */
+/**********************************************************************************/
+
+/**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                        Definition of exported symbolic constants               */
+/*                        Definition of exported variables                        */
 /**********************************************************************************/
-
-/**********************************************************************************/
-/*                        				MIDDLEWARE								  */
-/**********************************************************************************/
-/**< Conversion factors and offset for analog values **/
-extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2], EPC_CONF_Hs_Volt[2], 
-    EPC_CONF_Status_3v3[2], EPC_CONF_Status_5v0[2], EPC_CONF_Ext_Tmp_1[2], EPC_CONF_Ext_Tmp_2[2], EPC_CONF_Ext_Tmp_3[2];
-
-/**********************************************************************************/
-/*                        				HAL 									  */
-/**********************************************************************************/
-/**< Run Test instead of machine status **/
-#define EPC_CONF_TESTING
-
-/**< Decomment to enable each HAL module **/
-#define EPC_CONF_USE_CUSTOM_HAL
-
-/**< CAN sender standard identifier **/
-#define EPC_CONF_CAN_ID 0x109
-
-//#define EPC_CONF_PWM_ENABLED
-#define EPC_CONF_GPIO_ENABLED
-//#define EPC_CONF_ADC_DMA_ENABLED
-#define EPC_CONF_STS_ENABLED
-//#define EPC_CONF_TMR_ENABLED
-//#define EPC_CONF_WDG_ENABLED
-//#define EPC_CONF_CAN_ENABLED
-
-
-/**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
-#define EPC_CONF_I2C_TIMEOUT 5
-
-/**< Timeout until ADC conversion is finished **/
-#define EPC_CONF_ADC_TIMEOUT 1
 
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
@@ -85,5 +48,18 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
+/**********************************************************************************/
+/*                   Declaration of exported function prototypes                  */
+/**********************************************************************************/
 
-#endif /* EPC_CONF_H_ */
+/**
+ * @fn HAL_CAN_result_e HAL_CanTest(void)
+ * @brief Checks if the CAN protocol works correctly sending and receiving data
+ * @return HAL_CAN_RESULT_SUCCESS if both actions are correctly done,
+ * HAL_CAN_RESULT_BUSY if the peripheral is not ready,
+ * HAL_CAN_result_TIMEOUT if the CAN_TIMEOUT timeout has expired and
+ * HAL_CAN_RESULT_ERROR if FIFOs are empty or another error has happened.
+ */
+HAL_CAN_result_e HAL_CanTest (void);
+
+#endif /* HAL_CAN_TEST_H_ */

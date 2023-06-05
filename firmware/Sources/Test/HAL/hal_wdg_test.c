@@ -1,46 +1,19 @@
 /*********************************************************************************
-* @file           : test.c
-* @brief          : Implementation of testing file
-**********************************************************************************/
+* @file           : hal_tmr.c
+* @brief          : Implementation of HAL TMR
+***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "epc_conf.h"
 #include "main.h"
-
-#ifdef EPC_CONF_PWM_ENABLED
-	#include "hal_pwm_test.h"
-#endif
-
-#ifdef EPC_CONF_GPIO_ENABLED
-	#include "hal_gpio_test.h"
-#endif
-
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-	#include "hal_adc_test.h"
-#endif
-
-#ifdef EPC_CONF_STS_ENABLED
-	#include "hal_sts_test.h"
-#endif
-
-#ifdef EPC_CONF_TMR_ENABLED
-	#include "hal_tmr_test.h"
-#endif
-
-#ifdef EPC_CONF_WDG_ENABLED
-	#include "hal_wdg_test.h"
-#endif
-
-#ifdef EPC_CONF_CAN_ENABLED
-	#include "hal_can_test.h"
-#endif
+#include "hal_gpio.h"
+#include "hal_tmr_test.h"
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "test.h"
+#include "hal_wdg_test.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -49,6 +22,8 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
+#define N_SAMPLES 10
+#define DELAY_TIME 1000 // ms
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -61,6 +36,8 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
+static volatile uint32_t rest_ints = 0;
+extern volatile uint32_t n_ints_rt;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -86,100 +63,29 @@
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-TEST_result_e PWMMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_PWM_ENABLED
+HAL_WDG_result_e TestWdg(void){
+	HAL_WDG_result_e res = HAL_WDG_RESULT_SUCCESS;
 
-#endif
+	uint8_t exp_ints[3] = {1, 2, 7}, stage = 0;
+	HAL_GPIO_pin_value_e pin_val = HAL_GPIO_HIGH;
+	HAL_GpioSet(HAL_GPIO_OUT_Led2, pin_val);
+
+	// Start timers and refresh whatchdog
+	res |= HAL_WdgRefresh();
+	if (HAL_TmrStart(HAL_TMR_CLOCK_RT) !=  HAL_TMR_RESULT_SUCCESS){
+		while(stage < 3){
+			rest_ints = n_ints_rt;
+			if (rest_ints >=  exp_ints[stage]){
+				// Toggle gpio
+				pin_val = 1 - pin_val;
+				HAL_GpioSet(HAL_GPIO_OUT_Led2, pin_val);
+				stage += 1;
+				res |= HAL_WdgRefresh();
+			}
+		}
+	}else{
+		res = HAL_WDG_RESULT_ERROR;
+	}
 	return res;
-}
-
-TEST_result_e GpioMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_GPIO_ENABLED
-	 res = (TEST_result_e) HAL_GpioTest(HAL_GPIO_OUT_OutDisable, HAL_GPIO_IN_ThermalWarn);
-#endif
-	return res;
-}
-
-TEST_result_e SlowAdcMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-
-#endif
-	return res;
-}
-
-TEST_result_e FastAdcMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-
-#endif
-	return res;
-}
-
-TEST_result_e STSTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_STS_ENABLED
-	res = (TEST_result_e) HAL_StsTest();
-#endif
-	return res;
-}
-
-TEST_result_e TimersMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_TMR_ENABLED
-	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
-	res |= TestRTTmr();
-	HAL_TmrStop(HAL_TMR_CLOCK_PWR_MEAS);
-	HAL_TmrStart(HAL_TMR_CLOCK_RT);
-	res |= TestPwrMeasTmr();
-	HAL_TmrStop(HAL_TMR_CLOCK_RT);
-#endif
-	return res;
-}
-
-TEST_result_e WDGMainTest(void){
-	TEST_result_e res = TEST_RESULT_ERROR;
-	#ifdef EPC_CONF_WDG_ENABLED
-		#ifdef EPC_CONF_TMR_ENABLED
-			#ifdef EPC_CONF_GPIO_ENABLED
-				res |= TestWdg();
-			#endif
-		#endif
-	#endif
-
-	return res;
-}
-
-TEST_result_e CanMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_CAN_ENABLED
-	res = (TEST_result_e) HAL_CanTest();
-#endif
-	return res;
-}
-
-TEST_result_e HalMainTest(void){
-	TEST_result_e test_res = TEST_RESULT_SUCCESS;
-	#ifndef EPC_CONF_WDG_ENABLED
-	test_res |= PWMTest();
-	test_res |= GpioTest();
-	test_res |= SlowAdcTest();
-	test_res |= FastAdcTest();
-	test_res |= STSTest();
-	test_res |= TimersTest();
-	test_res |= WDGTest();
-	test_res |= CanTest();
-
-		HAL_Delay(1000);
-	#else
-		test_res |= WDGMainTest();
-	#endif
-	return test_res;
-}
-
-TEST_result_e TEST_main(void){
-	return HalMainTest();
 }
 

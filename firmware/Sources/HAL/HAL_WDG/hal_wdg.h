@@ -1,27 +1,18 @@
 /*********************************************************************************
-* @file           : epc_conf.h
-* @brief          : Project configuration variables
-**********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
+* @file           : hal_wdg.h
+* @brief          : HAL header file for Watchdog
 ***********************************************************************************/
-
-#ifndef EPC_CONF_H_
-#define EPC_CONF_H_
+#ifndef HAL_WDG_H_
+#define HAL_WDG_H_
 
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
-#include "stdint.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
+#include "stdint.h"
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -32,46 +23,24 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                         Definition of local functions                          */
+/*            Definition of exported types (typedef, enum, struct, union)         */
 /**********************************************************************************/
 
-/**********************************************************************************/
-/*                        Definition of exported symbolic constants               */
-/**********************************************************************************/
+/**
+ * @enum HAL_WDG_result_e
+ * @brief Structure for the result of the WDG operation.
+ */
+typedef enum
+{
+	HAL_WDG_RESULT_SUCCESS 	= 0x00U,	/**< HAL_WDG success operation result **/
+	HAL_WDG_RESULT_ERROR   	= 0x01U,	/**< HAL_WDG error operation result **/
+	HAL_WDG_RESULT_BUSY		= 0x02U,	/**< HAL_WDG busy operation result **/
+	HAL_WDG_RESULT_TIMEOUT	= 0x03U	/**< HAL_WDG timeout operation result **/
+}HAL_WDG_result_e;
 
 /**********************************************************************************/
-/*                        				MIDDLEWARE								  */
+/*                        Definition of exported variables                        */
 /**********************************************************************************/
-/**< Conversion factors and offset for analog values **/
-extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2], EPC_CONF_Hs_Volt[2], 
-    EPC_CONF_Status_3v3[2], EPC_CONF_Status_5v0[2], EPC_CONF_Ext_Tmp_1[2], EPC_CONF_Ext_Tmp_2[2], EPC_CONF_Ext_Tmp_3[2];
-
-/**********************************************************************************/
-/*                        				HAL 									  */
-/**********************************************************************************/
-/**< Run Test instead of machine status **/
-#define EPC_CONF_TESTING
-
-/**< Decomment to enable each HAL module **/
-#define EPC_CONF_USE_CUSTOM_HAL
-
-/**< CAN sender standard identifier **/
-#define EPC_CONF_CAN_ID 0x109
-
-//#define EPC_CONF_PWM_ENABLED
-#define EPC_CONF_GPIO_ENABLED
-//#define EPC_CONF_ADC_DMA_ENABLED
-#define EPC_CONF_STS_ENABLED
-//#define EPC_CONF_TMR_ENABLED
-//#define EPC_CONF_WDG_ENABLED
-//#define EPC_CONF_CAN_ENABLED
-
-
-/**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
-#define EPC_CONF_I2C_TIMEOUT 5
-
-/**< Timeout until ADC conversion is finished **/
-#define EPC_CONF_ADC_TIMEOUT 1
 
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
@@ -85,5 +54,28 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
+/**********************************************************************************/
+/*                   Declaration of exported function prototypes                  */
+/**********************************************************************************/
 
-#endif /* EPC_CONF_H_ */
+/**
+ * @fn HAL_WDG_result_e HAL_WdgInit()
+ * @brief Configure and initializes the watchdog for reset ever 500s if it is not
+ * refreshed.
+ *
+ * @return
+ * 		@ref HAL_WDG_RESULT_SUCCESS if initialized correctly,
+ * 		@ref HAL_WDG_RESULT_ERROR otherwise
+ */
+HAL_WDG_result_e HAL_WdgInit(void);
+
+/**
+ * @fn HAL_WDG_result_e HAL_WdgRefresh()
+ * @brief Refresh the watchdog counter.
+ * @return
+ * 		@ref HAL_WDG_RESULT_SUCCESS if initialized correctly,
+ * 		@ref HAL_WDG_RESULT_ERROR otherwise
+ */
+HAL_WDG_result_e HAL_WdgRefresh(void);
+
+#endif /* HAL_WDG_H_ */

@@ -118,24 +118,29 @@ HAL_TMR_result_e HAL_TmrGet (const HAL_TMR_clock_e clock, uint16_t *value){
 }
 
 HAL_TMR_result_e HAL_TmrDelay(const HAL_TMR_clock_e clock, const uint16_t delay){
-	HAL_TMR_result_e res = HAL_TMR_RESULT_ERROR;
+	HAL_TMR_result_e res = HAL_TMR_RESULT_SUCCESS;
 	if(clock == HAL_TMR_CLOCK_COUNT){
 		uint16_t tickStart, tickNow, diff, wait;
-		HAL_TmrGet(clock, &tickStart);
-		wait = delay;
-//		wait *= 10;
+		res |= HAL_TmrGet(clock, &tickStart);
+		if(res == HAL_TMR_RESULT_SUCCESS){
 
-		if (wait < MAX_TICKS_RT)
-		{
-			do{
-				HAL_TmrGet(clock, &tickNow);
-				if (tickNow < tickStart){
-					diff = MAX_TICKS_RT - tickNow + tickStart;
-				} else{
-					diff = tickNow - tickStart;
-				}
-			}while ( diff < wait);
-			res = HAL_TMR_RESULT_SUCCESS;
+			wait = delay;
+			if (wait < MAX_TICKS_RT)
+			{
+				do{
+					res |= HAL_TmrGet(clock, &tickNow);
+					if (res == HAL_TMR_RESULT_SUCCESS){
+						if (tickNow < tickStart){
+							diff = MAX_TICKS_RT - tickNow + tickStart;
+						} else{
+							diff = tickNow - tickStart;
+						}
+					}else {
+						break;
+					}
+				}while ( diff < wait);
+				res = HAL_TMR_RESULT_SUCCESS;
+			}
 		}
 	}
 	return res;
