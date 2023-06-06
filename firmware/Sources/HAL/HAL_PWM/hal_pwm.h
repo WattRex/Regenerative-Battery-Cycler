@@ -59,7 +59,7 @@ typedef enum
 /**********************************************************************************/
 
 /**
- * @fn void HAL_PwmInit(void)
+ * @fn HAL_PWM_result_e HAL_PwmInit(void)
  * @brief Configures the PWM
  * @return @ref HAL_PWM_RESULT_SUCCESS if initialize correctly,
  * @ref HAL_PWM_RESULT_ERROR otherwise.
@@ -79,7 +79,7 @@ HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty);
 
 
 /**
- * @fn HAL_PWM_pin_value_e HAL_PwmStart (void)
+ * @fn HAL_PWM_result_e HAL_PwmStart (void)
  * @brief Start the pwm output
  *
  * @return @ref HAL_PWM_RESULT_SUCCESS if the pwm has started correctly,
@@ -89,7 +89,7 @@ HAL_PWM_result_e HAL_PwmStart (void);
 
 
 /**
- * @fn HAL_PWM_pin_value_e HAL_PwmStop (void)
+ * @fn HAL_PWM_result_e HAL_PwmStop (void)
  * @brief Stop the pwm output
  *
  * @return @ref HAL_PWM_RESULT_SUCCESS if the pwm has started correctly,

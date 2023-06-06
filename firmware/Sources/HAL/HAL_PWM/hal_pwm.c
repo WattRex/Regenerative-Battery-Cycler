@@ -22,7 +22,7 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-
+#define MAX_DUTY 100000
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -40,6 +40,10 @@ static HRTIM_CompareCfgTypeDef pCompareCfg = {0};
 /**********************************************************************************/
 extern HRTIM_HandleTypeDef hhrtim1;
 
+/**********************************************************************************/
+/*                        Definition of imported variables                        */
+/**********************************************************************************/
+extern uint8_t EPC_ST_ERR_COUNTER;
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
@@ -61,11 +65,14 @@ extern HRTIM_HandleTypeDef hhrtim1;
 /**********************************************************************************/
 
 HAL_PWM_result_e HAL_PwmInit(void){
-	HAL_PWM_result_e res = HAL_PWM_RESULT_SUCCESS;
+	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
 	EPC_ST_ERR_COUNTER = 0;
 	MX_HRTIM1_Init();
 	if (EPC_ST_ERR_COUNTER){
 		res = HAL_PWM_RESULT_ERROR;
+	}
+	else{
+		res = HAL_PWM_RESULT_SUCCESS;
 	}
 	return res;
 }
@@ -74,13 +81,18 @@ HAL_PWM_result_e HAL_PwmInit(void){
 HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
 	uint32_t max = hhrtim1.Instance->sTimerxRegs[0].PERxR;
 	uint32_t pwm_duty;
-	if (duty>100000){
+	if (duty>MAX_DUTY){
 		pwm_duty = 9215;
 	}
-	else{
-		pwm_duty = duty * max/100000 - 1;
+	//If duty is 0 no division is allow so assigned the final result directly
+	else if (duty==0){
+		pwm_duty = 96;
 	}
-	if (pwm_duty < 96 || pwm_duty>9215){
+	else{
+		pwm_duty = duty * max/MAX_DUTY - 1;
+	}
+	// Minimum duty to apply to the pwm is 96 by hardware
+	if (pwm_duty < 96){
 		pwm_duty = 96;
 	}
 	pCompareCfg.CompareValue = pwm_duty;

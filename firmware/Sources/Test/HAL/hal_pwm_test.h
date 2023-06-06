@@ -16,7 +16,7 @@
 /**********************************************************************************/
 
 /**
- * @fn void HAL_PwmTest()
+ * @fn HAL_PWM_result_e HAL_PwmTest()
  * @brief Sets a duty of the 50% for 5s after that it stops for 2.5s and change the duty to 75% and 25% for 2.5s each and ends.
  * @return @ref HAL_PWM_RESULT_SUCCESS if initialize correctly,
  * @ref HAL_PWM_RESULT_ERROR otherwise.
