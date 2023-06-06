@@ -68,14 +68,19 @@ HAL_PWM_result_e HAL_PwmTest(void)
 			HAL_Delay(5000);
 			res = HAL_PwmStop();
 			if (res == HAL_PWM_RESULT_SUCCESS){
-				HAL_Delay(5000);
+				HAL_Delay(2500);
 				duty = 75000; // Duty 75%
 				res = HAL_PwmSetDuty(duty);
 				if (res == HAL_PWM_RESULT_SUCCESS){
 					res =HAL_PwmStart();
+					HAL_Delay(2500);
 					if (res == HAL_PWM_RESULT_SUCCESS){
-						HAL_Delay(5000);
-						res = HAL_PwmStop();
+						duty = 25000; // Duty 25%
+						res = HAL_PwmSetDuty(duty);
+						HAL_Delay(2500);
+						if (res == HAL_PWM_RESULT_SUCCESS){
+							res = HAL_PwmStop();
+						}
 					}
 				}
 			}
