@@ -17,6 +17,7 @@
   */
 	#include "epc_conf.h"
 	#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+	extern uint8_t EPC_ST_ERR_COUNTER;
 
 	#ifndef EPC_CONF_USE_CUSTOM_HAL
 /* USER CODE END Header */
