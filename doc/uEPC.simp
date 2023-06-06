@@ -115,7 +115,7 @@
       </counter>
       <counter>
         <item-type type-id="property" type="Property" />
-        <value>176</value>
+        <value>178</value>
       </counter>
       <counter>
         <item-type type-id="artifact" type="Artifact" />
@@ -958,6 +958,31 @@
     </item>
     <item id="di7414adf172d943238b3a9663eeb653686509" cid="CN012" type="comment-connector" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:47:21" from="796ffcb16d664f53a9e1f029501642a9" to="70c49ff151444c998c5721ebe71a48c9" />
     <item id="20342e2fd2ec44c6a7a38619759cc0a0" cid="REA014" type="realization" creation-date="06/06/2023 11:29:56" to="di720694dcd94a4da0b01b9608bed1bd272220" visibility="package" />
+    <item id="6bc8472e09e149599912b62e05f4567f" cid="PROP144" type="property" name="hwVer" owner="di767f1384ac9a42969e9138e89874e1467063" creation-date="06/06/2023 11:10:20" visibility="public">
+      <style style-name="Default" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="uint16_t" type-id="uint16_t" />
+    </item>
     <item id="176fcb411f2f40c08b3bc59b5682fc9b" cid="RQI038" type="uml-required-interface-end" creation-date="05/16/2023 09:33:20">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
         <text-style type="name" color="#2A2A2A" font="Segoe UI;11.25;B" />
@@ -6243,7 +6268,7 @@ led3 = 0
             <abstract-items />
             <layer id="92d393bcbfb9419893631a47788a4cc8" name="Default" visible="true" enabled="true" locked="false" />
           </diagram>
-          <diagram type="uml-class" id="p1f8e6fe438264aeebc3287b315bd672d_229845093" name="MID_REG" order-index="5" expanded="true" overview-order-index="3" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-339,-205" zoom="0.9">
+          <diagram type="uml-class" id="p1f8e6fe438264aeebc3287b315bd672d_229845093" name="MID_REG" order-index="5" expanded="true" overview-order-index="3" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-602,-379" zoom="0.8">
             <style>
               <background-color index="1" color="#FFFFFFFF" />
               <background-color index="2" color="#FFFFFFFF" />
@@ -6303,11 +6328,11 @@ led3 = 0
                   <source-code language="ActionScript" />
                 </source-codes>
               </item>
-              <item id="6bc8472e09e149599912b62e05f4567f" cid="PROP144" type="property" name="hwVer" owner="di767f1384ac9a42969e9138e89874e1467063" creation-date="06/06/2023 11:10:20" visibility="public">
-                <structural-feature type="uint16_t" type-id="uint16_t" />
-              </item>
               <item id="94a9871d5d004d9f8f8944998cfe9f58" cid="PROP150" type="property" name="tempErr" owner="di249d85a0df8a4478ad6c20a64f306ddf9260" creation-date="06/06/2023 11:11:16" visibility="public">
                 <structural-feature type="MID_REG_error_e" type-id="Class:di3f3c455c18e44a99a71d2486206d90f99959" />
+              </item>
+              <item id="69acd613513e40b0917961efb461971c" cid="PROP176" type="property" name="sn" owner="di767f1384ac9a42969e9138e89874e1467063" creation-date="06/06/2023 12:04:24" visibility="public">
+                <structural-feature type="uint32_t" type-id="uint32_t" />
               </item>
               <item id="di60230746370946e8a0460cdbbcc442a82220" cid="PKG002" type="package" name="MID_REG" creation-date="06/02/2023 10:50:28" visibility="undefined" />
               <item id="ff0ab46083824363919baa5eef14d3cd" cid="PROP152" type="property" name="lastErrVal" owner="di249d85a0df8a4478ad6c20a64f306ddf9260" creation-date="06/06/2023 11:11:23" visibility="public">
@@ -6429,6 +6454,7 @@ led3 = 0
                   <attribute id="ad432ce1abaed4a0092b9dbae701e4681450" cid="PROP142" name="id" creation-date="06/06/2023 09:40:45" property-ref="dif62ee08c438644c8b1cfef41184c4a6d7063" />
                   <attribute id="a65583333307e45e192d0b9c919cc41b8391" cid="PROP143" name="fwVer" creation-date="06/06/2023 09:40:51" property-ref="dicbcc497c557846aea8e465f4c99c17d77063" />
                   <attribute id="aaa4ee61592b84244b31cde91f098d299351" cid="PROP144" name="hwVer" creation-date="06/06/2023 11:10:20" property-ref="6bc8472e09e149599912b62e05f4567f" />
+                  <attribute id="aab1c9396487b454aa069a8da7a13c358283" cid="PROP176" name="sn" creation-date="06/06/2023 12:04:24" property-ref="69acd613513e40b0917961efb461971c" />
                 </attributes>
                 <source-codes>
                   <source-code language="ActionScript" />
