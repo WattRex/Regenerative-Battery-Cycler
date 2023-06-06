@@ -95,7 +95,8 @@ MID_REG_periodic_s MID_REG_periodic = {
 const MID_REG_info_s MID_REG_info = { //TODO: assign this from EPC_CONF
 		0,	// id
 		0,	// fwVer
-		0	// hwVer
+		0,	// hwVer
+		0	// sn
 };
 
 MID_REG_errorStatus_s MID_REG_errorStatus = {

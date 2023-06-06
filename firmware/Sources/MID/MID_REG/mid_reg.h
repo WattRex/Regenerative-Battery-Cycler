@@ -151,9 +151,10 @@ typedef struct
  */
 typedef struct
 {
-	uint16_t id : 6;
-	uint16_t fwVer : 5;
-	uint16_t hwVer : 5;
+	uint32_t id : 6;
+	uint32_t fwVer : 5;
+	uint32_t hwVer : 5;
+	uint32_t sn : 16;
 }MID_REG_info_s;
 
 
