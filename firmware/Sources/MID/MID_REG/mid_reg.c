@@ -90,7 +90,31 @@ MID_REG_periodic_s MID_REG_periodic = {
 	{MID_REG_DISABLED,							// usrHeartBeatStatus
 	MID_REG_DISABLED,							// electricMsgStatus
 	MID_REG_DISABLED}							// tempMsgStatus
+};
 
+const MID_REG_info_s MID_REG_info = { //TODO: assign this from EPC_CONF
+		0,	// id
+		0,	// fwVer
+		0	// hwVer
+};
+
+MID_REG_errorStatus_s MID_REG_errorStatus = {
+		MID_REG_ERROR_NONE,	// hsVoltErr
+		MID_REG_ERROR_NONE,	// lsVoltErr
+		MID_REG_ERROR_NONE,	// lsCurrErr
+		MID_REG_ERROR_NONE,	// commErr
+		MID_REG_ERROR_NONE,	// tempErr
+		MID_REG_ERROR_NONE,	// intErr
+		0					// lastErrVal
+};
+
+MID_REG_meas_s MID_REG_meas = {
+		0,	// hsVolt
+		0,	// lsVolt
+		0,	// lsCurr
+		0,	// tempBody
+		0,	// tempAnod
+		0	// tempAmb
 };
 
 /**********************************************************************************/

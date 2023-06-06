@@ -193,6 +193,11 @@ typedef struct
 extern const MID_REG_limit_s MID_REG_limit_range;
 extern  MID_REG_limit_s MID_REG_limit;
 extern MID_REG_control_s MID_REG_control;
+extern const MID_REG_periodic_period_s MID_REG_periodic_time_min;
+extern MID_REG_periodic_s MID_REG_periodic;
+extern const MID_REG_info_s MID_REG_info;
+extern MID_REG_errorStatus_s MID_REG_errorStatus;
+extern MID_REG_meas_s MID_REG_meas;
 
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
