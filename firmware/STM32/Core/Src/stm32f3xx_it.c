@@ -24,6 +24,7 @@
 /* USER CODE BEGIN Includes */
 	#ifdef EPC_CONF_USE_CUSTOM_HAL
 		#include "hal_tmr.h"
+		#include "hal_adc.h"
 	#endif
 /* USER CODE END Includes */
 
@@ -214,7 +215,11 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE END DMA1_Channel1_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc1);
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
-
+	#ifdef EPC_CONF_USE_CUSTOM_HAL
+		/* USER CODE END TIM2_IRQn 0 */
+  	HAL_Adc1_Callback();
+		/* USER CODE BEGIN TIM2_IRQn 1 */
+	#endif
   /* USER CODE END DMA1_Channel1_IRQn 1 */
 }
 
@@ -224,13 +229,15 @@ void DMA1_Channel1_IRQHandler(void)
 void DMA1_Channel2_IRQHandler(void)
 {
   /* USER CODE BEGIN DMA1_Channel2_IRQn 0 */
-
   /* USER CODE END DMA1_Channel2_IRQn 0 */
   HAL_DMA_IRQHandler(&hdma_adc2);
   /* USER CODE BEGIN DMA1_Channel2_IRQn 1 */
-
+	#ifdef EPC_CONF_ADC_DMA_ENABLED
+  	HAL_Adc2_Callback();
+	#endif
   /* USER CODE END DMA1_Channel2_IRQn 1 */
 }
+
 
 /**
   * @brief This function handles TIM2 global interrupt.
