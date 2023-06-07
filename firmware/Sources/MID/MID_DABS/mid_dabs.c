@@ -33,11 +33,6 @@
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
 typedef enum {
-	MID_DABS_MEAS_ELECTRIC = 0x00U,
-	MID_DABS_MEAS_TEMP = 0x01U
-}MID_DABS_meas_e;
-
-typedef enum {
 	blink_mode_idle = 0x00U,
 	blink_mode_wait = 0x01U,
 	blink_mode_cc_chg = 0x02U,
@@ -55,15 +50,15 @@ typedef enum {
 }blink_mode_e;
 
 typedef struct{
-	blink_mode_e mode;
-	uint8_t steps;
-	uint8_t ledsStep[];
+	blink_mode_e mode; 	//Blinking mode
+	uint8_t steps;		//Number of steps of the mode
+	uint8_t ledsStep[5];//Array with the output of the leds in each step
 }blink_conf_s;
 
 typedef struct{
-	blink_conf_s mode;
-	uint8_t step;
-	blink_conf_s prevMode;
+	blink_conf_s mode;		// Actual mode of the leds
+	uint8_t step;			// Actual step of the mode
+	blink_conf_s prevMode;	//Previous mode of the leds
 }blink_s;
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
@@ -72,20 +67,22 @@ typedef struct{
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
-blink_conf_s CheckBlinkStatus(void);
+static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
+		MID_REG_errorStatus_s * errors, blink_conf_s * mode);
 
-MID_DABS_result_e SetLeds(uint8_t state);
+static MID_DABS_result_e SetLeds(uint8_t state);
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
+// Modes the leds can be
 const blink_conf_s idleMode = {
-	blink_mode_idle, 2,	{0x00,0x0F}
+	blink_mode_idle, 2,	{0x00,0x0F,0x00,0x00,0x00}
 };
 const blink_conf_s waitMode = {
-	blink_mode_wait, 3,	{0x00,0x0A, 0x05}
+	blink_mode_wait, 3,	{0x00,0x0A, 0x05,0x00,0x00}
 };
 const blink_conf_s ccChgMode = {
-	blink_mode_cc_chg, 5, {0x0,0x08,0x04,0x02,0x01}
+	blink_mode_cc_chg, 5, {0x00,0x08,0x04,0x02,0x01}
 };
 const blink_conf_s ccDchgMode = {
 	blink_mode_cc_dchg, 5,	{0x00,0x01,0x02,0x04,0x08}
@@ -103,31 +100,34 @@ const blink_conf_s cpDchgMode = {
 	blink_mode_cp_dchg, 5,	{0x00,0x08,0x0C,0x0E,0x0F}
 };
 const blink_conf_s errHsvoltMode = {
-	blink_mode_err_hsvolt, 1,	{0x01}
+	blink_mode_err_hsvolt, 1,	{0x01,0x00,0x00,0x00,0x00}
 };
 const blink_conf_s errlsvoltMode = {
-	blink_mode_err_lsvolt, 1,	{0x08}
+	blink_mode_err_lsvolt, 1,	{0x08,0x00,0x00,0x00,0x00}
 };
 const blink_conf_s errlscurrMode = {
-	blink_mode_err_lscurr, 1, {0xC}
+	blink_mode_err_lscurr, 1, {0xC,0x00,0x00,0x00,0x00}
 };
 const blink_conf_s errCommMode = {
-	blink_mode_err_comm, 1,	{0x0A}
+	blink_mode_err_comm, 1,	{0x0A,0x00,0x00,0x00,0x00}
 };
 const blink_conf_s errTempMode = {
-	blink_mode_err_temp, 1,	{0x03}
+	blink_mode_err_temp, 1,	{0x03,0x00,0x00,0x00,0x00}
 };
 const blink_conf_s errIntMode = {
-	blink_mode_err_int, 1,	{0x09}
+	blink_mode_err_int, 1,	{0x09,0x00,0x00,0x00,0x00}
 };
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 blink_s ledsMode = {
-		idleMode, 0, idleMode
+		idleMode, 0, idleMode //Initialice in idle mode
 };
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
+/**********************************************************************************/
+/**********************************************************************************/
+/*                        Definition of imported variables                        */
 /**********************************************************************************/
 
 /**********************************************************************************/
@@ -147,25 +147,25 @@ blink_s ledsMode = {
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
-		MID_REG_errorStatus_s errors, blink_conf_s * mode){
-	res = MID_DABS_RESULT_SUCCESS;
-	if (MID_REG_errorStatus[0]!=MID_REG_ERROR_NONE){
+static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
+		MID_REG_errorStatus_s * errors, blink_conf_s * mode){
+	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
+	if (errors->hsVoltErr !=MID_REG_ERROR_NONE){
 		*mode = errHsvoltMode;
 	}
-	else if (MID_REG_errorStatus[1]!=MID_REG_ERROR_NONE){
+	else if (errors->lsVoltErr !=MID_REG_ERROR_NONE){
 		*mode = errlsvoltMode;
 	}
-	else if (MID_REG_errorStatus[2]!=MID_REG_ERROR_NONE){
+	else if (errors->lsCurrErr !=MID_REG_ERROR_NONE){
 		*mode = errlscurrMode;
 	}
-	else if (MID_REG_errorStatus[3]!=MID_REG_ERROR_NONE){
+	else if (errors->commErr !=MID_REG_ERROR_NONE){
 		*mode = errCommMode;
 	}
-	else if (MID_REG_errorStatus[4]!=MID_REG_ERROR_NONE){
+	else if (errors->tempErr !=MID_REG_ERROR_NONE){
 		*mode = errTempMode;
 	}
-	else if (MID_REG_errorStatus[4]!=MID_REG_ERROR_NONE){
+	else if (errors->intErr !=MID_REG_ERROR_NONE){
 		*mode = errIntMode;
 	}
 	// After checking there are no errors, check the actual mode.
@@ -209,77 +209,84 @@ MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e SetLeds(uint8_t step){
+static MID_DABS_result_e SetLeds(uint8_t step){
+	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
 	uint8_t state = ledsMode.mode.ledsStep[step];
 	uint8_t mask= 0x1;
-	HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
-	HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
-	HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
-	HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
-
+	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
+	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
+	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
+	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
+	return res;
 }
+
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg){
-	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
-	switch(type){
-		case MID_DABS_MEAS_ELECTRIC:
-			uint16_t data;
-			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->hsVolt = data;
-			}
-			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->tempBody = data;
-			}
-			int16_t data;
-			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->tempBody = data;
-			}
-			break;
-		case MID_DABS_MEAS_TEMP:
-			int16_t temp;
-			// Check if the hardware version has I2C
-			if (MID_REG_info_s.hwVer > 16){
-				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-				if (res == MID_DABS_RESULT_SUCCESS){
-					*measreg->tempBody = temp;
-				}
-			}else{
-				// If not I2C the register will always have a 0
-				*measreg->tempBody=0;
-			}
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_PORT_Ext_Temp1, &temp);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->tempBody = temp;
-			}
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_PORT_Ext_Temp2, &temp);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->tempBody = temp;
-			}
-			break;
-	}
-	return res;
-}
+//MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg){
+//	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
+//	switch(type){
+//		case MID_DABS_MEAS_ELECTRIC:
+//			uint16_t data;
+//			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
+//			if (res == MID_DABS_RESULT_SUCCESS){
+//				*measreg->hsVolt = data;
+//			}
+//			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
+//			if (res == MID_DABS_RESULT_SUCCESS){
+//				*measreg->tempBody = data;
+//			}
+//			int16_t data;
+//			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
+//			if (res == MID_DABS_RESULT_SUCCESS){
+//				*measreg->tempBody = data;
+//			}
+//			break;
+//		case MID_DABS_MEAS_TEMP:
+//			int16_t temp;
+//			// Check if the hardware version has I2C
+//			if (MID_REG_info_s.hwVer > 16){
+//				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
+//				if (res == MID_DABS_RESULT_SUCCESS){
+//					*measreg->tempBody = temp;
+//				}
+//			}else{
+//				// If not I2C the register will always have a 0
+//				*measreg->tempBody=0;
+//			}
+//			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_PORT_Ext_Temp1, &temp);
+//			if (res == MID_DABS_RESULT_SUCCESS){
+//				*measreg->tempBody = temp;
+//			}
+//			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_PORT_Ext_Temp2, &temp);
+//			if (res == MID_DABS_RESULT_SUCCESS){
+//				*measreg->tempBody = temp;
+//			}
+//			break;
+//	}
+//	return res;
+//}
 
 
-MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr, MID_REG_errorStatus_s const * errors){
+MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode,
+		int16_t curr, MID_REG_errorStatus_s * errors){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
 	blink_conf_s inputMode;
-	res = CheckBlinkStatus(epcmode, lscurr, errors, &inputMode);
-	if (ledsMode.prevMode.mode == inputMode.mode){
-		ledsMode.step++;
-		ledsMode.step = ledsMode.step % ledsMode.mode.steps;
+	//Check the mode of the EPC and the mode the leds should be in
+	res = CheckBlinkStatus(ctrlMode, curr, errors, &inputMode);
+	if (res == MID_DABS_RESULT_SUCCESS){
+		if (ledsMode.prevMode.mode == inputMode.mode){
+			ledsMode.step++;
+			ledsMode.step = ledsMode.step % ledsMode.mode.steps;
+		}
+		else{
+			ledsMode.mode = inputMode;
+			ledsMode.step = 0;
+		}
+		res = SetLeds(ledsMode.step);
+		ledsMode.prevMode = ledsMode.mode;
 	}
-	else{
-		ledsMode.mode = inputMode;
-		ledsMode.step = 0;
-	}
-	res = SetLeds(ledsMode.step);
-	ledsMode.prevMode = ledsMode.mode;
 	return res;
 }
+

@@ -26,6 +26,15 @@
 /**********************************************************************************/
 /*            Definition of exported types (typedef, enum, struct, union)         */
 /**********************************************************************************/
+/**
+ * @enum MID_DABS_meas_e
+ * @brief Enum of available measures for MID_DABS operations.
+ *
+ */
+typedef enum {
+	MID_DABS_MEAS_ELECTRIC = 0x00U,
+	MID_DABS_MEAS_TEMP = 0x01U
+}MID_DABS_meas_e;
 
 /**
  * @enum MID_DABS_result_e
@@ -68,7 +77,7 @@ typedef enum
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,MID_REG_meas_s * measreg);
+MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg);
 
 /**
  * @fn MID_DABS_result_e MID_DabsUpdateLeds()
@@ -78,6 +87,6 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,MID_REG_meas_s *
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e epcmode, int16_t lscurr, MID_REG_errorStatus_s errors);
+MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr, MID_REG_errorStatus_s * errors);
 
 #endif /* MID_DABS_H_ */

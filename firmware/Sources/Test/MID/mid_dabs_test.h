@@ -47,16 +47,6 @@
 /**********************************************************************************/
 
 /**
- * @fn MID_DABS_result_t MID_DabsTest()
- * @brief Try to read all the measurements from the peripheric devices.
- *
- * @return
- * 		@ref MID_DABS_RESULT_SUCCESS if test ends correctly,
- * 		@ref MID_DABS_RESULT_ERROR otherwise
- */
-MID_DABS_result_e MID_DabsTestMeas(void);
-
-/**
  * @fn MID_DABS_result_t MID_DabsTestLeds()
  * @brief Try the different states of the leds depending on the mode or error encounter.
  *
@@ -64,6 +54,6 @@ MID_DABS_result_e MID_DabsTestMeas(void);
  * 		@ref MID_DABS_RESULT_SUCCESS if test ends correctly,
  * 		@ref MID_DABS_RESULT_ERROR otherwise
  */
-MID_DABS_result_e MID_DabsTestLeds(void);
+MID_DABS_result_e MID_DabsTestLeds(uint8_t state);
 #endif /* MID_DABS_TEST_H_ */
  
