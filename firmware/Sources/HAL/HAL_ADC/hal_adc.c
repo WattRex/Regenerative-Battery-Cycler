@@ -117,11 +117,11 @@ static uint16_t getPwrMedian(uint16_t start_sensor_idx)
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
-void HAL_Adc1_Callback(void){
+void HAL_AdcCallbackDMAChl2Cplt(void){
 	_idx_cplt_ADC1 = _ADC1_BUFFER_SIZE/2 - _idx_cplt_ADC1;
 }
 
-void HAL_Adc2_Callback(void){
+void HAL_AdcCallbackDMAChl2Cplt(void){
 	_idx_cplt_ADC2 = _ADC2_BUFFER_SIZE/2 - _idx_cplt_ADC2;
 }
 
