@@ -25,7 +25,8 @@
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-
+#include "mid_reg.h"
+extern const MID_REG_limit_s EPC_CONF_limit_range;
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
@@ -42,6 +43,14 @@
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 volatile uint8_t n_ints= 0, int_triggered = 0;
+
+
+/*		LIMITS  	*/
+MID_REG_limit_s APP_SALG_limit = {};
+MID_REG_control_s APP_SALG_consign = {};
+MID_REG_control_s APP_SALG_control = {};
+MID_REG_errorStatus_s APP_SALG_errorStatus = {};
+MID_REG_meas_s APP_SALG_meas = {};
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -62,6 +71,55 @@ volatile uint8_t n_ints= 0, int_triggered = 0;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
+
+APP_SALG_result_e InitRegisters () {
+
+
+	/*		APP_SALG_limit  	*/
+	APP_SALG_limit.hsVoltMax 		= EPC_CONF_limit_range.hsVoltMax;
+	APP_SALG_limit.hsVoltMin 		= EPC_CONF_limit_range.hsVoltMin;
+	APP_SALG_limit.lsVoltMax 		= EPC_CONF_limit_range.lsVoltMax;
+	APP_SALG_limit.lsVoltMin 		= EPC_CONF_limit_range.lsVoltMin;
+	APP_SALG_limit.lsCurrMax 		= EPC_CONF_limit_range.lsCurrMax;
+	APP_SALG_limit.lsCurrMin 		= EPC_CONF_limit_range.lsCurrMin;
+	APP_SALG_limit.lsPwrMax  		= EPC_CONF_MAX_EPC_PWR_DEF;
+	APP_SALG_limit.lsPwrMin  		= EPC_CONF_MIN_EPC_PWR_DEF;
+	APP_SALG_limit.tempMax   		= EPC_CONF_TEMP_MAX_DEF;
+	APP_SALG_limit.tempMin   		= EPC_CONF_TEMP_MIN_DEF;
+
+	/*		APP_SALG_consign  	*/
+	APP_SALG_consign.outStatus  	= MID_REG_DISABLED;
+	APP_SALG_consign.mode			= MID_REG_MODE_IDLE;
+	APP_SALG_consign.limitType		= MID_REG_LIMIT_TIME;
+	APP_SALG_consign.modeRef		= 0;
+	APP_SALG_consign.limRef			= 0;
+
+	/*		APP_SALG_control  	*/
+	APP_SALG_consign.outStatus  	= MID_REG_DISABLED;
+	APP_SALG_consign.mode			= MID_REG_MODE_IDLE;
+	APP_SALG_consign.limitType		= MID_REG_LIMIT_TIME;
+	APP_SALG_consign.modeRef		= 0;
+	APP_SALG_consign.limRef			= 0;
+
+	/*		APP_SALG_errorStatus  	*/
+	APP_SALG_errorStatus.hsVoltErr 	= MID_REG_ERROR_NONE;
+	APP_SALG_errorStatus.lsVoltErr	= MID_REG_ERROR_NONE;
+	APP_SALG_errorStatus.lsCurrErr	= MID_REG_ERROR_NONE;
+	APP_SALG_errorStatus.commErr	= MID_REG_ERROR_NONE;
+	APP_SALG_errorStatus.tempErr	= MID_REG_ERROR_NONE;
+	APP_SALG_errorStatus.intErr		= MID_REG_ERROR_NONE;
+	APP_SALG_errorStatus.lastErrVal	= 0;
+
+	/*		APP_SALG_meas  	*/
+	APP_SALG_meas.hsVolt			= 0;
+	APP_SALG_meas.lsVolt			= 0;
+	APP_SALG_meas.lsCurr			= 0;
+	APP_SALG_meas.tempBody			= 0;
+	APP_SALG_meas.tempAnod			= 0;
+	APP_SALG_meas.tempAmb			= 0;
+
+	return APP_SALG_RESULT_SUCCESS;
+}
 
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
@@ -93,6 +151,10 @@ APP_SALG_result_e APP_SalgInit(){
 	}
 
 //	HAL_WdgInit();
+
+	// Initialize registers
+	InitRegisters(); //TODO: this returns allways APP_SALG_RESULT_SUCCESS. cast to ignore or do something :)
+
 	return res;
 }
 
