@@ -102,28 +102,23 @@ TEST_result_e GpioMainTest(void){
 	return res;
 }
 
-TEST_result_e SlowAdcMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-
-#endif
-	return res;
-}
-
-TEST_result_e FastAdcMainTest(void){
-	TEST_result_e res = TEST_RESULT_SUCCESS;
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-
-#endif
-	return res;
-}
-
 TEST_result_e STSMainTest(void){
 	TEST_result_e res = TEST_RESULT_SUCCESS;
 #ifdef EPC_CONF_STS_ENABLED
 	res = (TEST_result_e) HAL_StsTest();
 #endif
 	return res;
+}
+
+TEST_result_e AdcMainTest(void){
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+	#ifdef EPC_CONF_TMR_ENABLED
+		TestAdcs();
+	#endif
+#endif
+	return res;
+
 }
 
 TEST_result_e TimersMainTest(void){
@@ -165,13 +160,14 @@ TEST_result_e HalMainTest(void){
 	#ifndef EPC_CONF_WDG_ENABLED
 		test_res |= PWMMainTest();
 		test_res |= GpioMainTest();
-		test_res |= SlowAdcMainTest();
-		test_res |= FastAdcMainTest();
-		test_res |= STSMainTest();
-		test_res |= TimersMainTest();
 		test_res |= CanMainTest();
-
-		HAL_Delay(1000);
+		test_res |= STSMainTest();
+		#ifdef EPC_CONF_ADC_DMA_ENABLED
+			test_res |= AdcMainTest();
+		#else
+			test_res |= TimersMainTest();
+		#endif
+//		HAL_Delay(1000);
 	#else
 		test_res |= WDGMainTest();
 	#endif
