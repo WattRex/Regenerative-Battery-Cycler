@@ -10,7 +10,7 @@
 #include <string.h>
 
 #include "app_salg.h"
-//#include "app_iface.h"
+#include "app_iface.h"
 //#include "app_ctrl.h"
 
 #include "hal_sys.h"
@@ -47,10 +47,38 @@ volatile uint8_t n_ints= 0, int_triggered = 0;
 
 /*		LIMITS  	*/
 MID_REG_limit_s APP_SALG_limit = {};
-MID_REG_control_s APP_SALG_consign = {};
-MID_REG_control_s APP_SALG_control = {};
-MID_REG_errorStatus_s APP_SALG_errorStatus = {};
-MID_REG_meas_s APP_SALG_meas = {};
+
+MID_REG_control_s APP_SALG_consign = {
+		MID_REG_DISABLED, 	// outStatus
+		MID_REG_MODE_IDLE, 	// mode
+		MID_REG_LIMIT_TIME, // limitType
+		0,					// modeRef
+		0					// limRef
+};
+MID_REG_control_s APP_SALG_control = {
+		MID_REG_DISABLED, 	// outStatus
+		MID_REG_MODE_IDLE, 	// mode
+		MID_REG_LIMIT_TIME, // limitType
+		0,					// modeRef
+		0					// limRef
+};
+MID_REG_errorStatus_s APP_SALG_errorStatus = {
+		MID_REG_ERROR_NONE,	// hsVoltErr
+		MID_REG_ERROR_NONE,	// lsVoltErr
+		MID_REG_ERROR_NONE,	// lsCurrErr
+		MID_REG_ERROR_NONE,	// commErr
+		MID_REG_ERROR_NONE,	// tempErr
+		MID_REG_ERROR_NONE,	// intErr
+		0					// lastErrVal
+};
+MID_REG_meas_s APP_SALG_meas = {
+		0,	// hsVolt
+		0,	// lsVolt
+		0,	// lsCurr
+		0,	// tempBody
+		0,	// tempAnod
+		0	// tempAmb
+};
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -72,8 +100,10 @@ MID_REG_meas_s APP_SALG_meas = {};
 /*                         Definition of local functions                          */
 /**********************************************************************************/
 
-APP_SALG_result_e InitRegisters () {
-
+/*This register has to be initialized in run because the definition of limit ranges
+ * in EPC_CONF as an struct makes it impossible for the linker to understand that in
+ * EPC_CONF this memory zones are signed to the defines in this module.*/
+APP_SALG_result_e InitSalgLimitRegister () {
 
 	/*		APP_SALG_limit  	*/
 	APP_SALG_limit.hsVoltMax 		= EPC_CONF_limit_range.hsVoltMax;
@@ -86,37 +116,6 @@ APP_SALG_result_e InitRegisters () {
 	APP_SALG_limit.lsPwrMin  		= EPC_CONF_MIN_EPC_PWR_DEF;
 	APP_SALG_limit.tempMax   		= EPC_CONF_TEMP_MAX_DEF;
 	APP_SALG_limit.tempMin   		= EPC_CONF_TEMP_MIN_DEF;
-
-	/*		APP_SALG_consign  	*/
-	APP_SALG_consign.outStatus  	= MID_REG_DISABLED;
-	APP_SALG_consign.mode			= MID_REG_MODE_IDLE;
-	APP_SALG_consign.limitType		= MID_REG_LIMIT_TIME;
-	APP_SALG_consign.modeRef		= 0;
-	APP_SALG_consign.limRef			= 0;
-
-	/*		APP_SALG_control  	*/
-	APP_SALG_consign.outStatus  	= MID_REG_DISABLED;
-	APP_SALG_consign.mode			= MID_REG_MODE_IDLE;
-	APP_SALG_consign.limitType		= MID_REG_LIMIT_TIME;
-	APP_SALG_consign.modeRef		= 0;
-	APP_SALG_consign.limRef			= 0;
-
-	/*		APP_SALG_errorStatus  	*/
-	APP_SALG_errorStatus.hsVoltErr 	= MID_REG_ERROR_NONE;
-	APP_SALG_errorStatus.lsVoltErr	= MID_REG_ERROR_NONE;
-	APP_SALG_errorStatus.lsCurrErr	= MID_REG_ERROR_NONE;
-	APP_SALG_errorStatus.commErr	= MID_REG_ERROR_NONE;
-	APP_SALG_errorStatus.tempErr	= MID_REG_ERROR_NONE;
-	APP_SALG_errorStatus.intErr		= MID_REG_ERROR_NONE;
-	APP_SALG_errorStatus.lastErrVal	= 0;
-
-	/*		APP_SALG_meas  	*/
-	APP_SALG_meas.hsVolt			= 0;
-	APP_SALG_meas.lsVolt			= 0;
-	APP_SALG_meas.lsCurr			= 0;
-	APP_SALG_meas.tempBody			= 0;
-	APP_SALG_meas.tempAnod			= 0;
-	APP_SALG_meas.tempAmb			= 0;
 
 	return APP_SALG_RESULT_SUCCESS;
 }
@@ -153,8 +152,8 @@ APP_SALG_result_e APP_SalgInit(){
 //	HAL_WdgInit();
 
 	// Initialize registers
-	InitRegisters(); //TODO: this returns allways APP_SALG_RESULT_SUCCESS. cast to ignore or do something :)
-
+	InitSalgLimitRegister(); //TODO: this returns allways APP_SALG_RESULT_SUCCESS. cast to ignore or do something :)
+	AppIfacePeriodicRegister();
 	return res;
 }
 
