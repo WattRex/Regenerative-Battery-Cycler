@@ -1,6 +1,9 @@
 /*********************************************************************************
 * @file           : mid_dabs.h
 * @brief          : Middleware header file for Device ABStraction
+  This module will be in charge of updating the register with the measured 
+  data without actually knowing how it is gathered. 
+  Also it has the aim of updating the leds status according to the working mode and errors.
 ***********************************************************************************/
 
 #ifndef MID_DABS_H_

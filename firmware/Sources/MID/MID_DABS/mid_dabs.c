@@ -9,7 +9,6 @@
 //#include "hal_adc.h"
 #include "hal_sts.h"
 #include "hal_gpio.h"
-#include "hal_tmr.h"
 #include "epc_conf.h"
 
 /**********************************************************************************/
@@ -24,7 +23,7 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-
+#define MAX_LEDS_STEPS 5
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -50,9 +49,9 @@ typedef enum {
 }blink_mode_e;
 
 typedef struct{
-	blink_mode_e mode; 	//Blinking mode
-	uint8_t steps;		//Number of steps of the mode
-	uint8_t ledsStep[5];//Array with the output of the leds in each step
+	blink_mode_e mode; 		//Blinking mode
+	uint8_t steps;			//Number of steps of the mode
+	uint8_t ledsStep[MAX_LEDS_STEPS];	//Array with the output of the leds in each step
 }blink_conf_s;
 
 typedef struct{
@@ -76,52 +75,108 @@ static MID_DABS_result_e SetLeds(uint8_t state);
 /**********************************************************************************/
 // Modes the leds can be
 const blink_conf_s idleMode = {
-	blink_mode_idle, 2,	{0x00,0x0F,0x00,0x00,0x00}
+	blink_mode_idle, 2,	{0x00,				//0b00000000
+						0x0F,				//0b00001111
+						0x00,0x00,0x00		//0b00000000
+						}
 };
 const blink_conf_s waitMode = {
-	blink_mode_wait, 3,	{0x00,0x0A, 0x05,0x00,0x00}
+	blink_mode_wait, 3,	{0x00,				//0b00000000
+						0x0A, 				//0b00001010
+						0x05, 				//0b00000101
+						0x00,0x00			//0b00000000
+						}
 };
 const blink_conf_s ccChgMode = {
-	blink_mode_cc_chg, 5, {0x00,0x08,0x04,0x02,0x01}
+	blink_mode_cc_chg, 5, {0x00,			//0b00000000
+						0x08,				//0b00001000
+						0x04,				//0b00000100
+						0x02,				//0b00000010
+						0x01 				//0b00000001
+						}
 };
 const blink_conf_s ccDchgMode = {
-	blink_mode_cc_dchg, 5,	{0x00,0x01,0x02,0x04,0x08}
+	blink_mode_cc_dchg, 5,	{0x00,			//0b00000000
+							0x01,			//0b00000001
+							0x02,			//0b00000010
+							0x04,			//0b00000100
+							0x08 			//0b00001000
+							}
 };
 const blink_conf_s cvChgMode = {
-	blink_mode_cv_chg, 5, {0x0F,0x0E,0x0D,0x0B,0x07}
+	blink_mode_cv_chg, 5, 	{0x0F,			//0b00001111
+							0x0E,			//0b00001110
+							0x0D,			//0b00001101
+							0x0B,			//0b00001011
+							0x07 			//0b00000111
+							}
 };
 const blink_conf_s cvDchgMode = {
-	blink_mode_cv_dchg, 5,	{0x0F,0x07,0x0B,0x0D,0x0E}
+	blink_mode_cv_dchg, 5,	{0x0F,			//0b00001111
+							0x07,			//0b00000111
+							0x0B,			//0b00001011
+							0x0D,			//0b00001101
+							0x0E 			//0b00001110
+							}
 };
 const blink_conf_s cpChgMode = {
-	blink_mode_cp_chg, 5,	{0x00,0x01,0x03,0x07,0x0F}
+	blink_mode_cp_chg, 5,	{0x00,			//0b00000000
+							0x01,			//0b00000001
+							0x03,			//0b00000011
+							0x07,			//0b00000111
+							0x0F 			//0b00001111
+							}
 };
 const blink_conf_s cpDchgMode = {
-	blink_mode_cp_dchg, 5,	{0x00,0x08,0x0C,0x0E,0x0F}
+	blink_mode_cp_dchg, 5,	{0x00,			//0b00000000
+							0x08,			//0b00001000
+							0x0C,			//0b00001100
+							0x0E,			//0b00001110
+							0x0F 			//0b00001111
+							}
 };
 const blink_conf_s errHsvoltMode = {
-	blink_mode_err_hsvolt, 1,	{0x01,0x00,0x00,0x00,0x00}
+	blink_mode_err_hsvolt, 1,	{0x01,		//0b00000001
+								0x00,		//0b00000000
+								0x00,		//0b00000000
+								0x00,		//0b00000000
+								0x00}
 };
 const blink_conf_s errlsvoltMode = {
-	blink_mode_err_lsvolt, 1,	{0x08,0x00,0x00,0x00,0x00}
+	blink_mode_err_lsvolt, 1,	{0x08,		//0b00001000
+								0x00,0x00,	//0b00000000
+								0x00,0x00	//0b00000000
+								}
 };
 const blink_conf_s errlscurrMode = {
-	blink_mode_err_lscurr, 1, {0xC,0x00,0x00,0x00,0x00}
+	blink_mode_err_lscurr, 1, {0xC,			//0b00001100
+							0x00,0x00,		//0b00000000
+							0x00,0x00 		//0b00000000
+							}
 };
 const blink_conf_s errCommMode = {
-	blink_mode_err_comm, 1,	{0x0A,0x00,0x00,0x00,0x00}
+	blink_mode_err_comm, 1,	{0x0A,			//0b00001010
+							0x00,0x00,		//0b00000000
+							0x00,0x00		//0b00000000
+							}
 };
 const blink_conf_s errTempMode = {
-	blink_mode_err_temp, 1,	{0x03,0x00,0x00,0x00,0x00}
+	blink_mode_err_temp, 1,	{0x03,			//0b00000011
+							0x00,0x00,		//0b00000000
+							0x00,0x00		//0b00000000
+							}
 };
 const blink_conf_s errIntMode = {
-	blink_mode_err_int, 1,	{0x09,0x00,0x00,0x00,0x00}
+	blink_mode_err_int, 1,	{0x09,			//0b00001001
+							0x00,0x00,		//0b00000000
+							0x00,0x00		//0b00000000
+							}
 };
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 blink_s ledsMode = {
-		idleMode, 0, idleMode //Initialice in idle mode
+		idleMode, 0, idleMode 				//Initialice in idle mode
 };
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -150,23 +205,28 @@ blink_s ledsMode = {
 static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
 		MID_REG_errorStatus_s * errors, blink_conf_s * mode){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
-	if (errors->hsVoltErr !=MID_REG_ERROR_NONE){
-		*mode = errHsvoltMode;
-	}
-	else if (errors->lsVoltErr !=MID_REG_ERROR_NONE){
-		*mode = errlsvoltMode;
-	}
-	else if (errors->lsCurrErr !=MID_REG_ERROR_NONE){
-		*mode = errlscurrMode;
-	}
-	else if (errors->commErr !=MID_REG_ERROR_NONE){
-		*mode = errCommMode;
-	}
-	else if (errors->tempErr !=MID_REG_ERROR_NONE){
-		*mode = errTempMode;
-	}
-	else if (errors->intErr !=MID_REG_ERROR_NONE){
-		*mode = errIntMode;
+	if (epcmode == MID_REG_MODE_ERROR){	
+		if (errors->hsVoltErr !=MID_REG_ERROR_NONE){
+			*mode = errHsvoltMode;
+		}
+		else if (errors->lsVoltErr !=MID_REG_ERROR_NONE){
+			*mode = errlsvoltMode;
+		}
+		else if (errors->lsCurrErr !=MID_REG_ERROR_NONE){
+			*mode = errlscurrMode;
+		}
+		else if (errors->commErr !=MID_REG_ERROR_NONE){
+			*mode = errCommMode;
+		}
+		else if (errors->tempErr !=MID_REG_ERROR_NONE){
+			*mode = errTempMode;
+		}
+		else if (errors->intErr !=MID_REG_ERROR_NONE){
+			*mode = errIntMode;
+		}
+		else {
+			res = MID_DABS_RESULT_ERROR;
+		}		
 	}
 	// After checking there are no errors, check the actual mode.
 	else{
@@ -210,13 +270,13 @@ static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
 static MID_DABS_result_e SetLeds(uint8_t step){
-	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
+	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
 	uint8_t state = ledsMode.mode.ledsStep[step];
 	uint8_t mask= 0x1;
-	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
-	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
-	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
-	res = (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
 	return res;
 }
 
@@ -284,8 +344,10 @@ MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode,
 			ledsMode.mode = inputMode;
 			ledsMode.step = 0;
 		}
-		res = SetLeds(ledsMode.step);
-		ledsMode.prevMode = ledsMode.mode;
+		if(ledsMode.mode.steps != 1){
+			res = SetLeds(ledsMode.step);
+			ledsMode.prevMode = ledsMode.mode;
+		}		
 	}
 	return res;
 }
