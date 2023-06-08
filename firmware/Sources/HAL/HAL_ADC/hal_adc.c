@@ -155,9 +155,9 @@ HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value)
 	if (port <= HAL_ADC_HS_VOLT){
 		uint8_t idx = port + _idx_cplt_ADC2;
 		*value = getPwrMedian(idx);
-	}else if (HAL_ADC_EXT_TEMP1 <= port && port <= HAL_ADC_INT_TEMP){
+	}else if (HAL_ADC_TEMP_ANOD <= port && port <= HAL_ADC_INT_TEMP){
 		HAL_ADC_Start(&hadc1);
-		uint8_t sensor_idx = port - HAL_ADC_EXT_TEMP1 + _idx_cplt_ADC1;
+		uint8_t sensor_idx = port - HAL_ADC_TEMP_ANOD + _idx_cplt_ADC1;
 		*value = _ADC1_results[sensor_idx];
 	}else{
 		res = HAL_ADC_RESULT_ERROR;
