@@ -49,9 +49,9 @@ typedef enum
 	HAL_ADC_LS_VOLT,			/** ADC2_IN2 - PA5 **/
 	HAL_ADC_HS_VOLT,			/** ADC2_IN4 - PA6 **/
 
-	HAL_ADC_EXT_TEMP1,		/** ADC1_IN1 - PA5 **/
-	HAL_ADC_EXT_TEMP2,		/** ADC1_IN2 - PA4 **/
-	HAL_ADC_INT_TEMP,			/** ADC1 Chan Temp **/
+	HAL_ADC_TEMP_ANOD,		/** ADC1_IN1 - PA1 **/
+	HAL_ADC_TEMP_AMB,		/** ADC1_IN2 - PA0 **/
+	HAL_ADC_INT_TEMP,		/** ADC1 Chan Temp **/
 
 	HAL_ADC_PORT_COUNT 		/**< HAL_ADC_COUNT */
 }HAL_ADC_port_e;
@@ -80,8 +80,8 @@ typedef enum
  * @brief Callback function invoked when the timer RT interrupt occurs due to a counter overflow.
  * User must implement this function for for customized operation.
  */
-void HAL_Adc1_Callback(void);
-void HAL_Adc2_Callback(void);
+void HAL_AdcCallbackDMAChl1Cplt(void);
+void HAL_AdcCallbackDMAChl2Cplt(void);
 
 /**
  * @fn  HAL_ADC_result_e HAL_AdcInit(void)
