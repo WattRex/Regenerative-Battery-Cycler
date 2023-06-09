@@ -284,49 +284,48 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-//MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg){
-//	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
-//	switch(type){
-//		case MID_DABS_MEAS_ELECTRIC:
-//			uint16_t data;
-//			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-//			if (res == MID_DABS_RESULT_SUCCESS){
-//				*measreg->hsVolt = data;
-//			}
-//			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-//			if (res == MID_DABS_RESULT_SUCCESS){
-//				*measreg->tempBody = data;
-//			}
-//			int16_t data;
-//			res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-//			if (res == MID_DABS_RESULT_SUCCESS){
-//				*measreg->tempBody = data;
-//			}
-//			break;
-//		case MID_DABS_MEAS_TEMP:
-//			int16_t temp;
-//			// Check if the hardware version has I2C
-//			if (MID_REG_info_s.hwVer > 16){
-//				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
-//				if (res == MID_DABS_RESULT_SUCCESS){
-//					*measreg->tempBody = temp;
-//				}
-//			}else{
-//				// If not I2C the register will always have a 0
-//				*measreg->tempBody=0;
-//			}
-//			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_PORT_Ext_Temp1, &temp);
-//			if (res == MID_DABS_RESULT_SUCCESS){
-//				*measreg->tempBody = temp;
-//			}
-//			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_PORT_Ext_Temp2, &temp);
-//			if (res == MID_DABS_RESULT_SUCCESS){
-//				*measreg->tempBody = temp;
-//			}
-//			break;
-//	}
-//	return res;
-//}
+MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg){
+	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
+	switch(type){
+		case MID_DABS_MEAS_ELECTRIC:
+			uint16_t data;
+			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_HS_VOLT, &data);;
+			if (res == MID_DABS_RESULT_SUCCESS){
+				*measreg->hsVolt = data;
+			}
+			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_LS_VOLT, &data);;
+			if (res == MID_DABS_RESULT_SUCCESS){
+				*measreg->lsVolt = data;
+			}
+			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_LS_CURR, &data);;
+			if (res == MID_DABS_RESULT_SUCCESS){
+				*measreg->lsCurr =(int16_t) data;
+			}
+			break;
+		case MID_DABS_MEAS_TEMP:
+			int16_t temp;
+			// Check if the hardware version has I2C
+			if (MID_REG_info_s.hwVer > 16){
+				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
+				if (res == MID_DABS_RESULT_SUCCESS){
+					*measreg->tempBody = temp;
+				}
+			}else{
+				// If not I2C the register will always have a 0
+				*measreg->tempBody=0;
+			}
+			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_TEMP_ANOD, &temp);
+			if (res == MID_DABS_RESULT_SUCCESS){
+				*measreg->tempAnod = temp;
+			}
+			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_TEMP_AMB, &temp);
+			if (res == MID_DABS_RESULT_SUCCESS){
+				*measreg->tempAmb = temp;
+			}
+			break;
+	}
+	return res;
+}
 
 
 MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode,
