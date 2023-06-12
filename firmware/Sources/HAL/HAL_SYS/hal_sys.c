@@ -102,56 +102,46 @@ HAL_SYS_result_e HAL_SysInit(void){
 		/* Initialize all configured peripherals */
 #ifdef EPC_CONF_GPIO_ENABLED
 			if(HAL_GpioInit() != HAL_GPIO_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_GPIO;
-			}else{
 				res = HAL_SYS_RESULT_ERROR_CRIT;
+			}else{
 #endif
 
 #ifdef EPC_CONF_CAN_ENABLED
 			if (HAL_CanInit() != HAL_CAN_RESULT_SUCCESS){
 				res = HAL_SYS_RESULT_ERROR_COMM;
 			}else{
-				res = HAL_SYS_RESULT_ERROR_COMM;
 #endif
 
 #ifdef EPC_CONF_TMR_ENABLED
 			HAL_TMR_result_e tmr_res = HAL_TmrInit(HAL_TMR_CLOCK_RT);
 			tmr_res |= HAL_TmrInit(HAL_TMR_CLOCK_PWR_MEAS);
 			if (tmr_res != HAL_TMR_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_CRIT;
-			}else{
 				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+			}else{
 #endif
 
 #ifdef EPC_CONF_ADC_DMA_ENABLED
 			if(HAL_AdcInit() != HAL_ADC_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_ADC;
-			}else{
 				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+			}else{
 #endif
 
 #ifdef EPC_CONF_PWM_ENABLED
 			if (HAL_PwmInit() != HAL_PWM_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_CRIT;
-			}else{
 				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+			}else{
 #endif
-
-
 
 #ifdef EPC_CONF_STS_ENABLED
 			if (HAL_StsInit () != HAL_STS_RESULT_SUCCESS){
-				res |= HAL_SYS_RESULT_ERROR_STS;
-			}
-			else{
-				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+				res |= HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+			} else{
 #endif
 
 #ifdef EPC_CONF_WDG_ENABLED
 			if (HAL_WdgInit() != HAL_WDG_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_COMM;
-			}else{
 				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+			}else{
 #endif
 
 // Close initialization }
