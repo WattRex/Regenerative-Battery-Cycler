@@ -44,12 +44,10 @@ typedef enum
  */
 typedef enum
 {
-	HAL_SYS_RESULT_SUCCESS = 0x0U, 	/**< HAL_SYS success operation result **/
-	HAL_SYS_RESULT_ERROR_GPIO = 0x01U,	/**< HAL_SYS error on GPIO operation **/
-	HAL_SYS_RESULT_ERROR_ADC  = 0x02U,	/**< HAL_SYS error on ADC operation  **/
-	HAL_SYS_RESULT_ERROR_STS  = 0x03U,	/**< HAL_SYS error on I2C operation  **/
-	HAL_SYS_RESULT_ERROR_COMM = 0x04U,	/**< HAL_SYS error on communication process, CAN or UART **/
-	HAL_SYS_RESULT_ERROR_CRIT = 0x05U,	/**< HAL_SYS critical error result **/
+	HAL_SYS_RESULT_SUCCESS 						= 0x0U, 	/**< HAL_SYS success operation result **/
+	HAL_SYS_RESULT_ERROR_CRIT 				= 0x01U,	/**< HAL_SYS critical error result **/
+	HAL_SYS_RESULT_ERROR_CAN  				= 0x02U,	/**< HAL_SYS error on communication process, CAN **/
+	HAL_SYS_RESULT_ERROR_CRIT_PERIPH 	= 0x03U,	/**< HAL_SYS error on operation with critical peripherals **/
 }HAL_SYS_result_e;
 
 
@@ -83,6 +81,12 @@ typedef enum
  * if initialization and recovery of any peripheral failed.
  */
 HAL_SYS_result_e HAL_SysInit(void);
+
+/**
+ * @fn void HAL_SysResume(void)
+ * @brief Resume the uC after a low power mode
+ * */
+void HAL_SysResume(void);
 
 /**
  * @fn HAL_SYS_result_e HAL_SysPwrMode(HAL_SYS_mode_e)
