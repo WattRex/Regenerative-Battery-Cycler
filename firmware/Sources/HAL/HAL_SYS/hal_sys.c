@@ -100,30 +100,18 @@ HAL_SYS_result_e HAL_SysInit(void){
 		}else{
 
 		/* Initialize all configured peripherals */
-#ifdef EPC_CONF_PWM_ENABLED
-			if (HAL_PwmInit() != HAL_PWM_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_CRIT;
-			}else{
-#endif
-
 #ifdef EPC_CONF_GPIO_ENABLED
 			if(HAL_GpioInit() != HAL_GPIO_RESULT_SUCCESS){
 				res = HAL_SYS_RESULT_ERROR_GPIO;
 			}else{
+				res = HAL_SYS_RESULT_ERROR_CRIT;
 #endif
 
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-			if(HAL_AdcInit() != HAL_ADC_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_ADC;
-				// TODO: add dma
+#ifdef EPC_CONF_CAN_ENABLED
+			if (HAL_CanInit() != HAL_CAN_RESULT_SUCCESS){
+				res = HAL_SYS_RESULT_ERROR_COMM;
 			}else{
-#endif
-
-#ifdef EPC_CONF_STS_ENABLED
-			if (HAL_StsInit () != HAL_STS_RESULT_SUCCESS){
-				res |= HAL_SYS_RESULT_ERROR_STS;
-			}
-			else{
+				res = HAL_SYS_RESULT_ERROR_COMM;
 #endif
 
 #ifdef EPC_CONF_TMR_ENABLED
@@ -132,18 +120,38 @@ HAL_SYS_result_e HAL_SysInit(void){
 			if (tmr_res != HAL_TMR_RESULT_SUCCESS){
 				res = HAL_SYS_RESULT_ERROR_CRIT;
 			}else{
+				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
 #endif
 
-#ifdef EPC_CONF_CAN_ENABLED
-			if (HAL_CanInit() != HAL_CAN_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_COMM;
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+			if(HAL_AdcInit() != HAL_ADC_RESULT_SUCCESS){
+				res = HAL_SYS_RESULT_ERROR_ADC;
 			}else{
+				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+#endif
+
+#ifdef EPC_CONF_PWM_ENABLED
+			if (HAL_PwmInit() != HAL_PWM_RESULT_SUCCESS){
+				res = HAL_SYS_RESULT_ERROR_CRIT;
+			}else{
+				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+#endif
+
+
+
+#ifdef EPC_CONF_STS_ENABLED
+			if (HAL_StsInit () != HAL_STS_RESULT_SUCCESS){
+				res |= HAL_SYS_RESULT_ERROR_STS;
+			}
+			else{
+				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
 #endif
 
 #ifdef EPC_CONF_WDG_ENABLED
 			if (HAL_WdgInit() != HAL_WDG_RESULT_SUCCESS){
 				res = HAL_SYS_RESULT_ERROR_COMM;
 			}else{
+				res = HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
 #endif
 
 // Close initialization }
@@ -151,23 +159,7 @@ HAL_SYS_result_e HAL_SysInit(void){
 			}
 #endif
 
-#ifdef EPC_CONF_CAN_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_TMR_ENABLED
-		}
-#endif
-
 #ifdef EPC_CONF_STS_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_ADC_DMA_ENABLED
-		}
-#endif
-
-#ifdef EPC_CONF_GPIO_ENABLED
 		}
 #endif
 
@@ -175,9 +167,29 @@ HAL_SYS_result_e HAL_SysInit(void){
 		}
 #endif
 
+#ifdef EPC_CONF_ADC_DMA_ENABLED
+		}
+#endif
+
+#ifdef EPC_CONF_TMR_ENABLED
+		}
+#endif
+
+#ifdef EPC_CONF_CAN_ENABLED
+		}
+#endif
+
+#ifdef EPC_CONF_GPIO_ENABLED
+		}
+#endif
+
 		} // end_if System clock initialization
 	} // end_if HAL_Init()
 	return res;
+}
+
+void HAL_SysResume(void){
+	HAL_ResumeTick();
 }
 
 HAL_SYS_result_e HAL_SysPwrMode(const HAL_SYS_mode_e mode){
