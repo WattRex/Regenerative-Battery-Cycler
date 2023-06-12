@@ -71,7 +71,7 @@ MID_REG_errorStatus_s APP_SALG_errorStatus = {
 		MID_REG_ERROR_NONE,	// intErr
 		0					// lastErrVal
 };
-MID_REG_meas_s APP_SALG_meas = {
+MID_REG_meas_property_s APP_SALG_meas = {
 		0,	// hsVolt
 		0,	// lsVolt
 		0,	// lsCurr

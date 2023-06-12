@@ -186,7 +186,7 @@ typedef struct
 	int16_t tempBody;
 	int16_t tempAnod;
 	int16_t tempAmb;
-}MID_REG_meas_s;
+}MID_REG_meas_property_s;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
