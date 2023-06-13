@@ -213,23 +213,23 @@ static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr
 		MID_REG_errorStatus_s * errors, blink_conf_s * mode){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
 	if (epcmode == MID_REG_MODE_ERROR){	
-		if (errors->hsVoltErr !=MID_REG_ERROR_NONE){
+		if (errors->intErr !=MID_REG_ERROR_NONE){
+			*mode = errIntMode;
+		}
+		else if (errors->hsVoltErr !=MID_REG_ERROR_NONE){
 			*mode = errHsvoltMode;
+		}
+		else if (errors->commErr !=MID_REG_ERROR_NONE){
+			*mode = errCommMode;
 		}
 		else if (errors->lsVoltErr !=MID_REG_ERROR_NONE){
 			*mode = errlsvoltMode;
 		}
 		else if (errors->lsCurrErr !=MID_REG_ERROR_NONE){
 			*mode = errlscurrMode;
-		}
-		else if (errors->commErr !=MID_REG_ERROR_NONE){
-			*mode = errCommMode;
-		}
+		}	
 		else if (errors->tempErr !=MID_REG_ERROR_NONE){
 			*mode = errTempMode;
-		}
-		else if (errors->intErr !=MID_REG_ERROR_NONE){
-			*mode = errIntMode;
 		}
 		else {
 			res = MID_DABS_RESULT_ERROR;
