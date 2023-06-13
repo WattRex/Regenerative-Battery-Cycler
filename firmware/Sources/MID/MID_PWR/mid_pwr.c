@@ -31,16 +31,11 @@
 /**********************************************************************************/
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
-typedef enum{
-	pi_CC = 0x0u,
-	pi_CV,
-	pi_CP
-}pi_select_e;
 
 typedef enum{
-	SOA_save = 0x0u,
-	SOA_up,
-	SOA_down
+	SOA_ok = 0x0u,
+	SOA_over_pwr,
+	SOA_under_pwr
 }SOA_e;
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
@@ -49,9 +44,10 @@ typedef enum{
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
-static MID_PWR_result_e _calculatePI(const uint16_t ref, const uint16_t meas, const pi_select_e mode, const MID_REG_limit_s limits, uint16_t * action);
+static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas,
+		const MID_PWR_Mode_e mode, const MID_REG_limit_s limits, int32_t * action);
 
-static SOA_e _checkSOA(const int16_t I, const uint16_t V, const XXX limits);
+static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits);
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
@@ -59,13 +55,15 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const XXX limits);
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-static uint16_t kp_values = {800,0,0}, ki_values = {500,0,0};
-static int32_t integral_values = {0, 0, 0};
-static uint8_t saturado_values = {0,0,0};
-static uint32_t duty, d0;
+static uint16_t kp[3] = {6,0,0}, ki[3] = {5,0,0}; //TODO: EPC_CONF
+static int32_t  integral_value[3] = {0, 0, 0}; //I, V, P PI values
+static uint8_t  saturation_flag[3] = {0,0,0};	//I, V, P PI saturation flags
+static uint32_t duty, d0 = 0; //action duty goes from 0 to 100000 (in m%)
+
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
+
 /**********************************************************************************/
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
@@ -73,17 +71,18 @@ static uint32_t duty, d0;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
-
+//TODO: rewrite
 static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits){
-	SOA_e res = SOA_save;
-	int32_t power = I * V;
+	SOA_e res = SOA_ok;
+	int16_t power = (int16_t)(((int32_t)I * (int32_t)V) /100000); // 10^-3(mW) *10^-3 (mW) / 10^-5 -> dW
 	if (power > limits.lsPwrMax)
-		res = SOA_up;
+		res = SOA_over_pwr;
 	else if (power < limits.lsPwrMin)
-		res = SOA_down;
+		res = SOA_under_pwr;
 	return res;
 }
 
+//TODO: rewrite
 /**
  * @fn MID_PWR_result_t SetLeds()
  * @brief Set the leds to the state indicated by the input
@@ -92,39 +91,42 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s 
  * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
  * 		@ref MID_PWR_RESULT_ERROR otherwise.
  */
-static MID_PWR_result_e _calculatePI(const uint16_t ref, const uint16_t meas, const pi_select_e mode, const MID_REG_limit_s limits, uint16_t * action){
-	// Get values for the specific PI 
-	uint8_t saturado = saturado_values[mode];
-	uint16_t kp = kp_values[mode], ki = ki_values[mode];
-	uint32_t integral = integral_values[mode];
-	uint16_t up_limit, low_limit;
-	if (mode != pi_CC){
-		up_limit = limits.lsCurrMax ;
-		low_limit= limits.lsCurrMin ;
-	}else{
-		up_limit = 100000-d0;
-		low_limit= 0+d0;
-	}
-	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	int32_t error = ref - meas;
-	if(saturado){
-		integral += error;
-	}
-	*action = kp * error + ki* integral;
+static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, const MID_PWR_Mode_e mode,
+		const MID_REG_limit_s limits, int32_t * action){
 
-	if(*action >= up_limit){
-		*action = up_limit;
-		saturado = 1;
-	}else if(*action <= low_limit){
-		*action = low_limit;
-		saturado = 1;
-	}else{
-		saturado = 0;
+	// Get values for the specific PI 
+	int32_t upper_limit, lower_limit; //int32 because of duty
+	int32_t error = ref - meas;
+
+	// set limits for saturation
+	if (mode != MID_PWR_MODE_CC){ //out for pwr or v PI is allways current
+		upper_limit = limits.lsCurrMax ;
+		lower_limit = limits.lsCurrMin ;
+	}else{ // for i PI actions is the deltaDuty to apply
+		upper_limit = HAL_PWM_MAX_DUTY - d0;
+		lower_limit= - d0;
 	}
-	//Reasign the values calculated
-	saturado_values[mode] = saturado;
-	integral_values[mode] = integral;
-	return res;
+
+	// check if already saturated
+	if(saturation_flag[mode]){
+		integral_value[mode] += error;
+	}
+
+	//set new action
+	*action = kp[mode] * error + ki[mode] * integral_value[mode];
+
+	// check action and saturate if needed
+	if(*action > upper_limit){
+		*action = upper_limit;
+		saturation_flag[mode] = 1;
+	}else if(*action < lower_limit){
+		*action = lower_limit;
+		saturation_flag[mode] = 1;
+	}else{
+		saturation_flag[mode] = 0;
+	}
+
+	return MID_PWR_RESULT_SUCCESS;
 }
 
 /**********************************************************************************/
@@ -133,37 +135,45 @@ static MID_PWR_result_e _calculatePI(const uint16_t ref, const uint16_t meas, co
 
 MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
+	res = (MID_PWR_result_e) HAL_GpioSet(HAL_GPIO_OUT_OutDisable, outputMode);
 	return res;
 }
 
-MID_PWR_result_e MID_PwrApplyPI(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Control_Mode_e control_mode, const MID_REG_limit_s limits){
+MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	uint16_t action, new_duty;
-	int32_t actual_power;
-	switch (control_mode)
-	{
-	case MID_PWR_Control_Mode_CP:
-		actual_power = V_LS * I_LS;
-		res = _calculatePI(ref, actual_power, pi_CP, limits, &action);
-		break;
-	case MID_PWR_Control_Mode_CV:
-		res = _calculatePI(ref, V_LS, pi_CV, limits, &action);
-		break;
-	case MID_PWR_Control_Mode_CC:
-		action = ref;
-		res = MID_PWR_RESULT_SUCCESS;
-		break;
+	int32_t curr_ref, delta_duty;
+	int16_t actual_power;
+	switch (control_mode) { //first PI, if needed (in Pwr and V refs)
+		case MID_PWR_MODE_CP:
+			actual_power = (int16_t)(((int32_t)I_LS * (int32_t)V_LS) /100); // dW
+			res = _calculatePI(ref, actual_power, MID_PWR_MODE_CP, limits, &curr_ref);
+			break;
+		case MID_PWR_MODE_CV:
+			res = _calculatePI(ref, V_LS, MID_PWR_MODE_CV, limits, &curr_ref);
+			break;
+		case MID_PWR_MODE_CC: //not first PI needed.
+			curr_ref = ref;
+			res = MID_PWR_RESULT_SUCCESS;
+			break;
+		default:
+			res = MID_PWR_RESULT_ERROR;
 	}
 	if (res == MID_PWR_RESULT_SUCCESS){
-		if (_checkSOA(action, V_LS, limits) == SOA_up || action > limits.imax){
-			action = limits.lsCurrMax;
+
+		// I action at this point is allways under the limits. The pwr and V PI saturate the action
+		// and I ref from APP_CTRL is allways in limit
+
+		SOA_e SOA_status = _checkSOA(curr_ref, V_LS, limits);
+		if (SOA_status == SOA_over_pwr){
+			curr_ref = (int32_t)(limits.lsPwrMax*100) / V_LS;
 		}
-		else if (_checkSOA(action, V_LS, limits) == SOA_down || action > limits.imin){
-			action = limits.lsCurrMin;
+		else if (SOA_status == SOA_under_pwr){
+			curr_ref = (int32_t)(limits.lsPwrMin*100) / V_LS;
 		}
-		res = _calculatePI(action, I_LS, pi_CC, limits, &new_duty);
+		// calculate current PI
+		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &delta_duty);
 		if (res == MID_PWR_RESULT_SUCCESS){
-			duty = new_duty + d0;
+			duty = delta_duty + d0;
 			res = (MID_PWR_result_e) HAL_PwmSetDuty(duty);
 		}
 	}
@@ -173,9 +183,9 @@ MID_PWR_result_e MID_PwrApplyPI(const int16_t ref, const uint16_t V_LS, const in
 
 MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	uint32_t actual_d0 = V_LS *1000/ V_HS;
-	if (actual_d0<=100000 && actual_d0>=0){
-		d0 = actual_d0;
+	uint32_t new_d0 = V_LS * HAL_PWM_MAX_DUTY / V_HS;
+	if (new_d0 <= HAL_PWM_MAX_DUTY && new_d0 >= 0){
+		d0 = new_d0;
 		res = MID_PWR_RESULT_SUCCESS;
 	}
 	return res;

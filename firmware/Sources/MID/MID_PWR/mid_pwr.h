@@ -37,15 +37,16 @@ typedef enum {
 }MID_PWR_Output_e;
 
 /**
- * @enum MID_PWR_Control_Mode_e
+ * @enum MID_PWR_Mode_e
  * @brief Enum of available control modes for MID_PWR.
  *
  */
 typedef enum{
-	MID_PWR_Control_Mode_CC = 0x0u,
-	MID_PWR_Control_Mode_CV,
-	MID_PWR_Control_Mode_CP
-}MID_PWR_Control_Mode_e;
+	MID_PWR_MODE_CC = 0x0u,
+	MID_PWR_MODE_CV,
+	MID_PWR_MODE_CP,
+	MID_PWR_COUNT
+}MID_PWR_Mode_e;
 
 /**
  * @enum MID_PWR_result_e
@@ -79,7 +80,7 @@ typedef enum
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
-
+//TODO: rewrite
 /**
  * @fn MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode)
  * @brief Enable or disable the output pwr.
@@ -89,17 +90,17 @@ typedef enum
  * 		@ref MID_PWR_RESULT_ERROR otherwise.
  */
 MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode);
-
+//TODO: rewrite
 /**
- * @fn MID_PWR_result_e MID_PwrApplyPI(const uint16_t ref, const uint16_t actual_value, const MID_PWR_Control_Mode_e, const XXXX limits)
+ * @fn MID_PWR_result_e MID_PwrApplyPI(const uint16_t ref, const uint16_t actual_value, const MID_PWR_Mode_e, const XXXX limits)
  * @brief Enable or disable the output pwr.
  * @param outputMode Input variable to use to set the mode 
  * @return @ref MID_PWR_RESULT_SUCCESS if set correctly,
  * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
  * 		@ref MID_PWR_RESULT_ERROR otherwise.
  */
-MID_PWR_result_e MID_PwrApplyPI(const uint16_t ref, const uint16_t actual_value, const MID_PWR_Control_Mode_e, const XXXX limits);
-
+MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits);
+//TODO: rewrite
 /**
  * @fn MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS)
  * @brief Enable or disable the output pwr.

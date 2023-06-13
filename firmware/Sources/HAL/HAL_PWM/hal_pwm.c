@@ -22,7 +22,7 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-#define MAX_DUTY 100000
+
 #define MIN_PWM 96
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -36,6 +36,7 @@
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 static HRTIM_CompareCfgTypeDef pCompareCfg = {0};
+uint32_t * max_steps;
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
@@ -70,6 +71,8 @@ HAL_PWM_result_e HAL_PwmInit(void){
 	EPC_ST_ERR_COUNTER = 0;
 	MX_HRTIM1_Init();
 	if (EPC_ST_ERR_COUNTER==0){
+		//get from hrtim the max value for the PWM counter
+		max_steps = (uint32_t*) &(hhrtim1.Instance->sTimerxRegs[0].PERxR);
 		res = HAL_PWM_RESULT_SUCCESS;
 	}
 	return res;
@@ -78,15 +81,15 @@ HAL_PWM_result_e HAL_PwmInit(void){
 
 HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
 	// Get the period of the timer, as will be the maximum value to compare
-	uint32_t max = hhrtim1.Instance->sTimerxRegs[0].PERxR;
+
 	uint32_t pwm_duty;
-	if (duty>MAX_DUTY){
+	if (duty>=HAL_PWM_MAX_DUTY){
 		// The maximum duty to apply is the period configured
-		pwm_duty = max -1;
+		pwm_duty = *max_steps -1;
 	}
 	//If duty is 0 no division is allow so duty has to be greater than 0
 	else if (duty>0){
-		pwm_duty = duty * max/MAX_DUTY - 1;
+		pwm_duty = duty * (*max_steps)/HAL_PWM_MAX_DUTY - 1; //duty * max maximum result is .9215e9 (ok in uint32)
 	}
 	else{
 		// Otherwise assigned directly to the pwm
@@ -98,6 +101,7 @@ HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
 	}
 	// Write the value to compare in the register.
 	pCompareCfg.CompareValue = pwm_duty;
+//	pCompareCfg.CompareValue = 5007;
 	// Apply the compare configuration to the dessire timer unit in this case HRTIM-A1
 	HAL_PWM_result_e res = HAL_HRTIM_WaveformCompareConfig(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_1, &pCompareCfg);;
 	return res;
