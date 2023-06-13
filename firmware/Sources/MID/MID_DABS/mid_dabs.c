@@ -15,7 +15,7 @@
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "mid_dabs.h"
-
+#include "mid_reg.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -291,44 +291,43 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg){
+MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_property_s * measreg){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
+	uint16_t data_adc;
+	int16_t temp;
 	switch(type){
 		case MID_DABS_MEAS_ELECTRIC:
-			uint16_t data_adc;
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_HS_VOLT, &data_adc);;
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_HS_VOLT, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->hsVolt = (uin16_t) ((uint32_t)(data_adc*(MAX_HS_VOLT-MIN_VOLT)>>12)+MIN_VOLT);
+				measreg->hsVolt = (uint16_t) ((((int32_t) (data_adc * (MAX_HS_VOLT - MIN_VOLT)))>>12) + MIN_VOLT);
 			}
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_LS_VOLT, &data_adc);;
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_VOLT, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->lsVolt = (uin16_t) ((uint32_t)(data_adc*(MAX_LS_VOLT-MIN_VOLT)>>12)+MIN_VOLT);
+				measreg->lsVolt = (uint16_t) ((((int32_t) (data_adc * (MAX_LS_VOLT - MIN_VOLT)))>>12) + MIN_VOLT);
 			}
-			int16_t adc_curr;
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_LS_CURR, &adc_curr);;
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_CURR, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->lsCurr = (in16_t) ((uint32_t)(data_adc*(MAX_LS_CURR-MIN_LS_CURR)>>12)+MIN_LS_CURR);
+				measreg->lsCurr = (int16_t) ((((int32_t) (data_adc * (MAX_LS_CURR - MIN_LS_CURR)))>>12) + MIN_LS_CURR);
 			}
 			break;
 		case MID_DABS_MEAS_TEMP:
-			int16_t temp;
 			// Check if the hardware version has I2C
-			if (MID_REG_info_s.hwVer > 16){
+			if (MID_REG_info.hwVer == 1){
 				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
 				if (res == MID_DABS_RESULT_SUCCESS){
-					*measreg->tempBody = temp;
+					measreg->tempBody = temp;
 				}
 			}else{
 				// If not I2C the register will always have a 0
-				*measreg->tempBody=0;
+				measreg->tempBody=0;
 			}
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_TEMP_ANOD, &temp);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &temp);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->tempAnod = (in16_t) ((uint32_t)(temp*(MAX_TEMP-MIN_TEMP)>>12)+MIN_TEMP);
+				measreg->tempAnod = (int16_t) ((((int32_t) (temp * (MAX_TEMP - MIN_TEMP)))>>12) + MIN_TEMP);
 			}
-			res = (MID_DABS_result_e) HAL_AdcGet(HAL_ADC_TEMP_AMB, &temp);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &temp);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				*measreg->tempAmb = (in16_t) ((uint32_t)(temp*(MAX_TEMP-MIN_TEMP)>>12)+MIN_TEMP);
+				measreg->tempAmb = (int16_t) ((((int32_t) (temp * (MAX_TEMP - MIN_TEMP)))>>12) + MIN_TEMP);
 			}
 			break;
 	}

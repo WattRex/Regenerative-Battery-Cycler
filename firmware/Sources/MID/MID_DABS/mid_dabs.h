@@ -80,7 +80,7 @@ typedef enum
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_s * measreg);
+MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_property_s * measreg);
 
 /**
  * @fn MID_DABS_result_e MID_DabsUpdateLeds()
