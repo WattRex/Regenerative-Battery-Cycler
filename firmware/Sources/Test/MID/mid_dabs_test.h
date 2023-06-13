@@ -48,6 +48,16 @@
 
 /**
  * @fn MID_DABS_result_t MID_DabsTestLeds()
+ * @brief Try measurements, both electrical and temperatures.
+ *
+ * @return
+ * 		@ref MID_DABS_RESULT_SUCCESS if test ends correctly,
+ * 		@ref MID_DABS_RESULT_ERROR otherwise
+ */
+MID_DABS_result_e MID_DabsTestMeas(MID_DABS_meas_e meas_type);
+
+/**
+ * @fn MID_DABS_result_t MID_DabsTestLeds()
  * @brief Try the different states of the leds depending on the mode or error encounter.
  *
  * @return

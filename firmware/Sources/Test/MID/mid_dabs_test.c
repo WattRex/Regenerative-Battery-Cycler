@@ -55,6 +55,14 @@
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
+MID_DABS_result_e MID_DabsTestMeas(MID_DABS_meas_e meas_type){
+	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
+	MID_REG_meas_s measreg = {0,0,0,0,0,0};
+	res = MID_DabsUpdateMeas(meas_type, &measreg);		
+	return res;
+}
+
+
 MID_DABS_result_e MID_DabsTestLeds(uint8_t state){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
 	MID_REG_errorStatus_s errors = {0,0,0,0,0,0,0};
