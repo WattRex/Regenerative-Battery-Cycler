@@ -6,7 +6,7 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-//#include "hal_adc.h"
+#include "hal_adc.h"
 #include "hal_sts.h"
 #include "hal_gpio.h"
 #include "epc_conf.h"
