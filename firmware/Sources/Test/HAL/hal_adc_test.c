@@ -72,16 +72,16 @@ HAL_ADC_result_e TestAdcs(void){
 	res |= HAL_AdcGetValue(HAL_ADC_LS_VOLT, &ls_volt);
 	res |= HAL_AdcGetValue(HAL_ADC_HS_VOLT, &hs_volt);
 
-	res |= HAL_AdcGetValue(HAL_ADC_EXT_TEMP1, &temp1);
-	res |= HAL_AdcGetValue(HAL_ADC_EXT_TEMP2, &temp2);
+	res |= HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &temp1);
+	res |= HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &temp2);
 	res |= HAL_AdcGetValue(HAL_ADC_INT_TEMP, &int_temp);
 
 	while(n_ints_rt % 2 == 0){	};
 	HAL_TmrStop(HAL_TMR_CLOCK_RT);
 	HAL_TmrStop(HAL_TMR_CLOCK_PWR_MEAS);
 
-	res |= HAL_AdcGetValue(HAL_ADC_EXT_TEMP1, &temp1);
-	res |= HAL_AdcGetValue(HAL_ADC_EXT_TEMP2, &temp2);
+	res |= HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &temp1);
+	res |= HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &temp2);
 	res |= HAL_AdcGetValue(HAL_ADC_INT_TEMP, &int_temp);
 
 	return res;
