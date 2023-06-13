@@ -41,20 +41,13 @@
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
-
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
 
-/**
- * @fn MID_DABS_result_t MID_DabsTestLeds()
- * @brief Try measurements, both electrical and temperatures.
- *
- * @return
- * 		@ref MID_DABS_RESULT_SUCCESS if test ends correctly,
- * 		@ref MID_DABS_RESULT_ERROR otherwise
- */
-MID_DABS_result_e MID_DabsTestMeas(MID_DABS_meas_e meas_type);
+
+MID_DABS_result_e MID_DabsTestMeas(void);
+
 
 /**
  * @fn MID_DABS_result_t MID_DabsTestLeds()

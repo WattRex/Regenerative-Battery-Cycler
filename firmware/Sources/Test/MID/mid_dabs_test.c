@@ -11,6 +11,7 @@
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "mid_dabs_test.h"
+#include "hal_tmr.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -19,6 +20,7 @@
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
 
+#define MIN_PWM 96
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -30,6 +32,8 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
+static HRTIM_CompareCfgTypeDef pCompareCfg = {0};
+uint32_t * max_steps;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -54,14 +58,25 @@
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
-
-MID_DABS_result_e MID_DabsTestMeas(MID_DABS_meas_e meas_type){
+MID_DABS_result_e MID_DabsTestMeas(void){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
-	MID_REG_meas_property_s measreg = {0,0,0,0,0,0};
-	res = MID_DabsUpdateMeas(meas_type, &measreg);		
+	MID_REG_meas_s measreg = {0,0,0,0,0,0};
+	uint8_t i=0;
+	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
+	HAL_TmrStart(HAL_TMR_CLOCK_RT);
+	do{
+		res = MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measreg);
+		i++;
+	}while (i<10 && res == MID_DABS_RESULT_SUCCESS);
+	if (res == MID_DABS_RESULT_SUCCESS){
+		i=0;
+		do{
+			res = MID_DabsUpdateMeas(MID_DABS_MEAS_TEMP, &measreg);
+			i++;
+		}while (i<10 && res == MID_DABS_RESULT_SUCCESS);
+	}
 	return res;
 }
-
 
 MID_DABS_result_e MID_DabsTestLeds(uint8_t state){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
@@ -132,6 +147,5 @@ MID_DABS_result_e MID_DabsTestLeds(uint8_t state){
 			i++;
 		}while (i<states && res==MID_DABS_RESULT_SUCCESS);
 	}
-
 	return res;
 }

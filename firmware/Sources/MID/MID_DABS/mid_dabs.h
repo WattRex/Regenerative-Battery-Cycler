@@ -71,7 +71,7 @@ typedef enum
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
-
+//TODO: rewrite
 /**
  * @fn MID_DABS_result_e MID_DabsGetMeas()
  * @brief Get meassurements from all the sensors

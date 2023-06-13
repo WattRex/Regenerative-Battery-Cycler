@@ -15,7 +15,6 @@
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "mid_dabs.h"
-#include "mid_reg.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -24,17 +23,19 @@
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
 #define MAX_LEDS_STEPS 5
-#define MAX_HS_VOLT 15000
-#define MAX_LS_VOLT 6000
-#define MIN_VOLT 0
-#define MAX_LS_CURR 16500
-#define MIN_LS_CURR -16500
+#define MAX_HS_V 15000
+//#define MAX_LS_V 6000
+#define MAX_LS_V 5000
+#define MIN_V 0
+//#define MAX_LS_C 16500
+//#define MIN_LS_C -16500
+#define MAX_LS_C 11000
+#define MIN_LS_C -11000
 #define MAX_TEMP 700
 #define MIN_TEMP -200
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
-
 /**********************************************************************************/
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
@@ -227,7 +228,7 @@ static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr
 		}
 		else if (errors->lsCurrErr !=MID_REG_ERROR_NONE){
 			*mode = errlscurrMode;
-		}	
+		}
 		else if (errors->tempErr !=MID_REG_ERROR_NONE){
 			*mode = errTempMode;
 		}
@@ -293,41 +294,41 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 
 MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_property_s * measreg){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
-	uint16_t data_adc;
-	int16_t temp;
+	uint16_t data_adc = 0;
+	int16_t temp_sensor = 0;
 	switch(type){
 		case MID_DABS_MEAS_ELECTRIC:
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_HS_VOLT, &data_adc);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_HS_VOLT, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->hsVolt = (uint16_t) ((((int32_t) (data_adc * (MAX_HS_VOLT - MIN_VOLT)))>>12) + MIN_VOLT);
+				measreg->hsVolt = (uint16_t)((((uint32_t)(data_adc*(MAX_HS_V - MIN_V)))>>12)+MIN_V);
 			}
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_VOLT, &data_adc);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_VOLT, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->lsVolt = (uint16_t) ((((int32_t) (data_adc * (MAX_LS_VOLT - MIN_VOLT)))>>12) + MIN_VOLT);
+				measreg->lsVolt = (uint16_t)((((uint32_t)(data_adc*(MAX_LS_V - MIN_V)))>>12)+MIN_V);
 			}
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_CURR, &data_adc);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_CURR, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->lsCurr = (int16_t) ((((int32_t) (data_adc * (MAX_LS_CURR - MIN_LS_CURR)))>>12) + MIN_LS_CURR);
+				measreg->lsCurr =(int16_t) ((((uint32_t)(data_adc*(MAX_LS_C - MIN_LS_C)))>>12)+MIN_LS_C);
 			}
 			break;
 		case MID_DABS_MEAS_TEMP:
 			// Check if the hardware version has I2C
-			if (EPC_CONF_info.hwVer == 1){
-				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
+			if (EPC_CONF_info.hwVer < 16){
+				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp_sensor);
 				if (res == MID_DABS_RESULT_SUCCESS){
-					measreg->tempBody = temp;
+					measreg->tempBody = temp_sensor;
 				}
 			}else{
 				// If not I2C the register will always have a 0
 				measreg->tempBody=0;
 			}
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &temp);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->tempAnod = (int16_t) ((((int32_t) (temp * (MAX_TEMP - MIN_TEMP)))>>12) + MIN_TEMP);
+				measreg->tempAnod = (int16_t) ((((uint32_t)(data_adc*(MAX_TEMP - MIN_TEMP)))>>12)+MIN_TEMP);
 			}
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &temp);
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->tempAmb = (int16_t) ((((int32_t) (temp * (MAX_TEMP - MIN_TEMP)))>>12) + MIN_TEMP);
+				measreg->tempAmb = (int16_t) ((((uint32_t)(data_adc*(MAX_TEMP - MIN_TEMP)))>>12)+MIN_TEMP);
 			}
 			break;
 	}
