@@ -136,7 +136,7 @@ APP_SALG_result_e APP_SalgInit(){
 	APP_SALG_result_e res= APP_SALG_RESULT_SUCCESS;
 	HAL_SYS_result_e sysRes = HAL_SysInit();
 	while(sysRes != HAL_SYS_RESULT_SUCCESS){
-		if(sysRes == HAL_SYS_RESULT_ERROR_CRIT || sysRes == HAL_SYS_RESULT_ERROR_COMM){
+		if(sysRes == HAL_SYS_RESULT_ERROR_CRIT){
 			// TODO: move it to hal_sys
 			/* Try re-initialization due to critical error */
 			__disable_irq();

@@ -217,7 +217,7 @@ void DMA1_Channel1_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel1_IRQn 1 */
 	#ifdef EPC_CONF_USE_CUSTOM_HAL
 		/* USER CODE END TIM2_IRQn 0 */
-  	HAL_Adc1_Callback();
+  	HAL_AdcCallbackDMAChl1Cplt();
 		/* USER CODE BEGIN TIM2_IRQn 1 */
 	#endif
   /* USER CODE END DMA1_Channel1_IRQn 1 */
@@ -233,7 +233,7 @@ void DMA1_Channel2_IRQHandler(void)
   HAL_DMA_IRQHandler(&hdma_adc2);
   /* USER CODE BEGIN DMA1_Channel2_IRQn 1 */
 	#ifdef EPC_CONF_ADC_DMA_ENABLED
-  	HAL_Adc2_Callback();
+  	HAL_AdcCallbackDMAChl2Cplt();
 	#endif
   /* USER CODE END DMA1_Channel2_IRQn 1 */
 }
