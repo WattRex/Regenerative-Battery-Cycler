@@ -312,7 +312,7 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			break;
 		case MID_DABS_MEAS_TEMP:
 			// Check if the hardware version has I2C
-			if (MID_REG_info.hwVer == 1){
+			if (EPC_CONF_info.hwVer == 1){
 				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp);
 				if (res == MID_DABS_RESULT_SUCCESS){
 					measreg->tempBody = temp;
