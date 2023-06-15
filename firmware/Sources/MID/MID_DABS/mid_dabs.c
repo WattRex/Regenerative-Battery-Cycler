@@ -15,6 +15,7 @@
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "mid_dabs.h"
+#include "mid_reg.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -24,13 +25,10 @@
 /**********************************************************************************/
 #define MAX_LEDS_STEPS 5
 #define MAX_HS_V 15000
-//#define MAX_LS_V 6000
-#define MAX_LS_V 5000
+#define MAX_LS_V 6000
 #define MIN_V 0
-//#define MAX_LS_C 16500
-//#define MIN_LS_C -16500
-#define MAX_LS_C 11000
-#define MIN_LS_C -11000
+#define MAX_LS_C 16500
+#define MIN_LS_C -16500
 #define MAX_TEMP 700
 #define MIN_TEMP -200
 /**********************************************************************************/
@@ -192,7 +190,7 @@ blink_s ledsMode = {
 /**********************************************************************************/
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
-
+extern const MID_REG_info_s EPC_CONF_info;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
@@ -313,7 +311,7 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			break;
 		case MID_DABS_MEAS_TEMP:
 			// Check if the hardware version has I2C
-			if (EPC_CONF_info.hwVer < 16){
+			if ((EPC_CONF_info.hwVer %2)==0){ // Odd will have i2c Even won´t
 				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp_sensor);
 				if (res == MID_DABS_RESULT_SUCCESS){
 					measreg->tempBody = temp_sensor;

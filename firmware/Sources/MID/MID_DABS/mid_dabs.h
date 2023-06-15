@@ -73,23 +73,32 @@ typedef enum
 /**********************************************************************************/
 //TODO: rewrite
 /**
- * @fn MID_DABS_result_e MID_DabsGetMeas()
- * @brief Get meassurements from all the sensors
+ * @fn MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
+ * 									MID_REG_meas_property_s * measreg)
+ * @brief Get meassurements from the type specified, electrical or temperatures.
  *
+ * @param type, specific type of measurement to update.
+ * @param measreg, Pointer to the register where the measures are stored.
  * @return @ref MID_DABS_RESULT_SUCCESS if measured correctly,
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_property_s * measreg);
+MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
+							MID_REG_meas_property_s * measreg);
 
 /**
- * @fn MID_DABS_result_e MID_DabsUpdateLeds()
+ * @fn MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr,
+ * 								MID_REG_errorStatus_s * errors)
  * @brief Update Leds to show the state/mode of the epc
  *
+ * @param ctrlMode, Mode in which the epc is working on, could be CC, CV, y CP.
+ * @param curr, Actual measurement of the current in the low side.
+ * @param errors, Register where the different type of errors are stored.
  * @return @ref MID_DABS_RESULT_SUCCESS if update successfully,
  * 		@ref MID_DABS_RESULT_BUSY, @ref MID_DABS_RESULT_TIMEOUT or
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
-MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr, MID_REG_errorStatus_s * errors);
+MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr,
+								MID_REG_errorStatus_s * errors);
 
 #endif /* MID_DABS_H_ */
