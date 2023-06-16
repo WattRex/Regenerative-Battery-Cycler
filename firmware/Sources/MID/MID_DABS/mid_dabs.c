@@ -23,13 +23,6 @@
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
 #define MAX_LEDS_STEPS 5
-#define MAX_HS_V 15000
-#define MAX_LS_V 6000
-#define MIN_V 0
-#define MAX_LS_C 16500
-#define MIN_LS_C -16500
-#define MAX_TEMP 700
-#define MIN_TEMP -200
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -190,6 +183,9 @@ blink_s ledsMode = {
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
 extern const MID_REG_info_s EPC_CONF_info;
+extern MID_REG_meas_property_s factors;
+extern MID_REG_meas_property_s offset;
+extern MID_REG_meas_property_s max_value;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
@@ -297,15 +293,15 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 		case MID_DABS_MEAS_ELECTRIC:
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_HS_VOLT, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->hsVolt = (uint16_t)((((uint32_t)(data_adc*(MAX_HS_V - MIN_V)))>>12)+MIN_V);
+				measreg->hsVolt = (uint16_t)(((uint32_t)(data_adc*factor.hsVolt)/max_value.hsVolt)+offset.hsVolt);
 			}
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_VOLT, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->lsVolt = (uint16_t)((((uint32_t)(data_adc*(MAX_LS_V - MIN_V)))>>12)+MIN_V);
+				measreg->lsVolt = (uint16_t)(((uint32_t)(data_adc*factor.lsVolt)/max_value.lsVolt)+offset.lsVolt);
 			}
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_CURR, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->lsCurr =(int16_t) ((((uint32_t)(data_adc*(MAX_LS_C - MIN_LS_C)))>>12)+MIN_LS_C);
+				measreg->lsCurr =(int16_t) (((uint32_t)(data_adc*factor.lsCurr)/max_value.lsCurr)+offset.lsCurr);
 			}
 			break;
 		case MID_DABS_MEAS_TEMP:
@@ -321,11 +317,11 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			}
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->tempAnod = (int16_t) ((((uint32_t)(data_adc*(MAX_TEMP - MIN_TEMP)))>>12)+MIN_TEMP);
+				measreg->tempAnod = (int16_t) (((uint32_t)(data_adc*factor.tempAnod)/max_value.tempAnod)+offset.tempAnod);
 			}
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &data_adc);
 			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->tempAmb = (int16_t) ((((uint32_t)(data_adc*(MAX_TEMP - MIN_TEMP)))>>12)+MIN_TEMP);
+				measreg->tempAmb = (int16_t) (((uint32_t)(data_adc*factor.tempAmb)/max_value.tempAmb)+offset.tempAmb);
 			}
 			break;
 	}
