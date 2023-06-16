@@ -139,10 +139,18 @@ HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const 
 {
 	/* Start the Transmission process */
 	HAL_CAN_result_e res = HAL_CAN_RESULT_ERROR;
-	if (size <= 8){
+	uint32_t tsr = READ_REG(hcan.Instance->TSR);
+	/* Check that all the Tx mailboxes are not full */
+    if (((tsr & CAN_TSR_TME0) != 0U) ||
+        ((tsr & CAN_TSR_TME1) != 0U) ||
+        ((tsr & CAN_TSR_TME2) != 0U)){
+		if (size <= 8){
 		TxHeader.DLC =size;
 		TxHeader.StdId = id;
 		res = HAL_CAN_AddTxMessage(&hcan, &TxHeader, data, &TxMailbox);
+		}
+	}else{
+		res = HAL_CAN_RESULT_BUSY;
 	}
 	return res;
 }
@@ -150,9 +158,15 @@ HAL_CAN_result_e HAL_CanTransmit (const uint32_t id, const uint8_t* data, const 
 
 HAL_CAN_result_e HAL_CanReceive (uint32_t* const id, uint8_t* data, uint8_t* const size)
 {
+	HAL_CAN_result_e res = HAL_CAN_RESULT_ERROR;
 	/* Get RX message */
-	HAL_CAN_result_e res = HAL_CAN_GetRxMessage(&hcan, CAN_RX_FIFO0, &RxHeader, data);
-	*id = RxHeader.StdId;
-	*size = RxHeader.DLC;
+	/* Check that the Rx FIFO 0 is not empty */
+    if ((hcan.Instance->RF0R & CAN_RF0R_FMP0) != 0U){
+		res = HAL_CAN_GetRxMessage(&hcan, CAN_RX_FIFO0, &RxHeader, data);
+		*id = RxHeader.StdId;
+		*size = RxHeader.DLC;
+	}else{
+		res = HAL_CAN_RESULT_NO_MESSAGE;
+	}
 	return res;
 }

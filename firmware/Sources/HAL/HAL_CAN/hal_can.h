@@ -33,10 +33,11 @@
  */
 typedef enum
 {
-	HAL_CAN_RESULT_SUCCESS = 0x00U,	/**< HAL_CAN success operation result **/
-	HAL_CAN_RESULT_ERROR = 0x01U,	/**< HAL_CAN error operation result **/
-	HAL_CAN_RESULT_BUSY = 0x02U,	/**< HAL_CAN busy result **/
-	HAL_CAN_RESULT_TIMEOUT  = 0x03	/**< HAL_CAN timeout expired **/
+	HAL_CAN_RESULT_SUCCESS 		= 0x00U,	/**< HAL_CAN success operation result **/
+	HAL_CAN_RESULT_ERROR 		= 0x01U,	/**< HAL_CAN error operation result **/
+	HAL_CAN_RESULT_BUSY 		= 0x02U,	/**< HAL_CAN busy result **/
+	HAL_CAN_RESULT_NO_MESSAGE 	= 0x03U,
+	HAL_CAN_RESULT_TIMEOUT  	= 0x04		/**< HAL_CAN timeout expired **/
 }HAL_CAN_result_e;
 
 /**********************************************************************************/
