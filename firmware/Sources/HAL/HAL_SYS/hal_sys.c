@@ -108,7 +108,7 @@ HAL_SYS_result_e HAL_SysInit(void){
 
 #ifdef EPC_CONF_CAN_ENABLED
 			if (HAL_CanInit() != HAL_CAN_RESULT_SUCCESS){
-				res = HAL_SYS_RESULT_ERROR_COMM;
+				res = HAL_SYS_RESULT_ERROR_CAN;
 			}else{
 #endif
 

@@ -3,8 +3,8 @@
 * @brief          : Definition of global registers
 ***********************************************************************************/
 
-#ifndef MID_MID_REG_MID_REG_H_
-#define MID_MID_REG_MID_REG_H_
+#ifndef MID_REG_H_
+#define MID_REG_H_
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
@@ -83,12 +83,12 @@ typedef enum
  */
 typedef struct
 {
-	uint16_t hsVoltMax;
-	uint16_t hsVoltMin;
 	uint16_t lsVoltMax;
 	uint16_t lsVoltMin;
 	int16_t lsCurrMax;
 	int16_t lsCurrMin;
+	uint16_t hsVoltMax;
+	uint16_t hsVoltMin;
 	int16_t lsPwrMax;
 	int16_t lsPwrMin;
 	int16_t tempMax;
@@ -164,12 +164,12 @@ typedef struct
  */
 typedef struct
 {
-	MID_REG_error_e hsVoltErr;
-	MID_REG_error_e lsVoltErr;
-	MID_REG_error_e lsCurrErr;
-	MID_REG_error_e commErr;
-	MID_REG_error_e tempErr;
-	MID_REG_error_e intErr;
+	MID_REG_error_e hsVoltErr : 1;
+	MID_REG_error_e lsVoltErr : 1;
+	MID_REG_error_e lsCurrErr : 1;
+	MID_REG_error_e commErr : 1;
+	MID_REG_error_e tempErr : 1;
+	MID_REG_error_e intErr : 1;
 	uint16_t lastErrVal;
 }MID_REG_errorStatus_s;
 
@@ -209,4 +209,4 @@ typedef struct
 /**********************************************************************************/
 
 
-#endif /* MID_MID_REG_MID_REG_H_ */
+#endif /* MID_REG_H_ */
