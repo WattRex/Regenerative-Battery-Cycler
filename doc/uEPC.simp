@@ -9,7 +9,7 @@
     <entity-names>
       <counter>
         <item-type type-id="frame" type="Frame" />
-        <value>15</value>
+        <value>16</value>
       </counter>
       <counter>
         <item-type stereotype="component" type-id="component" type="Component" />
@@ -25,15 +25,15 @@
       </counter>
       <counter>
         <item-type stereotype="enumeration" type-id="enumeration" type="Enumeration" />
-        <value>6</value>
+        <value>7</value>
       </counter>
       <counter>
         <item-type type-id="class" type="Class" />
-        <value>18</value>
+        <value>19</value>
       </counter>
       <counter>
         <item-type stereotype="interface" type-id="uml-interface-classifier" type="Interface" />
-        <value>27</value>
+        <value>29</value>
       </counter>
       <counter>
         <item-type stereotype="table" type-id="class" type="Class" />
@@ -135,7 +135,7 @@
       </counter>
       <counter>
         <item-type type-id="frame" type="Frame" />
-        <value>164</value>
+        <value>167</value>
       </counter>
       <counter>
         <item-type type-id="component" type="Component" />
@@ -167,11 +167,11 @@
       </counter>
       <counter>
         <item-type type-id="relationship" type="Association" />
-        <value>75</value>
+        <value>78</value>
       </counter>
       <counter>
         <item-type type-id="property" type="Property" />
-        <value>378</value>
+        <value>389</value>
       </counter>
       <counter>
         <item-type type-id="artifact" type="Artifact" />
@@ -179,7 +179,7 @@
       </counter>
       <counter>
         <item-type type-id="enumeration" type="Enumeration" />
-        <value>52</value>
+        <value>54</value>
       </counter>
       <counter>
         <item-type type-id="comment" type="Comment" />
@@ -191,19 +191,19 @@
       </counter>
       <counter>
         <item-type type-id="class" type="Class" />
-        <value>53</value>
+        <value>54</value>
       </counter>
       <counter>
         <item-type type-id="usage" type="Usage" />
-        <value>165</value>
+        <value>166</value>
       </counter>
       <counter>
         <item-type type-id="realization" type="Realization" />
-        <value>44</value>
+        <value>45</value>
       </counter>
       <counter>
         <item-type type-id="uml-interface-classifier" type="Interface" />
-        <value>43</value>
+        <value>45</value>
       </counter>
       <counter>
         <item-type type-id="abstraction" type="Abstraction" />
@@ -355,7 +355,7 @@
       </counter>
       <counter>
         <type>SoftwareIdeasModeler.Core.DiagramItems.Fields.OperationField</type>
-        <value>65</value>
+        <value>78</value>
       </counter>
     </fields>
   </counters>
@@ -393,96 +393,122 @@
         <parameter id="9434e2eb1f47405e899b4c68b64f9ee1" name="ptr" code="p" meaning="Pointer" template="" description="" kind="Flag" />
       </parameters>
       <types>
-        <type id="uint8_t" name="uint8_t" />
-        <type id="GPIO_TypeDef" name="GPIO_TypeDef" />
-        <type id="*value" name="*value" />
-        <type id="void" name="void" />
-        <type id="uint3" name="uint3" />
-        <type id="uint1" name="uint1" />
-        <type id="Class:dia48de3b2fa404a4f8d18f0fe4958aa0f6972" name="HAL_TMR_result_t" class-ref="dia48de3b2fa404a4f8d18f0fe4958aa0f6972" />
-        <type id="uint64_t" name="uint64_t" />
-        <type id="Class:di714107423deb48e58951e4640e0f046e4065" name="HAL_SYS_P_IF" class-ref="di714107423deb48e58951e4640e0f046e4065" />
-        <type id="uint32_" name="uint32_" />
-        <type id="MID_REG_limits_s" name="MID_REG_limits_s" />
-        <type id="Class:301a2410410e479486d0b3a00a81285b" name="GPIO_pinout_config_t" class-ref="301a2410410e479486d0b3a00a81285b" />
-        <type id="Class:die5077cfebfac456e9789d362ad6b667d7567" name="MID_COMM_result_e" class-ref="die5077cfebfac456e9789d362ad6b667d7567" />
-        <type id="HAL_GPIO_output_e" name="HAL_GPIO_output_e" />
-        <type id="GPIO_pinout_config_t" name="GPIO_pinout_config_t" />
-        <type id="Class:170b223f5f434fbb99263007c393feeb" name="HAL_GPIO_result_e" class-ref="170b223f5f434fbb99263007c393feeb" />
-        <type id="Class:49254455f63e40c680a816999da375a4" name="blink_s" class-ref="49254455f63e40c680a816999da375a4" />
-        <type id="Class:di3f3c455c18e44a99a71d2486206d90f99959" name="MID_REG_error_e" class-ref="di3f3c455c18e44a99a71d2486206d90f99959" />
-        <type id="Class:98fe2ea5f9204c1d8be302862dc8bf45" name="stm32fyxx_hal_conf.h" class-ref="98fe2ea5f9204c1d8be302862dc8bf45" />
-        <type id="Class:die0973a055cb641639bcd9a2319032cf43178" name="HAL_PWM_P_IF" class-ref="die0973a055cb641639bcd9a2319032cf43178" />
-        <type id="Class:9ba1f774b8da402d98b474fafc1d89db" name="MID_DABS" class-ref="9ba1f774b8da402d98b474fafc1d89db" />
-        <type id="Class:dia8db584c779147b9a0f390688757c2b07837" name="blink_mode_e" class-ref="dia8db584c779147b9a0f390688757c2b07837" />
-        <type id="int16_t" name="int16_t" />
-        <type id="_GPIO_input_pins" name="_GPIO_input_pins" />
-        <type id="Class:di787b9f6f15a0455aa0bac7d8d0361f1e4276" name="MID_REG_periodic_period_s" class-ref="di787b9f6f15a0455aa0bac7d8d0361f1e4276" />
+        <type id="MID_PWR_" name="MID_PWR_" />
+        <type id="Class:4ab17ce758f14782aea2d0385cdccac8" name="blink_conf_s" class-ref="4ab17ce758f14782aea2d0385cdccac8" />
         <type id="Class:di411b53f06f19460cbde4e15b4e62a0646554" name="HAL_CAN_result_e" class-ref="di411b53f06f19460cbde4e15b4e62a0646554" />
-        <type id="Class:die62625c2a03b41c5bb94d4ff81c1f1ae7113" name="HAL_GPIO_pin_output_e" class-ref="die62625c2a03b41c5bb94d4ff81c1f1ae7113" />
-        <type id="m" name="m" />
-        <type id="uint16_6" name="uint16_6" />
-        <type id="uint" name="uint" />
-        <type id="Class:dia205ca0661da4d81b1555c8add8037116366" name="HAL_STS_result_e" class-ref="dia205ca0661da4d81b1555c8add8037116366" />
-        <type id="i" name="i" />
-        <type id="u" name="u" />
-        <type id="Class:di43d67c4907ec4d928adfd5fd9a8b8b884170" name="MID_DABS_result_e" class-ref="di43d67c4907ec4d928adfd5fd9a8b8b884170" />
-        <type id="uint16_t" name="uint16_t" />
+        <type id="GPIO_TypeDef" name="GPIO_TypeDef" />
         <type id="Class:dif0965519ad224e86bb54709b8ee171786520" name="HAL_STS" class-ref="dif0965519ad224e86bb54709b8ee171786520" />
-        <type id="HAL_WDG_result_e" name="HAL_WDG_result_e" />
-        <type id="uin" name="uin" />
-        <type id="Class:di8680ef3072dd4b44943892550db59b0d7208" name="HAL_FLASH_result_t" class-ref="di8680ef3072dd4b44943892550db59b0d7208" />
-        <type id="Class:di249d85a0df8a4478ad6c20a64f306ddf9260" name="MID_REG_errorStatus_s" class-ref="di249d85a0df8a4478ad6c20a64f306ddf9260" />
-        <type id="Class:di190c7dbc10f342a4800e8305b9ae4d6d6009" name="MID_REG_limit_type_e" class-ref="di190c7dbc10f342a4800e8305b9ae4d6d6009" />
-        <type id="Class:di5622a897a67d403d894c9c3612af4a1b1829" name="HAL_WDG_result_t" class-ref="di5622a897a67d403d894c9c3612af4a1b1829" />
-        <type id="HAL_GPIO_input_e" name="HAL_GPIO_input_e" />
-        <type id="const uint16_t" name="const uint16_t" />
+        <type id="Class:di3d57b4a2611042df9af526e12601d81a9062" name="HAL_TMR_clock_e" class-ref="di3d57b4a2611042df9af526e12601d81a9062" />
+        <type id="Class:dia48de3b2fa404a4f8d18f0fe4958aa0f6972" name="HAL_TMR_result_t" class-ref="dia48de3b2fa404a4f8d18f0fe4958aa0f6972" />
+        <type id="MID_PWR_Mo" name="MID_PWR_Mo" />
+        <type id="MID_REG_limi" name="MID_REG_limi" />
+        <type id="uint64_t" name="uint64_t" />
+        <type id="MID_P" name="MID_P" />
+        <type id="MID_R" name="MID_R" />
+        <type id="Class:di3d2a1f8c0e5447968df08759d58b257e4065" name="HAL_SYS_mode_e" class-ref="di3d2a1f8c0e5447968df08759d58b257e4065" />
+        <type id="int16_" name="int16_" />
+        <type id="Class:di43d67c4907ec4d928adfd5fd9a8b8b884170" name="MID_DABS_result_e" class-ref="di43d67c4907ec4d928adfd5fd9a8b8b884170" />
+        <type id="MID_PWR_Mode_" name="MID_PWR_Mode_" />
+        <type id="Class:dibae6329a519b4409923ba6ff1135f26e4814" name="APP_IFACE_result_e" class-ref="dibae6329a519b4409923ba6ff1135f26e4814" />
         <type id="Class:di9775f46f98fe44ddb5e59d5929157acf4065" name="HAL_SYS_result_e" class-ref="di9775f46f98fe44ddb5e59d5929157acf4065" />
+        <type id="Class:dica1f131f539542ff8e77c3fa4602183e6272" name="HAL_GPIO_pin_value_e" class-ref="dica1f131f539542ff8e77c3fa4602183e6272" />
+        <type id="Class:di5622a897a67d403d894c9c3612af4a1b1829" name="HAL_WDG_result_t" class-ref="di5622a897a67d403d894c9c3612af4a1b1829" />
         <type id="in" name="in" />
+        <type id="Class:dia8db584c779147b9a0f390688757c2b07837" name="blink_mode_e" class-ref="dia8db584c779147b9a0f390688757c2b07837" />
+        <type id="uint32_t" name="uint32_t" />
+        <type id="Class:9ba1f774b8da402d98b474fafc1d89db" name="MID_DABS" class-ref="9ba1f774b8da402d98b474fafc1d89db" />
+        <type id="MID" name="MID" />
+        <type id="MID_PWR_Mode" name="MID_PWR_Mode" />
+        <type id="MID_REG_limits_s" name="MID_REG_limits_s" />
+        <type id="Class:di249d85a0df8a4478ad6c20a64f306ddf9260" name="MID_REG_errorStatus_s" class-ref="di249d85a0df8a4478ad6c20a64f306ddf9260" />
+        <type id="MID_REG_" name="MID_REG_" />
+        <type id="Class:95c4e67b0f3c4932aee7bc2bc58ab3f1" name="MID_REG_status_e" class-ref="95c4e67b0f3c4932aee7bc2bc58ab3f1" />
+        <type id="Class:difb86e7ec0954450e88cae414d79aacf55044" name="MID_PWR_Output_e" class-ref="difb86e7ec0954450e88cae414d79aacf55044" />
+        <type id="m" name="m" />
+        <type id="i" name="i" />
         <type id="Class:dide93164866b14661bcef40d0be8eb2204644" name="MID_REG_control_s" class-ref="dide93164866b14661bcef40d0be8eb2204644" />
         <type id="Class:e3e41afb39614b428c09241fd3dd2c6a" name="MID_REG_limit_s" class-ref="e3e41afb39614b428c09241fd3dd2c6a" />
-        <type id="MID_REG_periodic_time_min" name="MID_REG_periodic_time_min" />
-        <type id="uint16t" name="uint16t" />
-        <type id="Class:dica1f131f539542ff8e77c3fa4602183e6272" name="HAL_GPIO_pin_value_e" class-ref="dica1f131f539542ff8e77c3fa4602183e6272" />
-        <type id="Class:di3d57b4a2611042df9af526e12601d81a9062" name="HAL_TMR_clock_e" class-ref="di3d57b4a2611042df9af526e12601d81a9062" />
-        <type id="Class:di5e9c2b924c9640b99b22a9f838609c5a8251" name="" class-ref="di5e9c2b924c9640b99b22a9f838609c5a8251" />
-        <type id="Class:dibae6329a519b4409923ba6ff1135f26e4814" name="APP_IFACE_result_e" class-ref="dibae6329a519b4409923ba6ff1135f26e4814" />
-        <type id="uint16" name="uint16" />
-        <type id="mi" name="mi" />
-        <type id="int32_t" name="int32_t" />
-        <type id="uint16_" name="uint16_" />
-        <type id="ui" name="ui" />
-        <type id="Class:f8a576b9ee8e4ddca770ab5cd5691bc4" name="MID_COMM_request_e" class-ref="f8a576b9ee8e4ddca770ab5cd5691bc4" />
-        <type id="Class:di6b950ef9d2584469bd1343c60bc8ed9d9327" name="HAL_ADC_result_e" class-ref="di6b950ef9d2584469bd1343c60bc8ed9d9327" />
-        <type id="Class:95c4e67b0f3c4932aee7bc2bc58ab3f1" name="MID_REG_status_e" class-ref="95c4e67b0f3c4932aee7bc2bc58ab3f1" />
-        <type id="Class:di026d9708e9404bc2a32172485d47b7c43140" name="MID_COMM_mode_e" class-ref="di026d9708e9404bc2a32172485d47b7c43140" />
-        <type id="uint32" name="uint32" />
-        <type id="int1" name="int1" />
-        <type id="Class:di767f1384ac9a42969e9138e89874e1467063" name="MID_REG_info_s" class-ref="di767f1384ac9a42969e9138e89874e1467063" />
-        <type id="Class:dic560f217e8b34c1d93a9eb0e57dc4f854501" name="MID_REG_meas_property_s" class-ref="dic560f217e8b34c1d93a9eb0e57dc4f854501" />
-        <type id="Class:die5063768d3bb4ca3b8586a9dfade38ff9505" name="HAL_ADC_port_e" class-ref="die5063768d3bb4ca3b8586a9dfade38ff9505" />
-        <type id="HAL_PWM_result_e" name="HAL_PWM_result_e" />
-        <type id="Class:4ab17ce758f14782aea2d0385cdccac8" name="blink_conf_s" class-ref="4ab17ce758f14782aea2d0385cdccac8" />
-        <type id="Class:dia63d2c74268342df918095c14d0f61fb8922" name="MID_REG_periodic_s" class-ref="dia63d2c74268342df918095c14d0f61fb8922" />
-        <type id="Class:di271c23d7450d42e0a1f379d5bb3230759092" name="MID_REG_periodic_status_s" class-ref="di271c23d7450d42e0a1f379d5bb3230759092" />
-        <type id="Class:di57053f1741fe4a749fbfb0c43be81fd63178" name="HAL_PWM_result_e" class-ref="di57053f1741fe4a749fbfb0c43be81fd63178" />
-        <type id="uint8_" name="uint8_" />
-        <type id="HAL_STS_result_t" name="HAL_STS_result_t" />
-        <type id="int16_" name="int16_" />
-        <type id="Class:7f741cc8995745f884387fd9335486b0" name="HAL_GPIO" class-ref="7f741cc8995745f884387fd9335486b0" />
-        <type id="Class:di2c68bbe9cac74a09a5820c982d2226742110" name="MID_DABS_meas_e" class-ref="di2c68bbe9cac74a09a5820c982d2226742110" />
-        <type id="Class:di109c69dc53ae4c169a889ac7bd82c8358741" name="HAL_GPIO_pin_input_e" class-ref="di109c69dc53ae4c169a889ac7bd82c8358741" />
-        <type id="uint32_t" name="uint32_t" />
-        <type id="Class:di3d2a1f8c0e5447968df08759d58b257e4065" name="HAL_SYS_mode_e" class-ref="di3d2a1f8c0e5447968df08759d58b257e4065" />
-        <type id="HAL_ADC_resul" name="HAL_ADC_resul" />
+        <type id="u" name="u" />
         <type id="array" name="array" />
+        <type id="MID_REG_periodic_time_min" name="MID_REG_periodic_time_min" />
+        <type id="MID_PWR_Mod" name="MID_PWR_Mod" />
+        <type id="uint32_" name="uint32_" />
+        <type id="MID_PWR_Mode_e" name="MID_PWR_Mode_e" />
+        <type id="GPIO_pinout_config_t" name="GPIO_pinout_config_t" />
+        <type id="Class:di714107423deb48e58951e4640e0f046e4065" name="HAL_SYS_P_IF" class-ref="di714107423deb48e58951e4640e0f046e4065" />
+        <type id="const uint16_t" name="const uint16_t" />
+        <type id="Class:di026d9708e9404bc2a32172485d47b7c43140" name="MID_COMM_mode_e" class-ref="di026d9708e9404bc2a32172485d47b7c43140" />
+        <type id="U" name="U" />
+        <type id="uint32" name="uint32" />
+        <type id="MID_REG_li" name="MID_REG_li" />
+        <type id="HAL_GPIO_input_e" name="HAL_GPIO_input_e" />
+        <type id="int32_t" name="int32_t" />
+        <type id="Class:die5077cfebfac456e9789d362ad6b667d7567" name="MID_COMM_result_e" class-ref="die5077cfebfac456e9789d362ad6b667d7567" />
+        <type id="Class:di57053f1741fe4a749fbfb0c43be81fd63178" name="HAL_PWM_result_e" class-ref="di57053f1741fe4a749fbfb0c43be81fd63178" />
+        <type id="MID_REG_limits" name="MID_REG_limits" />
+        <type id="HAL_PWM_result_e" name="HAL_PWM_result_e" />
         <type id="Class:dic5cd96c2e0274375abf13d0f3842f4f79753" name="APP_SALG_result_e" class-ref="dic5cd96c2e0274375abf13d0f3842f4f79753" />
+        <type id="uint_" name="uint_" />
+        <type id="Class:di5e9c2b924c9640b99b22a9f838609c5a8251" name="" class-ref="di5e9c2b924c9640b99b22a9f838609c5a8251" />
+        <type id="Class:die5063768d3bb4ca3b8586a9dfade38ff9505" name="HAL_ADC_port_e" class-ref="die5063768d3bb4ca3b8586a9dfade38ff9505" />
+        <type id="Class:dia205ca0661da4d81b1555c8add8037116366" name="HAL_STS_result_e" class-ref="dia205ca0661da4d81b1555c8add8037116366" />
+        <type id="Class:di109c69dc53ae4c169a889ac7bd82c8358741" name="HAL_GPIO_pin_input_e" class-ref="di109c69dc53ae4c169a889ac7bd82c8358741" />
+        <type id="Class:dic560f217e8b34c1d93a9eb0e57dc4f854501" name="MID_REG_meas_property_s" class-ref="dic560f217e8b34c1d93a9eb0e57dc4f854501" />
+        <type id="uint16" name="uint16" />
+        <type id="Class:di6b950ef9d2584469bd1343c60bc8ed9d9327" name="HAL_ADC_result_e" class-ref="di6b950ef9d2584469bd1343c60bc8ed9d9327" />
+        <type id="Class:die62625c2a03b41c5bb94d4ff81c1f1ae7113" name="HAL_GPIO_pin_output_e" class-ref="die62625c2a03b41c5bb94d4ff81c1f1ae7113" />
         <type id="Class:di87d834e0362a4615ba93c8983be72c6c6972" name="HAL_TMR_P_IF" class-ref="di87d834e0362a4615ba93c8983be72c6c6972" />
-        <type id="Class:difb86e7ec0954450e88cae414d79aacf55044" name="MID_PWR_Output_e" class-ref="difb86e7ec0954450e88cae414d79aacf55044" />
-        <type id="Class:dia4225664569842f6ab18ac155466cae63004" name="MID_PWR_result_e" class-ref="dia4225664569842f6ab18ac155466cae63004" />
-        <type id="int16" name="int16" />
+        <type id="int16_t" name="int16_t" />
         <type id="uint8" name="uint8" />
+        <type id="Class:f8a576b9ee8e4ddca770ab5cd5691bc4" name="MID_COMM_request_e" class-ref="f8a576b9ee8e4ddca770ab5cd5691bc4" />
+        <type id="uint3" name="uint3" />
+        <type id="int1" name="int1" />
+        <type id="uint1" name="uint1" />
+        <type id="MID_RE" name="MID_RE" />
+        <type id="HAL_WDG_result_e" name="HAL_WDG_result_e" />
+        <type id="Class:dic487adabce7d4347a4157562356284388107" name="MID_PWR" class-ref="dic487adabce7d4347a4157562356284388107" />
+        <type id="Class:ba0befbf03724cd3a0a4901ef2f3457d" name="MID_REG" class-ref="ba0befbf03724cd3a0a4901ef2f3457d" />
+        <type id="HAL_GPIO_output_e" name="HAL_GPIO_output_e" />
+        <type id="MID_REG_l" name="MID_REG_l" />
+        <type id="mi" name="mi" />
+        <type id="Class:di190c7dbc10f342a4800e8305b9ae4d6d6009" name="MID_REG_limit_type_e" class-ref="di190c7dbc10f342a4800e8305b9ae4d6d6009" />
+        <type id="ui" name="ui" />
+        <type id="Class:di3f3c455c18e44a99a71d2486206d90f99959" name="MID_REG_error_e" class-ref="di3f3c455c18e44a99a71d2486206d90f99959" />
+        <type id="uint8_t" name="uint8_t" />
+        <type id="Class:di45d24152e85e4d5da8386f371fa30b8c2633" name="M" class-ref="di45d24152e85e4d5da8386f371fa30b8c2633" />
+        <type id="Class:301a2410410e479486d0b3a00a81285b" name="GPIO_pinout_config_t" class-ref="301a2410410e479486d0b3a00a81285b" />
+        <type id="uint16_t" name="uint16_t" />
+        <type id="uint" name="uint" />
+        <type id="Class:di2c68bbe9cac74a09a5820c982d2226742110" name="MID_DABS_meas_e" class-ref="di2c68bbe9cac74a09a5820c982d2226742110" />
+        <type id="uint16_6" name="uint16_6" />
+        <type id="int16" name="int16" />
+        <type id="uin" name="uin" />
+        <type id="MID_REG_lim" name="MID_REG_lim" />
+        <type id="uint16t" name="uint16t" />
+        <type id="uint8_" name="uint8_" />
+        <type id="MID_PWR_M" name="MID_PWR_M" />
+        <type id="uint16_" name="uint16_" />
+        <type id="MI" name="MI" />
+        <type id="Class:dia4225664569842f6ab18ac155466cae63004" name="MID_PWR_result_e" class-ref="dia4225664569842f6ab18ac155466cae63004" />
         <type id="Class:dicc7abd65d1e240b3975d655a8ab89dcc8969" name="MID_REG_mode_e" class-ref="dicc7abd65d1e240b3975d655a8ab89dcc8969" />
+        <type id="_GPIO_input_pins" name="_GPIO_input_pins" />
+        <type id="void" name="void" />
+        <type id="MID_REG_limits_" name="MID_REG_limits_" />
+        <type id="Class:di8680ef3072dd4b44943892550db59b0d7208" name="HAL_FLASH_result_t" class-ref="di8680ef3072dd4b44943892550db59b0d7208" />
+        <type id="MID_REG_limit" name="MID_REG_limit" />
+        <type id="Class:170b223f5f434fbb99263007c393feeb" name="HAL_GPIO_result_e" class-ref="170b223f5f434fbb99263007c393feeb" />
+        <type id="MID_PW" name="MID_PW" />
+        <type id="Class:di767f1384ac9a42969e9138e89874e1467063" name="MID_REG_info_s" class-ref="di767f1384ac9a42969e9138e89874e1467063" />
+        <type id="MID_" name="MID_" />
+        <type id="Class:di787b9f6f15a0455aa0bac7d8d0361f1e4276" name="MID_REG_periodic_period_s" class-ref="di787b9f6f15a0455aa0bac7d8d0361f1e4276" />
+        <type id="Class:49254455f63e40c680a816999da375a4" name="blink_s" class-ref="49254455f63e40c680a816999da375a4" />
+        <type id="*value" name="*value" />
+        <type id="Class:dia63d2c74268342df918095c14d0f61fb8922" name="MID_REG_periodic_s" class-ref="dia63d2c74268342df918095c14d0f61fb8922" />
+        <type id="Class:7f741cc8995745f884387fd9335486b0" name="HAL_GPIO" class-ref="7f741cc8995745f884387fd9335486b0" />
+        <type id="Class:98fe2ea5f9204c1d8be302862dc8bf45" name="stm32fyxx_hal_conf.h" class-ref="98fe2ea5f9204c1d8be302862dc8bf45" />
+        <type id="HAL_STS_result_t" name="HAL_STS_result_t" />
+        <type id="HAL_ADC_resul" name="HAL_ADC_resul" />
+        <type id="Class:di271c23d7450d42e0a1f379d5bb3230759092" name="MID_REG_periodic_status_s" class-ref="di271c23d7450d42e0a1f379d5bb3230759092" />
       </types>
     </custom-types>
   </types>
@@ -491,6 +517,31 @@
       <interface>
         <required-interface-ref>ca697ee6538849de932db6a9c26a9b5f</required-interface-ref>
       </interface>
+    </item>
+    <item id="458eff1ee3884a07b61f68f5a5c2b45d" cid="PROP380" type="property" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:29:57" visibility="public">
+      <style style-name="Default" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" />
     </item>
     <item id="39e3c4f62fa640bfbe0eb0c36d323e34" cid="PROP013" type="property" owner="01c56a1ab3db464d83eaf9d68bffe9c8" creation-date="05/18/2023 12:15:11" visibility="private" />
     <item id="68c0875fd6b949beb896c4a6fcbb89b4" cid="PROP233" type="property" owner="a8872832e87b4aeabae470ff320c48e3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 11:42:15" visibility="public">
@@ -1790,6 +1841,7 @@
       <states />
       <events />
     </item>
+    <item id="ba024e9228b5458cafa06b186e7966d2" cid="PROP388" type="property" owner="268fce4373f0495187a7cb12fe8aae2d" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:53:30" visibility="private" />
     <item id="3c3a092f76e04a60833bb0245ef6acc0" cid="GROUP022" type="group" name="Group" creation-date="06/14/2023 13:04:43" />
     <item id="11f5681ffbb441858fb4ede3ce8a4016" cid="FCF002" type="flowchart-flow" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:04:07" from="713f66c82733426d965034e494cec41a" to="d128a2357ee849ed80f812d0c478a179" />
     <item id="b60638e45e364d389e41c313a4df4a5b" cid="FCF005" type="flowchart-flow" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:39:57" from="09c01b18affe471bb57abf4298cbf72e" to="25310cde420248d2b461ebebc3622067" />
@@ -2146,6 +2198,10 @@
       <required-interface interface-ref="7c37aee632c14ca9bf285e7545d9709f" />
     </item>
     <item id="759261615fbf4bf9aea1153ee3239d80" cid="FCP018" type="flowchart-process" name="step = 0" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:04:17" />
+    <item id="dcaaa48411134af98b8ed01fcb956596" cid="PROP387" type="property" owner="268fce4373f0495187a7cb12fe8aae2d" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:53:30" visibility="private">
+      <property aggregation="shared" />
+    </item>
+    <item id="d6315b83cec14e58b232195a71fc70f9" cid="PROP384" type="property" owner="eb089140f7444b95a9cdfc8420445c81" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:31:43" visibility="private" />
     <item id="didfd4252ef3134e45a9afb43a0b4e1a428572" cid="ELEM101" type="text" name="Text1" creation-date="06/14/2023 12:42:29">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-color="#32000000" wrap-name-text="true" wrap-other-text="true" padding="1" margin="1" glow-color="#FFFFFF" accuracy="0.9">
         <text-style type="name" color="#000000" font="Segoe UI;12;B" horizontal-alignment="left" />
@@ -2512,6 +2568,31 @@
     <item id="6c19e631122544ce9f07d89fb758a1fa" cid="FCDC005" type="flowchart-decision" name="steps != 0" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:41:30" />
     <item id="6ca6fdae4cf54f8b930bfefc566c63ad" cid="ELEM142" type="uml-provided-interface-connector" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 11:08:12" from="0742679ef9b1407bb4424ac262732586" to="bbd04ee7cbbc4c2cae6745ad83f41c92" />
     <item id="00d174eb6e3840d59a8e715b3649844e" cid="ELEM028" type="flowchart-start-end" name="End" creation-date="06/02/2023 12:44:59" />
+    <item id="05e7a2952dbc4cf2a0af5596b5edbc63" cid="PROP218" type="property" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:38:54" visibility="public">
+      <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" />
+    </item>
     <item id="efb73ef626294564b936ab4c09f8219c" cid="PROP307" type="property" owner="0711318d9e214ebea7c1816c73ff9c49" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:23:48" visibility="public">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
         <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
@@ -2593,6 +2674,31 @@
     </item>
     <item id="20342e2fd2ec44c6a7a38619759cc0a0" cid="REA014" type="realization" owner="1b4405b2cf0748d6a44bfa3c466f5fbf" creation-date="06/06/2023 11:29:56" visibility="package" />
     <item id="b2a093f64a08468498ab3299f17e91e8" cid="PROP293" type="property" owner="a22ad542d720480aa5bf88df9f9f05b8" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 11:50:53" visibility="private" />
+    <item id="bd6d2768a92c444c8868f4258be8a910" cid="PROP385" type="property" owner="58e6067fbbe544668257d3d9dac27371" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:32:17" visibility="public">
+      <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" />
+    </item>
     <item id="e546fb9fa0b44b93888781122dc637ac" cid="REA015" type="realization" owner="1b4405b2cf0748d6a44bfa3c466f5fbf" creation-date="06/06/2023 11:31:43" from="dia63d2c74268342df918095c14d0f61fb8922" visibility="package" />
     <item id="715613a5678442c2be5a6339ef16e09b" cid="PROP233" type="property" owner="a8872832e87b4aeabae470ff320c48e3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 11:42:15" visibility="public">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
@@ -2911,6 +3017,9 @@
       <drawing-shape type="Rectangle" />
     </item>
     <item id="3f853e07d9604d9dbc4ebf75bd5950ad" cid="FCP022" type="flowchart-process" name="prevMode = mode" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:46:31" />
+    <item id="bf95a904e6314278b489becb3cae15c7" cid="PROP383" type="property" owner="eb089140f7444b95a9cdfc8420445c81" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:31:43" visibility="private">
+      <property aggregation="shared" />
+    </item>
     <item id="db76a02332dd4122ba453542b5ee2a49" cid="RQI016" type="uml-required-interface-end" creation-date="05/15/2023 12:43:35">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
         <text-style type="name" color="#2A2A2A" font="Segoe UI;11.25;B" />
@@ -3803,6 +3912,31 @@
       </style>
       <structural-feature type="HAL_GPIO_pin_value_e" type-id="Class:dica1f131f539542ff8e77c3fa4602183e6272" />
     </item>
+    <item id="e1fa8029798744cd9e806e6f6be29f73" cid="PROP380" type="property" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:29:57" visibility="public">
+      <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" />
+    </item>
     <item id="f08c763cee0e4eb19e76a76b09b37f95" cid="RQI044" type="uml-required-interface-end" creation-date="05/18/2023 12:37:24">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
         <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
@@ -3980,6 +4114,31 @@
     </item>
     <item id="d128a2357ee849ed80f812d0c478a179" cid="FCDC003" type="flowchart-decision" name="mode == prevMode" owner="b3eb81185c574115b5c42d9332b21ed6" creation-date="06/02/2023 12:03:40" />
     <item id="48267b9ac9d048d5ac630745abffafe1" cid="PROP316" type="property" owner="08dee6d9667145e8aa25e03ed9d5d9c9" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:45:58" visibility="private" />
+    <item id="765c723ce60d4437ab3c8bc2e6bb9aee" cid="PROP218" type="property" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:38:54" visibility="public">
+      <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" />
+    </item>
     <item id="757e63343ea044a7912ee1ee862a8eea" cid="PROP363" type="property" name="EPC_CONF_info" owner="583928f22e1242f98f8b11876e28012a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:00:45" visibility="public">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
         <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
@@ -4069,6 +4228,7 @@ led3 = 0
     <item id="e20649110161486e887869b83ff70bab" cid="PROP274" type="property" owner="d6aaa209490944128a5009f330aa9570" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 10:58:58" visibility="private">
       <property aggregation="shared" />
     </item>
+    <item id="8f5517b2cad84b0286b1ef5fda390d7e" cid="PROP379" type="property" owner="32243e608ff14bc8b52a1bb68c973a7e" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:29:32" visibility="private" />
     <item id="769fa2e90bc24182abb9ba1f039e2034" cid="PROP321" type="property" owner="10b3ad74023f4c3f87c6b0d607fd166b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:48:40" visibility="private">
       <property aggregation="shared" />
     </item>
@@ -4376,6 +4536,9 @@ led3 = 0
     </item>
     <item id="bc15c0dc2b9d430f9645239c3e140953" cid="RQI007" type="uml-required-interface-end" creation-date="05/15/2023 08:50:34">
       <required-interface />
+    </item>
+    <item id="4d631eb8e44e41db976de7d7e1bd88a6" cid="PROP378" type="property" owner="32243e608ff14bc8b52a1bb68c973a7e" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:29:32" visibility="private">
+      <property aggregation="shared" />
     </item>
     <item id="2447c71c868a4903a164197af6e7dced" cid="IFC008" type="uml-interface" creation-date="05/15/2023 08:39:35">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
@@ -4923,8 +5086,8 @@ led3 = 0
           <item id="bdefc16411d64fbeb2cbdebfb5f5f58e" cid="REL008" type="relationship" owner="f31352249ea84da79ab2e98952ee6141" creation-date="05/18/2023 12:31:13" from="9c0e48c67b58457880717c3a778b7823" to="c02198301a284d6097b86684313d1d9a" visibility="package">
             <owned-items />
             <relation from="9c0e48c67b58457880717c3a778b7823" to="c02198301a284d6097b86684313d1d9a" derived="false">
-              <start-role id="umlar-b00779a2-b40b-4f3d-bfa9-ecf728176cce" name="" navigability="" association-type="association" visibility="private" property-ref="b9904a0df4dc4d679850126200ff4d4f" />
-              <end-role id="umlar-5319dc9a-98db-4140-8d63-433e0f7339bc" name="" navigability="yes" association-type="association" visibility="private" property-ref="8c7e425f065c461db24a4927e00cd740" />
+              <start-role id="umlar-a4cbe3d1-83b9-4a4d-a5e6-c450de86f95b" name="" navigability="" association-type="association" visibility="private" property-ref="b9904a0df4dc4d679850126200ff4d4f" />
+              <end-role id="umlar-032b996b-0777-4e01-b57c-b0c703ff8194" name="" navigability="yes" association-type="association" visibility="private" property-ref="8c7e425f065c461db24a4927e00cd740" />
             </relation>
           </item>
           <item id="f215f8c412f1497fa87b89a27604cb40" cid="ELEM008" type="uml-provided-interface-connector" creation-date="05/15/2023 08:39:18" from="di18f8a35373e04b619667e5c0fe00814f3763" to="81768810f9bc40d1b45d3f783ea5de03">
@@ -6317,8 +6480,8 @@ led3 = 0
           <item id="01c56a1ab3db464d83eaf9d68bffe9c8" cid="REL007" type="relationship" owner="f31352249ea84da79ab2e98952ee6141" creation-date="05/18/2023 12:15:11" from="di0c30f5e4195442bb8cbd4089742f92b16514" to="di71ab481a2c0549c59097b27f8721463f9466" visibility="package">
             <owned-items />
             <relation from="di0c30f5e4195442bb8cbd4089742f92b16514" to="di71ab481a2c0549c59097b27f8721463f9466" derived="false">
-              <start-role id="umlar-5db17125-ccfd-4d6b-82a9-d9725fc3e31f" name="" navigability="" association-type="association" visibility="private" property-ref="39e3c4f62fa640bfbe0eb0c36d323e34" />
-              <end-role id="umlar-7fd1b0e0-86de-46c4-9e6f-9f8599bf2e4f" name="" navigability="yes" association-type="association" visibility="private" property-ref="28564297c17040d4b8fa1eadda347f6c" />
+              <start-role id="umlar-b6fb5843-deb9-4e13-b2d1-3f40da8944bd" name="" navigability="" association-type="association" visibility="private" property-ref="39e3c4f62fa640bfbe0eb0c36d323e34" />
+              <end-role id="umlar-29ccd4cb-0576-46f3-abd9-d3abe94a2cf4" name="" navigability="yes" association-type="association" visibility="private" property-ref="28564297c17040d4b8fa1eadda347f6c" />
             </relation>
           </item>
           <item id="diab89ea15136f4375b62d449f122a9c695293" cid="CPT017" type="component" name="MID_COMM" owner="df61b63006ac428fbbfceee38dd0a932" creation-date="05/12/2023 13:49:59" visibility="undefined">
@@ -6447,8 +6610,8 @@ led3 = 0
           <item id="53d5d54e1d2a4ae7a7d860f116cb0814" cid="REL006" type="relationship" owner="f31352249ea84da79ab2e98952ee6141" creation-date="05/18/2023 12:14:21" from="98fe2ea5f9204c1d8be302862dc8bf45" to="9c0e48c67b58457880717c3a778b7823" visibility="package">
             <owned-items />
             <relation from="98fe2ea5f9204c1d8be302862dc8bf45" to="9c0e48c67b58457880717c3a778b7823" derived="false">
-              <start-role id="umlar-0acf113e-aecf-4c66-ad7a-588ce3a32414" name="" navigability="" association-type="association" visibility="private" property-ref="007c5bf935f7453188eb5506f4be7c75" />
-              <end-role id="umlar-0f2d119f-ee86-4843-b416-1e4e68bf23f2" name="" navigability="yes" association-type="association" visibility="private" property-ref="f4a73cc819eb4baab7857e8daf251bae" />
+              <start-role id="umlar-9406a4aa-8ca0-4e5b-b19a-3e83e8e77b54" name="" navigability="" association-type="association" visibility="private" property-ref="007c5bf935f7453188eb5506f4be7c75" />
+              <end-role id="umlar-10513f38-2ddf-4fce-8b01-e67fc647ffde" name="" navigability="yes" association-type="association" visibility="private" property-ref="f4a73cc819eb4baab7857e8daf251bae" />
             </relation>
           </item>
           <item id="di7c604968cdfe441fb872acea0d93532b1692" cid="CPT009" type="component" name="HAL_GPIO" owner="die5dd2c670fb24c7aa149a97084d6aea98267" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="05/12/2023 13:49:59" visibility="undefined">
@@ -8588,7 +8751,7 @@ ERROR
           </meta>
           <abstract-items />
           <sub-models />
-          <diagram type="uml-class" id="p0854ee562ca149b4b670acdb22e4aa8e_567281797" name="MID_PWR" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-316,-204" zoom="0.7">
+          <diagram type="uml-class" id="p0854ee562ca149b4b670acdb22e4aa8e_567281797" name="MID_PWR" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-942,-333" zoom="0.7">
             <style>
               <background-color index="1" color="#FFFFFFFF" />
               <background-color index="2" color="#FFFFFFFF" />
@@ -8600,28 +8763,11 @@ ERROR
               </authors>
               <description />
               <creation-date>05/17/2023 13:41:04</creation-date>
-              <change-date>06/16/2023 09:40:41</change-date>
+              <change-date>06/19/2023 14:53:30</change-date>
               <revision-count>0</revision-count>
               <version />
             </meta>
             <abstract-items>
-              <item id="3f68bc87bc84466895c5d2ae69e30767" cid="REA027" type="realization" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:37:22" from="c55a40c249be42e6b4942d3c49d7112e" to="1ca91c4283c6468497b52f10b686eae3" visibility="package" />
-              <item id="13028686c35841f896b975978ecc5c2c" cid="REL036" type="relationship" owner="2d13fe6e0b5a4f2b8ef061830cd45688" creation-date="06/13/2023 14:01:00" from="2d13fe6e0b5a4f2b8ef061830cd45688" to="dia4225664569842f6ab18ac155466cae63004" visibility="package">
-                <owned-items />
-                <relation from="2d13fe6e0b5a4f2b8ef061830cd45688" to="dia4225664569842f6ab18ac155466cae63004" derived="false">
-                  <start-role id="umlar-84504b03-235b-461b-be1c-5078cecb7a85" name="" navigability="" association-type="composition" visibility="private" property-ref="7ed9a45ba4d74234be83bec4cddcf244" />
-                  <end-role id="umlar-fae1cb2d-ba13-4580-bcac-1d274ca175d8" name="" navigability="" association-type="association" visibility="private" property-ref="a531da9cb3ae4c58abe642e2f8d2aec1" />
-                </relation>
-              </item>
-              <item id="89a0ca38c7ff4cb7ae2efc7d9ef9aa9b" cid="NAS001" type="uml-n-ary-association" owner="2d13fe6e0b5a4f2b8ef061830cd45688" creation-date="06/13/2023 14:00:36" />
-              <item id="c55a40c249be42e6b4942d3c49d7112e" cid="C041" type="class" name="MID_PWR" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:36:41" visibility="undefined">
-                <attributes>
-                  <attribute id="a2cfc146d55544e34be911a5de9bff1c1903" cid="PROP218" name=":" creation-date="06/16/2023 09:39:25" property-ref="6ca8e00185614801af5eadfb6930b7da" />
-                </attributes>
-                <source-codes>
-                  <source-code language="ActionScript" />
-                </source-codes>
-              </item>
               <item id="f5c6733aa875481f95d9f82a02e081fe" cid="ELEM125" type="frame" name="MID_PWR" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:40:41">
                 <owned-items />
                 <frame type="cmp" />
@@ -8635,89 +8781,49 @@ ERROR
                 </stereotype-instances>
                 <owned-items />
                 <attributes>
-                  <attribute id="a2cfc146d55544e34be911a5de9bff1c1903" cid="PROP218" name=":" creation-date="06/16/2023 09:38:54" property-ref="05e7a2952dbc4cf2a0af5596b5edbc63" />
-                </attributes>
-              </item>
-              <item id="b4b9d7dc73204496810ea901842f6487" cid="ELEM152" type="usage" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:37:52" from="c55a40c249be42e6b4942d3c49d7112e" to="f13a51cd98bf4507bc8452b42d753b15" visibility="package">
-                <stereotypes>
-                  <stereotype name="use" />
-                </stereotypes>
-                <stereotype-instances>
-                  <stereotype id="b4b9d7dc73204496810ea901842f6487_use_c" type="use" ref="" />
-                </stereotype-instances>
-              </item>
-              <item id="dib902cc1190584134a9cb9b26767b02a53004" cid="I006" type="uml-interface-classifier" name="MID_PWR_P_IF" style-class="Flat Yellow" creation-date="05/18/2023 11:48:14" visibility="undefined">
-                <owned-items />
-                <style class="Flat Yellow" />
-                <attributes>
-                  <attribute id="ac90855bb71d24ad58758be97ae0b424b398" cid="PROP179" name="do" creation-date="06/08/2023 12:50:30" property-ref="f6e1bc6c09044ad8b3491ba3ad9c558e" />
+                  <attribute id="a2cfc146d55544e34be911a5de9bff1c1903" cid="PROP218" name="" creation-date="06/16/2023 09:38:54" property-ref="05e7a2952dbc4cf2a0af5596b5edbc63" />
+                  <attribute id="aa6b89573abad4cd68bf7ed93f9ee9ba8479" cid="PROP380" name="" creation-date="06/19/2023 14:29:57" property-ref="458eff1ee3884a07b61f68f5a5c2b45d" />
                 </attributes>
                 <operations>
-                  <operation id="o2b9539887a38472fae018134d2f27c03641" cid="OP004" name="MID_PwrSetOutput" creation-date="05/18/2023 13:38:06" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
+                  <operation id="o920366d80ed647fbb2975394adf80bc3305" cid="OP075" name="MID_PwrSetOutput" creation-date="06/19/2023 14:51:54" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
                     <parameters>
-                      <parameter id="p7e6d9baeb49c4e8f985cf367e7b60c7a" name="outputMode" type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" direction="In" />
+                      <parameter id="pb0853c935c51462e8cb821ff4f4b8737" name="outputMode" type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" direction="In" />
                     </parameters>
                     <source-codes>
                       <source-code language="ActionScript" />
                     </source-codes>
                   </operation>
-                  <operation id="o50ee2281d8e74bb99953a4b0aa6208d2697" cid="OP001" name="_calculateD0" creation-date="05/18/2023 11:52:24" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="private">
+                  <operation id="o572bd3b75bbe4fa2917fd111b14e5e30395" cid="OP076" name="MID_PwrApplyCtrl" creation-date="06/19/2023 14:51:54" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
                     <parameters>
-                      <parameter id="pdd5dd076caf244618df07ffdb6843828" name="V_HS" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="p64bd123ff58048958e96b8678e39ac96" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="p9823bf80637b4104b4546c67898383cc" name="d0" type="uint16_t" type-id="uint16_t" direction="Out">
-                        <stereotypes>
-                          <stereotype>*</stereotype>
-                        </stereotypes>
-                      </parameter>
+                      <parameter id="p6fe1c8812f334bfdbbaaec99f16291c7" name="ref" type="int16_t" type-id="int16_t" direction="In" />
+                      <parameter id="p68f6dadc7ddb46f4a0bcf7ac560ade91" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
+                      <parameter id="pfd034feab2d44ee3a698b128e3e38edb" name="I_LS" type="int16_t" type-id="int16_t" direction="In" />
+                      <parameter id="pacbd67df666c446aad0f2877ed5319ce" name="control_mode" type="MID_PWR_Mode_e" type-id="MID_PWR_Mode_e" direction="In" />
+                      <parameter id="pd7315f20dd8147968326c4250d2fba39" name="limits" type="MID_REG_limits_s" type-id="MID_REG_limits_s" direction="In" />
                     </parameters>
                     <source-codes>
                       <source-code language="ActionScript" />
                     </source-codes>
                   </operation>
-                  <operation id="oe9439bce58a44ed093d46da13b7e41ef217" cid="OP008" name="MID_PwrApplyCurrentPI" creation-date="05/22/2023 11:23:28" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
+                  <operation id="oc6bfc106632b4600aeb1315f5e20ff00494" cid="OP077" name="MID_PwrCalculateD0" creation-date="06/19/2023 14:56:25" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
                     <parameters>
-                      <parameter id="p23cad07152164d6b93bb2b9f70f3e778" name="d0" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="pca7b1c64cedd449eaaee6ba6413dfa5f" name="V_ref" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="p3efd7d7fec154930807e3be68f1ae92d" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
+                      <parameter id="p640682274a1d456a8ed461216a742e6b" name="V_HS" type="uint16_t" type-id="uint16_t" direction="In" />
+                      <parameter id="pabca452b1dd64c94beb8cfe5370d1006" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
                     </parameters>
                     <source-codes>
                       <source-code language="ActionScript" />
                     </source-codes>
-                  </operation>
-                  <operation id="of43acb479db54e1b955079c30e90eb31680" cid="OP009" name="MID_PwrApplyVoltagePI" creation-date="05/22/2023 11:23:28" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
-                    <parameters>
-                      <parameter id="p070eecdded5f4712b20cd0324e4a8fbc" name="V_ref" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="p8d38f26313824a759d2ee6a4c9586c33" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
-                    </parameters>
-                  </operation>
-                  <operation id="oaa4f0e57ad0048da89ee936028ee330b32" cid="OP010" name="MID_PwrApplyPowerPI" creation-date="05/22/2023 11:23:28" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
-                    <parameters>
-                      <parameter id="p9a8dec95279941dca7709694101a3912" name="V_ref" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="p77dfffd9c7c14d39a91a9930bcac2c06" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
-                      <parameter id="p46c05eab474545b5bce5c648ace9014a" name="I_LS" type="uint16_t" type-id="uint16_t" direction="In" />
-                    </parameters>
                   </operation>
                 </operations>
               </item>
-              <item id="8c94a44d70a94b58a2f79f514f48e476" cid="REL046" type="relationship" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:38:18" from="1ca91c4283c6468497b52f10b686eae3" to="difb86e7ec0954450e88cae414d79aacf55044" visibility="package">
+              <item id="268fce4373f0495187a7cb12fe8aae2d" cid="REL077" type="relationship" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:53:30" from="1ca91c4283c6468497b52f10b686eae3" to="di9ef15f25c1964d1195f00f1b9a1beb5f3543" visibility="package">
                 <owned-items />
-                <relation from="1ca91c4283c6468497b52f10b686eae3" to="difb86e7ec0954450e88cae414d79aacf55044" derived="false">
-                  <start-role id="umlar-dffa05ec-a6ce-4382-9098-4cf5ff60488b" name="" navigability="" association-type="aggregation" visibility="private" property-ref="35c3b5aa6f3245a88afb11e194066dd9" />
-                  <end-role id="umlar-cfe3459b-241e-4b7d-9566-86443e644d95" name="" navigability="" association-type="association" visibility="private" property-ref="1b241e0d137e461386608d79fb74b1f3" />
+                <relation from="1ca91c4283c6468497b52f10b686eae3" to="di9ef15f25c1964d1195f00f1b9a1beb5f3543" derived="false">
+                  <start-role id="umlar-ffce9c9f-818c-4dbb-ac65-4e9f7af81ae5" name="" navigability="" association-type="aggregation" visibility="private" property-ref="dcaaa48411134af98b8ed01fcb956596" />
+                  <end-role id="umlar-64f18d47-1388-48bc-a741-2c173012a5b7" name="" navigability="" association-type="association" visibility="private" property-ref="ba024e9228b5458cafa06b186e7966d2" />
                 </relation>
               </item>
-              <item id="f13a51cd98bf4507bc8452b42d753b15" cid="I023" type="uml-interface-classifier" name="MID_PWR_R_IF" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:37:37" visibility="undefined">
-                <stereotypes>
-                  <stereotype name="interface" />
-                </stereotypes>
-                <stereotype-instances>
-                  <stereotype id="f13a51cd98bf4507bc8452b42d753b15_interface_c" type="interface" ref="" />
-                </stereotype-instances>
-                <operations>
-                  <operation id="od3f20aa6c95f4608a0bd1969991cc05d621" cid="OP027" name="_calculateD0" creation-date="06/16/2023 09:45:18" type="" type-id="" visibility="public" />
-                </operations>
-              </item>
+              <item id="89a0ca38c7ff4cb7ae2efc7d9ef9aa9b" cid="NAS001" type="uml-n-ary-association" owner="2d13fe6e0b5a4f2b8ef061830cd45688" creation-date="06/13/2023 14:00:36" />
               <item id="difb86e7ec0954450e88cae414d79aacf55044" cid="E033" type="enumeration" name="MID_PWR_Output_e" style-class="Flat Light Cyan" owner="f5c6733aa875481f95d9f82a02e081fe" creation-date="05/18/2023 11:45:48" visibility="undefined">
                 <stereotypes>
                   <stereotype name="enumeration" />
@@ -8731,11 +8837,28 @@ ERROR
                   <enumeration-item id="a7790670f990145e39ac7a0e387e38fde723" cid="ENI003" name="MID_PWR_Enable" creation-date="05/18/2023 11:47:26" value="0x01U" />
                 </enumeration-items>
               </item>
-              <item id="f6e1bc6c09044ad8b3491ba3ad9c558e" cid="PROP179" type="property" name="do" owner="dib902cc1190584134a9cb9b26767b02a53004" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/08/2023 12:50:30" visibility="private">
-                <structural-feature type="uint16_t" type-id="uint16_t" />
-                <property default-value="0" />
+              <item id="8c94a44d70a94b58a2f79f514f48e476" cid="REL046" type="relationship" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:38:18" from="1ca91c4283c6468497b52f10b686eae3" to="difb86e7ec0954450e88cae414d79aacf55044" visibility="package">
+                <owned-items />
+                <relation from="1ca91c4283c6468497b52f10b686eae3" to="difb86e7ec0954450e88cae414d79aacf55044" derived="false">
+                  <start-role id="umlar-82adbb71-3de1-4652-a4af-d61be0f5a60e" name="" navigability="" association-type="aggregation" visibility="private" property-ref="35c3b5aa6f3245a88afb11e194066dd9" />
+                  <end-role id="umlar-40140056-a5bb-4cd7-8c8b-ba534612a509" name="" navigability="" association-type="association" visibility="private" property-ref="1b241e0d137e461386608d79fb74b1f3" />
+                </relation>
               </item>
-              <item id="dia4225664569842f6ab18ac155466cae63004" cid="E032" type="enumeration" name="MID_PWR_result_e" style-class="Flat Light Cyan" creation-date="05/18/2023 11:45:48" visibility="undefined">
+              <item id="f13a51cd98bf4507bc8452b42d753b15" cid="I023" type="uml-interface-classifier" name="MID_PWR_R_IF" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:37:37" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="interface" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="f13a51cd98bf4507bc8452b42d753b15_interface_c" type="interface" ref="" />
+                </stereotype-instances>
+                <operations>
+                  <operation id="of74d3c04209047de971dee8dad3a9cbd923" cid="OP071" name="NewOperation1" creation-date="06/19/2023 14:41:54" type="" type-id="" visibility="public" />
+                  <operation id="oee783957bf284031813c6bb36fc1e2d9291" cid="OP072" name="NewOperation2" creation-date="06/19/2023 14:41:55" type="" type-id="" visibility="public" />
+                  <operation id="oe6aba4ff7d7a40b7b03b3d45d5c876fb622" cid="OP073" name="HALGpioSet" creation-date="06/19/2023 14:41:55" type="" type-id="" visibility="public" />
+                  <operation id="oafed60e13c1847ef8a03e0f8b5811308283" cid="OP074" name="HAL_PwmSetDuty" creation-date="06/19/2023 14:41:56" type="" type-id="" visibility="public" />
+                </operations>
+              </item>
+              <item id="dia4225664569842f6ab18ac155466cae63004" cid="E032" type="enumeration" name="MID_PWR_result_e" style-class="Flat Light Cyan" owner="f5c6733aa875481f95d9f82a02e081fe" creation-date="05/18/2023 11:45:48" visibility="undefined">
                 <stereotypes>
                   <stereotype name="enumeration" />
                 </stereotypes>
@@ -8750,69 +8873,138 @@ ERROR
                   <enumeration-item id="af42f2f94947943719ae167f992829cae549" cid="ENI011" name="MID_PWR_RESULT_TIMEOUT" creation-date="05/18/2023 13:42:37" value="0x03U" />
                 </enumeration-items>
               </item>
+              <item id="di9ef15f25c1964d1195f00f1b9a1beb5f3543" cid="E053" type="enumeration" name="MID_PWR_Mode_e" style-class="Flat Light Cyan" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="05/18/2023 11:45:48" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="enumeration" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
+                </stereotype-instances>
+                <style class="Flat Light Cyan" />
+                <enumeration-items>
+                  <enumeration-item id="a7790670f990145e39ac7a0e387e38fde723" cid="ENI003" name="MID_PWR_MODE_CC" creation-date="05/18/2023 11:47:26" value="0x00U" />
+                  <enumeration-item id="aae3f7679e38a429eaa721cedd4ebffa6387" cid="ENI004" name="MID_PWR_MODE_CV" creation-date="05/18/2023 11:47:32" value="0x01U" />
+                  <enumeration-item id="a6e053c804e7a48e5b44f9b486ba2a39f535" cid="ENI010" name="MID_PWR_MODE_CP" creation-date="05/18/2023 13:41:41" value="0x02U" />
+                  <enumeration-item id="af42f2f94947943719ae167f992829cae549" cid="ENI011" name="MID_PWR_COUNT" creation-date="05/18/2023 13:42:37" value="0x03U" />
+                </enumeration-items>
+              </item>
               <item id="2d13fe6e0b5a4f2b8ef061830cd45688" cid="PKG006" type="package" name="Package3" creation-date="06/13/2023 13:59:48" visibility="undefined">
                 <owned-items />
               </item>
-              <item id="05e7a2952dbc4cf2a0af5596b5edbc63" cid="PROP218" type="property" name=":" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:38:54" visibility="public">
-                <structural-feature type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" />
+              <item id="b4b9d7dc73204496810ea901842f6487" cid="ELEM152" type="usage" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:37:52" from="c55a40c249be42e6b4942d3c49d7112e" to="f13a51cd98bf4507bc8452b42d753b15" visibility="package">
+                <stereotypes>
+                  <stereotype name="use" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="b4b9d7dc73204496810ea901842f6487_use_c" type="use" ref="" />
+                </stereotype-instances>
+              </item>
+              <item id="13028686c35841f896b975978ecc5c2c" cid="REL036" type="relationship" owner="2d13fe6e0b5a4f2b8ef061830cd45688" creation-date="06/13/2023 14:01:00" from="2d13fe6e0b5a4f2b8ef061830cd45688" to="dia4225664569842f6ab18ac155466cae63004" visibility="package">
+                <owned-items />
+                <relation from="2d13fe6e0b5a4f2b8ef061830cd45688" to="dia4225664569842f6ab18ac155466cae63004" derived="false">
+                  <start-role id="umlar-3323f454-e92e-4bf8-a5c4-c8e1ef60fedd" name="" navigability="" association-type="composition" visibility="private" property-ref="7ed9a45ba4d74234be83bec4cddcf244" />
+                  <end-role id="umlar-92407a9a-3114-4df8-b87f-a6c43e04bdd0" name="" navigability="" association-type="association" visibility="private" property-ref="a531da9cb3ae4c58abe642e2f8d2aec1" />
+                </relation>
+              </item>
+              <item id="3f68bc87bc84466895c5d2ae69e30767" cid="REA027" type="realization" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:37:22" from="c55a40c249be42e6b4942d3c49d7112e" to="1ca91c4283c6468497b52f10b686eae3" visibility="package" />
+              <item id="32243e608ff14bc8b52a1bb68c973a7e" cid="REL075" type="relationship" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:29:32" from="1ca91c4283c6468497b52f10b686eae3" to="dia4225664569842f6ab18ac155466cae63004" visibility="package">
+                <owned-items />
+                <relation from="1ca91c4283c6468497b52f10b686eae3" to="dia4225664569842f6ab18ac155466cae63004" derived="false">
+                  <start-role id="umlar-72cd3133-70d0-4b12-b854-b514784ee48b" name="" navigability="" association-type="aggregation" visibility="private" property-ref="4d631eb8e44e41db976de7d7e1bd88a6" />
+                  <end-role id="umlar-bf748dc6-aada-4f18-b6a5-b83295864b71" name="" navigability="" association-type="association" visibility="private" property-ref="8f5517b2cad84b0286b1ef5fda390d7e" />
+                </relation>
+              </item>
+              <item id="7f94caae9e764d1384f2dd897ef917cf" cid="E052" type="enumeration" name="Enumeration7" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:52:08">
+                <stereotypes>
+                  <stereotype name="enumeration" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="7f94caae9e764d1384f2dd897ef917cf_enumeration_c" type="enumeration" ref="" />
+                </stereotype-instances>
+                <enumeration-items />
+              </item>
+              <item id="c55a40c249be42e6b4942d3c49d7112e" cid="C041" type="class" name="MID_PWR" owner="f5c6733aa875481f95d9f82a02e081fe" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 09:36:41" visibility="undefined">
+                <attributes>
+                  <attribute id="a2cfc146d55544e34be911a5de9bff1c1903" cid="PROP218" name="" creation-date="06/19/2023 14:30:22" property-ref="765c723ce60d4437ab3c8bc2e6bb9aee" />
+                  <attribute id="aa6b89573abad4cd68bf7ed93f9ee9ba8479" cid="PROP380" name="" creation-date="06/19/2023 14:30:22" property-ref="e1fa8029798744cd9e806e6f6be29f73" />
+                </attributes>
+                <source-codes>
+                  <source-code language="ActionScript" />
+                </source-codes>
               </item>
             </abstract-items>
             <layer id="202e52e9e8a7446ab23f2e1ca6040ec4" name="Default" visible="true" enabled="true" locked="false">
-              <item id="dib902cc1190584134a9cb9b26767b02a53004" iid="0fcd3fb532e44cdeb2b98d34a4221d8d" show-fields="true" creation-date="05/18/2023 11:48:14" order-index="3" type="entity">
-                <layout ax="1144" ay="332" awidth="650" aheight="156" x="1144" y="332" width="650" height="100" rotation-center="-144,-10.5" />
-                <classifier />
-                <class />
-              </item>
-              <item id="dia4225664569842f6ab18ac155466cae63004" iid="b748d72220e04a70929695470a60c40f" creation-date="05/18/2023 11:45:48" order-index="0" type="entity">
-                <layout ax="1294" ay="665" awidth="250" aheight="140" x="1294" y="665" width="250" height="130" rotation-center="-40,16" />
-              </item>
               <item id="f5c6733aa875481f95d9f82a02e081fe" iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:40:41" order-index="14" type="entity">
-                <layout ax="-93" ay="-214" awidth="1013" aheight="922" x="-93" y="-214" width="1013" height="922" expanded="-93,-214,1013,922" collapsed="0,0,0,0" rotation-center="79.5,0" />
+                <layout ax="-949" ay="-421" awidth="2150" aheight="1129" x="-949" y="-421" width="2150" height="1129" expanded="-949,-421,2150,1129" collapsed="0,0,0,0" rotation-center="367,103.5" />
               </item>
               <item id="8c94a44d70a94b58a2f79f514f48e476" iid="3efe0650b0384f1781601f2f9dd33f06" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:38:18" order-index="13" type="relation">
-                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-to-fields="false" auto-path="" x1="264" y1="-41" x2="581" y2="-41" start-border-pos="0.375" end-border-pos="0.875" name-position="0,20">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-264" y1="-52" x2="-115" y2="-179" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
                   <points>
-                    <point x="264" y="-41" />
-                    <point x="581" y="-41" />
+                    <point x="-264" y="-52" />
+                    <point x="-115" y="-179" />
                   </points>
                 </layout>
                 <relation from="1ca91c4283c6468497b52f10b686eae3" from-iid="86a9c548a2f64b34b6f465045a3e6509" to="difb86e7ec0954450e88cae414d79aacf55044" to-iid="b883644c319a41808a7147abaf7faa1d" />
               </item>
               <item id="b4b9d7dc73204496810ea901842f6487" iid="a640ca93caf448d9b16611d3e135cb76" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:37:52" order-index="12" type="relation">
-                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="147" y1="327" x2="147" y2="457" start-border-pos="0.625" end-border-pos="0.125" name-position="22,9">
+                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="-593" y1="288" x2="-593" y2="418" start-border-pos="0.625" end-border-pos="0.125" name-position="29,-2">
                   <points>
-                    <point x="147" y="327" />
-                    <point x="147" y="457" />
+                    <point x="-593" y="288" />
+                    <point x="-593" y="418" />
                   </points>
                 </layout>
                 <relation from="c55a40c249be42e6b4942d3c49d7112e" from-iid="886e5bed82ad4deda8b7216ea6e7ce27" to="f13a51cd98bf4507bc8452b42d753b15" to-iid="e661f0ebefba4b94b198e4fbc29e3d40" />
               </item>
               <item id="f13a51cd98bf4507bc8452b42d753b15" iid="e661f0ebefba4b94b198e4fbc29e3d40" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:37:37" order-index="11" type="entity">
-                <layout ax="30" ay="457" awidth="234" aheight="156" x="68" y="453" width="234" height="160" rotation-center="0,2" />
+                <layout ax="-922" ay="418" awidth="658" aheight="156" x="-922" y="621" width="658" height="160" rotation-center="-169,2" />
                 <classifier />
                 <class />
               </item>
               <item id="3f68bc87bc84466895c5d2ae69e30767" iid="9acc3f8bc2b14ca98ee8a3422ee6cd26" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:37:22" order-index="10" type="relation">
-                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="146" y1="171" x2="143" y2="41" start-border-pos="0.123754783912941" end-border-pos="0.623551446883405" name-position="0,20">
+                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="-593" y1="132" x2="-593" y2="36" start-border-pos="0.125" end-border-pos="0.625" name-position="0,20">
                   <points>
-                    <point x="146" y="171" />
-                    <point x="143" y="41" />
+                    <point x="-593" y="132" />
+                    <point x="-593" y="36" />
                   </points>
                 </layout>
                 <relation from="c55a40c249be42e6b4942d3c49d7112e" from-iid="886e5bed82ad4deda8b7216ea6e7ce27" to="1ca91c4283c6468497b52f10b686eae3" to-iid="86a9c548a2f64b34b6f465045a3e6509" />
               </item>
               <item id="1ca91c4283c6468497b52f10b686eae3" iid="86a9c548a2f64b34b6f465045a3e6509" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:36:53" order-index="9" type="entity">
-                <layout ax="20" ay="-123" awidth="244" aheight="164" x="20" y="-123" width="244" height="160" rotation-center="5,-4" />
+                <layout ax="-922" ay="-140" awidth="658" aheight="176" x="-922" y="-140" width="658" height="176" rotation-center="112,-10" />
                 <classifier />
                 <class />
               </item>
               <item id="c55a40c249be42e6b4942d3c49d7112e" iid="886e5bed82ad4deda8b7216ea6e7ce27" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" show-fields="true" creation-date="06/16/2023 09:36:41" order-index="8" type="entity">
-                <layout ax="12" ay="171" awidth="270" aheight="156" x="77" y="171" width="270" height="160" />
+                <layout ax="-922" ay="132" awidth="658" aheight="156" x="-922" y="339" width="658" height="160" rotation-center="-169,0" />
                 <classifier />
                 <class />
               </item>
               <item id="difb86e7ec0954450e88cae414d79aacf55044" iid="b883644c319a41808a7147abaf7faa1d" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="05/18/2023 11:45:48" order-index="0" type="entity">
-                <layout ax="581" ay="-92" awidth="250" aheight="102" x="581" y="-92" width="250" height="100" rotation-center="-19.5,36" />
+                <layout ax="-240" ay="-281" awidth="250" aheight="102" x="616" y="-281" width="250" height="100" rotation-center="-19.5,36" />
+              </item>
+              <item id="dia4225664569842f6ab18ac155466cae63004" iid="b748d72220e04a70929695470a60c40f" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="05/18/2023 11:45:48" order-index="0" type="entity">
+                <layout ax="78" ay="-281" awidth="250" aheight="140" x="934" y="-281" width="250" height="130" rotation-center="-40,16" />
+              </item>
+              <item id="di9ef15f25c1964d1195f00f1b9a1beb5f3543" iid="5f190a8405ea4db9917e3fc53baeca61" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="05/18/2023 11:45:48" order-index="0" type="entity">
+                <layout ax="396" ay="-281" awidth="250" aheight="140" x="1252" y="-281" width="250" height="130" rotation-center="-40,16" />
+              </item>
+              <item id="32243e608ff14bc8b52a1bb68c973a7e" iid="589b1a20eeb542f899391c04fdd8147a" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/19/2023 14:29:32" order-index="15" type="relation">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-264" y1="-52" x2="203" y2="-141" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
+                  <points>
+                    <point x="-264" y="-52" />
+                    <point x="203" y="-141" />
+                  </points>
+                </layout>
+                <relation from="1ca91c4283c6468497b52f10b686eae3" from-iid="86a9c548a2f64b34b6f465045a3e6509" to="dia4225664569842f6ab18ac155466cae63004" to-iid="b748d72220e04a70929695470a60c40f" />
+              </item>
+              <item id="268fce4373f0495187a7cb12fe8aae2d" iid="41ebdbf9050e413fbe8388c973c4a751" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/19/2023 14:53:30" order-index="16" type="relation">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-264" y1="-52" x2="521" y2="-141" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
+                  <points>
+                    <point x="-264" y="-52" />
+                    <point x="521" y="-141" />
+                  </points>
+                </layout>
+                <relation from="1ca91c4283c6468497b52f10b686eae3" from-iid="86a9c548a2f64b34b6f465045a3e6509" to="di9ef15f25c1964d1195f00f1b9a1beb5f3543" to-iid="5f190a8405ea4db9917e3fc53baeca61" />
               </item>
             </layer>
           </diagram>
@@ -9147,7 +9339,7 @@ ERROR
               </item>
             </layer>
           </diagram>
-          <diagram type="uml-class" id="pe1c59837e53a463aaafcba199d904131_625430345" name="MID_DABS" order-index="3" overview-order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-548,757">
+          <diagram type="uml-class" id="pe1c59837e53a463aaafcba199d904131_625430345" name="MID_DABS" order-index="3" overview-order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-520,464" zoom="0.8">
             <style>
               <background-color index="1" color="#FFFFFFFF" />
               <background-color index="2" color="#FFFFFFFF" />
@@ -9282,8 +9474,8 @@ ERROR
               <item id="dec5cb98d72f4f31a6d2799ef1bd5e02" cid="REL074" type="relationship" owner="591a31e767694ca296012aa901a0dd6b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:49:20" from="e051f3a3b1e5419c9905cec0b1ae765e" to="di43d67c4907ec4d928adfd5fd9a8b8b884170" visibility="package">
                 <owned-items />
                 <relation from="e051f3a3b1e5419c9905cec0b1ae765e" to="di43d67c4907ec4d928adfd5fd9a8b8b884170" derived="false">
-                  <start-role id="umlar-e52e9d0d-261c-40f2-ade5-ab62a950ffe8" name="" navigability="" association-type="aggregation" visibility="private" property-ref="3aad946618574409adbbf4c8834da465" />
-                  <end-role id="umlar-748290ff-246b-4a3a-b407-9beb3822c339" name="" navigability="" association-type="association" visibility="private" property-ref="db1acf418e3d4f38b01bb9ba5cf7b267" />
+                  <start-role id="umlar-38e09c2f-4e07-427e-b2f2-ddadcd365b7e" name="" navigability="" association-type="aggregation" visibility="private" property-ref="3aad946618574409adbbf4c8834da465" />
+                  <end-role id="umlar-1c14f994-1647-43bc-aae3-cbb29dc866be" name="" navigability="" association-type="association" visibility="private" property-ref="db1acf418e3d4f38b01bb9ba5cf7b267" />
                 </relation>
               </item>
               <item id="di43d67c4907ec4d928adfd5fd9a8b8b884170" cid="E030" type="enumeration" name="MID_DABS_result_e" style-class="Flat Light Cyan" owner="591a31e767694ca296012aa901a0dd6b" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -9304,15 +9496,15 @@ ERROR
               <item id="08dee6d9667145e8aa25e03ed9d5d9c9" cid="REL069" type="relationship" owner="591a31e767694ca296012aa901a0dd6b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:45:58" from="9ba1f774b8da402d98b474fafc1d89db" to="dia8db584c779147b9a0f390688757c2b07837" visibility="package">
                 <owned-items />
                 <relation from="9ba1f774b8da402d98b474fafc1d89db" to="dia8db584c779147b9a0f390688757c2b07837" derived="false">
-                  <start-role id="umlar-668a2e80-a527-4d17-8ec7-edfd43b98d4b" name="" navigability="" association-type="aggregation" visibility="private" property-ref="d7b508f31b914d0fbfba9d82e7704100" />
-                  <end-role id="umlar-9a77f5ab-bc42-42f1-ae29-44ff20e048e9" name="" navigability="" association-type="association" visibility="private" property-ref="48267b9ac9d048d5ac630745abffafe1" />
+                  <start-role id="umlar-e6e1e850-6783-439f-b247-956e13f6755a" name="" navigability="" association-type="aggregation" visibility="private" property-ref="d7b508f31b914d0fbfba9d82e7704100" />
+                  <end-role id="umlar-e6ef874d-d433-4f63-91b0-65eaf667c02d" name="" navigability="" association-type="association" visibility="private" property-ref="48267b9ac9d048d5ac630745abffafe1" />
                 </relation>
               </item>
               <item id="10b3ad74023f4c3f87c6b0d607fd166b" cid="REL072" type="relationship" owner="591a31e767694ca296012aa901a0dd6b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:48:40" from="e051f3a3b1e5419c9905cec0b1ae765e" to="di2c68bbe9cac74a09a5820c982d2226742110" visibility="package">
                 <owned-items />
                 <relation from="e051f3a3b1e5419c9905cec0b1ae765e" to="di2c68bbe9cac74a09a5820c982d2226742110" derived="false">
-                  <start-role id="umlar-7fa3f2a6-3ab7-4de6-a56d-28d963aa9217" name="" navigability="" association-type="aggregation" visibility="private" property-ref="769fa2e90bc24182abb9ba1f039e2034" />
-                  <end-role id="umlar-ca4a68be-a8c5-4d55-ae65-3a12aa9d9dfe" name="" navigability="" association-type="association" visibility="private" property-ref="eda29982e02045d781ee31925ce1e9f1" />
+                  <start-role id="umlar-4ac16338-fa66-4ad3-9105-bcd1cf581257" name="" navigability="" association-type="aggregation" visibility="private" property-ref="769fa2e90bc24182abb9ba1f039e2034" />
+                  <end-role id="umlar-08de51b7-1bd3-4464-87a9-2f6682673fcc" name="" navigability="" association-type="association" visibility="private" property-ref="eda29982e02045d781ee31925ce1e9f1" />
                 </relation>
               </item>
               <item id="e051f3a3b1e5419c9905cec0b1ae765e" cid="I037" type="uml-interface-classifier" name="MID_DABS_P_IF" owner="591a31e767694ca296012aa901a0dd6b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:48:16" visibility="undefined">
@@ -9386,15 +9578,15 @@ ERROR
               <item id="ad0b9c2e8a634b9c862aa4029d27784f" cid="REL071" type="relationship" owner="591a31e767694ca296012aa901a0dd6b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:47:24" from="9ba1f774b8da402d98b474fafc1d89db" to="49254455f63e40c680a816999da375a4" visibility="package">
                 <owned-items />
                 <relation from="9ba1f774b8da402d98b474fafc1d89db" to="49254455f63e40c680a816999da375a4" derived="false">
-                  <start-role id="umlar-f71d5b1e-d033-45b1-8a19-cdc4d43fd8ed" name="" navigability="" association-type="aggregation" visibility="private" property-ref="c39ab7210a1a4ba89f7c6fef78782fca" />
-                  <end-role id="umlar-d96ac4a5-2a9e-431e-9560-9dd349462341" name="" navigability="" association-type="association" visibility="private" property-ref="64b658bb52164779afdff33e438fff07" />
+                  <start-role id="umlar-eaf817be-58f8-493c-a4b3-8a51e1df4cf3" name="" navigability="" association-type="aggregation" visibility="private" property-ref="c39ab7210a1a4ba89f7c6fef78782fca" />
+                  <end-role id="umlar-bd5c5be4-58be-42be-ad26-65f88fd58543" name="" navigability="" association-type="association" visibility="private" property-ref="64b658bb52164779afdff33e438fff07" />
                 </relation>
               </item>
               <item id="96f87e22e51f4f569cc3bc51ec3ef5d6" cid="REL068" type="relationship" owner="591a31e767694ca296012aa901a0dd6b" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:45:53" from="9ba1f774b8da402d98b474fafc1d89db" to="4ab17ce758f14782aea2d0385cdccac8" visibility="package">
                 <owned-items />
                 <relation from="9ba1f774b8da402d98b474fafc1d89db" to="4ab17ce758f14782aea2d0385cdccac8" derived="false">
-                  <start-role id="umlar-05482997-1e0f-489e-aece-d47a6fcb9425" name="" navigability="" association-type="aggregation" visibility="private" property-ref="12f97367ba094ebd87c913333a79e9a0" />
-                  <end-role id="umlar-0d33281d-f21b-44b2-9b6b-5da1035c0a67" name="" navigability="" association-type="association" visibility="private" property-ref="801c241251ff422cbe70ab13f4d0f72b" />
+                  <start-role id="umlar-fb5fe929-4948-4090-b57f-435fc4ef4491" name="" navigability="" association-type="aggregation" visibility="private" property-ref="12f97367ba094ebd87c913333a79e9a0" />
+                  <end-role id="umlar-5a678b1b-71de-46f3-b62a-20bd2c415f64" name="" navigability="" association-type="association" visibility="private" property-ref="801c241251ff422cbe70ab13f4d0f72b" />
                 </relation>
               </item>
               <item id="di2c68bbe9cac74a09a5820c982d2226742110" cid="E044" type="enumeration" name="MID_DABS_meas_e" style-class="Flat Light Cyan" owner="591a31e767694ca296012aa901a0dd6b" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -10191,7 +10383,7 @@ ERROR
             </layer>
           </diagram>
         </model>
-        <model id="p2c865919f26b4fce95dd5dc6750f7834_922251888" name="HAL" namespace="" order-index="6">
+        <model id="p2c865919f26b4fce95dd5dc6750f7834_922251888" name="HAL" namespace="" order-index="6" expanded="true">
           <meta>
             <authors>
               <author> </author>
@@ -10204,7 +10396,7 @@ ERROR
           </meta>
           <abstract-items />
           <sub-models />
-          <diagram type="uml-class" id="pf676a55603b44457bc870fc665e4c374_461002774" name="HAL_PWM" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-70,-70" zoom="0.7">
+          <diagram type="uml-class" id="pf676a55603b44457bc870fc665e4c374_461002774" name="HAL_PWM" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-190,127" zoom="0.8">
             <style>
               <background-color index="1" color="#FFFFFFFF" />
               <background-color index="2" color="#FFFFFFFF" />
@@ -10216,12 +10408,136 @@ ERROR
               </authors>
               <description />
               <creation-date>05/17/2023 13:42:36</creation-date>
-              <change-date>05/22/2023 08:33:52</change-date>
+              <change-date>06/19/2023 14:35:26</change-date>
               <revision-count>0</revision-count>
               <version />
             </meta>
             <abstract-items>
+              <item id="2626f089e1394e078fd540bf60026c0a" cid="ELEM166" type="frame" name="HAL_PWM" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:35:26">
+                <owned-items />
+                <frame type="cmp" />
+              </item>
+              <item id="58e6067fbbe544668257d3d9dac27371" cid="I043" type="uml-interface-classifier" name="HAL_PWM_P_IF" owner="2626f089e1394e078fd540bf60026c0a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:31:22" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="interface" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="58e6067fbbe544668257d3d9dac27371_interface_c" type="interface" ref="" />
+                </stereotype-instances>
+                <owned-items />
+                <attributes>
+                  <attribute id="a1bafebba759a4a59a0c77728b5549584963" cid="PROP385" name="" creation-date="06/19/2023 14:32:17" property-ref="371a4b444b014b24b9f0978d080b2b92" />
+                </attributes>
+                <operations>
+                  <operation id="od30edde227804b9bad17334ba37f6aca843" cid="OP067" name="HAL_PwmInit" creation-date="06/19/2023 14:34:31" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                  <operation id="o424bdbe56c7b4a469d8e8f8267ec1752404" cid="OP068" name="HAL_PwmStart" creation-date="06/19/2023 14:34:31" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                  <operation id="o0be6574ab56c44edbd7310be19dbbef7363" cid="OP069" name="HAL_PwmStop" creation-date="06/19/2023 14:34:31" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                  <operation id="o488dd0d25a204197a3cd4c3f8d70e7e7869" cid="OP070" name="HAL_PwmSetDuty" creation-date="06/19/2023 14:34:31" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <parameters>
+                      <parameter id="p6681dd3cf7e24bc6a7a122f2136c263c" name="duty" type="uint32_t" type-id="uint32_t" direction="In" />
+                    </parameters>
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                </operations>
+              </item>
+              <item id="24f00def84e444c8bb854236dbbb959b" cid="C053" type="class" name="HAL_PWM" owner="2626f089e1394e078fd540bf60026c0a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:31:17" visibility="undefined">
+                <attributes>
+                  <attribute id="a1bafebba759a4a59a0c77728b5549584963" cid="PROP385" name="" creation-date="06/19/2023 14:35:14" property-ref="bd6d2768a92c444c8868f4258be8a910" />
+                </attributes>
+                <operations>
+                  <operation id="od30edde227804b9bad17334ba37f6aca843" cid="OP067" name="HAL_PwmInit" creation-date="06/19/2023 14:35:14" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                  <operation id="o424bdbe56c7b4a469d8e8f8267ec1752404" cid="OP068" name="HAL_PwmStart" creation-date="06/19/2023 14:35:14" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                  <operation id="o0be6574ab56c44edbd7310be19dbbef7363" cid="OP069" name="HAL_PwmStop" creation-date="06/19/2023 14:35:14" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                  <operation id="o488dd0d25a204197a3cd4c3f8d70e7e7869" cid="OP070" name="HAL_PwmSetDuty" creation-date="06/19/2023 14:35:14" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
+                    <parameters>
+                      <parameter id="p6681dd3cf7e24bc6a7a122f2136c263c" name="duty" type="uint32_t" type-id="uint32_t" direction="In" />
+                    </parameters>
+                    <source-codes>
+                      <source-code language="ActionScript" />
+                    </source-codes>
+                  </operation>
+                </operations>
+              </item>
               <item id="die62625c2a03b41c5bb94d4ff81c1f1ae7113" cid="E004" type="enumeration" name="HAL_GPIO_pin_output_e" creation-date="05/18/2023 11:45:48" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="enumeration" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
+                </stereotype-instances>
+                <enumeration-items />
+              </item>
+              <item id="de2b570bf15549e5aba97195221e1f7d" cid="REA044" type="realization" owner="2626f089e1394e078fd540bf60026c0a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:35:12" from="24f00def84e444c8bb854236dbbb959b" to="58e6067fbbe544668257d3d9dac27371" visibility="package" />
+              <item id="di57053f1741fe4a749fbfb0c43be81fd63178" cid="E026" type="enumeration" name="HAL_PWM_result_e" style-class="Flat Light Cyan" owner="2626f089e1394e078fd540bf60026c0a" creation-date="05/18/2023 11:45:48" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="enumeration" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
+                </stereotype-instances>
+                <style class="Flat Light Cyan" />
+                <enumeration-items>
+                  <enumeration-item id="a7790670f990145e39ac7a0e387e38fde723" cid="ENI003" name="HAL_PWM_RESULT_SUCCESS" creation-date="05/18/2023 11:47:26" value="0x00U" />
+                  <enumeration-item id="aae3f7679e38a429eaa721cedd4ebffa6387" cid="ENI004" name="HAL_PWM_RESULT_ERROR" creation-date="05/18/2023 11:47:32" value="0x01U" />
+                  <enumeration-item id="a6e053c804e7a48e5b44f9b486ba2a39f535" cid="ENI010" name="HAL_PWM_RESULT_BUSY" creation-date="05/18/2023 13:41:41" value="0x02U" />
+                  <enumeration-item id="af42f2f94947943719ae167f992829cae549" cid="ENI011" name="HAL_PWM_RESULT_TIMEOUT" creation-date="05/18/2023 13:42:37" value="0x03U" />
+                </enumeration-items>
+              </item>
+              <item id="08aeb6c64b41454997d16fdeeb67dd29" cid="ELEM165" type="usage" owner="2626f089e1394e078fd540bf60026c0a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:35:06" from="24f00def84e444c8bb854236dbbb959b" to="2ec59d215e0247fabdf68e9e850175c0" visibility="package">
+                <stereotypes>
+                  <stereotype name="use" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="08aeb6c64b41454997d16fdeeb67dd29_use_c" type="use" ref="" />
+                </stereotype-instances>
+              </item>
+              <item id="170b223f5f434fbb99263007c393feeb" cid="E001" type="enumeration" name="HAL_GPIO_result_e" creation-date="05/18/2023 11:45:48" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="enumeration" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
+                </stereotype-instances>
+                <enumeration-items>
+                  <enumeration-item id="a7790670f990145e39ac7a0e387e38fde723" cid="ENI003" name="HAL_GPIO_RESULT_SUCCESS" creation-date="05/18/2023 11:47:26" value="0" />
+                  <enumeration-item id="aae3f7679e38a429eaa721cedd4ebffa6387" cid="ENI004" name="HAL_GPIO_RESULT_ERROR" creation-date="05/18/2023 11:47:32" />
+                </enumeration-items>
+              </item>
+              <item id="2ec59d215e0247fabdf68e9e850175c0" cid="I044" type="uml-interface-classifier" name="HAL_PWM_R_IF" owner="2626f089e1394e078fd540bf60026c0a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:31:30" visibility="undefined">
+                <stereotypes>
+                  <stereotype name="interface" />
+                </stereotypes>
+                <stereotype-instances>
+                  <stereotype id="2ec59d215e0247fabdf68e9e850175c0_interface_c" type="interface" ref="" />
+                </stereotype-instances>
+              </item>
+              <item id="di109c69dc53ae4c169a889ac7bd82c8358741" cid="E003" type="enumeration" name="HAL_GPIO_pin_input_e" creation-date="05/18/2023 11:45:48" visibility="undefined">
                 <stereotypes>
                   <stereotype name="enumeration" />
                 </stereotypes>
@@ -10242,182 +10558,65 @@ ERROR
                   <enumeration-item id="a72dd0c8959a64bfd9cd641e0e23f8113950" cid="ENI002" name="HAL_GPIO_HIGH" creation-date="05/18/2023 11:46:23" value="1" />
                 </enumeration-items>
               </item>
-              <item id="170b223f5f434fbb99263007c393feeb" cid="E001" type="enumeration" name="HAL_GPIO_result_e" creation-date="05/18/2023 11:45:48" visibility="undefined">
-                <stereotypes>
-                  <stereotype name="enumeration" />
-                </stereotypes>
-                <stereotype-instances>
-                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
-                </stereotype-instances>
-                <enumeration-items>
-                  <enumeration-item id="a7790670f990145e39ac7a0e387e38fde723" cid="ENI003" name="HAL_GPIO_RESULT_SUCCESS" creation-date="05/18/2023 11:47:26" value="0" />
-                  <enumeration-item id="aae3f7679e38a429eaa721cedd4ebffa6387" cid="ENI004" name="HAL_GPIO_RESULT_ERROR" creation-date="05/18/2023 11:47:32" />
-                </enumeration-items>
+              <item id="371a4b444b014b24b9f0978d080b2b92" cid="PROP385" type="property" owner="58e6067fbbe544668257d3d9dac27371" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:32:17" visibility="public">
+                <structural-feature type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" />
               </item>
-              <item id="di109c69dc53ae4c169a889ac7bd82c8358741" cid="E003" type="enumeration" name="HAL_GPIO_pin_input_e" creation-date="05/18/2023 11:45:48" visibility="undefined">
-                <stereotypes>
-                  <stereotype name="enumeration" />
-                </stereotypes>
-                <stereotype-instances>
-                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
-                </stereotype-instances>
-                <enumeration-items />
-              </item>
-              <item id="die0973a055cb641639bcd9a2319032cf43178" cid="C017" type="class" name="HAL_PWM_P_IF" style-class="Flat Yellow" creation-date="05/18/2023 11:48:14" visibility="undefined">
-                <documentations>
-                  <doc id="8c16608db23744cd80248c053248898e">
-                    <text>
-                      <default>
-                        <style font-name="Verdana" font-size="12">
-                          <text>
-                            <solid-brush color="#FF000000" />
-                          </text>
-                        </style>
-                      </default>
-                      <styles />
-                      <content>
-                        <paragraph>
-                          <style numbering-type="None">
-                            <numbering name="" multi-level="false">
-                              <numbering-level type="None" level="0" format="{0}." />
-                            </numbering>
-                          </style>
-                          <p>
-                            <t>Apply </t>
-                          </p>
-                          <p>
-                            <t>duty </t>
-                          </p>
-                          <p>
-                            <t>to </t>
-                          </p>
-                          <p>
-                            <t>peripheral </t>
-                          </p>
-                          <p>
-                            <t>pin. 
-</t>
-                          </p>
-                        </paragraph>
-                        <paragraph>
-                          <style numbering-type="None">
-                            <numbering name="" multi-level="false">
-                              <numbering-level type="None" level="0" format="{0}." />
-                            </numbering>
-                          </style>
-                          <p>
-                            <t>It </t>
-                          </p>
-                          <p>
-                            <t>allows </t>
-                          </p>
-                          <p>
-                            <t>to </t>
-                          </p>
-                          <p>
-                            <t>set </t>
-                          </p>
-                          <p>
-                            <t>duty </t>
-                          </p>
-                          <p>
-                            <t>percentage, </t>
-                          </p>
-                          <p>
-                            <t>start </t>
-                          </p>
-                          <p>
-                            <t>and </t>
-                          </p>
-                          <p>
-                            <t>stop </t>
-                          </p>
-                          <p>
-                            <t>PWM </t>
-                          </p>
-                          <p>
-                            <t>generation.
-</t>
-                          </p>
-                        </paragraph>
-                      </content>
-                    </text>
-                  </doc>
-                </documentations>
-                <style class="Flat Yellow" />
-                <operations>
-                  <operation id="o50ee2281d8e74bb99953a4b0aa6208d2697" cid="OP001" name="HAL_PwmInit" creation-date="05/18/2023 11:52:24" type="HAL_PWM_result_e" type-id="HAL_PWM_result_e" visibility="public">
-                    <source-codes>
-                      <source-code language="ActionScript" />
-                    </source-codes>
-                  </operation>
-                  <operation id="o2b9539887a38472fae018134d2f27c03641" cid="OP004" name="HAL_PwmSetDuty" creation-date="05/18/2023 13:38:06" type="HAL_PWM_result_e" type-id="Class:di57053f1741fe4a749fbfb0c43be81fd63178" visibility="public">
-                    <parameters>
-                      <parameter id="pfbdb96e5c3b848cda0c683742b9e20c5" name="duty" type="uint32_t" type-id="uint32_t" direction="In" />
-                    </parameters>
-                    <source-codes>
-                      <source-code language="ActionScript" />
-                    </source-codes>
-                  </operation>
-                  <operation id="of53e09d7921a4a56a1e1f4678d38fcd7251" cid="OP002" name="HAL_PwmStart" creation-date="05/18/2023 11:52:24" type="HAL_PWM_result_e" type-id="Class:di57053f1741fe4a749fbfb0c43be81fd63178" visibility="public">
-                    <source-codes>
-                      <source-code language="ActionScript" />
-                    </source-codes>
-                  </operation>
-                  <operation id="o95813c7b7a964cfaba74da064d991291811" cid="OP006" name="HAL_PwmStop" creation-date="05/22/2023 08:39:49" type="HAL_PWM_result_e" type-id="Class:di57053f1741fe4a749fbfb0c43be81fd63178" visibility="public">
-                    <source-codes>
-                      <source-code language="ActionScript" />
-                    </source-codes>
-                  </operation>
-                </operations>
-                <source-codes>
-                  <source-code language="ActionScript" />
-                </source-codes>
-              </item>
-              <item id="di57053f1741fe4a749fbfb0c43be81fd63178" cid="E026" type="enumeration" name="HAL_PWM_result_e" style-class="Flat Light Cyan" creation-date="05/18/2023 11:45:48" visibility="undefined">
-                <stereotypes>
-                  <stereotype name="enumeration" />
-                </stereotypes>
-                <stereotype-instances>
-                  <stereotype id="170b223f5f434fbb99263007c393feeb_enumeration_c" type="enumeration" ref="" />
-                </stereotype-instances>
-                <style class="Flat Light Cyan" />
-                <enumeration-items>
-                  <enumeration-item id="a7790670f990145e39ac7a0e387e38fde723" cid="ENI003" name="HAL_PWM_RESULT_SUCCESS" creation-date="05/18/2023 11:47:26" value="0x00U" />
-                  <enumeration-item id="aae3f7679e38a429eaa721cedd4ebffa6387" cid="ENI004" name="HAL_PWM_RESULT_ERROR" creation-date="05/18/2023 11:47:32" value="0x01U" />
-                  <enumeration-item id="a6e053c804e7a48e5b44f9b486ba2a39f535" cid="ENI010" name="HAL_PWM_RESULT_BUSY" creation-date="05/18/2023 13:41:41" value="0x02U" />
-                  <enumeration-item id="af42f2f94947943719ae167f992829cae549" cid="ENI011" name="HAL_PWM_RESULT_TIMEOUT" creation-date="05/18/2023 13:42:37" value="0x03U" />
-                </enumeration-items>
-              </item>
-              <item id="dia3f6ec8484694ef39c45d5b3264734fd3178" cid="PROP052" type="property" owner="di369f490e3a064c098e39dca7f83cf2c13178" creation-date="05/18/2023 12:01:24" visibility="private" />
-              <item id="di4ae416eb40ae41748b01d43e24345ebc3178" cid="PROP053" type="property" owner="di369f490e3a064c098e39dca7f83cf2c13178" creation-date="05/18/2023 12:01:24" visibility="private">
-                <structural-feature type="HAL_PWM_P_IF" type-id="Class:die0973a055cb641639bcd9a2319032cf43178" />
-              </item>
-              <item id="di369f490e3a064c098e39dca7f83cf2c13178" cid="REL022" type="relationship" creation-date="05/18/2023 12:01:24" from="di57053f1741fe4a749fbfb0c43be81fd63178" to="die0973a055cb641639bcd9a2319032cf43178" visibility="package">
+              <item id="eb089140f7444b95a9cdfc8420445c81" cid="REL076" type="relationship" owner="2626f089e1394e078fd540bf60026c0a" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:31:43" from="58e6067fbbe544668257d3d9dac27371" to="di57053f1741fe4a749fbfb0c43be81fd63178" visibility="package">
                 <owned-items />
-                <relation from="di57053f1741fe4a749fbfb0c43be81fd63178" to="die0973a055cb641639bcd9a2319032cf43178" derived="false">
-                  <start-role id="umlar-5d1b52b4-0564-4518-b1a4-8a15c7fdec3c" name="" navigability="" association-type="association" visibility="private" property-ref="dia3f6ec8484694ef39c45d5b3264734fd3178" />
-                  <end-role id="umlar-6d491014-8cf4-430b-b00a-677b9196fb0b" name="" navigability="yes" association-type="association" visibility="private" property-ref="di4ae416eb40ae41748b01d43e24345ebc3178" />
+                <relation from="58e6067fbbe544668257d3d9dac27371" to="di57053f1741fe4a749fbfb0c43be81fd63178" derived="false">
+                  <start-role id="umlar-5797b2fe-057b-4554-89ad-2334106ac884" name="" navigability="" association-type="aggregation" visibility="private" property-ref="bf95a904e6314278b489becb3cae15c7" />
+                  <end-role id="umlar-b6befea5-8f21-4303-89da-ed7a2aaac56c" name="" navigability="" association-type="association" visibility="private" property-ref="d6315b83cec14e58b232195a71fc70f9" />
                 </relation>
               </item>
             </abstract-items>
             <layer id="309168787a014ecd9f0a67af5e528c71" name="Default" visible="true" enabled="true" locked="false">
-              <item id="di57053f1741fe4a749fbfb0c43be81fd63178" iid="1b9b86eabff2456db8c4f945518772d3" creation-date="05/18/2023 11:45:48" order-index="0" type="entity">
-                <layout ax="980" ay="170" awidth="250" aheight="140" x="980" y="170" width="250" height="130" rotation-center="-40,16" />
+              <item id="2626f089e1394e078fd540bf60026c0a" iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="06/19/2023 14:35:26" order-index="12" type="entity">
+                <layout ax="117" ay="220" awidth="771" aheight="894" x="117" y="220" width="771" height="894" expanded="117,220,771,894" collapsed="0,0,0,0" />
               </item>
-              <item id="die0973a055cb641639bcd9a2319032cf43178" iid="b14a05e6e5a44c4e8302c43d7420fedf" show-fields="true" creation-date="05/18/2023 11:48:14" order-index="3" type="entity">
-                <layout ax="80" ay="181" awidth="650" aheight="118" x="80" y="181" width="650" height="118" rotation-center="-144,-10.5" />
+              <item id="de2b570bf15549e5aba97195221e1f7d" iid="2a6378da8f5c4fa49896fb536b1fedb7" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="06/19/2023 14:35:12" order-index="11" type="relation">
+                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="333" y1="657" x2="333" y2="558" start-border-pos="0.125" end-border-pos="0.625" name-position="0,20">
+                  <points>
+                    <point x="333" y="657" />
+                    <point x="333" y="558" />
+                  </points>
+                </layout>
+                <relation from="24f00def84e444c8bb854236dbbb959b" from-iid="c291ce4fb9254a1fbb509e2d2a4379db" to="58e6067fbbe544668257d3d9dac27371" to-iid="b97d8630513c4bc39d86fba47e983fb1" />
+              </item>
+              <item id="08aeb6c64b41454997d16fdeeb67dd29" iid="6b103773266b40a485363576fc5e5d41" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="06/19/2023 14:35:06" order-index="10" type="relation">
+                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="333" y1="817" x2="333" y2="916" start-border-pos="0.625" end-border-pos="0.125" name-position="21,-2">
+                  <points>
+                    <point x="333" y="817" />
+                    <point x="333" y="916" />
+                  </points>
+                </layout>
+                <relation from="24f00def84e444c8bb854236dbbb959b" from-iid="c291ce4fb9254a1fbb509e2d2a4379db" to="2ec59d215e0247fabdf68e9e850175c0" to-iid="09166090a254479ab0f147f0d43e9dab" />
+              </item>
+              <item id="eb089140f7444b95a9cdfc8420445c81" iid="8a99d2e7054541538c086180069a8268" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="06/19/2023 14:31:43" order-index="9" type="relation">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="524" y1="478" x2="744" y2="398" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="80" end-local-pos="125" name-position="0,20">
+                  <points>
+                    <point x="524" y="478" />
+                    <point x="744" y="398" />
+                  </points>
+                </layout>
+                <relation from="58e6067fbbe544668257d3d9dac27371" from-iid="b97d8630513c4bc39d86fba47e983fb1" to="di57053f1741fe4a749fbfb0c43be81fd63178" to-iid="1b9b86eabff2456db8c4f945518772d3" />
+              </item>
+              <item id="2ec59d215e0247fabdf68e9e850175c0" iid="09166090a254479ab0f147f0d43e9dab" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="06/19/2023 14:31:30" order-index="8" type="entity">
+                <layout ax="142" ay="916" awidth="382" aheight="160" x="142" y="916" width="382" height="160" rotation-center="121,0" />
                 <classifier />
                 <class />
               </item>
-              <item id="di369f490e3a064c098e39dca7f83cf2c13178" iid="727097b7b86041a489e8e34bb8da85bf" creation-date="05/18/2023 12:01:24" order-index="5" type="relation">
-                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="980" y1="240" x2="730" y2="240" start-border-pos="0.875" end-border-pos="0.375" start-local-pos="50" end-local-pos="80" name-position="0,20">
-                  <points>
-                    <point x="980" y="240" />
-                    <point x="730" y="240" />
-                  </points>
-                </layout>
-                <relation from="di57053f1741fe4a749fbfb0c43be81fd63178" from-iid="1b9b86eabff2456db8c4f945518772d3" to="die0973a055cb641639bcd9a2319032cf43178" to-iid="b14a05e6e5a44c4e8302c43d7420fedf" />
+              <item id="58e6067fbbe544668257d3d9dac27371" iid="b97d8630513c4bc39d86fba47e983fb1" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="06/19/2023 14:31:22" order-index="7" type="entity">
+                <layout ax="142" ay="398" awidth="382" aheight="160" x="142" y="398" width="382" height="160" rotation-center="121,0" />
+                <classifier />
+                <class />
+              </item>
+              <item id="24f00def84e444c8bb854236dbbb959b" iid="c291ce4fb9254a1fbb509e2d2a4379db" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" show-fields="true" creation-date="06/19/2023 14:31:17" order-index="6" type="entity">
+                <layout ax="142" ay="657" awidth="382" aheight="160" x="142" y="657" width="382" height="160" rotation-center="121,0" />
+                <classifier />
+                <class />
+              </item>
+              <item id="di57053f1741fe4a749fbfb0c43be81fd63178" iid="1b9b86eabff2456db8c4f945518772d3" container="2626f089e1394e078fd540bf60026c0a" container-iid="7badf48572af4e4dac59720d5a4ac97a" creation-date="05/18/2023 11:45:48" order-index="0" type="entity">
+                <layout ax="619" ay="258" awidth="250" aheight="140" x="619" y="258" width="250" height="130" rotation-center="-40,16" />
               </item>
             </layer>
           </diagram>
@@ -10441,8 +10640,8 @@ ERROR
               <item id="3731304901e540c19855d525e54ce027" cid="REL048" type="relationship" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 11:38:52" from="a8872832e87b4aeabae470ff320c48e3" to="di1384b027eabc4301b7150ec687b2e50f7458" visibility="package">
                 <owned-items />
                 <relation from="a8872832e87b4aeabae470ff320c48e3" to="di1384b027eabc4301b7150ec687b2e50f7458" derived="false">
-                  <start-role id="umlar-5553a8c6-ee87-469e-b7b0-57d5767392ce" name="" navigability="" association-type="aggregation" visibility="private" property-ref="1887f12d08b84901b6c5677879754e5d" />
-                  <end-role id="umlar-694910be-1aed-4361-811b-b811affc48e1" name="" navigability="" association-type="association" visibility="private" property-ref="82b46c8499e74ad28ae5899ed3257783" />
+                  <start-role id="umlar-1c0f60d4-10ec-460c-b4d6-5d67d8906843" name="" navigability="" association-type="aggregation" visibility="private" property-ref="1887f12d08b84901b6c5677879754e5d" />
+                  <end-role id="umlar-3b7b6389-ea58-4e87-b99a-b078fd32586b" name="" navigability="" association-type="association" visibility="private" property-ref="82b46c8499e74ad28ae5899ed3257783" />
                 </relation>
               </item>
               <item id="di036de17e1f3349ecb23b46c2d8f2379f7458" cid="E007" type="enumeration" name="HAL_GPIO_pin_input_e" style-class="Flat Light Cyan" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -10591,15 +10790,15 @@ ERROR
               <item id="39022046926244cab45e416c0821d364" cid="REL053" type="relationship" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 12:06:07" from="7f741cc8995745f884387fd9335486b0" to="301a2410410e479486d0b3a00a81285b" visibility="package">
                 <owned-items />
                 <relation from="7f741cc8995745f884387fd9335486b0" to="301a2410410e479486d0b3a00a81285b" derived="false">
-                  <start-role id="umlar-e7f41180-2ae7-403b-a84a-24b7c855b797" name="" navigability="" association-type="aggregation" visibility="private" property-ref="277b8c1d050b4cf3aa1151f003dbdc4e" />
-                  <end-role id="umlar-b827bb21-92ee-456e-b98d-045f86fe4144" name="" navigability="" association-type="association" visibility="private" property-ref="f4090a758fdf44918c9db9edf2b30e84" />
+                  <start-role id="umlar-206c7579-f293-47fc-a785-3e7ec9b998a2" name="" navigability="" association-type="aggregation" visibility="private" property-ref="277b8c1d050b4cf3aa1151f003dbdc4e" />
+                  <end-role id="umlar-0e0ff379-9d44-40c2-9f2b-e3843381710b" name="" navigability="" association-type="association" visibility="private" property-ref="f4090a758fdf44918c9db9edf2b30e84" />
                 </relation>
               </item>
               <item id="827a1bc85d344e6cbaae77319d942b8e" cid="REL050" type="relationship" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 11:39:35" from="a8872832e87b4aeabae470ff320c48e3" to="di5f3d329cdcc845dfac408750115d2e667458" visibility="package">
                 <owned-items />
                 <relation from="a8872832e87b4aeabae470ff320c48e3" to="di5f3d329cdcc845dfac408750115d2e667458" derived="false">
-                  <start-role id="umlar-2ad92deb-9829-4597-ad7e-6aa2f4ca22b0" name="" navigability="" association-type="aggregation" visibility="private" property-ref="e4d06380bf2940aa9690de7e3d14d01c" />
-                  <end-role id="umlar-eb672f4e-ab8f-4d9c-a6f9-72e760204f32" name="" navigability="" association-type="association" visibility="private" property-ref="e1b38bd8b3f5454584a199c2b296e867" />
+                  <start-role id="umlar-534955d9-06c4-4828-ac33-5a18c5eb9a37" name="" navigability="" association-type="aggregation" visibility="private" property-ref="e4d06380bf2940aa9690de7e3d14d01c" />
+                  <end-role id="umlar-e5a9757a-426d-41b7-93a7-eddbf58a27c3" name="" navigability="" association-type="association" visibility="private" property-ref="e1b38bd8b3f5454584a199c2b296e867" />
                 </relation>
               </item>
               <item id="di58b12c8efe0143b3930d0406cef1c0847458" cid="E005" type="enumeration" name="HAL_GPIO_result_e" style-class="Flat Light Cyan" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -10632,8 +10831,8 @@ ERROR
               <item id="6722a43c450249b8a6d7e1967c0d8e9e" cid="REL049" type="relationship" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 11:39:28" from="a8872832e87b4aeabae470ff320c48e3" to="di58b12c8efe0143b3930d0406cef1c0847458" visibility="package">
                 <owned-items />
                 <relation from="a8872832e87b4aeabae470ff320c48e3" to="di58b12c8efe0143b3930d0406cef1c0847458" derived="false">
-                  <start-role id="umlar-df629058-f99d-4789-87bd-163beea8e38d" name="" navigability="" association-type="aggregation" visibility="private" property-ref="ff807fd2a91a41e2aa51febdfc1209ff" />
-                  <end-role id="umlar-55fae14c-8825-4709-be63-2df16e9819fa" name="" navigability="" association-type="association" visibility="private" property-ref="f055fe1adb134a97a89f28d6049457d5" />
+                  <start-role id="umlar-37d9a0d4-9872-4484-8fe7-5185188d7280" name="" navigability="" association-type="aggregation" visibility="private" property-ref="ff807fd2a91a41e2aa51febdfc1209ff" />
+                  <end-role id="umlar-3dfb21c4-b1fc-4c5c-b390-4bf0b2755e81" name="" navigability="" association-type="association" visibility="private" property-ref="f055fe1adb134a97a89f28d6049457d5" />
                 </relation>
               </item>
               <item id="di5f3d329cdcc845dfac408750115d2e667458" cid="E008" type="enumeration" name="HAL_GPIO_pin_output_e" style-class="Flat Light Cyan" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -10656,8 +10855,8 @@ ERROR
               <item id="e80d5ae54aa241e5b7c2889841c09f06" cid="REL051" type="relationship" owner="a11ff7d5f0fe4e31943f86ff8b4abca9" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/16/2023 11:40:52" from="a8872832e87b4aeabae470ff320c48e3" to="di036de17e1f3349ecb23b46c2d8f2379f7458" visibility="package">
                 <owned-items />
                 <relation from="a8872832e87b4aeabae470ff320c48e3" to="di036de17e1f3349ecb23b46c2d8f2379f7458" derived="false">
-                  <start-role id="umlar-1366f5e2-2ec1-44a6-9f28-73b0049ab977" name="" navigability="" association-type="aggregation" visibility="private" property-ref="d1c7731aff974e5e8e08e82126e240fe" />
-                  <end-role id="umlar-8f5f3cd1-264c-4e19-a28e-7beb8657c777" name="" navigability="" association-type="association" visibility="private" property-ref="e02b6310a6f747b3b2905331621506d0" />
+                  <start-role id="umlar-14e635a2-0f2d-4f00-adec-a3702add6ba9" name="" navigability="" association-type="aggregation" visibility="private" property-ref="d1c7731aff974e5e8e08e82126e240fe" />
+                  <end-role id="umlar-1e8d2cc2-e652-4513-97a1-4ab3186f3f7e" name="" navigability="" association-type="association" visibility="private" property-ref="e02b6310a6f747b3b2905331621506d0" />
                 </relation>
               </item>
             </abstract-items>
@@ -10884,16 +11083,16 @@ ERROR
               <item id="62477867ff3941169b4395afb99341ca" cid="REL056" type="relationship" owner="8408c1d0146847dcb7b99278de4d82dd" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 10:50:37" from="11d7a410d77b48c993c15dd3709d08da" to="di6b950ef9d2584469bd1343c60bc8ed9d9327" visibility="package">
                 <owned-items />
                 <relation from="11d7a410d77b48c993c15dd3709d08da" to="di6b950ef9d2584469bd1343c60bc8ed9d9327" derived="false">
-                  <start-role id="umlar-b4eb4d01-b2af-43a1-9e3f-d070508a2209" name="" navigability="" association-type="aggregation" visibility="private" property-ref="dffec54eae6e4df99e1d7b968a5bf927" />
-                  <end-role id="umlar-760c47c9-5ed1-4029-b017-4598e58f3284" name="" navigability="" association-type="association" visibility="private" property-ref="3be4fd76778d409394f4262cf773a7ae" />
+                  <start-role id="umlar-c86ca618-fcfd-4b4c-8ad6-1ba2d9102e39" name="" navigability="" association-type="aggregation" visibility="private" property-ref="dffec54eae6e4df99e1d7b968a5bf927" />
+                  <end-role id="umlar-cb10e8ef-0c3b-48e6-9258-519334326c96" name="" navigability="" association-type="association" visibility="private" property-ref="3be4fd76778d409394f4262cf773a7ae" />
                 </relation>
               </item>
               <item id="diea8178cdf0d54a7c92e7a01a6a9dd0f67208" cid="PROP035" type="property" creation-date="05/18/2023 12:01:24" visibility="private" />
               <item id="d6aaa209490944128a5009f330aa9570" cid="REL059" type="relationship" owner="8408c1d0146847dcb7b99278de4d82dd" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 10:58:58" from="11d7a410d77b48c993c15dd3709d08da" to="die5063768d3bb4ca3b8586a9dfade38ff9505" visibility="package">
                 <owned-items />
                 <relation from="11d7a410d77b48c993c15dd3709d08da" to="die5063768d3bb4ca3b8586a9dfade38ff9505" derived="false">
-                  <start-role id="umlar-e135e3c3-fe48-48ce-bcfd-bb20a1dff34e" name="" navigability="" association-type="aggregation" visibility="private" property-ref="e20649110161486e887869b83ff70bab" />
-                  <end-role id="umlar-3e54e31b-1864-4a52-96da-e4c6cd54cc9d" name="" navigability="" association-type="association" visibility="private" property-ref="bb54c7e6db9642518dc834ef49b5ca46" />
+                  <start-role id="umlar-a6365582-fd30-4ace-8a64-33d7d7da9139" name="" navigability="" association-type="aggregation" visibility="private" property-ref="e20649110161486e887869b83ff70bab" />
+                  <end-role id="umlar-8b6bd8c0-d788-4811-b92e-6925b8f9b5b3" name="" navigability="" association-type="association" visibility="private" property-ref="bb54c7e6db9642518dc834ef49b5ca46" />
                 </relation>
               </item>
               <item id="8408c1d0146847dcb7b99278de4d82dd" cid="ELEM144" type="frame" name="HAL_ADC" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 11:24:15">
@@ -11157,8 +11356,8 @@ ERROR
               <item id="fa9c3a612a9f4dcdae6be8d2a1bb5f3f" cid="REL060" type="relationship" owner="12771e026899475787896b3f5fe249ef" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 11:27:35" from="6cca63941b9143bb92c473637a585331" to="dia205ca0661da4d81b1555c8add8037116366" visibility="package">
                 <owned-items />
                 <relation from="6cca63941b9143bb92c473637a585331" to="dia205ca0661da4d81b1555c8add8037116366" derived="false">
-                  <start-role id="umlar-8f17b850-29d0-4e2a-8ccc-2da306859e48" name="" navigability="" association-type="aggregation" visibility="private" property-ref="9096017194174d288a1c2484ec1ca824" />
-                  <end-role id="umlar-ed2881df-89ca-4c6c-abc5-40f8fca8f43c" name="" navigability="" association-type="association" visibility="private" property-ref="c41828b55a3e46fb9ee8d841e7bc2706" />
+                  <start-role id="umlar-11969114-3f7d-49c0-a4c9-a0e858752543" name="" navigability="" association-type="aggregation" visibility="private" property-ref="9096017194174d288a1c2484ec1ca824" />
+                  <end-role id="umlar-4974d548-dbe5-4aff-8440-d7bffc8075a2" name="" navigability="" association-type="association" visibility="private" property-ref="c41828b55a3e46fb9ee8d841e7bc2706" />
                 </relation>
               </item>
               <item id="di753d7cf0958346c984a371de1dfa0a006366" cid="PROP032" type="property" creation-date="05/18/2023 12:01:36" visibility="private" />
@@ -11354,8 +11553,8 @@ ERROR
               <item id="740d9c74002b4e3da9c0bca8ff2acc99" cid="REL066" type="relationship" owner="34d68742703548cfba621db4c2c93c10" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:22:04" from="0711318d9e214ebea7c1816c73ff9c49" to="di3d57b4a2611042df9af526e12601d81a9062" visibility="package">
                 <owned-items />
                 <relation from="0711318d9e214ebea7c1816c73ff9c49" to="di3d57b4a2611042df9af526e12601d81a9062" derived="false">
-                  <start-role id="umlar-1280b49b-e380-4c91-9adb-6c7ca275c7b0" name="" navigability="" association-type="aggregation" visibility="private" property-ref="61ed58735e0d46c3bae40dfbcbadc05f" />
-                  <end-role id="umlar-7061e474-a69f-489f-aba8-cca21a01314e" name="" navigability="" association-type="association" visibility="private" property-ref="e58b68cf80d94948975f2cb02912225a" />
+                  <start-role id="umlar-60f1bdd3-1f1a-4903-b7ef-14b4d6beaea5" name="" navigability="" association-type="aggregation" visibility="private" property-ref="61ed58735e0d46c3bae40dfbcbadc05f" />
+                  <end-role id="umlar-852cb3e2-6376-43ad-803c-411497e92099" name="" navigability="" association-type="association" visibility="private" property-ref="e58b68cf80d94948975f2cb02912225a" />
                 </relation>
               </item>
               <item id="di87d834e0362a4615ba93c8983be72c6c6972" cid="C018" type="uml-interface-classifier" name="HAL_TMR_P_IF" style-class="Flat Yellow" creation-date="05/18/2023 11:48:14" visibility="undefined">
@@ -11579,8 +11778,8 @@ ERROR
               <item id="933313e0c46a4ced90f4c246df420bed" cid="REL064" type="relationship" owner="34d68742703548cfba621db4c2c93c10" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 12:21:58" from="0711318d9e214ebea7c1816c73ff9c49" to="dia48de3b2fa404a4f8d18f0fe4958aa0f6972" visibility="package">
                 <owned-items />
                 <relation from="0711318d9e214ebea7c1816c73ff9c49" to="dia48de3b2fa404a4f8d18f0fe4958aa0f6972" derived="false">
-                  <start-role id="umlar-bb18da54-0642-492f-ba09-690ef77b5edb" name="" navigability="" association-type="aggregation" visibility="private" property-ref="56dfa8587ebc4834b39cfad411772b3c" />
-                  <end-role id="umlar-5575296c-4a8d-448e-bf85-55d86680e2a5" name="" navigability="" association-type="association" visibility="private" property-ref="4a28289ecc704683a3387731f6118850" />
+                  <start-role id="umlar-2e164602-c888-4817-aaf2-31850356dd54" name="" navigability="" association-type="aggregation" visibility="private" property-ref="56dfa8587ebc4834b39cfad411772b3c" />
+                  <end-role id="umlar-3645088c-92d7-4965-8be4-24b712a65326" name="" navigability="" association-type="association" visibility="private" property-ref="4a28289ecc704683a3387731f6118850" />
                 </relation>
               </item>
               <item id="di3d57b4a2611042df9af526e12601d81a9062" cid="E029" type="enumeration" name="HAL_TMR_clock_e" style-class="Flat Light Cyan" owner="34d68742703548cfba621db4c2c93c10" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -11709,8 +11908,8 @@ ERROR
               <item id="di7fd925e736a54c16b2f554ce45c36b4a4065" cid="REL010" type="relationship" creation-date="05/18/2023 12:01:24" from="di9775f46f98fe44ddb5e59d5929157acf4065" to="di714107423deb48e58951e4640e0f046e4065" visibility="package">
                 <owned-items />
                 <relation from="di9775f46f98fe44ddb5e59d5929157acf4065" to="di714107423deb48e58951e4640e0f046e4065" derived="false">
-                  <start-role id="umlar-22951b4b-b882-41fa-abde-0c5ad0140e69" name="" navigability="" association-type="association" visibility="private" property-ref="di63b37af3b9b04ae99a0d4615c76b06f44065" />
-                  <end-role id="umlar-823338c2-abf2-46a7-a1bc-49b37eaecdd6" name="" navigability="yes" association-type="association" visibility="private" property-ref="di2c3bf2ceaa0d4c60a0bce33dc92343634065" />
+                  <start-role id="umlar-80e4aef7-0c68-4d96-8f16-dd443826f864" name="" navigability="" association-type="association" visibility="private" property-ref="di63b37af3b9b04ae99a0d4615c76b06f44065" />
+                  <end-role id="umlar-1cb516c3-c76e-41d9-b27e-750c434e98e3" name="" navigability="yes" association-type="association" visibility="private" property-ref="di2c3bf2ceaa0d4c60a0bce33dc92343634065" />
                 </relation>
               </item>
               <item id="di2c3bf2ceaa0d4c60a0bce33dc92343634065" cid="PROP020" type="property" owner="di7fd925e736a54c16b2f554ce45c36b4a4065" creation-date="05/18/2023 12:01:24" visibility="private" />
@@ -11741,8 +11940,8 @@ ERROR
               <item id="di3871557d4c294c28abb644ca768b3a5c4065" cid="REL009" type="relationship" creation-date="05/18/2023 12:01:12" from="di3d2a1f8c0e5447968df08759d58b257e4065" to="di714107423deb48e58951e4640e0f046e4065" visibility="package">
                 <owned-items />
                 <relation from="di3d2a1f8c0e5447968df08759d58b257e4065" to="di714107423deb48e58951e4640e0f046e4065" derived="false">
-                  <start-role id="umlar-57d661a5-ccd5-4114-94e4-7738ebb43562" name="" navigability="" association-type="association" visibility="private" property-ref="dif19fd514baa44070945dc1b214f4f5454065" />
-                  <end-role id="umlar-e0add448-1840-424c-9ce9-6fd0e8fb4507" name="" navigability="yes" association-type="association" visibility="private" property-ref="dic0a7a3d147c14d34b1e0be32c4ee46fb4065" />
+                  <start-role id="umlar-8c23e964-5596-4630-aebb-48ad8d5e7d07" name="" navigability="" association-type="association" visibility="private" property-ref="dif19fd514baa44070945dc1b214f4f5454065" />
+                  <end-role id="umlar-3b6241e2-e50e-479b-8444-4f09a24e8ba2" name="" navigability="yes" association-type="association" visibility="private" property-ref="dic0a7a3d147c14d34b1e0be32c4ee46fb4065" />
                 </relation>
               </item>
               <item id="di4a5c9aea8d994d4ab150cc369dc009904065" cid="PROP021" type="property" creation-date="05/18/2023 12:01:32" visibility="private" />
@@ -11829,8 +12028,8 @@ ERROR
               <item id="di599b96b70967451fae8e990ca9a8647f8251" cid="REL020" type="relationship" creation-date="05/18/2023 12:01:24" from="did5d0a15c26c14430953294edb41af9558251" to="di5e9c2b924c9640b99b22a9f838609c5a8251" visibility="package">
                 <owned-items />
                 <relation from="did5d0a15c26c14430953294edb41af9558251" to="di5e9c2b924c9640b99b22a9f838609c5a8251" derived="false">
-                  <start-role id="umlar-d29607bc-5663-4163-bba0-0e77bf2cf631" name="" navigability="" association-type="association" visibility="private" property-ref="di9ac07e75f52a4eee8d277e0a236e382d8251" />
-                  <end-role id="umlar-5169e77c-b59c-41cf-9c8e-916e824b7d57" name="" navigability="yes" association-type="association" visibility="private" property-ref="di94820f1fed2f4bae88ed39b922c9e4e58251" />
+                  <start-role id="umlar-31d351d7-451c-43d1-8648-aeab98a16783" name="" navigability="" association-type="association" visibility="private" property-ref="di9ac07e75f52a4eee8d277e0a236e382d8251" />
+                  <end-role id="umlar-196ac379-7fed-4d46-bafd-d6683ad43ac4" name="" navigability="yes" association-type="association" visibility="private" property-ref="di94820f1fed2f4bae88ed39b922c9e4e58251" />
                 </relation>
               </item>
               <item id="di7e66a04bf6ae424c86201d6cf44d43b88251" cid="C013" type="class" name="Memory map" creation-date="05/18/2023 14:14:43" visibility="undefined">
@@ -12208,8 +12407,8 @@ ERROR
               <item id="a22ad542d720480aa5bf88df9f9f05b8" cid="REL062" type="relationship" owner="c1a821405bea4771ab30c1fbcbb92534" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 11:50:53" from="36a3725733b542e9b1c6310cb380d75e" to="di411b53f06f19460cbde4e15b4e62a0646554" visibility="package">
                 <owned-items />
                 <relation from="36a3725733b542e9b1c6310cb380d75e" to="di411b53f06f19460cbde4e15b4e62a0646554" derived="false">
-                  <start-role id="umlar-64bb641a-c7bf-442f-9320-d6a434f4b1b9" name="" navigability="" association-type="aggregation" visibility="private" property-ref="9910b1ca7849424d93d853de832c7f89" />
-                  <end-role id="umlar-bc42f39d-b0f2-47a8-b73c-9a300a4ee5e7" name="" navigability="" association-type="association" visibility="private" property-ref="b2a093f64a08468498ab3299f17e91e8" />
+                  <start-role id="umlar-b7564902-03d5-4f51-a47f-eb1f9337aeb4" name="" navigability="" association-type="aggregation" visibility="private" property-ref="9910b1ca7849424d93d853de832c7f89" />
+                  <end-role id="umlar-cd6da9f0-502f-4622-9c81-5ea80f71c3c8" name="" navigability="" association-type="association" visibility="private" property-ref="b2a093f64a08468498ab3299f17e91e8" />
                 </relation>
               </item>
             </abstract-items>
@@ -12310,8 +12509,8 @@ ERROR
               <item id="c4d13f17c8ee4c78a28a7226853d3872" cid="REL061" type="relationship" owner="ca0410428e0640d68c8662410fdd9150" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 11:42:37" from="59e42f2c0b0a447998cb453dafcbe96b" to="di5622a897a67d403d894c9c3612af4a1b1829" visibility="package">
                 <owned-items />
                 <relation from="59e42f2c0b0a447998cb453dafcbe96b" to="di5622a897a67d403d894c9c3612af4a1b1829" derived="false">
-                  <start-role id="umlar-8f044302-d070-480d-8ed6-eb416af3b4ea" name="" navigability="" association-type="aggregation" visibility="private" property-ref="663f85331d8543b8a64aa231e23f0ebd" />
-                  <end-role id="umlar-09562a88-d029-41ce-ac33-5b6507a24f99" name="" navigability="" association-type="association" visibility="private" property-ref="bed0637f415c49bc9a763470d6b4c7a2" />
+                  <start-role id="umlar-e5518e06-6d4d-4ab3-935f-5ef3a9284efa" name="" navigability="" association-type="aggregation" visibility="private" property-ref="663f85331d8543b8a64aa231e23f0ebd" />
+                  <end-role id="umlar-edc6068e-9202-49d1-99fe-6e6c5e536aee" name="" navigability="" association-type="association" visibility="private" property-ref="bed0637f415c49bc9a763470d6b4c7a2" />
                 </relation>
               </item>
               <item id="di5622a897a67d403d894c9c3612af4a1b1829" cid="E025" type="enumeration" name="HAL_WDG_result_t" style-class="Flat Light Cyan" owner="ca0410428e0640d68c8662410fdd9150" creation-date="05/18/2023 11:45:48" visibility="undefined">
@@ -12543,29 +12742,43 @@ ERROR
         </layer>
       </diagram>
       <mapping-definitions>
-        <mapping-definition id="p691778ae8fc44a6a958a51995e40db6d_136162104" name="" order-index="0" creation-date="06/16/2023 09:42:38" from-diagram="p939225943c7d4857a0f227874beec86d_618919618" to-diagram="pe1c59837e53a463aaafcba199d904131_625430345">
+        <mapping-definition id="p691778ae8fc44a6a958a51995e40db6d_136162104" name="" order-index="0" creation-date="06/16/2023 09:42:38" from-diagram="p32f63b06a96d443aaab90e39fc30e363_972012453" to-diagram="p0854ee562ca149b4b670acdb22e4aa8e_567281797">
           <rule id="mr-fe7aeeab-3060-46bb-9b62-54a2ae6f214c" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" />
           <rule id="mr-6d6a3a52-ad69-4e11-842d-10ff9b1f75c8" name-modification="same" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="a5f92531fd01b488eab1b27568486ccb2262" to-element="e09a7382e9644828b2222737a004e888" />
           <rule id="mr-b7eb859f-e2ef-4d31-b8f8-4088536ac6a6" name-modification="same" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="aa571fd82324a4c31b33344825bdc7f03530" to-element="e09a7382e9644828b2222737a004e888" />
-          <rule id="mr-dbd971f1-ce5b-4c32-8c46-c676de463397" name-modification="same" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="a26d06ad5db0043a8bd117eebe76a2722114" />
+          <rule id="mr-dbd971f1-ce5b-4c32-8c46-c676de463397" name-modification="same" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="a26d06ad5db0043a8bd117eebe76a2722114" />
           <rule id="mr-a23b2028-375c-4e38-8eb1-c185a74501ec" name-modification="same" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="ac9b82570614042ebab939434c11698a9419" to-element="e09a7382e9644828b2222737a004e888" />
           <rule id="mr-9826ecd3-9445-4d37-b310-5745b1b14cde" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="o96920422b63c4aa888774f78cf26854f695" />
           <rule id="mr-402950f7-0584-4287-8144-3a2e41c3310c" name-modification="same" status="mapped" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="o3ac9fe8b1b4d4792a13d70d14f2dfe6d220" to-element="e09a7382e9644828b2222737a004e888" to-field="od281d411863d4248b77d524359e55866896" />
           <rule id="mr-a0d53f43-12f3-43ab-ad13-d2c02162f170" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="o3282583fe3794b1b9c2c027019558d0f14" />
-          <rule id="mr-c090947f-f2b3-42dc-bd53-2100f5aa6d04" from-element="11d7a410d77b48c993c15dd3709d08da" />
+          <rule id="mr-c090947f-f2b3-42dc-bd53-2100f5aa6d04" status="ignored" from-element="11d7a410d77b48c993c15dd3709d08da" />
           <rule id="mr-895e84d8-ef62-4028-a74a-1d3f0f8c4e8a" name-modification="same" from-element="11d7a410d77b48c993c15dd3709d08da" from-field="a5f98cb4491424874af106936aa650d3b113" to-element="e09a7382e9644828b2222737a004e888" />
           <rule id="mr-68391465-cca4-405f-9cee-790b0c7f9951" name-modification="same" from-element="11d7a410d77b48c993c15dd3709d08da" from-field="a6a13f8e6cc1b451eaa14dbfe9cbad454466" to-element="e09a7382e9644828b2222737a004e888" />
           <rule id="mr-43ecbf62-24ef-41d2-bd12-dde0932d4e6e" status="ignored" from-element="11d7a410d77b48c993c15dd3709d08da" from-field="odc5182598f31435bb6d09f4a149a088d661" />
           <rule id="mr-e972be12-dcc8-4abc-8288-9f15830ba650" name-modification="same" status="mapped" from-element="11d7a410d77b48c993c15dd3709d08da" from-field="o1b2c86aae9e74193b32bd900d6c13f4a252" to-element="e09a7382e9644828b2222737a004e888" to-field="o39916079e817482db014bf48c1bb5c9f569" />
           <rule id="mr-7e075c09-4d6c-4e5e-b867-39aedf85b473" status="ignored" from-element="11d7a410d77b48c993c15dd3709d08da" from-field="o9ec2c21fc4b648f69f2594fe8e0b770a444" />
           <rule id="mr-e03aca27-8485-4faf-ad50-304a280f7066" status="ignored" from-element="11d7a410d77b48c993c15dd3709d08da" from-field="occ6335b1df234c97bba00e0b7076ac93990" />
-          <rule id="mr-f9aca6b0-f406-4a80-bcbe-ab73f260fe3c" from-element="583928f22e1242f98f8b11876e28012a" />
+          <rule id="mr-f9aca6b0-f406-4a80-bcbe-ab73f260fe3c" status="ignored" from-element="583928f22e1242f98f8b11876e28012a" />
           <rule id="mr-bcc1de69-3bd2-4d0e-b458-57006ce15997" status="ignored" from-element="583928f22e1242f98f8b11876e28012a" from-field="ad5d7974cf51841978bd37ddd66d3f7b1556" />
           <rule id="mr-d66860d0-bbb5-4ddf-b00e-fadb88a45435" name-modification="same" status="mapped" from-element="583928f22e1242f98f8b11876e28012a" from-field="ac6d60b4cd6dc4cfebe7eab976ea55336604" to-element="e09a7382e9644828b2222737a004e888" to-field="ac5ec1d62c3fb410db112ffcbd746409f364" />
           <rule id="mr-3803c8f0-3706-4372-92b0-35bc08849f22" status="ignored" from-element="583928f22e1242f98f8b11876e28012a" from-field="a3d302a2bbde245bf88fd3b902f4c1d24460" />
           <rule id="mr-77cc44b7-6a5a-4833-bf0d-8bfd742fc1e8" name-modification="same" status="mapped" from-element="583928f22e1242f98f8b11876e28012a" from-field="a381a82c99b5b47cfa216c51393550108261" to-element="e09a7382e9644828b2222737a004e888" to-field="ac12daeb1368a4cdc8bf7a0fbdc884116836" />
           <rule id="mr-78f7d9ff-e26f-43d3-9b5d-64a80defe7e3" name-modification="same" status="mapped" from-element="583928f22e1242f98f8b11876e28012a" from-field="aafb3bbf75e7744b9855427f1165a35ec77" to-element="e09a7382e9644828b2222737a004e888" to-field="a011c9baa91dc4a448c2ea9c23b56ec5c444" />
           <rule id="mr-c3a6aaac-8b11-449e-a3bd-a8001b48deaf" name-modification="same" status="mapped" from-element="583928f22e1242f98f8b11876e28012a" from-field="a7bce7f9689fa4c97a27c21e1dcc655bc974" to-element="e09a7382e9644828b2222737a004e888" to-field="a5afb78cbab53428b805099378b04fe05891" />
+          <rule id="mr-3c3e04c8-6b65-4d6a-8fad-e2e992ea32d2" status="ignored" from-element="58e6067fbbe544668257d3d9dac27371" />
+          <rule id="mr-c0de5b4b-98ed-4a4b-8517-dff6c31c5db4" status="ignored" from-element="58e6067fbbe544668257d3d9dac27371" from-field="a1bafebba759a4a59a0c77728b5549584963" />
+          <rule id="mr-37583fd8-8957-4970-8093-f0058bfaab42" status="ignored" from-element="58e6067fbbe544668257d3d9dac27371" from-field="od30edde227804b9bad17334ba37f6aca843" />
+          <rule id="mr-77ea8a22-22db-4ffd-8b1a-2bf2f5070ff3" status="ignored" from-element="58e6067fbbe544668257d3d9dac27371" from-field="o424bdbe56c7b4a469d8e8f8267ec1752404" />
+          <rule id="mr-ef5b7d3b-5488-401c-94e8-d50c39e86afd" status="ignored" from-element="58e6067fbbe544668257d3d9dac27371" from-field="o0be6574ab56c44edbd7310be19dbbef7363" />
+          <rule id="mr-a0898d1e-48cb-437d-bbfe-d0d0058dd06a" name-modification="same" status="mapped" from-element="58e6067fbbe544668257d3d9dac27371" from-field="o488dd0d25a204197a3cd4c3f8d70e7e7869" to-element="f13a51cd98bf4507bc8452b42d753b15" to-field="oafed60e13c1847ef8a03e0f8b5811308283" />
+          <rule id="mr-d4672361-b2a4-4f60-b495-2070d65c73c6" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" />
+          <rule id="mr-3a5cbdfb-2556-4edb-9f3f-2dbd46913141" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="a5f92531fd01b488eab1b27568486ccb2262" />
+          <rule id="mr-96f66255-76be-4289-93e7-0871d62a4f93" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="aa571fd82324a4c31b33344825bdc7f03530" />
+          <rule id="mr-bca9d31c-90a8-424d-9ea0-1de26d33a176" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="a26d06ad5db0043a8bd117eebe76a2722114" />
+          <rule id="mr-36b9d9db-0e6c-4879-8a6a-e5c9b39b6648" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="ac9b82570614042ebab939434c11698a9419" />
+          <rule id="mr-4925e1ce-5d6d-4730-9d1f-81c0e51d7ae6" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="o96920422b63c4aa888774f78cf26854f695" />
+          <rule id="mr-a5d45736-77b5-4e14-adb7-9410d10bc0e1" name-modification="same" status="mapped" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="o3ac9fe8b1b4d4792a13d70d14f2dfe6d220" to-element="f13a51cd98bf4507bc8452b42d753b15" to-field="oe6aba4ff7d7a40b7b03b3d45d5c876fb622" />
+          <rule id="mr-080b749c-6e2c-45f3-97ef-7b2902c071e4" status="ignored" from-element="a8872832e87b4aeabae470ff320c48e3" from-field="o3282583fe3794b1b9c2c027019558d0f14" />
         </mapping-definition>
       </mapping-definitions>
     </model>
