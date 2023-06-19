@@ -79,9 +79,10 @@ HAL_CAN_result_e HAL_CanInit();
 
 
 /**
- * @fn HAL_CAN_result_e HAL_CanFilters(const uint16_t id, const uint16_t mask)
+ * @fn HAL_CAN_result_e HAL_CanAddFilters(const uint16_t id, const uint16_t mask)
  * @brief Configure the CAN filter with the options provided by the
  * manufacturer provided functions. This will have a id and a mask aplied to the id.
+ * The receive message id must match the values where the mask is 0, with the id imposed.
  * Every time the function is called will set a filter in a bank up to 14
  *
  * @param id ID reference that will have the messages in order to receive them
@@ -91,7 +92,18 @@ HAL_CAN_result_e HAL_CanInit();
  * HAL_CAN_result_eIMEOUT if the CAN_TIMEOUT timeout has expired and
  * HAL_CAN_RESULT_ERROR otherwise
  */
-HAL_CAN_result_e HAL_CanFilters(const uint16_t id, const uint16_t mask);
+HAL_CAN_result_e HAL_CanAddFilters(const uint16_t id, const uint16_t mask);
+
+/**
+ * @fn HAL_CAN_result_e HAL_CanDelFilters(void)
+ * @brief Configure the CAN filter to receive all messages deleting all filters
+ *
+ * @return HAL_CAN_RESULT_SUCCESS if interface was initialized correctly,
+ * HAL_CAN_RESULT_BUSY if the peripheral is not ready,
+ * HAL_CAN_result_eIMEOUT if the CAN_TIMEOUT timeout has expired and
+ * HAL_CAN_RESULT_ERROR otherwise
+ */
+HAL_CAN_result_e HAL_CanDelFilters(void);
 
 /**
  * @fn HAL_CAN_result_e HAL_CanTransmit(const uint32_t id, const uint8_t* data, const uint8_t size)
