@@ -75,7 +75,8 @@ typedef enum
 /**
  * @fn MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
  * 									MID_REG_meas_property_s * measreg)
- * @brief Get meassurements from the type specified, electrical or temperatures.
+ * @brief Get measurements from the type specified, electrical or temperatures, 
+ *  from the adc and converts them into the specific values.
  *
  * @param type, specific type of measurement to update.
  * @param measreg, Pointer to the register where the measures are stored.
