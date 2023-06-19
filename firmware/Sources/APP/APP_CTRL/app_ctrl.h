@@ -65,9 +65,21 @@ typedef enum
  * @brief Check if there is some value in measures above or below limits and updates
  * the error register
  * @return @ref APP_CTRL_RESULT_SUCCESS if no errors, APP_CTRL_RESULT_ERROR_FOUND if
- * errors found and APP_CTRL_RESULT_ERROR_INT if any error in comparision
+ * errors found and APP_CTRL_RESULT_ERROR_INT if any error in comparison
  */
 APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s *, const MID_REG_meas_property_s *, const MID_REG_limit_s *);
+
+
+/**
+ * @fn APP_CTRL_result_e APP_CtrlUpdate(MID_REG_control_s,
+ * MID_REG_meas_property_s, MID_REG_limit_s )
+ * @brief Update internal PIs and apply control to PWM. If limit is reached, stop PWM
+ * @return @ref APP_CTRL_RESULT_SUCCESS if no errors, APP_CTRL_RESULT_ERROR_INT if
+ * errors in calculus or MID_PWR results
+ */
+APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s *, const MID_REG_meas_property_s *, const MID_REG_limit_s *);
+
+
 
 
 #endif /* APP_APP_CTRL_APP_CTRL_H_ */
