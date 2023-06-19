@@ -1,11 +1,10 @@
 /*********************************************************************************
-* @file           : hal_sys.h
-* @brief          : HAL header file for SYS
-**********************************************************************************/
+* @file           : hal_adc.h
+* @brief          : HAL header file for ADC
+***********************************************************************************/
 
-#ifndef HAL_SYS_H_
-#define HAL_SYS_H_
-
+#ifndef HAL_ADC_H_
+#define HAL_ADC_H_
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
@@ -13,6 +12,7 @@
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
+#include <stdint.h>
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -27,29 +27,34 @@
 /**********************************************************************************/
 
 /**
- * @enum HAL_SYS_mode_e
- * @brief Structure for the defined micro power modes.
+ * @enum HAL_ADC_result_e
+ * @brief Structure for the result of the ADC operation.
  */
 typedef enum
 {
-	HAL_SYS_MODE_NORMAL = 0x0U,	/**< HAL_SYS_MODE_NORMAL Normal power mode **/
-	HAL_SYS_MODE_SLEEP,			/**< HAL_SYS_MODE_SLEEP Sleep power mode **/
-	HAL_SYS_MODE_COUNT			/**< HAL_SYS_MODE_COUNT */
-}HAL_SYS_mode_e;
+	HAL_ADC_RESULT_SUCCESS 	= 0x00U, 	/**< HAL_ADC success operation result **/
+	HAL_ADC_RESULT_ERROR	 	= 0x01U,	/**< HAL_ADC error operation result **/
+	HAL_ADC_RESULT_BUSY			= 0x02U,	/**< HAL_ADC busy operation result **/
+	HAL_ADC_RESULT_TIMEOUT	= 0x03U,	/**< HAL_ADC timeout operation result **/
+} HAL_ADC_result_e;
 
 
 /**
- * @enum HAL_SYS_result_e
- * @brief Structure of available response values for HAL_SYS operations.
+ * @enum HAL_ADC_port_e
+ * @brief ADC channels.
  */
 typedef enum
 {
-	HAL_SYS_RESULT_SUCCESS 						= 0x0U, 	/**< HAL_SYS success operation result **/
-	HAL_SYS_RESULT_ERROR_CRIT 				= 0x01U,	/**< HAL_SYS critical error result **/
-	HAL_SYS_RESULT_ERROR_CAN  				= 0x02U,	/**< HAL_SYS error on communication process, CAN **/
-	HAL_SYS_RESULT_ERROR_CRIT_PERIPH 	= 0x03U,	/**< HAL_SYS error on operation with critical peripherals **/
-}HAL_SYS_result_e;
+	HAL_ADC_LS_CURR,			/** ADC2_IN1 - PA4 **/
+	HAL_ADC_LS_VOLT,			/** ADC2_IN2 - PA5 **/
+	HAL_ADC_HS_VOLT,			/** ADC2_IN4 - PA6 **/
 
+	HAL_ADC_TEMP_ANOD,		/** ADC1_IN1 - PA1 **/
+	HAL_ADC_TEMP_AMB,		/** ADC1_IN2 - PA0 **/
+	HAL_ADC_INT_TEMP,		/** ADC1 Chan Temp **/
+
+	HAL_ADC_PORT_COUNT 		/**< HAL_ADC_COUNT */
+}HAL_ADC_port_e;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -70,41 +75,32 @@ typedef enum
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
-
 /**
- * @fn HAL_SYS_result_e HAL_SysInit(void)
- * @brief Reset all peripherals, configures CPU, AHB and APB buses clocks to 8MHz
- * and invokes the corresponding initialization functions of the used peripherals.
- * If any initialization fails, a recovery process is initiated.
- * @return 	@ref HAL_SYS_RESULT_SUCCESS, if the initialization was successful and
- * @ref HAL_SYS_RESULT_ERROR, @ref HAL_SYS_RESULT_BUSY or @ref HAL_SYS_result_TIMEOUT
- * if initialization and recovery of any peripheral failed.
+ * @fn void HAL_TMR_RT_Callback(void)
+ * @brief Callback function invoked when the timer RT interrupt occurs due to a counter overflow.
+ * User must implement this function for for customized operation.
  */
-HAL_SYS_result_e HAL_SysInit(void);
+void HAL_AdcCallbackDMAChl1Cplt(void);
+void HAL_AdcCallbackDMAChl2Cplt(void);
 
 /**
- * @fn void HAL_SysResume(void)
- * @brief Resume the uC after a low power mode
- * */
-void HAL_SysResume(void);
-
-/**
- * @fn HAL_SYS_result_e HAL_SysPwrMode(HAL_SYS_mode_e)
- * @brief The micro enters on power save mode.
- *
- * @param mode Power mode used
- * @return @ref HAL_SYS_RESULT_SUCCESS if power mode changed correctly and
- * @ref HAL_SYS_RESULT_ERROR otherwise.
+ * @fn  HAL_ADC_result_e HAL_AdcInit(void)
+ * @brief Initializes and configures ADC1 and ADC2 with the settings and options
+ * provides by the processor expert. It uses regular rank with discontinuous measures and
+ * a circular sequencer. Each ADC measures 3 channels and is triggered by RT timer (ADC1) and PwrMeas timer (ADC2).
+ * To store data uses the DMA in circular mode.
+ * @return @ref HAL_ADC_RESULT_SUCCESS if ADCs have been initialized correctly,
+ * @ref HAL_ADC_RESULT_ERROR otherwise.
  */
-HAL_SYS_result_e HAL_SysPwrMode(HAL_SYS_mode_e mode);
+HAL_ADC_result_e HAL_AdcInit (void);
 
 /**
- * @fn HAL_SYS_result_e HAL_SysReset(void)
- * @brief Performs an hard or soft reset on the micro and peripherals.
- *
- * @return @ref HAL_SYS_RESULT_ERROR if action cannot be applied.
+ * @fn HAL_ADC_result_e HAL_AdcGet(HAL_ADC_port_e, uint16_t*)
+ * @brief Retrieve the measure of the specified ADC channel
+ * @param value Result value of the conversion. 12b resolution. [0-4095]
+ * @return @ref HAL_ADC_RESULT_SUCCESS if measure can be be acquired,
+ * @ref HAL_ADC_RESULT_ERROR otherwise.
  */
-HAL_SYS_result_e HAL_SysReset (void);
+HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value);
 
-#endif /* HAL_SYS_H_ */
- 
+#endif /* HAL_ADC_H_ */

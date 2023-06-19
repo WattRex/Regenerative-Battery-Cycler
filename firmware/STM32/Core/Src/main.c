@@ -15,9 +15,8 @@
   *
   ******************************************************************************
   */
-	#include "epc_conf.h"
-	#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 
+#include "epc_conf.h"
 	#ifndef EPC_CONF_USE_CUSTOM_HAL
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
@@ -36,6 +35,8 @@
 	#else
 		#include "app_salg.h"
 		#include "main.h"
+		#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+		extern uint8_t EPC_ST_ERR_COUNTER;
 	#endif
 
 	#ifdef EPC_CONF_TESTING
@@ -75,6 +76,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+// declaring structure
 
 /* USER CODE END 0 */
 

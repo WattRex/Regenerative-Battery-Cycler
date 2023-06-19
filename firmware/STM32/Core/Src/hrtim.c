@@ -95,7 +95,7 @@ void MX_HRTIM1_Init(void)
   {
     Error_Handler();
   }
-  pOutputCfg.Polarity = HRTIM_OUTPUTPOLARITY_HIGH;
+  pOutputCfg.Polarity = HRTIM_OUTPUTPOLARITY_LOW;
   pOutputCfg.SetSource = HRTIM_OUTPUTSET_TIMCMP1;
   pOutputCfg.ResetSource = HRTIM_OUTPUTRESET_TIMPER;
   pOutputCfg.IdleMode = HRTIM_OUTPUTIDLEMODE_NONE;

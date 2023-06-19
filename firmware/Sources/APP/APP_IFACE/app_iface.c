@@ -1,23 +1,25 @@
 /*********************************************************************************
-* @file           : hal_gpio.c
-* @brief          : Implementation of HAL GPIO
-***********************************************************************************/
+* @file           : app_iface.c
+* @brief          : Implementation of APP IFACE
+**********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
+#include <stdlib.h>
 
-/**********************************************************************************/
-/*                        Include headers of the component                        */
-/**********************************************************************************/
-#include "hal_gpio.h"
-#include "gpio.h"
-#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+#include "app_iface.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-#include <stdint.h>
+#include "mid_reg.h"
+
+/**********************************************************************************/
+/*                      Definition of imported constant data                      */
+/**********************************************************************************/
+extern const MID_REG_limit_s EPC_CONF_limit_range; //used to check new limits
+extern const MID_REG_periodic_period_s EPC_CONF_periodic_time_min; //used to check new limits and init APP_IFACE_periodic
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -31,24 +33,11 @@
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
 
-/**
- * @struct GPIO_pinout_config_t
- * @brief Tuple of GPIO pin and GPIO peripheral port: GPIO[A-F]
- */
-typedef struct
-{
-	const  uint16_t pin;   		/**< GPIO pin*/
-	GPIO_TypeDef *peripheral;	/**< GPIO Peripheral GPIOx[A-F]*/
-}GPIO_pinout_config_t;
-
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 
-/**********************************************************************************/
-/*                        Definition of imported variables                        */
-/**********************************************************************************/
-extern uint8_t EPC_ST_ERR_COUNTER;
+MID_REG_periodic_s APP_IFACE_periodic = {};
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -66,30 +55,6 @@ extern uint8_t EPC_ST_ERR_COUNTER;
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
 
-/**
- * Configuration struct for available output GPIO pins (@ref HAL_GPIO_output_e)
- */
-const GPIO_pinout_config_t _GPIO_output_pins[]={
-		// uC right side
-		{Out_Disable_Pin, Out_Disable_GPIO_Port},			/**< @ref HAL_GPIO__OUT_Out_Disable - PA9 	**/
-
-		// uC bottom side
-		{Led0_Pin, Led0_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led0 - PC4	**/
-		{Led1_Pin, Led1_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led1 - PC5	**/
-		{Led2_Pin, Led2_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led2 - PB0	**/
-		{Led3_Pin, Led3_GPIO_Port}				/**< @ref HAL_GPIO_OUT_Led3 - PB1	**/
-};
-
-/**
- * Configuration struct for available input GPIO pins (@ref HAL_GPIO_input_e)
- */
-const GPIO_pinout_config_t _GPIO_input_pins[]={
-		{Thermal_Warn_Pin, Thermal_Warn_GPIO_Port},	/**< @ref HAL_GPIO_IN_ThermalWarn - PA10 **/
-		{Status_3v3_Pin, Status_3v3_GPIO_Port},	/**< @ref HAL_GPIO_IN_Status3v3 - PB14 **/
-		{Status_5v0_Pin, Status_5v0_GPIO_Port}	/**< @ref HAL_GPIO_IN_Status5v0 - PB15 **/
-};
-
-
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
@@ -98,33 +63,18 @@ const GPIO_pinout_config_t _GPIO_input_pins[]={
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-HAL_GPIO_result_e HAL_GpioInit(void){
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_SUCCESS;
-	EPC_ST_ERR_COUNTER = 0;
-	MX_GPIO_Init();
-	if (EPC_ST_ERR_COUNTER){
-		res = HAL_GPIO_RESULT_ERROR;
-	}
-	return res;
-}
+/*This register has to be initialized in run because the definition of limit ranges
+ * in EPC_CONF as an struct makes it impossible for the linker to understand that in
+ * EPC_CONF this memory zones are signed to the defines in this module.*/
+APP_IFACE_result_e AppIfacePeriodicRegister () {
 
+	/*		APP_IFACE_periodic  	*/
+	APP_IFACE_periodic.period.usrHeartBeat = EPC_CONF_periodic_time_min.usrHeartBeat;
+	APP_IFACE_periodic.period.electricMsg  = EPC_CONF_periodic_time_min.electricMsg;
+	APP_IFACE_periodic.period.tempMsg      = EPC_CONF_periodic_time_min.tempMsg;
+	APP_IFACE_periodic.status.usrHeartBeat	= MID_REG_DISABLED;
+	APP_IFACE_periodic.status.electricMsg	= MID_REG_DISABLED;
+	APP_IFACE_periodic.status.tempMsg		= MID_REG_DISABLED;
 
-HAL_GPIO_result_e HAL_GpioSet(HAL_GPIO_output_e pin, HAL_GPIO_pin_value_e value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_OUT_COUNT){
-		HAL_GPIO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
-		res = HAL_GPIO_RESULT_SUCCESS;
-	}
-	return res;
-}
-
-HAL_GPIO_result_e HAL_GpioGet (HAL_GPIO_input_e pin, HAL_GPIO_pin_value_e *value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_IN_COUNT){
-		*value = HAL_GPIO_ReadPin(_GPIO_input_pins[pin].peripheral, _GPIO_input_pins[pin].pin);
-		res = HAL_GPIO_RESULT_SUCCESS;
-	}
-	return res;
+	return APP_IFACE_RESULT_SUCCESS;
 }

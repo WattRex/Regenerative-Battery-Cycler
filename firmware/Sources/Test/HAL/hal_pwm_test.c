@@ -1,18 +1,17 @@
 /*********************************************************************************
-* @file           : hal_gpio.c
-* @brief          : Implementation of HAL GPIO
+* @file           : hal_pwm_test.c
+* @brief          : Implementation for HAL PWM TEST
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
 
+
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "hal_gpio.h"
-#include "gpio.h"
-#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+#include "hal_pwm_test.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -31,24 +30,9 @@
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
 
-/**
- * @struct GPIO_pinout_config_t
- * @brief Tuple of GPIO pin and GPIO peripheral port: GPIO[A-F]
- */
-typedef struct
-{
-	const  uint16_t pin;   		/**< GPIO pin*/
-	GPIO_TypeDef *peripheral;	/**< GPIO Peripheral GPIOx[A-F]*/
-}GPIO_pinout_config_t;
-
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-
-/**********************************************************************************/
-/*                        Definition of imported variables                        */
-/**********************************************************************************/
-extern uint8_t EPC_ST_ERR_COUNTER;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -59,35 +43,8 @@ extern uint8_t EPC_ST_ERR_COUNTER;
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                    Declaration of local function prototypes                    */
-/**********************************************************************************/
-
-/**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
-
-/**
- * Configuration struct for available output GPIO pins (@ref HAL_GPIO_output_e)
- */
-const GPIO_pinout_config_t _GPIO_output_pins[]={
-		// uC right side
-		{Out_Disable_Pin, Out_Disable_GPIO_Port},			/**< @ref HAL_GPIO__OUT_Out_Disable - PA9 	**/
-
-		// uC bottom side
-		{Led0_Pin, Led0_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led0 - PC4	**/
-		{Led1_Pin, Led1_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led1 - PC5	**/
-		{Led2_Pin, Led2_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led2 - PB0	**/
-		{Led3_Pin, Led3_GPIO_Port}				/**< @ref HAL_GPIO_OUT_Led3 - PB1	**/
-};
-
-/**
- * Configuration struct for available input GPIO pins (@ref HAL_GPIO_input_e)
- */
-const GPIO_pinout_config_t _GPIO_input_pins[]={
-		{Thermal_Warn_Pin, Thermal_Warn_GPIO_Port},	/**< @ref HAL_GPIO_IN_ThermalWarn - PA10 **/
-		{Status_3v3_Pin, Status_3v3_GPIO_Port},	/**< @ref HAL_GPIO_IN_Status3v3 - PB14 **/
-		{Status_5v0_Pin, Status_5v0_GPIO_Port}	/**< @ref HAL_GPIO_IN_Status5v0 - PB15 **/
-};
 
 
 /**********************************************************************************/
@@ -98,33 +55,34 @@ const GPIO_pinout_config_t _GPIO_input_pins[]={
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-HAL_GPIO_result_e HAL_GpioInit(void){
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_SUCCESS;
-	EPC_ST_ERR_COUNTER = 0;
-	MX_GPIO_Init();
-	if (EPC_ST_ERR_COUNTER){
-		res = HAL_GPIO_RESULT_ERROR;
-	}
-	return res;
-}
-
-
-HAL_GPIO_result_e HAL_GpioSet(HAL_GPIO_output_e pin, HAL_GPIO_pin_value_e value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_OUT_COUNT){
-		HAL_GPIO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
-		res = HAL_GPIO_RESULT_SUCCESS;
-	}
-	return res;
-}
-
-HAL_GPIO_result_e HAL_GpioGet (HAL_GPIO_input_e pin, HAL_GPIO_pin_value_e *value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_IN_COUNT){
-		*value = HAL_GPIO_ReadPin(_GPIO_input_pins[pin].peripheral, _GPIO_input_pins[pin].pin);
-		res = HAL_GPIO_RESULT_SUCCESS;
+HAL_PWM_result_e HAL_PwmTest(void)
+{
+	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
+	uint32_t duty= 50000; // Duty at 50%
+	
+	if (HAL_PwmSetDuty(duty)==HAL_PWM_RESULT_SUCCESS){
+		res = HAL_PwmStart();
+		if (res == HAL_PWM_RESULT_SUCCESS){
+			HAL_Delay(5000);
+			res = HAL_PwmStop();
+			if (res == HAL_PWM_RESULT_SUCCESS){
+				HAL_Delay(2500);
+				duty = 75000; // Duty 75%
+				res = HAL_PwmSetDuty(duty);
+				if (res == HAL_PWM_RESULT_SUCCESS){
+					res =HAL_PwmStart();
+					HAL_Delay(2500);
+					if (res == HAL_PWM_RESULT_SUCCESS){
+						duty = 25000; // Duty 25%
+						res = HAL_PwmSetDuty(duty);
+						HAL_Delay(2500);
+						if (res == HAL_PWM_RESULT_SUCCESS){
+							res = HAL_PwmStop();
+						}
+					}
+				}
+			}
+		}
 	}
 	return res;
 }

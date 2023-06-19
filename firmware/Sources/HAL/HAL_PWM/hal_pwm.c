@@ -1,19 +1,19 @@
 /*********************************************************************************
-* @file           : hal_gpio.c
-* @brief          : Implementation of HAL GPIO
+* @file           : hal_pwm.c
+* @brief          : Implementation of HAL PWM
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
+#include "stm32f3xx_hal.h"
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "hal_gpio.h"
-#include "gpio.h"
+#include "hal_pwm.h"
+#include "hrtim.h"
 #include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
-
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -22,7 +22,8 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-
+#define MAX_DUTY 100000
+#define MIN_PWM 96
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -31,29 +32,19 @@
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
 
-/**
- * @struct GPIO_pinout_config_t
- * @brief Tuple of GPIO pin and GPIO peripheral port: GPIO[A-F]
- */
-typedef struct
-{
-	const  uint16_t pin;   		/**< GPIO pin*/
-	GPIO_TypeDef *peripheral;	/**< GPIO Peripheral GPIOx[A-F]*/
-}GPIO_pinout_config_t;
-
 /**********************************************************************************/
 /*                         Definition of local variables                          */
+/**********************************************************************************/
+static HRTIM_CompareCfgTypeDef pCompareCfg = {0};
+/**********************************************************************************/
+/*                        Definition of exported variables                        */
 /**********************************************************************************/
 
 /**********************************************************************************/
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
+extern HRTIM_HandleTypeDef hhrtim1;
 extern uint8_t EPC_ST_ERR_COUNTER;
-
-/**********************************************************************************/
-/*                        Definition of exported variables                        */
-/**********************************************************************************/
-
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
@@ -66,30 +57,6 @@ extern uint8_t EPC_ST_ERR_COUNTER;
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
 
-/**
- * Configuration struct for available output GPIO pins (@ref HAL_GPIO_output_e)
- */
-const GPIO_pinout_config_t _GPIO_output_pins[]={
-		// uC right side
-		{Out_Disable_Pin, Out_Disable_GPIO_Port},			/**< @ref HAL_GPIO__OUT_Out_Disable - PA9 	**/
-
-		// uC bottom side
-		{Led0_Pin, Led0_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led0 - PC4	**/
-		{Led1_Pin, Led1_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led1 - PC5	**/
-		{Led2_Pin, Led2_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led2 - PB0	**/
-		{Led3_Pin, Led3_GPIO_Port}				/**< @ref HAL_GPIO_OUT_Led3 - PB1	**/
-};
-
-/**
- * Configuration struct for available input GPIO pins (@ref HAL_GPIO_input_e)
- */
-const GPIO_pinout_config_t _GPIO_input_pins[]={
-		{Thermal_Warn_Pin, Thermal_Warn_GPIO_Port},	/**< @ref HAL_GPIO_IN_ThermalWarn - PA10 **/
-		{Status_3v3_Pin, Status_3v3_GPIO_Port},	/**< @ref HAL_GPIO_IN_Status3v3 - PB14 **/
-		{Status_5v0_Pin, Status_5v0_GPIO_Port}	/**< @ref HAL_GPIO_IN_Status5v0 - PB15 **/
-};
-
-
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
@@ -98,33 +65,55 @@ const GPIO_pinout_config_t _GPIO_input_pins[]={
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-HAL_GPIO_result_e HAL_GpioInit(void){
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_SUCCESS;
+HAL_PWM_result_e HAL_PwmInit(void){
+	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
 	EPC_ST_ERR_COUNTER = 0;
-	MX_GPIO_Init();
-	if (EPC_ST_ERR_COUNTER){
-		res = HAL_GPIO_RESULT_ERROR;
+	MX_HRTIM1_Init();
+	if (EPC_ST_ERR_COUNTER==0){
+		res = HAL_PWM_RESULT_SUCCESS;
 	}
 	return res;
 }
 
 
-HAL_GPIO_result_e HAL_GpioSet(HAL_GPIO_output_e pin, HAL_GPIO_pin_value_e value){
+HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
+	// Get the period of the timer, as will be the maximum value to compare
+	uint32_t max = hhrtim1.Instance->sTimerxRegs[0].PERxR;
+	uint32_t pwm_duty;
+	if (duty>MAX_DUTY){
+		// The maximum duty to apply is the period configured
+		pwm_duty = max -1;
+	}
+	//If duty is 0 no division is allow so duty has to be greater than 0
+	else if (duty>0){
+		pwm_duty = duty * max/MAX_DUTY - 1;
+	}
+	else{
+		// Otherwise assigned directly to the pwm
+		pwm_duty = duty;
+	}
+	// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
+	if (pwm_duty < MIN_PWM){
+		pwm_duty = MIN_PWM;
+	}
+	// Write the value to compare in the register.
+	pCompareCfg.CompareValue = pwm_duty;
+	// Apply the compare configuration to the dessire timer unit in this case HRTIM-A1
+	HAL_PWM_result_e res = HAL_HRTIM_WaveformCompareConfig(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_1, &pCompareCfg);;
+	return res;
+}
 
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_OUT_COUNT){
-		HAL_GPIO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
-		res = HAL_GPIO_RESULT_SUCCESS;
+HAL_PWM_result_e HAL_PwmStart (void){
+
+	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
+	res = HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_A);
+	if (res == HAL_PWM_RESULT_SUCCESS){
+		res = HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TA1);
 	}
 	return res;
 }
 
-HAL_GPIO_result_e HAL_GpioGet (HAL_GPIO_input_e pin, HAL_GPIO_pin_value_e *value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_IN_COUNT){
-		*value = HAL_GPIO_ReadPin(_GPIO_input_pins[pin].peripheral, _GPIO_input_pins[pin].pin);
-		res = HAL_GPIO_RESULT_SUCCESS;
-	}
+HAL_PWM_result_e HAL_PwmStop (void){
+	HAL_PWM_result_e res = HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TA1);
 	return res;
 }

@@ -1,28 +1,30 @@
 /*********************************************************************************
-* @file           : hal_gpio.c
-* @brief          : Implementation of HAL GPIO
+* @file           : hal_adc.c
+* @brief          : Implementation of HAL ADC
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
+#include "dma.h"
+#include "stdlib.h"
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
-#include "hal_gpio.h"
-#include "gpio.h"
-#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+#include "hal_adc.h"
+#include "adc.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-#include <stdint.h>
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-
+#define _ADC1_BUFFER_SIZE 6
+#define _N_SAMPLES_PWR 10
+#define _ADC2_BUFFER_SIZE 60
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -31,28 +33,24 @@
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
 
-/**
- * @struct GPIO_pinout_config_t
- * @brief Tuple of GPIO pin and GPIO peripheral port: GPIO[A-F]
- */
-typedef struct
-{
-	const  uint16_t pin;   		/**< GPIO pin*/
-	GPIO_TypeDef *peripheral;	/**< GPIO Peripheral GPIOx[A-F]*/
-}GPIO_pinout_config_t;
-
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
+/* Variable containing ADC conversions results */
+static __IO uint16_t   _ADC1_results[_ADC1_BUFFER_SIZE];
+static __IO uint16_t   _ADC2_results[_ADC2_BUFFER_SIZE];
 
-/**********************************************************************************/
-/*                        Definition of imported variables                        */
-/**********************************************************************************/
-extern uint8_t EPC_ST_ERR_COUNTER;
+static volatile uint8_t _idx_cplt_ADC1 = _ADC1_BUFFER_SIZE/2;
+static volatile uint8_t _idx_cplt_ADC2 = _ADC2_BUFFER_SIZE/2;
+
+static	uint16_t _meas_pwr[_N_SAMPLES_PWR];
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
+extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc2;
+extern uint8_t EPC_ST_ERR_COUNTER;
 
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
@@ -66,65 +64,103 @@ extern uint8_t EPC_ST_ERR_COUNTER;
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
 
-/**
- * Configuration struct for available output GPIO pins (@ref HAL_GPIO_output_e)
- */
-const GPIO_pinout_config_t _GPIO_output_pins[]={
-		// uC right side
-		{Out_Disable_Pin, Out_Disable_GPIO_Port},			/**< @ref HAL_GPIO__OUT_Out_Disable - PA9 	**/
-
-		// uC bottom side
-		{Led0_Pin, Led0_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led0 - PC4	**/
-		{Led1_Pin, Led1_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led1 - PC5	**/
-		{Led2_Pin, Led2_GPIO_Port},			/**< @ref HAL_GPIO_OUT_Led2 - PB0	**/
-		{Led3_Pin, Led3_GPIO_Port}				/**< @ref HAL_GPIO_OUT_Led3 - PB1	**/
-};
-
-/**
- * Configuration struct for available input GPIO pins (@ref HAL_GPIO_input_e)
- */
-const GPIO_pinout_config_t _GPIO_input_pins[]={
-		{Thermal_Warn_Pin, Thermal_Warn_GPIO_Port},	/**< @ref HAL_GPIO_IN_ThermalWarn - PA10 **/
-		{Status_3v3_Pin, Status_3v3_GPIO_Port},	/**< @ref HAL_GPIO_IN_Status3v3 - PB14 **/
-		{Status_5v0_Pin, Status_5v0_GPIO_Port}	/**< @ref HAL_GPIO_IN_Status5v0 - PB15 **/
-};
-
-
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
 
+// Inserts a key in arr[] of given capacity. n is current
+// size of arr[]. This function returns n+1 if insertion
+// is successful, else n.
+static uint16_t insertSorted(const uint16_t n, uint16_t key)
+{
+    // Cannot insert more elements if n is already
+    // more than or equal to capacity
+		uint16_t new_size = n;
+		if (n < _N_SAMPLES_PWR) {
+			new_size += 1;
+			if (n == 0){
+				_meas_pwr[0] = key;
+			} else{
+				int16_t i = n - 1;
+				for (; (i >= 0 && _meas_pwr[i] > key); i--)
+					_meas_pwr[i + 1] = _meas_pwr[i];
+
+				_meas_pwr[i + 1] = key;
+			}
+    }
+
+    return new_size;
+}
+
+
+// Function for calculating median
+static uint16_t getPwrMedian(uint16_t start_sensor_idx)
+{
+	// Insert data ordered
+	uint16_t meas_idx = start_sensor_idx;
+	uint8_t stride = 3, i;
+	for(i = 0; i < _N_SAMPLES_PWR;){
+		i = insertSorted(i, _ADC2_results[meas_idx]);
+		meas_idx += stride;
+	}
+
+	// check for even case
+  uint16_t res = 0;
+	if (i % 2 != 0)
+		res = _meas_pwr[i / 2];
+	else
+		res = (_meas_pwr[(i - 1) / 2] + _meas_pwr[i / 2]) / 2;
+  return res;
+}
+
+
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
+void HAL_AdcCallbackDMAChl1Cplt(void){
+	_idx_cplt_ADC1 = _ADC1_BUFFER_SIZE/2 - _idx_cplt_ADC1;
+}
 
-HAL_GPIO_result_e HAL_GpioInit(void){
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_SUCCESS;
+void HAL_AdcCallbackDMAChl2Cplt(void){
+	_idx_cplt_ADC2 = _ADC2_BUFFER_SIZE/2 - _idx_cplt_ADC2;
+}
+
+HAL_ADC_result_e HAL_AdcInit (void)
+{
+	HAL_ADC_result_e res = HAL_ADC_RESULT_SUCCESS;
+
 	EPC_ST_ERR_COUNTER = 0;
-	MX_GPIO_Init();
+	MX_DMA_Init();
+	MX_ADC1_Init();
+	MX_ADC2_Init();
+
 	if (EPC_ST_ERR_COUNTER){
-		res = HAL_GPIO_RESULT_ERROR;
+		res = HAL_ADC_RESULT_ERROR;
+	}else{
+		res |= HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+		res |= HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
+	  if (res == HAL_ADC_RESULT_SUCCESS){
+	  	res |= HAL_ADC_Start_DMA(&hadc1, (uint32_t *)_ADC1_results, _ADC1_BUFFER_SIZE);
+	  	res |= HAL_ADC_Start_DMA(&hadc2, (uint32_t *)_ADC2_results, _ADC2_BUFFER_SIZE);
+		}
 	}
+
 	return res;
 }
 
 
-HAL_GPIO_result_e HAL_GpioSet(HAL_GPIO_output_e pin, HAL_GPIO_pin_value_e value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_OUT_COUNT){
-		HAL_GPIO_WritePin(_GPIO_output_pins[pin].peripheral, _GPIO_output_pins[pin].pin, value);
-		res = HAL_GPIO_RESULT_SUCCESS;
-	}
-	return res;
-}
-
-HAL_GPIO_result_e HAL_GpioGet (HAL_GPIO_input_e pin, HAL_GPIO_pin_value_e *value){
-
-	HAL_GPIO_result_e res = HAL_GPIO_RESULT_ERROR;
-	if(pin < HAL_GPIO_IN_COUNT){
-		*value = HAL_GPIO_ReadPin(_GPIO_input_pins[pin].peripheral, _GPIO_input_pins[pin].pin);
-		res = HAL_GPIO_RESULT_SUCCESS;
+HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value)
+{
+	HAL_ADC_result_e res = HAL_ADC_RESULT_SUCCESS;
+	if (port <= HAL_ADC_HS_VOLT){
+		uint8_t idx = port + _idx_cplt_ADC2;
+		*value = getPwrMedian(idx);
+	}else if (HAL_ADC_TEMP_ANOD <= port && port <= HAL_ADC_INT_TEMP){
+		HAL_ADC_Start(&hadc1);
+		uint8_t sensor_idx = port - HAL_ADC_TEMP_ANOD + _idx_cplt_ADC1;
+		*value = _ADC1_results[sensor_idx];
+	}else{
+		res = HAL_ADC_RESULT_ERROR;
 	}
 	return res;
 }
