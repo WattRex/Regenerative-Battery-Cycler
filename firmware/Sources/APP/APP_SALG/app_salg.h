@@ -31,9 +31,8 @@
  */
 typedef enum
 {
-	APP_SALG_RESULT_SUCCESS = 0x0U, 		/**< APP_SALG success operation result **/
-	APP_SALG_RESULT_ERROR_INIT 	= 0x01U,	/**< APP_SALG critical error on peripheral initialization **/
-	APP_SALG_RESULT_ERROR_COMM 	= 0x02U,	/**< APP_SALG error on communication process, CAN or UART **/
+	APP_SALG_RESULT_SUCCESS = 0x0U, 	/**< APP_SALG success operation result **/
+	APP_SALG_RESULT_ERROR= 0x01U,			/**< APP_SALG critical error on communication **/
 } APP_SALG_result_e;
 
 /**********************************************************************************/

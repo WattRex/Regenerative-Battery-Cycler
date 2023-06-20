@@ -37,6 +37,9 @@
 	#include "hal_can_test.h"
 #endif
 
+#ifdef MID_COMM_H_
+	#include "mid_comm_test.h"
+#endif
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
@@ -174,7 +177,17 @@ TEST_result_e HalMainTest(void){
 	return test_res;
 }
 
+TEST_result_e MidMainTest(void){
+	TEST_result_e test_res = TEST_RESULT_SUCCESS;
+		test_res |= CommMainTest();
+		HAL_Delay(1000);
+	return test_res;
+}
+
 TEST_result_e TEST_main(void){
-	return HalMainTest();
+	TEST_result_e res = TEST_RESULT_SUCCESS;
+//	res |= HalMainTest();
+	res |= MidMainTest();
+	return res;
 }
 

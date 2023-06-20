@@ -6,9 +6,6 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include <stdlib.h>
-#include <string.h>
-
 #include "app_salg.h"
 #include "app_iface.h"
 //#include "app_ctrl.h"
@@ -16,10 +13,8 @@
 #include "hal_sys.h"
 #include "epc_conf.h"
 
-#ifdef EPC_CONF_TMR_ENABLED // TODO: remove it after integration
-	#include "hal_tmr.h"
-#endif
-//#include "hal_wdg.h"
+#include "hal_tmr.h"
+#include "hal_wdg.h"
 #include "main.h" // TODO: remove it when error handler is executed on hal_sys
 
 /**********************************************************************************/
@@ -135,7 +130,8 @@ APP_SALG_result_e APP_SalgInit(){
 	/* Initialize HAL */
 	APP_SALG_result_e res= APP_SALG_RESULT_SUCCESS;
 	HAL_SYS_result_e sysRes = HAL_SysInit();
-	while(sysRes != HAL_SYS_RESULT_SUCCESS){
+	if(sysRes != HAL_SYS_RESULT_SUCCESS){
+		res = APP_SALG_RESULT_ERROR;
 		if(sysRes == HAL_SYS_RESULT_ERROR_CRIT){
 			// TODO: move it to hal_sys
 			/* Try re-initialization due to critical error */

@@ -85,7 +85,7 @@ const MID_REG_periodic_period_s EPC_CONF_periodic_time_min = {
 };
 
 
-const MID_REG_info_s MID_REG_info = { //TODO: assign this from EPC_CONF
+const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
 		_ID,		// id
 		_FW_VER,	// fwVer
 		_HW_VER,	// hwVer
@@ -109,12 +109,37 @@ const MID_REG_info_s MID_REG_info = { //TODO: assign this from EPC_CONF
 /**********************************************************************************/
 
 /** Tuple of factor and offset */
-int32_t EPC_CONF_Ls_Curr[2]     = {0, 0};
-int32_t EPC_CONF_Ls_Volt[2]     = {0, 0};
-int32_t EPC_CONF_Ls_Volt_Ext[2] = {0, 0};
-int32_t EPC_CONF_Hs_Volt[2]     = {0, 0};
-int32_t EPC_CONF_Status_3v3[2]  = {0, 0};
-int32_t EPC_CONF_Status_5v0[2]  = {0, 0};
-int32_t EPC_CONF_Ext_Tmp_1[2]   = {0, 0};
-int32_t EPC_CONF_Ext_Tmp_2[2]   = {0, 0};
-int32_t EPC_CONF_Ext_Tmp_3[2]   = {0, 0};;
+
+const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
+    4095, 	// hsVolt
+    4095,	//lsVolt
+    4095,	//lsCurr
+    4095,	//tempBody
+    4095,	//tempAnod
+    4095	//tempAmb
+};
+
+const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
+	15000, 	// hsVolt max-min
+	5000,	//lsVolt max-min
+	33000,	//lsCurr max-min
+	// Despite the lsCurr is a int16 and max value is 32767, 
+	// internally will be done a cast to uint16 as the factor will allways be positive
+	900,	//tempBody max-min
+	900,	//tempAnod max-min
+	900		//tempAmb max-min
+};
+
+const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
+	0, 	// hsVolt
+	0,	//lsVolt
+	-16500,	//lsCurr
+	-200,	//tempBody
+	-200,	//tempAnod
+	-200	//tempAmb
+};
+
+
+const uint16_t EPC_CONF_PWR_kp[3] = {853,3,5};
+const uint16_t EPC_CONF_PWR_ki[3] = {853,3,5};
+const uint16_t EPC_CONF_PWR_kd[3] = {853,3,5};
