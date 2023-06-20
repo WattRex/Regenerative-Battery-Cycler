@@ -71,7 +71,7 @@ typedef enum
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
-//TODO: rewrite
+
 /**
  * @fn MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
  * 									MID_REG_meas_property_s * measreg)
