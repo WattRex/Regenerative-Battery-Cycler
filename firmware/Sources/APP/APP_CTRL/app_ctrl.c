@@ -286,7 +286,7 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 
 		if (res == APP_CTRL_RESULT_SUCCESS){
-			res = APP_CtrlApplyNewMode(newMode, mode, meas);
+			res = APP_CtrlApplyNewMode(&newMode, mode, meas);
 			ctrl_status = limit_already_reached;
 		}
 	}else{
