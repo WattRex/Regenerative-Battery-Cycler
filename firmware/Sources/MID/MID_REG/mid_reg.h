@@ -159,7 +159,7 @@ typedef struct
 
 
 /**
- * @struct MID_REG_errorStatus_s
+ * @struct MID_REG_error_status_s
  * @brief Structure to track different errors.
  */
 typedef struct
@@ -171,7 +171,7 @@ typedef struct
 	MID_REG_error_e tempErr;
 	MID_REG_error_e intErr;
 	uint16_t lastErrVal;
-}MID_REG_errorStatus_s;
+}MID_REG_error_status_s;
 
 
 /**
