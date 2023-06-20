@@ -289,6 +289,8 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 			res = APP_CtrlApplyNewMode(&newMode, mode, meas);
 			ctrl_status = limit_already_reached;
 		}
+	}else if(ctrl_status == limit_already_reached){
+		//NOP
 	}else{
 		res = APP_CTRL_RESULT_ERROR_INT;
 	}
@@ -303,7 +305,7 @@ APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_R
 	ctrl_action = calcNewAction(newMode, meas);
 	ctrl_status = limit_not_reached;
 	ctrl_time = 0;
-	mode = newMode; //TODO: esto es deepcopy o iguala punteros?
+	memcpy(newMode, mode, sizeof(mode));
 	//Enable PWR output for the modes that require power transfer
 	if (newMode->mode == MID_REG_MODE_CV || newMode->mode == MID_REG_MODE_CP || newMode->mode == MID_REG_MODE_CC){
 		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
