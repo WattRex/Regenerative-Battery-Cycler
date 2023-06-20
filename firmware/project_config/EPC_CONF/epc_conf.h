@@ -69,7 +69,9 @@ extern const uint16_t EPC_CONF_PWR_kd[3];
 #define EPC_CONF_CAN_ENABLED
 #define EPC_CONF_DABS_TEST
 #define EPC_CONF_PWR_TEST
-
+//#define EPC_CONF_DABS_TEST
+//#define EPC_CONF_PWR_TEST
+#define EPC_CONF_COMM_TEST
 
 /**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
 #define EPC_CONF_I2C_TIMEOUT 5

@@ -110,7 +110,7 @@ const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
 
 /** Tuple of factor and offset */
 
-const MID_REG_meas_property_s max_value = {
+const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
     4095, 	// hsVolt
     4095,	//lsVolt
     4095,	//lsCurr
@@ -119,7 +119,7 @@ const MID_REG_meas_property_s max_value = {
     4095	//tempAmb
 };
 
-const MID_REG_meas_property_s factors = {
+const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 	15000, 	// hsVolt max-min
 	5000,	//lsVolt max-min
 	33000,	//lsCurr max-min
@@ -130,7 +130,7 @@ const MID_REG_meas_property_s factors = {
 	900		//tempAmb max-min
 };
 
-const MID_REG_meas_property_s offset = {
+const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
 	0, 	// hsVolt
 	0,	//lsVolt
 	-16500,	//lsCurr
@@ -140,6 +140,6 @@ const MID_REG_meas_property_s offset = {
 };
 
 
-const uint16_t kp[3] = {853,3,5};
-const uint16_t ki[3] = {853,3,5};
-const uint16_t kd[3] = {853,3,5};
+const uint16_t EPC_CONF_PWR_kp[3] = {853,3,5};
+const uint16_t EPC_CONF_PWR_ki[3] = {853,3,5};
+const uint16_t EPC_CONF_PWR_kd[3] = {853,3,5};
