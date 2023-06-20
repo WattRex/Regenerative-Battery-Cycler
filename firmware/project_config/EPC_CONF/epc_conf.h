@@ -36,13 +36,17 @@
 /**********************************************************************************/
 extern const MID_REG_periodic_period_s EPC_CONF_periodic_time_min;
 extern const MID_REG_limit_s EPC_CONF_limit_range;
-extern const MID_REG_info_s MID_REG_info;
+extern const MID_REG_info_s EPC_CONF_info;
+
 /**********************************************************************************/
 /*                        				MIDDLEWARE								  */
 /**********************************************************************************/
-/**< Conversion factors and offset for analog values **/
-extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2], EPC_CONF_Hs_Volt[2], 
-    EPC_CONF_Status_3v3[2], EPC_CONF_Status_5v0[2], EPC_CONF_Ext_Tmp_1[2], EPC_CONF_Ext_Tmp_2[2], EPC_CONF_Ext_Tmp_3[2];
+extern const MID_REG_meas_property_s EPC_CONF_MEAS_max_value;
+extern const MID_REG_meas_property_s EPC_CONF_MEAS_factors;
+extern const MID_REG_meas_property_s EPC_CONF_MEAS_offset;
+extern const uint16_t EPC_CONF_PWR_kp[3];
+extern const uint16_t EPC_CONF_PWR_ki[3];
+extern const uint16_t EPC_CONF_PWR_kd[3];
 
 /**********************************************************************************/
 /*                        				HAL 									  */
@@ -56,13 +60,15 @@ extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2]
 /**< CAN sender standard identifier **/
 #define EPC_CONF_CAN_ID 0x109
 
-//#define EPC_CONF_PWM_ENABLED
+#define EPC_CONF_PWM_ENABLED
 #define EPC_CONF_GPIO_ENABLED
 #define EPC_CONF_ADC_DMA_ENABLED
 //#define EPC_CONF_STS_ENABLED
 #define EPC_CONF_TMR_ENABLED
 //#define EPC_CONF_WDG_ENABLED
-//#define EPC_CONF_CAN_ENABLED
+#define EPC_CONF_CAN_ENABLED
+#define EPC_CONF_DABS_TEST
+#define EPC_CONF_PWR_TEST
 
 
 /**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
