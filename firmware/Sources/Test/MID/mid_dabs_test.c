@@ -78,7 +78,7 @@ MID_DABS_result_e MID_DabsTestMeas(void){
 
 MID_DABS_result_e MID_DabsTestLeds(uint8_t state){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
-	MID_REG_errorStatus_s errors = {0,0,0,0,0,0,0};
+	MID_REG_error_status_s errors = {0,0,0,0,0,0,0};
 	uint8_t i = 0, states=1;
 	int16_t lscurr=0;
 	switch(state){

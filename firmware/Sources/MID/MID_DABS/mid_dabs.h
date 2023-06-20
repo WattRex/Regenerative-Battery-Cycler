@@ -89,7 +89,7 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
 
 /**
  * @fn MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr,
- * 								MID_REG_errorStatus_s * errors)
+ * 								MID_REG_error_status_s * errors)
  * @brief Update Leds to show the state/mode of the epc
  *
  * @param ctrlMode, Mode in which the epc is working on, could be CC, CV, y CP.
@@ -100,6 +100,6 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
 MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode, int16_t curr,
-								MID_REG_errorStatus_s * errors);
+								MID_REG_error_status_s * errors);
 
 #endif /* MID_DABS_H_ */

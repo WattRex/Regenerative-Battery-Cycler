@@ -65,7 +65,7 @@ typedef struct{
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
 static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
-		MID_REG_errorStatus_s * errors, blink_conf_s * mode);
+		MID_REG_error_status_s * errors, blink_conf_s * mode);
 
 static MID_DABS_result_e SetLeds(uint8_t state);
 /**********************************************************************************/
@@ -191,7 +191,7 @@ extern const MID_REG_meas_property_s EPC_CONF_MEAS_max_value;
 /**********************************************************************************/
 /**
  * @fn MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
-		MID_REG_errorStatus_s errors, blink_conf_s * mode)
+		MID_REG_error_status_s errors, blink_conf_s * mode)
  * @brief Get the leds mode associated to the mode in which is currently working the epc.
  *
  * @param epcmode MID_REG_mode_e, is the mode the epc is working
@@ -204,7 +204,7 @@ extern const MID_REG_meas_property_s EPC_CONF_MEAS_max_value;
  * 		@ref MID_DABS_RESULT_ERROR otherwise.
  */
 static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr,
-		MID_REG_errorStatus_s * errors, blink_conf_s * mode){
+		MID_REG_error_status_s * errors, blink_conf_s * mode){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
 	if (epcmode == MID_REG_MODE_ERROR){	
 		if (errors->intErr !=MID_REG_ERROR_NONE){
@@ -306,7 +306,7 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			break;
 		case MID_DABS_MEAS_TEMP:
 			// Check if the hardware version has I2C
-			if ((EPC_CONF_info.hwVer %2)==0){ // Odd will have i2c Even won´t
+			if ((EPC_CONF_info.hwVer %2)!=0){ // Even will have i2c Odd won´t
 				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp_sensor);
 				if (res == MID_DABS_RESULT_SUCCESS){
 					measreg->tempBody = temp_sensor;
@@ -330,7 +330,7 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 
 
 MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode,
-		int16_t curr, MID_REG_errorStatus_s * errors){
+		int16_t curr, MID_REG_error_status_s * errors){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
 	blink_conf_s inputMode;
 	//Check the mode of the EPC and the mode the leds should be in
