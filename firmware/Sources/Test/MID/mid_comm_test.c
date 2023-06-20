@@ -12,7 +12,7 @@
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "mid_comm_test.h"
-
+#include "stm32f3xx_hal.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -125,6 +125,8 @@ MID_COMM_result_e sendData(void){
 	HAL_Delay(1);
 	res |= MID_CommSendReqLimits(MID_COMM_REQUEST_LIMITS_TEMP, &tx_limits);
 	HAL_Delay(1);
+	res |= MID_CommSendPeriodic(&rx_periodic);
+	HAL_Delay(1);
 	return res;
 }
 
@@ -154,10 +156,10 @@ MID_COMM_result_e recvData(void){
 			res = MID_COMM_RESULT_ERROR;
 	}
 
-	// Check reception of MSG 0xYY7
-//	if(recvCtrl != 1 || memcmp(&tx_limits, &rx_limits, sizeof(MID_REG_limit_s)) != 0 ){
-//			res = MID_COMM_RESULT_ERROR;
-//	}
+	// Check reception of MSG 0xYY7-8
+	if(recvCtrl != 1 || memcmp(&tx_limits, &rx_limits, sizeof(MID_REG_limit_s)) != 0 ){
+			res = MID_COMM_RESULT_ERROR;
+	}
 
 	return res;
 }
@@ -201,7 +203,7 @@ void  MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * const  data){
 	rx_periodic = *data;
 }
 
-MID_COMM_result_e CommMainTest(void){
+MID_COMM_result_e MID_CommTest(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	MID_CommInit();
 	res |= sendData();

@@ -86,7 +86,7 @@ __weak void  MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint1
 
 MID_COMM_result_e MID_CommInit(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	res |= HAL_CanFilters(0x10, 0x7F0);
+	res |= HAL_CanAddFilters(0x10, 0x7F0);
 	return res;
 }
 
@@ -187,6 +187,16 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
 	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_MODE);
 	size_t size = sizeof(*mode);
 	memcpy(tx_data, mode, size);
+	res |= HAL_CanTransmit(tx_id, tx_data, size);
+	return res;
+}
+
+
+MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic){
+	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
+	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_MODE);
+	size_t size = sizeof(*periodic);
+	memcpy(tx_data, periodic, size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);
 	return res;
 }

@@ -45,6 +45,6 @@
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
-MID_COMM_result_e CommMainTest(void);
+MID_COMM_result_e MID_CommTest(void);
 
 #endif /* MID_COMM_TEST_H_ */
