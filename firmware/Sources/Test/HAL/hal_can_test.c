@@ -60,7 +60,7 @@ HAL_CAN_result_e HAL_CanTest(void)
 	uint8_t dataR[8]={0,0,0,0,0,0,0,0};
 	uint32_t id;
 	HAL_CAN_result_e res;
-	res = HAL_CanFilters(0x130, 0x7F0);
+	res = HAL_CanAddFilters(0x130, 0x7F0);
 	res = HAL_CanTransmit(0x102, &data, 1);
 	if (res == HAL_CAN_RESULT_SUCCESS){
 		while (i<5){
