@@ -34,6 +34,7 @@
 #define _MIN_PERIOD         100  // ms
 
 /*		MSGS CONF		*/
+#define _MSG_PERIODIC_DEFAULT		0	 // Disable
 #define _USR_HEART_BEAT_PERIOD_DEF 1000  // ms
 #define _ELECTRIC_MSG_PERIOD_DEF   1000  // ms
 #define _TEMP_MSG_PERIOD_DEF       1000  // ms
@@ -78,9 +79,12 @@ const MID_REG_limit_s EPC_CONF_limit_range = {
         _TEMP_MIN       // tempMin
 };
 
-const MID_REG_periodic_period_s EPC_CONF_periodic_time_min = {
+const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
+		_MSG_PERIODIC_DEFAULT,		 // usrHeartBeat Disable
 		_USR_HEART_BEAT_PERIOD_DEF,	 // usrHeartBeatPeriod
+		_MSG_PERIODIC_DEFAULT,		 // electricMsgPeriod Disable
 		_ELECTRIC_MSG_PERIOD_DEF,	 // electricMsgPeriod
+		_MSG_PERIODIC_DEFAULT,		 // tempMsgPeriod Disable
 		_TEMP_MSG_PERIOD_DEF	     // tempMsgPeriod
 };
 

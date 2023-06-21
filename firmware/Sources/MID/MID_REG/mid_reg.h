@@ -111,37 +111,17 @@ typedef struct
 
 
 /**
- * @struct MID_REG_periodic_period_s
- * @brief Structure for the time of periodic msgs.
- */
-typedef struct
-{
-	uint16_t usrHeartBeat;
-	uint16_t electricMsg;
-	uint16_t tempMsg;
-}MID_REG_periodic_period_s;
-
-
-/**
- * @struct MID_REG_periodic_status_s
- * @brief Structure for the periodic msgs status.
- */
-typedef struct
-{
-	MID_REG_status_e usrHeartBeat;
-	MID_REG_status_e electricMsg;
-	MID_REG_status_e tempMsg;
-}MID_REG_periodic_status_s;
-
-
-/**
  * @struct MID_REG_periodic_s
- * @brief Structure for the periodic msgs conf.
+ * @brief Structure for the periodic msgs.
  */
 typedef struct
 {
-	MID_REG_periodic_period_s period;
-	MID_REG_periodic_status_s status;
+	MID_REG_status_e usrHeartBeatStatus : 1;
+	uint16_t usrHeartBeatPeriod : 15;
+	MID_REG_status_e electricMsgStatus : 1;
+	uint16_t electricMsgPeriod : 15;
+	MID_REG_status_e tempMsgStatus : 1;
+	uint16_t tempMsgPeriod : 15;
 }MID_REG_periodic_s;
 
 
@@ -180,9 +160,9 @@ typedef struct
  */
 typedef struct
 {
-	uint16_t hsVolt;
 	uint16_t lsVolt;
 	int16_t lsCurr;
+	uint16_t hsVolt;
 	int16_t tempBody;
 	int16_t tempAnod;
 	int16_t tempAmb;
