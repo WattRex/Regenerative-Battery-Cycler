@@ -116,11 +116,11 @@ typedef struct
  */
 typedef struct
 {
-	MID_REG_status_e usrHeartBeatEnable : 1;
+	MID_REG_status_e usrHeartBeatStatus : 1;
 	uint16_t usrHeartBeatPeriod : 15;
-	MID_REG_status_e electricMsgEnable : 1;
+	MID_REG_status_e electricMsgStatus : 1;
 	uint16_t electricMsgPeriod : 15;
-	MID_REG_status_e tempMsgEnable : 1;
+	MID_REG_status_e tempMsgStatus : 1;
 	uint16_t tempMsgPeriod : 15;
 }MID_REG_periodic_s;
 
