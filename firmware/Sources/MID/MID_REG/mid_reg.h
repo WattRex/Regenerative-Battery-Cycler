@@ -160,9 +160,9 @@ typedef struct
  */
 typedef struct
 {
-	uint16_t hsVolt;
 	uint16_t lsVolt;
 	int16_t lsCurr;
+	uint16_t hsVolt;
 	int16_t tempBody;
 	int16_t tempAnod;
 	int16_t tempAmb;
