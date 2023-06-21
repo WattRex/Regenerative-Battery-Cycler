@@ -139,7 +139,7 @@ HAL_CAN_result_e HAL_CanDelFilters(void){
 	CAN_FilterTypeDef  sFilterConfig;
 	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
 	sFilterConfig.FilterScale = CAN_FILTERSCALE_16BIT; // STID[10:3] STID[2:0] RTR IDE EXID[17:15]
-	sFilterConfig.FilterIdHigh = id << 5; // STDID + RTR=0 IDE=0 EXID = 00
+	sFilterConfig.FilterIdHigh = 0x000; // STDID + RTR=0 IDE=0 EXID = 00
 	/* In list mode the Mask also works as part of the list.
 	* In the 16bit scale you have 4 ids per filter bank
 	*/
