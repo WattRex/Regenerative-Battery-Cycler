@@ -169,6 +169,7 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s * errors,
 		const MID_REG_meas_property_s * meas, const MID_REG_limit_s * limits){
 
 	APP_CTRL_result_e res = APP_CTRL_RESULT_ERROR_INT;
+	MID_PWR_result_e internalRes = MID_PWR_RESULT_TIMEOUT;
 
 	//Inverse priority check to set lastErrVal to error with the biggest priority
 
@@ -236,7 +237,8 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s * errors,
 
 	// Disable power conversion if any error is raised
 	if (res == APP_CTRL_RESULT_ERROR_RAISED){
-		//TODO: Disable PWM -> MID_Pwr if APP_CTRL_RESULT_ERROR_RAISED
+		internalRes = MID_PwrSetOutput(MID_PWR_Enable);
+		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_ERROR_RAISED : APP_CTRL_RESULT_ERROR_INT;
 	}else{
 		res = APP_CTRL_RESULT_SUCCESS;
 	}
