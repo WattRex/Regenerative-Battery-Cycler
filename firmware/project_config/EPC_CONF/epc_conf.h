@@ -34,7 +34,7 @@
 /**********************************************************************************/
 /*                        Definition of exported symbolic constants               */
 /**********************************************************************************/
-extern const MID_REG_periodic_period_s EPC_CONF_periodic_time_min;
+extern const MID_REG_periodic_s EPC_CONF_periodic_time_min;
 extern const MID_REG_limit_s EPC_CONF_limit_range;
 extern const MID_REG_info_s EPC_CONF_info;
 
