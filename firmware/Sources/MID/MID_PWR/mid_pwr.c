@@ -54,6 +54,18 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas,
 		const MID_PWR_Mode_e mode, const MID_REG_limit_s limits, int32_t * action);
 
 static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits);
+
+static void convert_dSI_to_FP(const int16_t value, fp_t * const res);
+
+static void convert_mSI_to_FP(const int16_t value, fp_t * const res)
+
+static void sum_FP(fp_t const * const sum1, fp_t const * const sum2, fp_t * const res);
+
+static void mult_FP(fp_t const * const fac1, fp_t const * const fac2, fp_t * const res);
+
+static void convert_FP_to_mSI(fp_t const * const value, int16_t * const res);
+
+static void convert_FP_to_dSI(fp_t const * const value, int16_t * const res);
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
