@@ -170,11 +170,29 @@ MID_COMM_result_e recvData(void){
 void MID_CommCallbackControlMode(MID_REG_control_s * const data){
 	recvCtrl += 1;
 	rx_ctrl = *data;
+	MID_CommSendControlMode(&rx_ctrl);
 }
 
 
 void  MID_CommCallbackRequest(const MID_COMM_request_e req){
-
+	if (req==0){
+		MID_CommSendInfo();
+	}
+	else if (req == 1){
+		MID_CommSendInfo();
+	}
+	else if (req == 2){
+		MID_CommSendControlMode(&rx_ctrl);
+	}
+	else if (req == 3){
+		MID_CommSendElectMeas(&tx_meas);
+	}
+	else if (req == 4){
+		MID_CommSendTempMeas(&tx_meas);
+	}
+	else if (req >= 6 && req <= 9){
+		MID_CommSendReqLimits(req, &rx_limits);
+	}
 }
 
 
@@ -183,24 +201,31 @@ void  MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t val
 	if (lim_type == MID_COMM_MSG_ID_LS_VOLT_LIMIT){
 		rx_limits.lsVoltMin = valueMin;
 		rx_limits.lsVoltMax = valueMax;
+		MID_CommSendReqLimits(MID_COMM_REQUEST_LIMITS_LS_VOLT, &rx_limits);
 	} else if (lim_type == MID_COMM_MSG_ID_LS_CURR_LIMIT){
 		rx_limits.lsCurrMin = valueMin;
 		rx_limits.lsCurrMax = valueMax;
+		MID_CommSendReqLimits(MID_COMM_REQUEST_LIMITS_LS_CURR, &rx_limits);
 	}else if (lim_type == MID_COMM_MSG_ID_HS_VOLT_LIMIT){
 		rx_limits.hsVoltMin = valueMin;
 		rx_limits.hsVoltMax = valueMax;
+		MID_CommSendReqLimits(MID_COMM_REQUEST_LIMITS_HS_VOLT, &rx_limits);
 	}else if (lim_type == MID_COMM_MSG_ID_PWR_LIMIT){
 		rx_limits.lsPwrMin = valueMin;
 		rx_limits.lsPwrMax = valueMax;
+		MID_CommSendReqLimits(MID_COMM_REQUEST_LIMITS_PWR, &rx_limits);
 	}else if (lim_type == MID_COMM_MSG_ID_TEMP_LIMIT){
 		rx_limits.tempMin= valueMin;
 		rx_limits.tempMax = valueMax;
+		MID_CommSendReqLimits(MID_COMM_REQUEST_LIMITS_TEMP, &rx_limits);
 	}
+
 }
 
 void  MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * const  data){
 	recvPeriodic += 1;
 	rx_periodic = *data;
+	MID_CommSendPeriodic(&rx_periodic);
 }
 
 MID_COMM_result_e MID_CommTest(void){

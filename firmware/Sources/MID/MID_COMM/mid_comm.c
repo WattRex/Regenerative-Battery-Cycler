@@ -39,7 +39,7 @@
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 uint32_t tx_id, rx_id;
-uint8_t tx_data[6], rx_data[6];
+uint8_t tx_data[8], rx_data[8];
 uint8_t rx_size;
 
 MID_REG_control_s ctrl;
@@ -86,7 +86,7 @@ __weak void  MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint1
 
 MID_COMM_result_e MID_CommInit(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	res |= HAL_CanAddFilters(0x10, 0x7F0);
+	res |= HAL_CanAddFilters(0x120, 0x7F0);
 	return res;
 }
 
@@ -95,24 +95,22 @@ MID_COMM_result_e MID_CommProcessIncommingData(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	uint8_t size = 0;
 	HAL_CAN_result_e res_can = HAL_CanReceive(&rx_id, rx_data, &size);
-	// TODO: receive until not empty
-	// TODO: que hacer con los errores cuando se parsea mal o se recibe mal de can?
-	while(res_can == HAL_CAN_RESULT_SUCCESS){
-		if (__CMP_MSG_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_MODE) && size == 8){
+	while(res_can != HAL_CAN_RESULT_NO_MESSAGE && res == MID_COMM_RESULT_SUCCESS){
+		if (__CMP_MSG_ID(rx_id, MID_COMM_MSG_ID_MODE) && size == 8){
 				memcpy((uint8_t *)&ctrl, rx_data, size);
 				MID_CommCallbackControlMode(&ctrl);
-		} else if(__CMP_MSG_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_REQ) && size == 1){
+		} else if(__CMP_MSG_ID(rx_id, MID_COMM_MSG_ID_REQ) && size == 1){
 				MID_COMM_request_e req;
 				memcpy((uint8_t *)&req, rx_data, size);
 				MID_CommCallbackRequest(req);
 		} else if(__CHECK_RANGE_MSG_ID(rx_id, MID_COMM_MSG_ID_LS_VOLT_LIMIT, MID_COMM_MSG_ID_TEMP_LIMIT)){
 				MID_COMM_msg_id_e lim = (rx_id & CAN_MASK_MSG_ID);
 				if (size == 4){
-					uint16_t valueMin = (rx_data[0] << 8) | rx_data[1];
-					uint16_t valueMax = (rx_data[2] << 8) | rx_data[3];
+					uint16_t valueMax = (rx_data[0] << 8) | rx_data[1];
+					uint16_t valueMin = (rx_data[2] << 8) | rx_data[3];
 					MID_CommCallbackLimit(lim, valueMin, valueMax);
 				}
-		} else if(__CMP_MSG_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_PERIODIC) && size == 2){
+		} else if(__CMP_MSG_ID(rx_id, MID_COMM_MSG_ID_PERIODIC) && size == 6){
 				memcpy((uint8_t *)&periodic, rx_data, size);
 				MID_CommCallbackConfigPeriodicConfig(&periodic);
 		} else{
@@ -194,7 +192,7 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
 
 MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_MODE);
+	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_PERIODIC);
 	size_t size = sizeof(*periodic);
 	memcpy(tx_data, periodic, size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);
