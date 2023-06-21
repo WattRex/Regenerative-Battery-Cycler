@@ -23,6 +23,9 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
+#define _N_FRAC_BITS 16
+#define _FP_FACTOR (1 << _N_FRAC_BITS)
+#define _SCALING_FACTOR 1000
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -37,6 +40,8 @@ typedef enum{
 	SOA_over_pwr,
 	SOA_under_pwr
 }SOA_e;
+
+typedef int32_t fp_t;
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
@@ -71,6 +76,41 @@ static uint32_t duty, d0 = 0; //action duty goes from 0 to 100000 (in m%)
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
+// TODO: add documentation
+// reference: http://www.sunshine2k.de/articles/coding/fp/sunfp.html#ch42
+static void convert_mSI_to_FP(const int16_t value, fp_t * const res){
+	*res = (fp_t) value * _FP_FACTOR / _SCALING_FACTOR;
+}
+
+static void sum_FP(fp_t const * const sum1, fp_t const * const sum2, fp_t * const res){
+	*res = *sum1 + *sum2;
+}
+
+static void mult_FP(fp_t const * const fac1, fp_t const * const fac2, fp_t * const res){
+	int64_t mul = (int64_t)(*fac1) * (int64_t)(*fac2);
+	*res = (fp_t) ( mul >> _N_FRAC_BITS );
+}
+
+static void convert_FP_to_mSI(fp_t const * const value, int16_t * const res){
+	*res = (int16_t) ( (int64_t)(*value) * _SCALING_FACTOR >> _N_FRAC_BITS);
+}
+
+// TODO: move it to test
+void TestFP(void){
+	int16_t ls_volt = 8500, hs_volt = 0; // hs_volt should be hs_volt = (ls_volt + ls_volt)*1.5 = 25.5 M = 25500 mV
+	fp_t fp_val, fp_sum, fp_fact, fp_mult;
+
+	convert_mSI_to_FP(ls_volt, &fp_val);
+	sum_FP(&fp_val, &fp_val, &fp_sum);
+	convert_FP_to_mSI(&fp_sum, &hs_volt);
+
+	convert_mSI_to_FP(1500, &fp_fact);
+	mult_FP(&fp_sum, &fp_fact, &fp_mult);
+
+	convert_FP_to_mSI(&fp_mult, &hs_volt);
+}
+
+
 //TODO: rewrite
 static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits){
 	SOA_e res = SOA_ok;

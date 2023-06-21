@@ -178,6 +178,14 @@ TEST_result_e HalMainTest(void){
 	return test_res;
 }
 
+TEST_result_e MidMainTest(void){
+	TEST_result_e test_res = TEST_RESULT_SUCCESS;
+//		test_res |= CommMainTest();
+		test_res |= PwrMainTest();
+		HAL_Delay(1000);
+	return test_res;
+}
+
 TEST_result_e TEST_main(void){
 	return HalMainTest();
 }
