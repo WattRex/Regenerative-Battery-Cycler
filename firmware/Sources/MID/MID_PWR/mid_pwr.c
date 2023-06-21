@@ -25,7 +25,8 @@
 /**********************************************************************************/
 #define _N_FRAC_BITS 16
 #define _FP_FACTOR (1 << _N_FRAC_BITS)
-#define _SCALING_FACTOR 1000
+#define _SCALING_FACTOR_MILIS 1000
+#define _SCALING_FACTOR_DECIS 10
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -78,8 +79,11 @@ static uint32_t duty, d0 = 0; //action duty goes from 0 to 100000 (in m%)
 /**********************************************************************************/
 // TODO: add documentation
 // reference: http://www.sunshine2k.de/articles/coding/fp/sunfp.html#ch42
+static void convert_dSI_to_FP(const int16_t value, fp_t * const res){
+	*res = (fp_t) value * _FP_FACTOR / _SCALING_FACTOR_DECIS;
+}
 static void convert_mSI_to_FP(const int16_t value, fp_t * const res){
-	*res = (fp_t) value * _FP_FACTOR / _SCALING_FACTOR;
+	*res = (fp_t) value * _FP_FACTOR / _SCALING_FACTOR_MILIS;
 }
 
 static void sum_FP(fp_t const * const sum1, fp_t const * const sum2, fp_t * const res){
@@ -92,7 +96,10 @@ static void mult_FP(fp_t const * const fac1, fp_t const * const fac2, fp_t * con
 }
 
 static void convert_FP_to_mSI(fp_t const * const value, int16_t * const res){
-	*res = (int16_t) ( (int64_t)(*value) * _SCALING_FACTOR >> _N_FRAC_BITS);
+	*res = (int16_t) ( (int64_t)(*value) * _SCALING_FACTOR_MILIS >> _N_FRAC_BITS);
+}
+static void convert_FP_to_dSI(fp_t const * const value, int16_t * const res){
+	*res = (int16_t) ( (int64_t)(*value) * _SCALING_FACTOR_DECIS >> _N_FRAC_BITS);
 }
 
 // TODO: move it to test
