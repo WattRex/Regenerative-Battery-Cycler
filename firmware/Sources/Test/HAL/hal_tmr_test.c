@@ -111,21 +111,23 @@ static HAL_TMR_result_e TestOneTmr(const HAL_TMR_clock_e clock){
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-void HAL_TMR_RT_Callback(void)
-{
-	n_ints_rt += 1;
-#ifdef EPC_CONF_GPIO_ENABLED
-	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
-#endif
-}
+#ifdef EPC_CONF_TESTING
+	void HAL_TMR_RT_Callback(void)
+	{
+		n_ints_rt += 1;
+	#ifdef EPC_CONF_GPIO_ENABLED
+		HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_9);
+	#endif
+	}
 
-void HAL_TMR_PWR_MEAS_Callback(void)
-{
-	n_ints_pwr_meas += 1;
-#ifdef EPC_CONF_GPIO_ENABLED
-	HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+	void HAL_TMR_PWR_MEAS_Callback(void)
+	{
+		n_ints_pwr_meas += 1;
+	#ifdef EPC_CONF_GPIO_ENABLED
+		HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+	#endif
+	}
 #endif
-}
 
 
 HAL_TMR_result_e TestRTTmr(void){
