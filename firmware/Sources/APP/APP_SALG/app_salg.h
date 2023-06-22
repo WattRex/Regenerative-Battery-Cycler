@@ -32,7 +32,9 @@
 typedef enum
 {
 	APP_SALG_RESULT_SUCCESS = 0x0U, 	/**< APP_SALG success operation result **/
-	APP_SALG_RESULT_ERROR= 0x01U,			/**< APP_SALG critical error on communication **/
+	APP_SALG_RESULT_ERROR		= 0x01U,			/**< APP_SALG critical error on communication **/
+	APP_SALG_RESULT_BUSY 		= 0x2U,			/**< APP_SALG busy operation result */
+	APP_SALG_RESULT_TIMEOUT = 0x3U,		/**< APP_SALG timeout operation result */
 } APP_SALG_result_e;
 
 /**********************************************************************************/
