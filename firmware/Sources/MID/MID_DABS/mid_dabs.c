@@ -274,10 +274,11 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
 	uint8_t state = ledsMode.mode.ledsStep[step];
 	uint8_t mask= 0x1;
-	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
-	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
-	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
-	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
+	// TODO: uncomment it
+//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
+//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
+//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
+//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
 	return res;
 }
 
@@ -291,6 +292,7 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 	int16_t temp_sensor = 0;
 	switch(type){
 		case MID_DABS_MEAS_ELECTRIC:
+<<<<<<< Updated upstream
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_HS_VOLT, &data_adc);;
 			if (res == MID_DABS_RESULT_SUCCESS){
 				measreg->hsVolt = (uint16_t)(((uint32_t)(data_adc*EPC_CONF_MEAS_factors.hsVolt)/EPC_CONF_MEAS_max_value.hsVolt)+EPC_CONF_MEAS_offset.hsVolt);
@@ -300,6 +302,17 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 				measreg->lsVolt = (uint16_t)(((uint32_t)(data_adc*EPC_CONF_MEAS_factors.lsVolt)/EPC_CONF_MEAS_max_value.lsVolt)+EPC_CONF_MEAS_offset.lsVolt);
 			}
 			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_CURR, &data_adc);;
+=======
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_HS_VOLT, &data_adc);
+			if (res == MID_DABS_RESULT_SUCCESS){
+				measreg->hsVolt = (uint16_t)(((uint32_t)(data_adc*EPC_CONF_MEAS_factors.hsVolt)/EPC_CONF_MEAS_max_value.hsVolt)+EPC_CONF_MEAS_offset.hsVolt);
+			}
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_VOLT, &data_adc);
+			if (res == MID_DABS_RESULT_SUCCESS){
+				measreg->lsVolt = (uint16_t)(((uint32_t)(data_adc*EPC_CONF_MEAS_factors.lsVolt)/EPC_CONF_MEAS_max_value.lsVolt)+EPC_CONF_MEAS_offset.lsVolt);
+			}
+			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_LS_CURR, &data_adc);
+>>>>>>> Stashed changes
 			if (res == MID_DABS_RESULT_SUCCESS){
 				measreg->lsCurr =(int16_t) (((uint32_t)(data_adc*(uint16_t)EPC_CONF_MEAS_factors.lsCurr)/EPC_CONF_MEAS_max_value.lsCurr)+EPC_CONF_MEAS_offset.lsCurr);
 			}

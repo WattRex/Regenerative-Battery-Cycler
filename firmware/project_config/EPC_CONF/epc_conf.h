@@ -52,7 +52,12 @@ extern const uint16_t EPC_CONF_PWR_kd[3];
 /*                        				HAL 									  */
 /**********************************************************************************/
 /**< Run Test instead of machine status **/
-#define EPC_CONF_TESTING
+//#define EPC_CONF_TESTING
+#ifdef EPC_CONF_TESTING
+	#define EPC_CONF_DABS_TEST
+	#define EPC_CONF_PWR_TEST
+	#define EPC_CONF_COMM_TEST
+#endif
 
 /**< Decomment to enable each HAL module **/
 #define EPC_CONF_USE_CUSTOM_HAL
@@ -67,11 +72,6 @@ extern const uint16_t EPC_CONF_PWR_kd[3];
 #define EPC_CONF_TMR_ENABLED
 //#define EPC_CONF_WDG_ENABLED
 #define EPC_CONF_CAN_ENABLED
-#define EPC_CONF_DABS_TEST
-#define EPC_CONF_PWR_TEST
-//#define EPC_CONF_DABS_TEST
-//#define EPC_CONF_PWR_TEST
-#define EPC_CONF_COMM_TEST
 
 /**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
 #define EPC_CONF_I2C_TIMEOUT 5
