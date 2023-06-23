@@ -6,9 +6,8 @@
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include <stdlib.h>
-
 #include "app_iface.h"
+#include "mid_comm.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -19,7 +18,7 @@
 /*                      Definition of imported constant data                      */
 /**********************************************************************************/
 extern const MID_REG_limit_s EPC_CONF_limit_range; //used to check new limits
-extern const MID_REG_periodic_period_s EPC_CONF_periodic_time_min; //used to check new limits and init APP_IFACE_periodic
+extern const MID_REG_periodic_s EPC_CONF_periodic_time_min; //used to check new limits and init APP_IFACE_periodic
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -69,12 +68,33 @@ MID_REG_periodic_s APP_IFACE_periodic = {};
 APP_IFACE_result_e AppIfacePeriodicRegister () {
 
 	/*		APP_IFACE_periodic  	*/
-	APP_IFACE_periodic.period.usrHeartBeat = EPC_CONF_periodic_time_min.usrHeartBeat;
-	APP_IFACE_periodic.period.electricMsg  = EPC_CONF_periodic_time_min.electricMsg;
-	APP_IFACE_periodic.period.tempMsg      = EPC_CONF_periodic_time_min.tempMsg;
-	APP_IFACE_periodic.status.usrHeartBeat	= MID_REG_DISABLED;
-	APP_IFACE_periodic.status.electricMsg	= MID_REG_DISABLED;
-	APP_IFACE_periodic.status.tempMsg		= MID_REG_DISABLED;
+	APP_IFACE_periodic.usrHeartBeatPeriod = EPC_CONF_periodic_time_min.usrHeartBeatPeriod;
+	APP_IFACE_periodic.electricMsgPeriod  = EPC_CONF_periodic_time_min.electricMsgPeriod;
+	APP_IFACE_periodic.tempMsgPeriod      = EPC_CONF_periodic_time_min.tempMsgPeriod;
+	APP_IFACE_periodic.usrHeartBeatStatus	= MID_REG_DISABLED;
+	APP_IFACE_periodic.electricMsgStatus	= MID_REG_DISABLED;
+	APP_IFACE_periodic.tempMsgStatus		= MID_REG_DISABLED;
 
 	return APP_IFACE_RESULT_SUCCESS;
+}
+	
+APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s *  const control,
+	MID_REG_meas_property_s * const meas, MID_REG_error_status_s * const status,
+	MID_REG_limit_s * limits, MID_REG_control_s *consign){
+	APP_IFACE_result_e res = APP_IFACE_RESULT_SUCCESS;
+
+	return res;
+}
+
+APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas,
+	MID_REG_error_status_s *  const status){
+	APP_IFACE_result_e res = APP_IFACE_RESULT_SUCCESS;
+
+	return res;
+}
+
+APP_IFACE_result_e APP_IfaceNotifyModeChange (MID_REG_control_s const * const control){
+	APP_IFACE_result_e res = APP_IFACE_RESULT_SUCCESS;
+	res |= MID_CommSendControlMode(&control);
+	return res;
 }

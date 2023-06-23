@@ -8,6 +8,7 @@
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
+#include "mid_reg.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -27,13 +28,12 @@
 
 /**
  * @enum APP_IFACE_result_e
- * @brief Structure for the result of the APP IFACE operations.
+ * @brief Structure for the result of the APP IFACE operation.
  */
 typedef enum
 {
-	APP_IFACE_RESULT_SUCCESS = 0x0U, 		/**< APP_SALG success operation result **/
-	APP_IFACE_RESULT_ERROR_INIT 	= 0x01U,	/**< APP_IFACE critical error on peripheral initialization **/
-	APP_IFACE_RESULT_ERROR_COMM 	= 0x02U,	/**< APP_IFACE error on communication process, CAN or UART **/
+	APP_IFACE_RESULT_SUCCESS	= 0x0U,		/**< APP_IFACE success operation result **/
+	APP_IFACE_RESULT_ERROR		= 0x01U,	/**< APP_IFACE error on communication operation **/
 } APP_IFACE_result_e;
 
 /**********************************************************************************/
@@ -56,5 +56,14 @@ typedef enum
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
 APP_IFACE_result_e AppIfacePeriodicRegister ();
+
+APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s *  const control,
+	MID_REG_meas_property_s * const meas, MID_REG_error_status_s * const status,
+	MID_REG_limit_s * limits, MID_REG_control_s *consign);
+
+APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas,
+	MID_REG_error_status_s *  const status);
+
+APP_IFACE_result_e APP_IfaceNotifyModeChange (MID_REG_control_s const * const control);
 
 #endif /* APP_IFACE_H_ */
