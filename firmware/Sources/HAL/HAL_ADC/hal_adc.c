@@ -113,7 +113,6 @@ static uint16_t getPwrMedian(uint16_t start_sensor_idx)
   return res;
 }
 
-
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
@@ -155,6 +154,7 @@ HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value)
 	if (port <= HAL_ADC_HS_VOLT){
 		uint8_t idx = port + _idx_cplt_ADC2;
 		*value = getPwrMedian(idx);
+//		*value = findMedian(idx);
 	}else if (HAL_ADC_TEMP_ANOD <= port && port <= HAL_ADC_INT_TEMP){
 		HAL_ADC_Start(&hadc1);
 		uint8_t sensor_idx = port - HAL_ADC_TEMP_ANOD + _idx_cplt_ADC1;
