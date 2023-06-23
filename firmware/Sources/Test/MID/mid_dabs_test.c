@@ -58,7 +58,7 @@
 /**********************************************************************************/
 MID_DABS_result_e MID_DabsTestMeas(void){
 	MID_DABS_result_e res = MID_DABS_RESULT_ERROR;
-	MID_REG_meas_s measreg = {0,0,0,0,0,0};
+	MID_REG_meas_property_s measreg = {0,0,0,0,0,0};
 	uint8_t i=0;
 	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
 	HAL_TmrStart(HAL_TMR_CLOCK_RT);

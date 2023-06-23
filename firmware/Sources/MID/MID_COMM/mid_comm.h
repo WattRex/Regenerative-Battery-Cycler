@@ -223,7 +223,7 @@ MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendStatus ( MID_REG_errorStatus_s * const status);
+MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const status)

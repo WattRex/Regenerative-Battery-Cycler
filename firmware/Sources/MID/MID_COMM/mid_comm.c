@@ -124,16 +124,16 @@ MID_COMM_result_e MID_CommProcessIncommingData(void){
 
 MID_COMM_result_e MID_CommSendInfo (void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_INFO);
-	size_t size = sizeof(EPC_CONF_reg_info);
-	memcpy(tx_data, &EPC_CONF_reg_info, (uint8_t) size);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_INFO);
+	size_t size = sizeof(EPC_CONF_info);
+	memcpy(tx_data, &EPC_CONF_info, (uint8_t) size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);
 	return res;
 }
 
-MID_COMM_result_e MID_CommSendStatus ( MID_REG_errorStatus_s * const status ){
+MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status ){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_STATUS);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_STATUS);
 	size_t size = sizeof(*status);
 	memcpy(tx_data, status, size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);
@@ -147,7 +147,7 @@ MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_l
 	size_t size = 4;
 
 	if (req >= MID_COMM_REQUEST_LIMITS_LS_VOLT && req <= MID_COMM_REQUEST_LIMITS_TEMP){
-		tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, (MID_COMM_MSG_ID_LS_VOLT_LIMIT+offset));
+		tx_id = __PACK_CAN_ID(EPC_CONF_info.id, (MID_COMM_MSG_ID_LS_VOLT_LIMIT+offset));
 		ptr_data += offset*size;
 		memcpy(tx_data, ptr_data, size);
 		res |= HAL_CanTransmit(tx_id, tx_data, size);
@@ -160,7 +160,7 @@ MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_l
 
 MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s * const meas){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_ELECT_MEAS);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_ELECT_MEAS);
 	size_t size = 6;
 	memcpy(tx_data, meas, size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);
@@ -170,7 +170,7 @@ MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s * const meas){
 
 MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_TEMP_MEAS);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_TEMP_MEAS);
 	size_t size = 6;
 	uint8_t* ptr_data = (uint8_t *) meas;
 	ptr_data += size;
@@ -182,7 +182,7 @@ MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas){
 
 MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_MODE);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_MODE);
 	size_t size = sizeof(*mode);
 	memcpy(tx_data, mode, size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);
@@ -192,7 +192,7 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
 
 MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	tx_id = __PACK_CAN_ID(EPC_CONF_reg_info.id, MID_COMM_MSG_ID_PERIODIC);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_PERIODIC);
 	size_t size = sizeof(*periodic);
 	memcpy(tx_data, periodic, size);
 	res |= HAL_CanTransmit(tx_id, tx_data, size);

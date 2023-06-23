@@ -34,7 +34,7 @@
 /**********************************************************************************/
 uint8_t recvCtrl = 0, recvPeriodic = 0, recvReq = 0, recvLimit = 0;
 
-MID_REG_errorStatus_s tx_status = {
+MID_REG_error_status_s tx_status = {
 	MID_REG_ERROR_RAISED, // hsVoltErr
 	MID_REG_ERROR_NONE,		// lsVoltErr
 	MID_REG_ERROR_RAISED, // lsCurrErr
@@ -147,7 +147,7 @@ MID_COMM_result_e recvData(void){
 	}
 
 	// Check reception of MSG 0xYY1
-	if(recvCtrl != 1 || memcmp(&tx_ctrl, &rx_ctrl, sizeof(MID_REG_errorStatus_s)) != 0 ){
+	if(recvCtrl != 1 || memcmp(&tx_ctrl, &rx_ctrl, sizeof(MID_REG_error_status_s)) != 0 ){
 			res = MID_COMM_RESULT_ERROR;
 	}
 
