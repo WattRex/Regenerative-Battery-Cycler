@@ -153,7 +153,6 @@ HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value)
 	HAL_ADC_result_e res = HAL_ADC_RESULT_SUCCESS;
 	if (port <= HAL_ADC_HS_VOLT){
 		uint8_t idx = port + _idx_cplt_ADC2;
-	//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
 		*value = getPwrMedian(idx);
 //		*value = findMedian(idx);
 	}else if (HAL_ADC_TEMP_ANOD <= port && port <= HAL_ADC_INT_TEMP){
