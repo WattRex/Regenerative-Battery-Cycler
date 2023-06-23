@@ -180,7 +180,7 @@ MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas){
 }
 
 
-MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
+MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s const * const mode){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_MODE);
 	size_t size = sizeof(*mode);
@@ -190,7 +190,7 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
 }
 
 
-MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic){
+MID_COMM_result_e MID_CommSendPeriodic (MID_REG_periodic_s const * const periodic){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_PERIODIC);
 	size_t size = sizeof(*periodic);

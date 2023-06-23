@@ -203,9 +203,7 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		res |= MID_DabsUpdateLeds(control.mode, measures.lsCurr, &errorStatus);
 
 		// 7.0 Notify user of status change
-		if(memcmp(&consign, &control, sizeof(MID_REG_control_s)) != 0){
-			res |= APP_IfaceNotifyModeChange(&control);
-		}
+		res |= APP_IfaceNotifyModeChange(&control);
 		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
 
 		// 8.0 Heartbeat to whatchdog
