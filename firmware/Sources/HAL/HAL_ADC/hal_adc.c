@@ -68,49 +68,59 @@ extern uint8_t EPC_ST_ERR_COUNTER;
 /*                         Definition of local functions                          */
 /**********************************************************************************/
 
-// Inserts a key in arr[] of given capacity. n is current
-// size of arr[]. This function returns n+1 if insertion
-// is successful, else n.
-static uint16_t insertSorted(const uint16_t n, uint16_t key)
-{
-    // Cannot insert more elements if n is already
-    // more than or equal to capacity
-		uint16_t new_size = n;
-		if (n < _N_SAMPLES_PWR) {
-			new_size += 1;
-			if (n == 0){
-				_meas_pwr[0] = key;
-			} else{
-				int16_t i = n - 1;
-				for (; (i >= 0 && _meas_pwr[i] > key); i--)
-					_meas_pwr[i + 1] = _meas_pwr[i];
+static uint16_t findMedian4(const uint16_t a, const uint16_t b, const uint16_t c, const uint16_t d){
+	uint16_t res;
 
-				_meas_pwr[i + 1] = key;
-			}
-    }
+	if ( (a <= b && b <= c && c <= d) || (d <= c && c <= b && b <= a) ){
+		res = b;
+	}
+	else if ( (b <= a && a <= c && c <= d) || (d <= c && c <= a && a <= b) ){
+		res = a;
+	}
+	else if ( (b <= c && c <= a && a <= d) || (d <= a && a <= c && c <= b) ){
+		res = c;
+	}
+	else{
+		res = d;
+	}
+	return res;
 
-    return new_size;
 }
 
-
-// Function for calculating median
-static uint16_t getPwrMedian(uint16_t start_sensor_idx)
-{
-	// Insert data ordered
-	uint16_t meas_idx = start_sensor_idx;
-	uint8_t stride = 3, i;
-	for(i = 0; i < _N_SAMPLES_PWR;){
-		i = insertSorted(i, _ADC2_results[meas_idx]);
-		meas_idx += stride;
+static uint16_t findMedian3(const uint16_t a, const uint16_t b, const uint16_t c){
+	uint16_t res;
+	if ( (a <= b && b <= c) || (c <= b && b <= a)) {
+		res = b;
 	}
+	else if ( (b <= a && a <= c) || (c <= a && a <= b)) {
+		res = a;
+	}	else{
+		res = c;
+	}
+	return res;
+}
 
-	// check for even case
-  uint16_t res = 0;
-	if (i % 2 != 0)
-		res = _meas_pwr[i / 2];
-	else
-		res = (_meas_pwr[(i - 1) / 2] + _meas_pwr[i / 2]) / 2;
-  return res;
+static uint16_t getEstim(uint16_t start_sensor_idx){
+		uint16_t meas_idx = start_sensor_idx;
+		uint8_t stride = 3;
+//		uint16_t i, res = 0;
+//		for(i = 0; i < _N_SAMPLES_PWR; i += 1){
+//			res += _ADC2_results[meas_idx];
+//			_meas_pwr[i] = _ADC2_results[meas_idx];
+//			meas_idx += stride;
+//		}
+//		return res;
+////		i = 0;
+		meas_idx = start_sensor_idx;
+		uint16_t m1 = findMedian3(_ADC2_results[meas_idx], _ADC2_results[meas_idx + stride], _ADC2_results[meas_idx + 2*stride]);
+		meas_idx = stride;
+		uint16_t m2 = findMedian3(_ADC2_results[meas_idx], _ADC2_results[meas_idx + stride], _ADC2_results[meas_idx + 2*stride]);
+		meas_idx = stride;
+		uint16_t m3 = findMedian4(_ADC2_results[meas_idx], _ADC2_results[meas_idx + stride],
+				_ADC2_results[meas_idx + 2*stride], _ADC2_results[meas_idx + 3*stride]);
+
+//		return findMedian3(m1,  m2,  m3);
+		return ( m1 + m2 + m3) / 3;
 }
 
 /**********************************************************************************/
@@ -153,8 +163,10 @@ HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value)
 	HAL_ADC_result_e res = HAL_ADC_RESULT_SUCCESS;
 	if (port <= HAL_ADC_HS_VOLT){
 		uint8_t idx = port + _idx_cplt_ADC2;
-		*value = getPwrMedian(idx);
-//		*value = findMedian(idx);
+//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
+//		*value = getPwrMedian(idx);
+		*value = getEstim(idx);
+//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
 	}else if (HAL_ADC_TEMP_ANOD <= port && port <= HAL_ADC_INT_TEMP){
 		HAL_ADC_Start(&hadc1);
 		uint8_t sensor_idx = port - HAL_ADC_TEMP_ANOD + _idx_cplt_ADC1;
