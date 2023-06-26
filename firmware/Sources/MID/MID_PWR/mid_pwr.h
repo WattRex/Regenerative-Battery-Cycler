@@ -81,9 +81,7 @@ typedef enum
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
-void TestFP(void); // TODO: remove it
 
-//TODO: rewrite
 /**
  * @fn MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode)
  * @brief Enable or disable the output pwr.
@@ -92,26 +90,23 @@ void TestFP(void); // TODO: remove it
  * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
  * 		@ref MID_PWR_RESULT_ERROR otherwise.
  */
-MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode);
-//TODO: rewrite
+MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint16_t V_HS, const uint16_t V_LS);
+
 /**
- * @fn MID_PWR_result_e MID_PwrApplyPI(const uint16_t ref, const uint16_t actual_value, const MID_PWR_Mode_e, const XXXX limits)
- * @brief Enable or disable the output pwr.
- * @param outputMode Input variable to use to set the mode 
+ * @fn MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS,
+ * 									const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits);
+ * @brief This function apply the control type desired, in case is not current it will apply two consecutive PIs,
+ *  as the first one will return a reference in current. The current PI will return the duty to apply in the pwm.
+ *  All while it checks it is working in the Safe Operating Area, otherwise it will limit the current.
+ * @param ref Reference for the PI, in each control mode will refer to a different unit, (Voltage for CV, Power for CP and Current for CC)
+ * @param V_Ls, Voltage in the low side of the EPC
+ * @param I_ls, Current in the low side of the EPC
+ * @param control_mode, Variable to select the control desire to apply, it can be an option out of Control Current, Voltage or Power.
+ * @param limits, register where are the limits of the EPC.
  * @return @ref MID_PWR_RESULT_SUCCESS if set correctly,
  * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
  * 		@ref MID_PWR_RESULT_ERROR otherwise.
  */
 MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits);
-//TODO: rewrite
-/**
- * @fn MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS)
- * @brief Enable or disable the output pwr.
- * @param outputMode Input variable to use to set the mode 
- * @return @ref MID_PWR_RESULT_SUCCESS if set correctly,
- * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
- * 		@ref MID_PWR_RESULT_ERROR otherwise.
- */
-MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS);
 
 #endif /* MID_PWR_H_ */

@@ -19,19 +19,6 @@
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-
-/**********************************************************************************/
-/*                     Definition of local symbolic constants                     */
-/**********************************************************************************/
-#define _N_FRAC_BITS 16
-#define _FP_FACTOR (1 << _N_FRAC_BITS)
-#define _SCALING_FACTOR_MILIS 1000
-#define _SCALING_FACTOR_DECIS 10
-
-/**********************************************************************************/
-/*                    Definition of local function like macros                    */
-/**********************************************************************************/
-
 /**********************************************************************************/
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
@@ -44,39 +31,126 @@ typedef enum{
 
 typedef int32_t fp_t;
 /**********************************************************************************/
+/*                     Definition of local symbolic constants                     */
+/**********************************************************************************/
+#define _FP_FACTOR (1 << EPC_CONF_FP_N_FRAC_BITS)
+#define _SCALING_FACTOR_MILIS 1000
+#define _SCALING_FACTOR_DECIS 10
+
+
+/**********************************************************************************/
+/*                    Definition of local function like macros                    */
+/**********************************************************************************/
+// reference: http://www.sunshine2k.de/articles/coding/fp/sunfp.html#ch42
+/**
+ * @fn dSI_to_FP(value)
+ * @brief Converts the value given in deciUnits to the fixed point specified and return it.
+ * @param value, Value in deciunits
+ */
+#define dSI_to_FP(value) ((fp_t) value * _FP_FACTOR / _SCALING_FACTOR_DECIS)
+/**
+ * @fn mSI_to_FP(value)
+ * @brief Converts the value given in miliUnits to the fixed point specified
+ * @param value, Value in miliunits
+ */
+#define mSI_to_FP(value) ((fp_t) value * _FP_FACTOR / _SCALING_FACTOR_MILIS)
+
+/**
+ * @fn sum_to_FP(sum1,sum2)
+ * @brief Make the sum of 2 values in fixed point, return the result in fp
+ * @param sum1, first operand
+ * @param sum2, second operand
+ */
+#define sum_FP(sum1,sum2) (sum1 + sum2)
+/**
+ * @fn sub_FP(sub1,sub2) 
+ * @brief Make the difference of 2 values in fixed point, return the result in fp
+ * @param sub1, first operand
+ * @param sub2, second operand
+ */
+#define sub_FP(sub1,sub2) (sub1 - sub2)
+/**
+ * @fn mul_FP(fac1,fac2)
+ * @brief Make the multiplication of 2 values in fixed point, return the result in fp
+ * @param fac1, first operand
+ * @param fac2, second operand
+ */
+#define mul_FP(fac1,fac2) ((fp_t)(((int64_t)(fac1) * (int64_t)(fac2)>>EPC_CONF_FP_N_FRAC_BITS)))
+
+/**
+ * @fn FP_to_mSI(value)
+ * @brief Converts the value given in fixed point to miliUnits
+ * @param value, Value in miliunits
+ */
+#define FP_to_mSI(value) ((int16_t) ( (int64_t)(value) * _SCALING_FACTOR_MILIS >> EPC_CONF_FP_N_FRAC_BITS))
+/**
+ * @fn FP_to_dSI(value)
+ * @brief Converts the value given in fixed point to deciUnits
+ * @param value, Value in miliunits
+ */
+#define FP_to_dSI(value) ((int16_t) ( (int64_t)(value) * _SCALING_FACTOR_DECIS >> EPC_CONF_FP_N_FRAC_BITS))
+/**
+ * @fn FP_to_SI(value)
+ * @brief Converts the value given in fixed point to Units
+ * @param value, Value in miliunits
+ */
+#define FP_to_SI(value)  ((int16_t) ( (int64_t)(value) >> EPC_CONF_FP_N_FRAC_BITS))
+
+/**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
-
+extern uint32_t HAL_PWM_period;
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
-static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas,
-		const MID_PWR_Mode_e mode, const MID_REG_limit_s limits, int32_t * action);
+/**
+ * @fn MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS);
+ * @brief It will update the internal variable that stores the duty percentage in which the current is 0.
+ * @param V_HS Voltage measure in the high side of the EPC
+ * @param V_LS Voltage measure in the low side of the EPC 
+ * @return @ref MID_PWR_RESULT_SUCCESS if set correctly,
+ * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
+ * 		@ref MID_PWR_RESULT_ERROR otherwise.
+ */
+static MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS);
 
+/**
+ * @fn static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, const MID_PWR_Mode_e mode,
+		const MID_REG_limit_s limits, int32_t * action)
+ * @brief Apply a specefic PI, 
+ * @param ref, value to have as reference
+ * @param meas, value measured from sensor
+ * @param mode, type of PI to apply
+ * @param limits, limits to use in the PI
+ * @param action_res, pointer to the action to apply
+ * @return @ref MID_PWR_RESULT_SUCCESS if calculated correctly,
+ * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
+ * 		@ref MID_PWR_RESULT_ERROR otherwise.
+ */
+static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas,
+		const MID_PWR_Mode_e mode, const MID_REG_limit_s limits, int16_t * action_res);
+
+/**
+ * @fn static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits)
+ * @brief Check the device is working under the safe operating area, all the measures must refer to the low side of the EPC.
+ * @param I, Value of the current.
+ * @param V, Value of the voltage
+ * @param limits, register in which are stored the maximum and minimum values of power. 
+ * @return @ref SOA_ok if not traspassing the limits,
+ * 		@ref SOA_over_pwr, the upper limit has been surpassed.
+ * 	 	@ref SOA_under_pwr, the lower limit has been surpassed.
+ */
 static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits);
 
-static void convert_dSI_to_FP(const int16_t value, fp_t * const res);
-
-static void convert_mSI_to_FP(const int16_t value, fp_t * const res)
-
-static void sum_FP(fp_t const * const sum1, fp_t const * const sum2, fp_t * const res);
-
-static void mult_FP(fp_t const * const fac1, fp_t const * const fac2, fp_t * const res);
-
-static void convert_FP_to_mSI(fp_t const * const value, int16_t * const res);
-
-static void convert_FP_to_dSI(fp_t const * const value, int16_t * const res);
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
-
+#define Q16_SCALE_FACTOR 65536 // 2^16
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-static uint16_t kp[3] = {6,0,0}, ki[3] = {5,0,0}; //TODO: EPC_CONF
-static int32_t  integral_value[3] = {0, 0, 0}; //I, V, P PI values
-static uint8_t  saturation_flag[3] = {0,0,0};	//I, V, P PI saturation flags
-static uint32_t duty, d0 = 0; //action duty goes from 0 to 100000 (in m%)
+static fp_t  last_error[3] = {0, 0, 0}; //I, V, P PI values
+static uint16_t duty, d0 = 0; //action duty goes from 0 to 9215
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -85,52 +159,11 @@ static uint32_t duty, d0 = 0; //action duty goes from 0 to 100000 (in m%)
 /**********************************************************************************/
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
-
+extern uint32_t HAL_PWM_period;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
-// TODO: add documentation
-// reference: http://www.sunshine2k.de/articles/coding/fp/sunfp.html#ch42
-static void convert_dSI_to_FP(const int16_t value, fp_t * const res){
-	*res = (fp_t) value * _FP_FACTOR / _SCALING_FACTOR_DECIS;
-}
-static void convert_mSI_to_FP(const int16_t value, fp_t * const res){
-	*res = (fp_t) value * _FP_FACTOR / _SCALING_FACTOR_MILIS;
-}
 
-static void sum_FP(fp_t const * const sum1, fp_t const * const sum2, fp_t * const res){
-	*res = *sum1 + *sum2;
-}
-
-static void mult_FP(fp_t const * const fac1, fp_t const * const fac2, fp_t * const res){
-	int64_t mul = (int64_t)(*fac1) * (int64_t)(*fac2);
-	*res = (fp_t) ( mul >> _N_FRAC_BITS );
-}
-
-static void convert_FP_to_mSI(fp_t const * const value, int16_t * const res){
-	*res = (int16_t) ( (int64_t)(*value) * _SCALING_FACTOR_MILIS >> _N_FRAC_BITS);
-}
-static void convert_FP_to_dSI(fp_t const * const value, int16_t * const res){
-	*res = (int16_t) ( (int64_t)(*value) * _SCALING_FACTOR_DECIS >> _N_FRAC_BITS);
-}
-
-// TODO: move it to test
-void TestFP(void){
-	int16_t ls_volt = 8500, hs_volt = 0; // hs_volt should be hs_volt = (ls_volt + ls_volt)*1.5 = 25.5 M = 25500 mV
-	fp_t fp_val, fp_sum, fp_fact, fp_mult;
-
-	convert_mSI_to_FP(ls_volt, &fp_val);
-	sum_FP(&fp_val, &fp_val, &fp_sum);
-	convert_FP_to_mSI(&fp_sum, &hs_volt);
-
-	convert_mSI_to_FP(1500, &fp_fact);
-	mult_FP(&fp_sum, &fp_fact, &fp_mult);
-
-	convert_FP_to_mSI(&fp_mult, &hs_volt);
-}
-
-
-//TODO: rewrite
 static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits){
 	SOA_e res = SOA_ok;
 	int16_t power = (int16_t)(((int32_t)I * (int32_t)V) /100000); // 10^-3(mW) *10^-3 (mW) / 10^-5 -> dW
@@ -141,50 +174,79 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s 
 	return res;
 }
 
-//TODO: rewrite
-/**
- * @fn MID_PWR_result_t SetLeds()
- * @brief Set the leds to the state indicated by the input
- * @param state, 8bit input but only needed the last 4 bits as there are only 4 leds
- * @return @ref MID_PWR_RESULT_SUCCESS if measured correctly,
- * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
- * 		@ref MID_PWR_RESULT_ERROR otherwise.
- */
+MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS){
+	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
+	uint32_t new_d0 = V_LS * HAL_PWM_period / V_HS;
+	if (new_d0 <= HAL_PWM_period && new_d0 >= 0){
+		d0 = new_d0;
+		res = MID_PWR_RESULT_SUCCESS;
+	}
+	return res;
+}
+
 static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, const MID_PWR_Mode_e mode,
-		const MID_REG_limit_s limits, int32_t * action){
+		const MID_REG_limit_s limits, int16_t * action_res){
 
 	// Get values for the specific PI 
-	int32_t upper_limit, lower_limit; //int32 because of duty
-	int32_t error = ref - meas;
+	fp_t upper_limit, lower_limit; //int32 because of duty
+	fp_t kp,ki;
+	static fp_t fp_ref, fp_input;
+	static fp_t error;
+	static fp_t accion, proporcional, integral = 0;
 
 	// set limits for saturation
 	if (mode != MID_PWR_MODE_CC){ //out for pwr or v PI is allways current
-		upper_limit = limits.lsCurrMax ;
-		lower_limit = limits.lsCurrMin ;
-	}else{ // for i PI actions is the deltaDuty to apply
-		upper_limit = HAL_PWM_MAX_DUTY - d0;
-		lower_limit= - d0;
+		upper_limit = mSI_to_FP(limits.lsCurrMax) ;
+		lower_limit = mSI_to_FP(limits.lsCurrMin) ;
+		if (mode == MID_PWR_MODE_CV){
+			kp= EPC_CONF_PWR_KP_V;
+			ki= EPC_CONF_PWR_KI_V;
+			fp_ref = mSI_to_FP(ref);
+			fp_input = mSI_to_FP(meas);
+
+		}else{
+			kp= EPC_CONF_PWR_KP_P;
+			ki= EPC_CONF_PWR_KI_P;
+			fp_ref = dSI_to_FP(ref);
+			fp_input = dSI_to_FP(meas);
+		}
+	}else if (mode == MID_PWR_MODE_CC){ // for i PI actions is the Duty to apply
+		upper_limit = (HAL_PWM_period -1)*_FP_FACTOR;
+		lower_limit = 0;
+		kp= EPC_CONF_PWR_KP_I;
+		ki= EPC_CONF_PWR_KI_I;
+		fp_ref = mSI_to_FP(ref);
+		fp_input = mSI_to_FP(meas);
 	}
 
-	// check if already saturated
-	if(saturation_flag[mode]){
-		integral_value[mode] += error;
-	}
 
-	//set new action
-	*action = kp[mode] * error + ki[mode] * integral_value[mode];
+	// error = (double)(reference - input);
+	error = sub_FP(fp_ref,fp_input);
 
-	// check action and saturate if needed
-	if(*action > upper_limit){
-		*action = upper_limit;
-		saturation_flag[mode] = 1;
-	}else if(*action < lower_limit){
-		*action = lower_limit;
-		saturation_flag[mode] = 1;
-	}else{
-		saturation_flag[mode] = 0;
-	}
+	// proporcional = kp_I * error;
+	proporcional = mul_FP(kp,error);
 
+	// integral = integral + ki_I * last_error;
+	fp_t temp;
+	temp = mul_FP(ki,last_error[mode]);
+	integral = sum_FP(integral,temp);
+
+
+    if(integral >= upper_limit){
+    	integral = upper_limit;
+    }else if(integral <= lower_limit){
+    	integral = lower_limit;
+    }
+
+    last_error[mode] = error;
+    // accion = proporcional + integral;
+    accion = sum_FP(proporcional,integral);
+
+    if (mode == MID_PWR_MODE_CC){
+    	*action_res = FP_to_SI(accion);
+    }else{
+    	*action_res = FP_to_mSI(accion);
+    }
 	return MID_PWR_RESULT_SUCCESS;
 }
 
@@ -192,15 +254,28 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, cons
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode){
+MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint16_t V_HS, const uint16_t V_LS){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
 	res = (MID_PWR_result_e) HAL_GpioSet(HAL_GPIO_OUT_OutDisable, outputMode);
+	if (outputMode == MID_PWR_Enable && res == MID_PWR_RESULT_SUCCESS){
+		last_error[0] = 0;
+		last_error[1] = 0;
+		last_error[2] = 0;
+		res |= _calculateD0(V_HS, V_LS);
+		if (res == MID_PWR_RESULT_SUCCESS){
+			res |= (MID_PWR_result_e) HAL_PwmSetDuty(d0);
+			res |= HAL_PwmStart();
+		}
+	}
+	else if (outputMode == MID_PWR_Disable && res == MID_PWR_RESULT_SUCCESS){
+		res |= HAL_PwmStop();
+	}
 	return res;
 }
 
 MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	int32_t curr_ref, delta_duty;
+	int16_t curr_ref;
 	int16_t actual_power;
 	switch (control_mode) { //first PI, if needed (in Pwr and V refs)
 		case MID_PWR_MODE_CP:
@@ -230,22 +305,13 @@ MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const 
 			curr_ref = (int32_t)(limits.lsPwrMin*100) / V_LS;
 		}
 		// calculate current PI
-		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &delta_duty);
+		//Ignore warning as action for current PI will be a value of duty between 0-9215
+		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &duty);
 		if (res == MID_PWR_RESULT_SUCCESS){
-			duty = delta_duty + d0;
-			res = (MID_PWR_result_e) HAL_PwmSetDuty(duty);
+			res = (MID_PWR_result_e) HAL_PwmSetDuty((uint32_t)duty);
 		}
 	}
 
 	return res;
 }
 
-MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS){
-	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	uint32_t new_d0 = V_LS * HAL_PWM_MAX_DUTY / V_HS;
-	if (new_d0 <= HAL_PWM_MAX_DUTY && new_d0 >= 0){
-		d0 = new_d0;
-		res = MID_PWR_RESULT_SUCCESS;
-	}
-	return res;
-}
