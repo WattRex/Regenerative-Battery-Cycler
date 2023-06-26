@@ -176,8 +176,8 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s 
 
 MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	uint32_t new_d0 = V_LS * HAL_PWM_period / V_HS;
-	if (new_d0 <= HAL_PWM_period && new_d0 >= 0){
+	uint32_t new_d0 = V_LS * (HAL_PWM_period-1) / V_HS;
+	if (new_d0 <= (HAL_PWM_period-1) && new_d0 >= 0){
 		d0 = new_d0;
 		res = MID_PWR_RESULT_SUCCESS;
 	}
