@@ -237,7 +237,7 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s * errors,
 
 	// Disable power conversion if any error is raised
 	if (res == APP_CTRL_RESULT_ERROR_RAISED){
-		internalRes = MID_PwrSetOutput(MID_PWR_Enable);
+		internalRes = MID_PwrSetOutput(MID_PWR_Enable, meas->hsVolt, meas->lsVolt);
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_ERROR_RAISED : APP_CTRL_RESULT_ERROR_INT;
 	}else{
 		res = APP_CTRL_RESULT_SUCCESS;
@@ -259,7 +259,7 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 		switch(mode->mode)
 		{
 			case MID_REG_MODE_WAIT:
-				internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+				internalRes = MID_PwrSetOutput(MID_PWR_Disable, meas->hsVolt, meas->lsVolt);
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 			case MID_REG_MODE_CV:
 				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CV, limits);
@@ -271,7 +271,7 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CP, limits);
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 			default:
-				internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+				internalRes = MID_PwrSetOutput(MID_PWR_Disable, meas->hsVolt, meas->lsVolt);
 				res = APP_CTRL_RESULT_ERROR_INT;
 		}
 
@@ -284,7 +284,7 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 				0					// limRef
 		};
 
-		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+		internalRes = MID_PwrSetOutput(MID_PWR_Disable, meas->hsVolt, meas->lsVolt);
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 
 		if (res == APP_CTRL_RESULT_SUCCESS){
@@ -310,7 +310,7 @@ APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_R
 	memcpy(newMode, mode, sizeof(mode));
 	//Enable PWR output for the modes that require power transfer
 	if (newMode->mode == MID_REG_MODE_CV || newMode->mode == MID_REG_MODE_CP || newMode->mode == MID_REG_MODE_CC){
-		internalRes = MID_PwrSetOutput(MID_PWR_Enable);
+		internalRes = MID_PwrSetOutput(MID_PWR_Enable, meas->hsVolt, meas->lsVolt);
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 	}
 
