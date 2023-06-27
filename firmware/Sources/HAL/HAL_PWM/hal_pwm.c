@@ -22,7 +22,6 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-#define MAX_DUTY 100000
 #define MIN_PWM 96
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -39,7 +38,7 @@ static HRTIM_CompareCfgTypeDef pCompareCfg = {0};
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
-
+uint32_t HAL_PWM_period;
 /**********************************************************************************/
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
@@ -70,6 +69,7 @@ HAL_PWM_result_e HAL_PwmInit(void){
 	EPC_ST_ERR_COUNTER = 0;
 	MX_HRTIM1_Init();
 	if (EPC_ST_ERR_COUNTER==0){
+		HAL_PWM_period = (hhrtim1.Instance->sTimerxRegs[0].PERxR);
 		res = HAL_PWM_RESULT_SUCCESS;
 	}
 	return res;
@@ -78,24 +78,20 @@ HAL_PWM_result_e HAL_PwmInit(void){
 
 HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
 	// Get the period of the timer, as will be the maximum value to compare
-	uint32_t max = hhrtim1.Instance->sTimerxRegs[0].PERxR;
 	uint32_t pwm_duty;
-	if (duty>MAX_DUTY){
-		// The maximum duty to apply is the period configured
-		pwm_duty = max -1;
+	if (duty>=HAL_PWM_period){
+		// The maximum duty to apply is the period configured -1
+		pwm_duty = HAL_PWM_period -1;
 	}
-	//If duty is 0 no division is allow so duty has to be greater than 0
-	else if (duty>0){
-		pwm_duty = duty * max/MAX_DUTY - 1;
-	}
-	else{
-		// Otherwise assigned directly to the pwm
+	//If duty between max and min values
+	else if (duty>=MIN_PWM){
 		pwm_duty = duty;
 	}
-	// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
-	if (pwm_duty < MIN_PWM){
+	else{
+		// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
 		pwm_duty = MIN_PWM;
 	}
+	
 	// Write the value to compare in the register.
 	pCompareCfg.CompareValue = pwm_duty;
 	// Apply the compare configuration to the dessire timer unit in this case HRTIM-A1
