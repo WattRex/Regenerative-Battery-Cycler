@@ -67,12 +67,12 @@
 /**********************************************************************************/
 
 const MID_REG_limit_s EPC_CONF_limit_range = {
-		_MAX_HS_VOLT, 	// hsVoltMax
-		_MIN_HS_VOLT,   // hsVoltMin
 		_MAX_LS_VOLT,   // lsVoltMax
 		_MIN_LS_VOLT,   // lsVoltMin
 		_MAX_LS_CURR,   // lsCurrMax
         _MIN_LS_CURR,   // lsCurrMin
+		_MAX_HS_VOLT, 	// hsVoltMax
+		_MIN_HS_VOLT,   // hsVoltMin
 		_MAX_EPC_PWR,   // lsPwrMax
         _MIN_EPC_PWR,   // lsPwrMin
 		_TEMP_MAX,      // tempMax
