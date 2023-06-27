@@ -63,7 +63,7 @@ extern uint32_t HAL_PWM_period;
 HAL_PWM_result_e HAL_PwmTest(void)
 {
 	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
-	uint32_t duty= 0.5 * HAL_PWM_period; // Duty at 50%
+	uint32_t duty= HAL_PWM_period/2; // Duty at 50%
 	
 	if (HAL_PwmSetDuty(duty)==HAL_PWM_RESULT_SUCCESS){
 		res = HAL_PwmStart();
@@ -72,13 +72,13 @@ HAL_PWM_result_e HAL_PwmTest(void)
 			res = HAL_PwmStop();
 			if (res == HAL_PWM_RESULT_SUCCESS){
 				HAL_Delay(2500);
-				duty =  0.75 * HAL_PWM_period; // Duty 75%
+				duty =  HAL_PWM_period *3/4; // Duty 75%
 				res = HAL_PwmSetDuty(duty);
 				if (res == HAL_PWM_RESULT_SUCCESS){
 					res =HAL_PwmStart();
 					HAL_Delay(2500);
 					if (res == HAL_PWM_RESULT_SUCCESS){
-						duty =  0.25 * HAL_PWM_period; // Duty 25%
+						duty =  HAL_PWM_period /4; // Duty 25%
 						res = HAL_PwmSetDuty(duty);
 						HAL_Delay(2500);
 						if (res == HAL_PWM_RESULT_SUCCESS){
