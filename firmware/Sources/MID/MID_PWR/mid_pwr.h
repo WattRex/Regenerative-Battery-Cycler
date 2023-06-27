@@ -90,7 +90,7 @@ typedef enum
  * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
  * 		@ref MID_PWR_RESULT_ERROR otherwise.
  */
-MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint16_t V_HS, const uint16_t V_LS);
+MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode);
 
 /**
  * @fn MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS,
@@ -109,4 +109,14 @@ MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint1
  */
 MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits);
 
+/**
+ * @fn MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS);
+ * @brief It will update the internal variable that stores the duty percentage in which the current is 0.
+ * @param V_HS Voltage measure in the high side of the EPC
+ * @param V_LS Voltage measure in the low side of the EPC
+ * @return @ref MID_PWR_RESULT_SUCCESS if set correctly,
+ * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
+ * 		@ref MID_PWR_RESULT_ERROR otherwise.
+ */
+MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS);
 #endif /* MID_PWR_H_ */

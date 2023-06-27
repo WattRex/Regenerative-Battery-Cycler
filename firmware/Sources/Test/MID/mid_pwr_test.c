@@ -14,6 +14,8 @@
 #include "mid_dabs_test.h"
 #include "hal_tmr.h"
 #include "hal_pwm.h"
+#include "stm32f3xx_hal.h"
+
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -33,7 +35,7 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-static int16_t Iref = 1000;
+static int16_t I_ref = 1000;
 static MID_REG_meas_property_s measreg = {0,0,0,0,0,0};
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -67,25 +69,21 @@ MID_PWR_result_e MID_PwrTest(void){
 	res = MID_PwrSetOutput(MID_PWR_Disable);
 	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
 	HAL_TmrStart(HAL_TMR_CLOCK_RT);
-	uint16_t i=0;
-
-	do{
+	//Delay of 5ms in order to be able to measure correctly
+	HAL_Delay(5);
+	res = (MID_PWR_result_e) MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measreg);
+	res |= MID_PwrCalculateD0(measreg.hsVolt,measreg.lsVolt);
+	res |= MID_PwrSetOutput(MID_PWR_Enable);
+	while (res == MID_PWR_RESULT_SUCCESS){
 		res = (MID_PWR_result_e) MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measreg);
 		if (res == MID_PWR_RESULT_SUCCESS){
 			res |= MID_PwrCalculateD0(measreg.hsVolt, measreg.lsVolt);
 			if(res == MID_PWR_RESULT_SUCCESS){
-				res |= MID_PwrApplyCtrl(Iref, measreg.lsVolt, measreg.lsCurr, MID_PWR_MODE_CC, limits);
+				res |= MID_PwrApplyCtrl(I_ref, measreg.lsVolt, measreg.lsCurr, MID_PWR_MODE_CC, limits);
 			}
 		}
-		if (i== 0){
-			HAL_PwmStart();
-			// i = 1;
-		}
-		else if (i==10000) Iref=0;
-		else if (i==15000) I_ref=1500;
-		i++;
 		HAL_Delay(1);
-	}while (res == MID_PWR_RESULT_SUCCESS && i<25000);
+	}
 	HAL_PwmStop();
 	return res;
 }

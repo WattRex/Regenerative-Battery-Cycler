@@ -103,16 +103,6 @@ extern uint32_t HAL_PWM_period;
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
-/**
- * @fn MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS);
- * @brief It will update the internal variable that stores the duty percentage in which the current is 0.
- * @param V_HS Voltage measure in the high side of the EPC
- * @param V_LS Voltage measure in the low side of the EPC 
- * @return @ref MID_PWR_RESULT_SUCCESS if set correctly,
- * 		@ref MID_PWR_RESULT_BUSY, @ref MID_PWR_RESULT_TIMEOUT or
- * 		@ref MID_PWR_RESULT_ERROR otherwise.
- */
-static MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS);
 
 /**
  * @fn static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, const MID_PWR_Mode_e mode,
@@ -172,16 +162,6 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s 
 		res = SOA_over_pwr;
 	else if (power < limits.lsPwrMin)
 		res = SOA_under_pwr;
-	return res;
-}
-
-MID_PWR_result_e _calculateD0(const uint16_t V_HS, const uint16_t V_LS){
-	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	uint32_t new_d0 = V_LS * (HAL_PWM_period-1) / V_HS;
-	if (new_d0 <= (HAL_PWM_period-1) && new_d0 >= 0){
-		d0 = new_d0;
-		res = MID_PWR_RESULT_SUCCESS;
-	}
 	return res;
 }
 
@@ -263,11 +243,10 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, cons
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint16_t V_HS, const uint16_t V_LS){
+MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
 	res = (MID_PWR_result_e) HAL_GpioSet(HAL_GPIO_OUT_OutDisable, outputMode);
 	if (outputMode == MID_PWR_Enable && res == MID_PWR_RESULT_SUCCESS){
-		res |= _calculateD0(V_HS, V_LS);
 		last_error[0] = 0;
 		last_error[1] = 0;
 		last_error[2] = 0;
@@ -285,7 +264,7 @@ MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint1
 	return res;
 }
 
-MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const uint16_t V_HS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits){
+MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
 	int16_t curr_ref, actual_power;
 	int16_t new_duty;
@@ -317,13 +296,22 @@ MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const 
 			curr_ref = (int32_t)(limits.lsPwrMin*100) / V_LS;
 		}
 		// calculate current PI		
-		res |= _calculateD0(V_HS, V_LS);
 		//Ignore warning as action for current PI will be a value of duty between 0-9215
 		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &new_duty);
 		if (res == MID_PWR_RESULT_SUCCESS){
 			duty = new_duty+d0;
 			res = (MID_PWR_result_e) HAL_PwmSetDuty((uint32_t)duty);
 		}
+	}
+	return res;
+}
+
+MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS){
+	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
+	uint32_t new_d0 = V_LS * (HAL_PWM_period-1) / V_HS;
+	if (new_d0 <= (HAL_PWM_period-1) && new_d0 >= 0){
+		d0 = new_d0;
+		res = MID_PWR_RESULT_SUCCESS;
 	}
 	return res;
 }

@@ -48,7 +48,7 @@
 /**********************************************************************************/
 
 /**
- * @fn MID_PWR_result_e MID_PwrTest(MID_PWR_Mode_e mode)
+ * @fn MID_PWR_result_e MID_PwrTest(void)
  * @brief Try the different controls 
  *
  * @return
