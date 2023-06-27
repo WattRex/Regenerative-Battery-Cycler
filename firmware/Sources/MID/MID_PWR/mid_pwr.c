@@ -150,6 +150,7 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s 
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 static fp_t  last_error[3] = {0, 0, 0}; //I, V, P PI values
+static fp_t  integral[3] = {0, 0, 0}; //I, V, P PI values
 static uint16_t duty, d0 = 0; //action duty goes from 0 to 9215
 
 /**********************************************************************************/
@@ -188,16 +189,18 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, cons
 		const MID_REG_limit_s limits, int16_t * action_res){
 
 	// Get values for the specific PI 
-	fp_t upper_limit, lower_limit; //int32 because of duty
+	int16_t upper_limit, lower_limit; //int32 because of duty
 	fp_t kp,ki;
 	static fp_t fp_ref, fp_input;
 	static fp_t error;
-	static fp_t accion, proporcional, integral = 0;
+	static fp_t accion, proporcional = 0;
+	fp_t up_limit_I = 2097152000;
+	fp_t low_limit_I = -2097152000;
 
 	// set limits for saturation
 	if (mode != MID_PWR_MODE_CC){ //out for pwr or v PI is allways current
-		upper_limit = mSI_to_FP(limits.lsCurrMax) ;
-		lower_limit = mSI_to_FP(limits.lsCurrMin) ;
+		upper_limit = (limits.lsCurrMax) ;
+		lower_limit = (limits.lsCurrMin) ;
 		if (mode == MID_PWR_MODE_CV){
 			kp= EPC_CONF_PWR_KP_V;
 			ki= EPC_CONF_PWR_KI_V;
@@ -211,8 +214,8 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, cons
 			fp_input = dSI_to_FP(meas);
 		}
 	}else if (mode == MID_PWR_MODE_CC){ // for i PI actions is the Duty to apply
-		upper_limit = (HAL_PWM_period -1)*_FP_FACTOR;
-		lower_limit = 0;
+		upper_limit = (HAL_PWM_period -1)-d0;
+		lower_limit = -d0;
 		kp= EPC_CONF_PWR_KP_I;
 		ki= EPC_CONF_PWR_KI_I;
 		fp_ref = mSI_to_FP(ref);
@@ -229,24 +232,30 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, cons
 	// integral = integral + ki_I * last_error;
 	fp_t temp;
 	temp = mul_FP(ki,last_error[mode]);
-	integral = sum_FP(integral,temp);
+	integral[mode] = sum_FP(integral[mode],temp);
 
 
-    if(integral >= upper_limit){
-    	integral = upper_limit;
-    }else if(integral <= lower_limit){
-    	integral = lower_limit;
+    if(integral[mode] >= up_limit_I){
+    	integral[mode] = up_limit_I;
+    }else if(integral[mode] <= low_limit_I){
+    	integral[mode] = low_limit_I;
     }
 
     last_error[mode] = error;
-    // accion = proporcional + integral;
-    accion = sum_FP(proporcional,integral);
+    // accion = proporcional + integral[mode];
+    accion = sum_FP(proporcional,integral[mode]);
+
 
     if (mode == MID_PWR_MODE_CC){
     	*action_res = FP_to_SI(accion);
     }else{
     	*action_res = FP_to_mSI(accion);
     }
+    if(*action_res >= upper_limit){
+    	*action_res = upper_limit;
+    }else if(*action_res <= lower_limit){
+    	*action_res = lower_limit;
+        }
 	return MID_PWR_RESULT_SUCCESS;
 }
 
@@ -258,10 +267,13 @@ MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint1
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
 	res = (MID_PWR_result_e) HAL_GpioSet(HAL_GPIO_OUT_OutDisable, outputMode);
 	if (outputMode == MID_PWR_Enable && res == MID_PWR_RESULT_SUCCESS){
+		res |= _calculateD0(V_HS, V_LS);
 		last_error[0] = 0;
 		last_error[1] = 0;
 		last_error[2] = 0;
-		res |= _calculateD0(V_HS, V_LS);
+		integral[0] = 0;
+		integral[1] = 0;
+		integral[2] = 0;
 		if (res == MID_PWR_RESULT_SUCCESS){
 			res |= (MID_PWR_result_e) HAL_PwmSetDuty(d0);
 			res |= HAL_PwmStart();
@@ -273,19 +285,19 @@ MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode, const uint1
 	return res;
 }
 
-MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits){
+MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const int16_t I_LS, const uint16_t V_HS, const MID_PWR_Mode_e control_mode, const MID_REG_limit_s limits){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	int16_t curr_ref;
-	int16_t actual_power;
+	int16_t curr_ref, actual_power;
+	int16_t new_duty;
 	switch (control_mode) { //first PI, if needed (in Pwr and V refs)
 		case MID_PWR_MODE_CP:
-			actual_power = (int16_t)(((int32_t)I_LS * (int32_t)V_LS) /100); // dW
+			actual_power = (int16_t)(((int32_t)I_LS * (int32_t)V_LS)  /100000); // dW
 			res = _calculatePI(ref, actual_power, MID_PWR_MODE_CP, limits, &curr_ref);
 			break;
 		case MID_PWR_MODE_CV:
 			res = _calculatePI(ref, V_LS, MID_PWR_MODE_CV, limits, &curr_ref);
 			break;
-		case MID_PWR_MODE_CC: //not first PI needed.
+		case MID_PWR_MODE_CC: //First PI not needed.
 			curr_ref = ref;
 			res = MID_PWR_RESULT_SUCCESS;
 			break;
@@ -304,14 +316,14 @@ MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const 
 		else if (SOA_status == SOA_under_pwr){
 			curr_ref = (int32_t)(limits.lsPwrMin*100) / V_LS;
 		}
-		// calculate current PI
+		// calculate current PI		
+		res |= _calculateD0(V_HS, V_LS);
 		//Ignore warning as action for current PI will be a value of duty between 0-9215
-		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &duty);
+		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &new_duty);
 		if (res == MID_PWR_RESULT_SUCCESS){
+			duty = new_duty+d0;
 			res = (MID_PWR_result_e) HAL_PwmSetDuty((uint32_t)duty);
 		}
 	}
-
 	return res;
 }
-
