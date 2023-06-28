@@ -195,7 +195,7 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		// 4.0 Apply control actions
 		ctrl_res = APP_CtrlCheckErrors (&errorStatus, &measures, &limit);
 		if (ctrl_res != APP_CTRL_RESULT_SUCCESS){
-			//
+			// If error, set error mode and disable output.
 			consign.outStatus = MID_REG_DISABLED; 	// outStatus
 			consign.mode = MID_REG_MODE_ERROR; 	// mode
 			consign.limitType = MID_REG_LIMIT_TIME; // limitType
@@ -203,6 +203,7 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 			consign.limRef = 0;					// limRef
 			ctrl_res = APP_CtrlApplyNewMode (&consign, &control, &measures);
 		}else if (ctrl_res == APP_CTRL_RESULT_SUCCESS && control.mode==MID_REG_MODE_ERROR){
+			//If last mode was error, and have been solved enter idle mode.
 			consign.outStatus = MID_REG_DISABLED; 	// outStatus
 			consign.mode = MID_REG_MODE_IDLE; 	// mode
 			consign.limitType = MID_REG_LIMIT_TIME; // limitType
@@ -210,11 +211,13 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 			consign.limRef = 0;					// limRef
 			ctrl_res = APP_CtrlApplyNewMode (&consign, &control, &measures);
 		}else{
+			//Check if changes in consign have been made, every change will disable and enable output
 			if (consign.limRef != control.limRef || consign.limitType != control.limitType ||
 					consign.mode != control.mode || consign.modeRef != control.modeRef ||
 					consign.outStatus != control.outStatus){
 				ctrl_res = APP_CtrlApplyNewMode (&consign, &control, &measures);
 			}
+			//Update control
 			if (ctrl_res == APP_CTRL_RESULT_SUCCESS){
 				ctrl_res = APP_CtrlUpdate(&control, &measures, &limit);
 			}
