@@ -23,6 +23,16 @@
 #define EPC_CONF_MIN_EPC_PWR_DEF   -500  // dW
 #define EPC_CONF_TEMP_MAX_DEF       660  // dºC
 #define EPC_CONF_TEMP_MIN_DEF      -160  // dºC
+
+
+#define EPC_CONF_FP_N_FRAC_BITS 	16	 // Number of bits for decimals
+
+#define EPC_CONF_PWR_KP_I			567		// 0.008658
+#define EPC_CONF_PWR_KI_I			3001549 // 45.8 3001549 // 22.89  1500774
+#define EPC_CONF_PWR_KP_V			115 //0.00175 //114688 1.75
+#define EPC_CONF_PWR_KI_V			492 //0.0075 //491520 7.5 //491520000 7500
+#define EPC_CONF_PWR_KP_P			2//0.00002 //1311 0.02
+#define EPC_CONF_PWR_KI_P			7//0.0001 //6553600 100
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -44,9 +54,6 @@ extern const MID_REG_info_s EPC_CONF_info;
 extern const MID_REG_meas_property_s EPC_CONF_MEAS_max_value;
 extern const MID_REG_meas_property_s EPC_CONF_MEAS_factors;
 extern const MID_REG_meas_property_s EPC_CONF_MEAS_offset;
-extern const uint16_t EPC_CONF_PWR_kp[3];
-extern const uint16_t EPC_CONF_PWR_ki[3];
-extern const uint16_t EPC_CONF_PWR_kd[3];
 
 /**********************************************************************************/
 /*                        				HAL 									  */
@@ -72,6 +79,7 @@ extern const uint16_t EPC_CONF_PWR_kd[3];
 #define EPC_CONF_TMR_ENABLED
 //#define EPC_CONF_WDG_ENABLED
 #define EPC_CONF_CAN_ENABLED
+
 
 /**< Timeout for initialization and blocking mode transfers for I2C peripheral**/
 #define EPC_CONF_I2C_TIMEOUT 5

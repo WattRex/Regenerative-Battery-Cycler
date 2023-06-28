@@ -67,12 +67,12 @@
 /**********************************************************************************/
 
 const MID_REG_limit_s EPC_CONF_limit_range = {
-		_MAX_HS_VOLT, 	// hsVoltMax
-		_MIN_HS_VOLT,   // hsVoltMin
 		_MAX_LS_VOLT,   // lsVoltMax
 		_MIN_LS_VOLT,   // lsVoltMin
 		_MAX_LS_CURR,   // lsCurrMax
         _MIN_LS_CURR,   // lsCurrMin
+		_MAX_HS_VOLT, 	// hsVoltMax
+		_MIN_HS_VOLT,   // hsVoltMin
 		_MAX_EPC_PWR,   // lsPwrMax
         _MIN_EPC_PWR,   // lsPwrMin
 		_TEMP_MAX,      // tempMax
@@ -115,35 +115,30 @@ const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
 /** Tuple of factor and offset */
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
-    4095, 	// hsVolt
     4095,	//lsVolt
     4095,	//lsCurr
+	4095, 	// hsVolt
     4095,	//tempBody
     4095,	//tempAnod
     4095	//tempAmb
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
-	15000, 	// hsVolt max-min
 	5000,	//lsVolt max-min
 	33000,	//lsCurr max-min
 	// Despite the lsCurr is a int16 and max value is 32767, 
 	// internally will be done a cast to uint16 as the factor will allways be positive
+	15000, 	// hsVolt max-min
 	900,	//tempBody max-min
 	900,	//tempAnod max-min
 	900		//tempAmb max-min
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
-	0, 	// hsVolt
 	0,	//lsVolt
 	-16500,	//lsCurr
+	0, 	// hsVolt
 	-200,	//tempBody
 	-200,	//tempAnod
 	-200	//tempAmb
 };
-
-
-const uint16_t EPC_CONF_PWR_kp[3] = {853,3,5};
-const uint16_t EPC_CONF_PWR_ki[3] = {853,3,5};
-const uint16_t EPC_CONF_PWR_kd[3] = {853,3,5};
