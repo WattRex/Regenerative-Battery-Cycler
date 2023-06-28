@@ -10,7 +10,7 @@
 
 #include "app_salg.h"
 #include "app_iface.h"
-//#include "app_ctrl.h" // TODO: uncomment it
+#include "app_ctrl.h" // TODO: uncomment it
 
 #include "mid_reg.h"
 #include "mid_dabs.h"
@@ -20,7 +20,6 @@
 
 #include "hal_tmr.h"
 #include "hal_wdg.h"
-
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -107,6 +106,7 @@ APP_SALG_result_e InitSalgLimitRegister () {
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 #ifndef EPC_CONF_TESTING
+
 void HAL_TMR_RT_Callback(){
 //	HAL_SysResume();
 	rt_n_ints += 1;
@@ -158,14 +158,16 @@ APP_SALG_result_e APP_SalgInit(){
 	return res;
 }
 
-#include "main.h"
 APP_SALG_result_e APP_SalgStatusMachine(){
 	APP_SALG_result_e res = APP_SALG_RESULT_SUCCESS;
-//	APP_CTRL_result_e ctrl_res = APP_CTRL_RESULT_SUCCESS;
-	APP_IFACE_result_e iface_res = APP_IFACE_RESULT_SUCCESS;
+	APP_CTRL_result_e ctrl_res = APP_CTRL_RESULT_SUCCESS;
+//	APP_IFACE_result_e iface_res = APP_IFACE_RESULT_SUCCESS;
 
 	HAL_TmrStart(HAL_TMR_CLOCK_RT);
 	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
+	// Wait 2 cycles in order to have measurements in DMA
+	rt_n_ints = 0;
+	while(rt_n_ints < 2);
 	while(1){
 
 		// 9.0 Enters on sleep mode
@@ -176,8 +178,7 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 //			HAL_SysPwrMode(HAL_SYS_MODE_SLEEP);
 		}
 
-		HAL_GPIO_TogglePin(Led2_GPIO_Port, Led2_Pin);
-//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
+
 		// 1.0 Timer interrupt raised, sampling temperature measures
 		rt_int_triggered = 0;
 		pw_meas_n_ints = 0;
@@ -185,28 +186,50 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		// TODO: check return values
 
 		// 2.0 Get measures
-		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
 		res |= MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measures);
-		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
 		res |= MID_DabsUpdateMeas(MID_DABS_MEAS_TEMP, &measures);
 
 		// 3.0 Read for incoming messages
-		res |= APP_IfaceIncommingMsg(&control, &measures, &errorStatus, &limit, &consign);
+//		res |= APP_IfaceIncommingMsg(&control, &measures, &errorStatus, &limit, &consign);
 
 		// 4.0 Apply control actions
-//		ctrl_res |= APP_CtrlCheckErrors (&errorStatus, &measures, &limit);
-//		ctrl_res |= APP_CtrlApplyNewMode (&consign, &measures, &limit);
-//		ctrl_res |= APP_CtrlUpdate(&control, &measures, &limit);
+		ctrl_res = APP_CtrlCheckErrors (&errorStatus, &measures, &limit);
+		if (ctrl_res != APP_CTRL_RESULT_SUCCESS){
+			//
+			consign.outStatus = MID_REG_DISABLED; 	// outStatus
+			consign.mode = MID_REG_MODE_ERROR; 	// mode
+			consign.limitType = MID_REG_LIMIT_TIME; // limitType
+			consign.modeRef = 0;					// modeRef
+			consign.limRef = 0;					// limRef
+			ctrl_res = APP_CtrlApplyNewMode (&consign, &control, &measures);
+		}else if (ctrl_res == APP_CTRL_RESULT_SUCCESS && control.mode==MID_REG_MODE_ERROR){
+			consign.outStatus = MID_REG_DISABLED; 	// outStatus
+			consign.mode = MID_REG_MODE_IDLE; 	// mode
+			consign.limitType = MID_REG_LIMIT_TIME; // limitType
+			consign.modeRef = 0;					// modeRef
+			consign.limRef = 0;					// limRef
+			ctrl_res = APP_CtrlApplyNewMode (&consign, &control, &measures);
+		}else{
+			if (consign.limRef != control.limRef || consign.limitType != control.limitType ||
+					consign.mode != control.mode || consign.modeRef != control.modeRef ||
+					consign.outStatus != control.outStatus){
+				ctrl_res = APP_CtrlApplyNewMode (&consign, &control, &measures);
+			}
+			if (ctrl_res == APP_CTRL_RESULT_SUCCESS){
+				ctrl_res = APP_CtrlUpdate(&control, &measures, &limit);
+			}
+		}
+
+
 
 		// 5.0 Process periodic outgoing communication
-		res |= APP_IfaceProcessPeriodic(&measures, &errorStatus);
+//		res |= APP_IfaceProcessPeriodic(&measures, &errorStatus);
 
 		// 6.0 Update LEDs
 		res |= MID_DabsUpdateLeds(control.mode, measures.lsCurr, &errorStatus);
 
 		// 7.0 Notify user of status change
-		res |= APP_IfaceNotifyModeChange(&control);
-//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
+//		res |= APP_IfaceNotifyModeChange(&control);
 
 		// 8.0 Heartbeat to whatchdog
 		#ifdef EPC_CONF_WDG_ENABLED
