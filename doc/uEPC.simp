@@ -429,7 +429,7 @@
       </counter>
       <counter>
         <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlActivityDiagram</type>
-        <value>6</value>
+        <value>7</value>
       </counter>
       <counter>
         <type>SoftwareIdeasModeler.Core.Diagrams.UmlDiagrams.UmlCompositeStructureDiagram</type>
@@ -2653,6 +2653,31 @@
         <text>C</text>
       </drawing>
       <drawing-shape type="Rectangle" />
+    </item>
+    <item id="bdbbd82113f049659e40fe82937103f0" cid="PROP389" type="property" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:57:36" visibility="public">
+      <style style-name="Default" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#3A555555" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+        <text-style type="name" color="#555555" font="Segoe UI;11.25;B" />
+        <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+        <text-style type="text" color="#555555" font="Segoe UI;9.75;" horizontal-alignment="left" />
+        <text-style type="tagged-value" color="#555555" font="Segoe UI;9.75;" />
+        <text-style type="stereotype" color="#555555" font="Segoe UI;9;I" />
+        <background type="solid" colors="#F2F2F2,#F2F2F2" />
+        <border color="#555555" width="2" />
+        <label-connector color="#80000000" dash-style="Dash" />
+        <alternate-styles>
+          <alternate-style style-name="Alternate" shadow-type="smooth" shadow-offset="2,2" shadow-visible="true" shadow-color="#322A2A2A" shadow-radius="8" wrap-name-text="true" wrap-other-text="true" padding="2" margin="1" glow-color="#FFFFFF" accuracy="0.9">
+            <text-style type="name" color="#E9E9E9" font="Segoe UI;11.25;B" />
+            <text-style type="part-header" color="#1E1E1E" font="Verdana;9;I" />
+            <text-style type="text" color="#E9E9E9" font="Segoe UI;9.75;" horizontal-alignment="left" />
+            <text-style type="tagged-value" color="#E9E9E9" font="Segoe UI;9.75;" />
+            <text-style type="stereotype" color="#E9E9E9" font="Segoe UI;9;I" />
+            <background type="solid" colors="#203D85,#203D85" />
+            <border color="#203D85" width="2" />
+            <label-connector color="#80000000" dash-style="Dash" />
+          </alternate-style>
+        </alternate-styles>
+      </style>
+      <structural-feature type="MID_PWR_Mode_e" type-id="Class:di9ef15f25c1964d1195f00f1b9a1beb5f3543" />
     </item>
     <item id="didfd4252ef3134e45a9afb43a0b4e1a428572" cid="ELEM101" type="text" name="Text1" creation-date="06/14/2023 12:42:29">
       <style style-name="Custom Style" shadow-type="smooth" shadow-offset="2,2" shadow-color="#32000000" wrap-name-text="true" wrap-other-text="true" padding="1" margin="1" glow-color="#FFFFFF" accuracy="0.9">
@@ -9903,7 +9928,7 @@ led3 = 0
         </layer>
       </diagram>
     </model>
-    <model id="p432cbb400dff43a5bdbde8f0a2e6b90b_231207885" name="@Class Diagram" namespace="" order-index="2">
+    <model id="p432cbb400dff43a5bdbde8f0a2e6b90b_231207885" name="@Class Diagram" namespace="" order-index="2" expanded="true">
       <meta>
         <authors>
           <author> </author>
@@ -10689,7 +10714,7 @@ ERROR
             </layer>
           </diagram>
         </model>
-        <model id="pf66ff3767342407a9e2a838fad148cac_137268406" name="MID" namespace="" order-index="5" expanded="true">
+        <model id="pf66ff3767342407a9e2a838fad148cac_137268406" name="MID" namespace="" order-index="5">
           <meta>
             <authors>
               <author> </author>
@@ -10739,9 +10764,11 @@ ERROR
                   <attribute id="aadada5a809ec4dfeabce422f1fafcbb325" cid="PROP392" name="duty" creation-date="06/19/2023 15:01:11" property-ref="ca7faf2c56a44b739adcbfc815e95562" />
                 </attributes>
                 <operations>
-                  <operation id="o920366d80ed647fbb2975394adf80bc3305" cid="OP075" name="MID_PwrSetOutput" creation-date="06/19/2023 14:57:57" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
+                  <operation id="o920366d80ed647fbb2975394adf80bc3305" cid="OP075" name="MID_PwrSetOutput" creation-date="06/27/2023 10:55:10" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
                     <parameters>
                       <parameter id="pb0853c935c51462e8cb821ff4f4b8737" name="outputMode" type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" direction="In" />
+                      <parameter id="p3d24982091e64cd88d26ad2c2e4ce09d" name="V_HS" type="uint16_t" type-id="uint16_t" direction="In" />
+                      <parameter id="p0dbc55a33e524958bf1ca4fc5e4f1379" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
                     </parameters>
                     <source-codes>
                       <source-code language="ActionScript" />
@@ -10907,6 +10934,8 @@ ERROR
                   <operation id="o920366d80ed647fbb2975394adf80bc3305" cid="OP075" name="MID_PwrSetOutput" creation-date="06/19/2023 14:51:54" type="MID_PWR_result_e" type-id="Class:dia4225664569842f6ab18ac155466cae63004" visibility="public">
                     <parameters>
                       <parameter id="pb0853c935c51462e8cb821ff4f4b8737" name="outputMode" type="MID_PWR_Output_e" type-id="Class:difb86e7ec0954450e88cae414d79aacf55044" direction="In" />
+                      <parameter id="p3d24982091e64cd88d26ad2c2e4ce09d" name="V_HS" type="uint16_t" type-id="uint16_t" direction="In" />
+                      <parameter id="p0dbc55a33e524958bf1ca4fc5e4f1379" name="V_LS" type="uint16_t" type-id="uint16_t" direction="In" />
                     </parameters>
                     <source-codes>
                       <source-code language="ActionScript" />
@@ -11036,18 +11065,15 @@ ERROR
                   <end-role id="umlar-2ad2683e-2d0e-4651-930c-528ac1a29448" name="" navigability="" association-type="association" visibility="private" property-ref="ba024e9228b5458cafa06b186e7966d2" />
                 </relation>
               </item>
-              <item id="bdbbd82113f049659e40fe82937103f0" cid="PROP389" type="property" owner="1ca91c4283c6468497b52f10b686eae3" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/19/2023 14:57:36" visibility="public">
-                <structural-feature type="MID_PWR_Mode_e" type-id="Class:di9ef15f25c1964d1195f00f1b9a1beb5f3543" />
-              </item>
             </abstract-items>
             <layer id="202e52e9e8a7446ab23f2e1ca6040ec4" name="Default" visible="true" enabled="true" locked="false">
               <item id="f5c6733aa875481f95d9f82a02e081fe" iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:40:41" order-index="14" type="entity">
                 <layout ax="-949" ay="-421" awidth="2150" aheight="1129" x="-949" y="-421" width="2150" height="1129" expanded="-949,-421,2150,1129" collapsed="0,0,0,0" rotation-center="367,103.5" />
               </item>
               <item id="8c94a44d70a94b58a2f79f514f48e476" iid="3efe0650b0384f1781601f2f9dd33f06" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:38:18" order-index="13" type="relation">
-                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-259" y1="-93" x2="-115" y2="-179" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-259" y1="-109" x2="-115" y2="-179" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
                   <points>
-                    <point x="-259" y="-93" />
+                    <point x="-259" y="-109" />
                     <point x="-115" y="-179" />
                   </points>
                 </layout>
@@ -11068,16 +11094,16 @@ ERROR
                 <class />
               </item>
               <item id="3f68bc87bc84466895c5d2ae69e30767" iid="9acc3f8bc2b14ca98ee8a3422ee6cd26" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:37:22" order-index="10" type="relation">
-                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="-568" y1="108" x2="-568" y2="-7" start-border-pos="0.124797406807131" end-border-pos="0.625202593192869" name-position="0,20">
+                <layout line-style="oblique" lock-to-fields="false" auto-path="" x1="-571" y1="108" x2="-573" y2="-7" start-border-pos="0.123573513432878" end-border-pos="0.624444265214224" name-position="0,20">
                   <points>
-                    <point x="-568" y="108" />
-                    <point x="-568" y="-7" />
+                    <point x="-571" y="108" />
+                    <point x="-573" y="-7" />
                   </points>
                 </layout>
                 <relation from="c55a40c249be42e6b4942d3c49d7112e" from-iid="886e5bed82ad4deda8b7216ea6e7ce27" to="1ca91c4283c6468497b52f10b686eae3" to-iid="86a9c548a2f64b34b6f465045a3e6509" />
               </item>
               <item id="1ca91c4283c6468497b52f10b686eae3" iid="86a9c548a2f64b34b6f465045a3e6509" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/16/2023 09:36:53" order-index="9" type="entity">
-                <layout ax="-876" ay="-179" awidth="617" aheight="172" x="-876" y="-179" width="617" height="172" rotation-center="132.5,7" />
+                <layout ax="-889" ay="-211" awidth="630" aheight="204" x="-889" y="-211" width="630" height="204" rotation-center="139,23" />
                 <classifier />
                 <class />
               </item>
@@ -11096,18 +11122,18 @@ ERROR
                 <layout ax="396" ay="-281" awidth="250" aheight="140" x="1252" y="-281" width="250" height="130" rotation-center="-40,16" />
               </item>
               <item id="32243e608ff14bc8b52a1bb68c973a7e" iid="589b1a20eeb542f899391c04fdd8147a" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/19/2023 14:29:32" order-index="15" type="relation">
-                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-259" y1="-93" x2="203" y2="-141" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-259" y1="-109" x2="203" y2="-141" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
                   <points>
-                    <point x="-259" y="-93" />
+                    <point x="-259" y="-109" />
                     <point x="203" y="-141" />
                   </points>
                 </layout>
                 <relation from="1ca91c4283c6468497b52f10b686eae3" from-iid="86a9c548a2f64b34b6f465045a3e6509" to="dia4225664569842f6ab18ac155466cae63004" to-iid="b748d72220e04a70929695470a60c40f" />
               </item>
               <item id="268fce4373f0495187a7cb12fe8aae2d" iid="41ebdbf9050e413fbe8388c973c4a751" container="f5c6733aa875481f95d9f82a02e081fe" container-iid="e8a00f462bf7452290bc76aa125fb0a9" creation-date="06/19/2023 14:53:30" order-index="16" type="relation">
-                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-259" y1="-93" x2="521" y2="-141" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
+                <layout start-role-position="25,15" end-role-position="25,-15" start-multiplicity-position="25,-15" end-multiplicity-position="25,15" line-style="rounded-rectangular" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="-259" y1="-109" x2="521" y2="-141" start-border-pos="0.375" end-border-pos="0.625" start-local-pos="82" end-local-pos="125" name-position="0,20">
                   <points>
-                    <point x="-259" y="-93" />
+                    <point x="-259" y="-109" />
                     <point x="521" y="-141" />
                   </points>
                 </layout>
@@ -17050,7 +17076,7 @@ ERROR
           </item>
         </layer>
       </diagram>
-      <diagram type="uml-activity" id="p35e040d215144f29800e391ac53ecca7_899807238" name="APP_CTRL" order-index="0" overview-order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-596,1134" zoom="0.8">
+      <diagram type="uml-activity" id="p35e040d215144f29800e391ac53ecca7_899807238" name="APP_CTRL" order-index="0" overview-order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default" view-location="-216,-355" zoom="0.8">
         <style>
           <background-color index="1" color="#FFFFFFFF" />
           <background-color index="2" color="#FFFFFFFF" />
@@ -17323,7 +17349,7 @@ ERROR
             <action locally-reentrant="false" />
           </item>
           <item id="di0c54a85eab934f07998b424bd8b86ea22023" cid="DC040" type="decision" name="err in checks" owner="473bba9914eb42f699bd9e078a12f8ef" creation-date="06/21/2023 13:05:28" visibility="undefined" />
-          <item id="did0007e04d3194395bbe24a0beef28bb58523" cid="DC004" type="decision" name="ref &lt;= ls_V" owner="ee3faaf1ea8b44af8e2ebe9ead8eb41c" creation-date="06/20/2023 15:05:58" visibility="undefined" />
+          <item id="did0007e04d3194395bbe24a0beef28bb58523" cid="DC004" type="decision" name="ref &gt;= ls_V" owner="ee3faaf1ea8b44af8e2ebe9ead8eb41c" creation-date="06/20/2023 15:05:58" visibility="undefined" />
           <item id="dicc23184d2c3545079546150598b6e0152023" cid="IN008" type="initial-node" name="Start" owner="473bba9914eb42f699bd9e078a12f8ef" creation-date="06/21/2023 13:04:52" visibility="undefined" />
           <item id="dia1937c883b004c739f918681f0aa64de8572" cid="ELEM317" type="control-flow" owner="473bba9914eb42f699bd9e078a12f8ef" creation-date="06/21/2023 13:07:35" from="didc502580273a406fa72dd7769b7fd8ab8572" to="dia740bbc62802441f9deba4129bbc6ab48572" visibility="package">
             <control-flow guard="" />
@@ -19436,7 +19462,7 @@ ERROR
           </item>
         </layer>
       </diagram>
-      <diagram type="uml-activity" id="p6fa4264a2760466baf8e4e2f6d3f06d5_979920864" name="HAL_PWM" order-index="3" overview-order-index="5" uid="" auto-routed-paths="false" default-line-style="default" view-location="311,-546" zoom="0.6">
+      <diagram type="uml-activity" id="p6fa4264a2760466baf8e4e2f6d3f06d5_979920864" name="HAL_PWM" order-index="3" overview-order-index="5" uid="" auto-routed-paths="false" default-line-style="default" view-location="355,-630" zoom="0.6">
         <style>
           <background-color index="1" color="#FFFFFFFF" />
           <background-color index="2" color="#FFFFFFFF" />
@@ -19559,7 +19585,7 @@ ERROR
             <owned-items />
             <frame type="act" />
           </item>
-          <item id="0d3992ba735c4802a0c56dfe565fba20" cid="ELEM672" type="control-flow" name="else" owner="91fab6517fe449e3a5a7c78587ddb619" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/26/2023 15:37:10" from="di3b752528765c494c9843a4aeb546f1d64258" to="07111d17b5ec4334bc6b57b31c72a8ab" visibility="package">
+          <item id="0d3992ba735c4802a0c56dfe565fba20" cid="ELEM672" type="control-flow" name="duty&lt;MIN_PWM" owner="91fab6517fe449e3a5a7c78587ddb619" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/26/2023 15:37:10" from="di3b752528765c494c9843a4aeb546f1d64258" to="07111d17b5ec4334bc6b57b31c72a8ab" visibility="package">
             <control-flow guard="" />
           </item>
           <item id="dia9dba30e3cb442429743b2a9db222f684258" cid="ACT096" type="action" name="pwm_duty = duty" owner="91fab6517fe449e3a5a7c78587ddb619" creator="CDoZfQE0eoPT0twKUywpA6bcSVmND/ES1wvVTUIWqr7nDuuw" creation-date="06/26/2023 12:22:20" visibility="undefined">
@@ -19937,6 +19963,25 @@ ERROR
             <layout name-position="11.5,-7.586914" name-anchor="right" auto-anchor="true" label-attached="false" ax="1744.5" ay="-422" awidth="21" aheight="21" x="1622" y="-439.5" width="30.5" height="21" rotation-center="19,0" />
           </item>
         </layer>
+      </diagram>
+      <diagram type="uml-activity" id="pb42ac30d3a1740fca27d174242c38fbf_929320631" name="HAL_WDG" order-index="4" overview-order-index="6" uid="" auto-routed-paths="false" default-line-style="default">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>06/27/2023 08:08:53</creation-date>
+          <change-date>06/27/2023 08:08:53</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items />
+        <layer id="4159962d12d740ae90d711bbaeb006b2" name="Default" visible="true" enabled="true" locked="false" />
       </diagram>
     </model>
     <model id="p296df643c27d45f98cb7226a1725815b_129833474" name="@Flow Diagrams" namespace="" order-index="5">
