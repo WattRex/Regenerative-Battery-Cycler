@@ -15,7 +15,8 @@
 
 #include "mid_reg.h" 	//Import MID_REG_info to check type
 #include "epc_conf.h"
-//#include "mid_pwr.h"
+#include "mid_pwr.h"
+#include <string.h>
 /**********************************************************************************/
 /*                      Definition of imported constant data                      */
 /**********************************************************************************/
@@ -23,7 +24,6 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-#define to_dW 100000
 #define steps_to_ms 10 //10kHz to 1kHz (1ms)
 
 /**********************************************************************************/
@@ -103,7 +103,7 @@ action_e calcNewAction(const MID_REG_control_s * mode, const MID_REG_meas_proper
 			case MID_REG_MODE_CC:
 				res = (mode->modeRef >= 0) ? action_charge : action_discharge;
 			case MID_REG_MODE_CV:
-				res = (mode->modeRef <= meas->lsVolt) ? action_charge : action_discharge;
+				res = (mode->modeRef >= meas->lsVolt) ? action_charge : action_discharge;
 			case MID_REG_MODE_CP:
 				res = (mode->modeRef >= 0) ? action_charge : action_discharge;
 			default:
@@ -138,13 +138,13 @@ limit_status_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_
 		}
 	}	// power, charge
 	else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_charge){
-		int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / to_dW);
+		int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
 		if (power <= (int16_t)mode->limRef){
 			res = limit_reached;
 		}
 	}	// power, discharge
 	else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_discharge){
-		int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / to_dW);
+		int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
 		if (power >= (int16_t)mode->limRef){
 			res = limit_reached;
 		}
@@ -153,6 +153,8 @@ limit_status_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_
 		if (ctrl_time >= mode->limRef){
 			res = limit_reached;
 		}
+	}else if (ctrl_action==action_wait){
+		res = limit_not_reached;
 	}else{
 		res = limit_error;
 	}
@@ -165,7 +167,7 @@ limit_status_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 
-APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s * errors,
+APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_error_status_s * errors,
 		const MID_REG_meas_property_s * meas, const MID_REG_limit_s * limits){
 
 	APP_CTRL_result_e res = APP_CTRL_RESULT_ERROR_INT;
@@ -237,7 +239,7 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s * errors,
 
 	// Disable power conversion if any error is raised
 	if (res == APP_CTRL_RESULT_ERROR_RAISED){
-		internalRes = MID_PwrSetOutput(MID_PWR_Enable, meas->hsVolt, meas->lsVolt);
+		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_ERROR_RAISED : APP_CTRL_RESULT_ERROR_INT;
 	}else{
 		res = APP_CTRL_RESULT_SUCCESS;
@@ -249,33 +251,39 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_errorStatus_s * errors,
 APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_property_s * meas,
 		const MID_REG_limit_s * limits){
 	APP_CTRL_result_e res = APP_CTRL_RESULT_ERROR_INT;
-	MID_PWR_result_e internalRes = MID_PWR_RESULT_TIMEOUT;
-
+	MID_PWR_result_e internalRes = MID_PWR_RESULT_SUCCESS;
+//	internalRes = MID_PwrCalculateD0(meas->hsVolt, meas->lsVolt);
 	updateCtrlTime(&ctrl_time);
 	ctrl_status = checkLimit(mode, meas, ctrl_action, ctrl_time);
 
-	if (ctrl_status == limit_not_reached){
+	if (ctrl_status == limit_not_reached && internalRes == MID_PWR_RESULT_SUCCESS){
 		//check if limit is reached
 		switch(mode->mode)
 		{
 			case MID_REG_MODE_WAIT:
-				internalRes = MID_PwrSetOutput(MID_PWR_Disable, meas->hsVolt, meas->lsVolt);
+				internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+				mode->outStatus = MID_PWR_Disable;
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
+				break;
 			case MID_REG_MODE_CV:
-				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CV, limits);
+				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CV, *limits);
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
+				break;
 			case MID_REG_MODE_CC:
-				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CC, limits);
+				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CC, *limits);
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
+				break;
 			case MID_REG_MODE_CP:
-				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CP, limits);
+				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CP, *limits);
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
+				break;
 			default:
-				internalRes = MID_PwrSetOutput(MID_PWR_Disable, meas->hsVolt, meas->lsVolt);
+				internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+				mode->outStatus = MID_PWR_Disable;
 				res = APP_CTRL_RESULT_ERROR_INT;
+				break;
 		}
-
-	}else if(ctrl_status == limit_reached){
+	}else if(ctrl_status == limit_reached && internalRes == MID_PWR_RESULT_SUCCESS){
 		MID_REG_control_s newMode = {
 				MID_REG_DISABLED, 	// outStatus
 				MID_REG_MODE_IDLE, 	// mode
@@ -284,7 +292,8 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 				0					// limRef
 		};
 
-		internalRes = MID_PwrSetOutput(MID_PWR_Disable, meas->hsVolt, meas->lsVolt);
+		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+		mode->outStatus = MID_PWR_Disable;
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 
 		if (res == APP_CTRL_RESULT_SUCCESS){
@@ -292,7 +301,7 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 			ctrl_status = limit_already_reached;
 		}
 	}else if(ctrl_status == limit_already_reached){
-		//NOP
+		res = APP_CTRL_RESULT_SUCCESS;
 	}else{
 		res = APP_CTRL_RESULT_ERROR_INT;
 	}
@@ -302,17 +311,24 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 
 APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_REG_control_s * mode,
 		const MID_REG_meas_property_s * meas){
-	APP_CTRL_result_e res = APP_CTRL_RESULT_SUCCESS;
+	APP_CTRL_result_e res = APP_CTRL_RESULT_ERROR_INT;
 	MID_PWR_result_e internalRes = MID_PWR_RESULT_TIMEOUT;
+	if (newMode->outStatus == MID_REG_DISABLED){
+		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
+	}
 	ctrl_action = calcNewAction(newMode, meas);
 	ctrl_status = limit_not_reached;
 	ctrl_time = 0;
-	memcpy(newMode, mode, sizeof(mode));
+	memcpy(mode, newMode, sizeof(MID_REG_control_s));
 	//Enable PWR output for the modes that require power transfer
-	if (newMode->mode == MID_REG_MODE_CV || newMode->mode == MID_REG_MODE_CP || newMode->mode == MID_REG_MODE_CC){
-		internalRes = MID_PwrSetOutput(MID_PWR_Enable, meas->hsVolt, meas->lsVolt);
-		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
+	if ((newMode->mode == MID_REG_MODE_CV || newMode->mode == MID_REG_MODE_CP || newMode->mode == MID_REG_MODE_CC) &&
+			newMode->outStatus == MID_REG_ENABLED){
+		internalRes = MID_PwrCalculateD0(meas->hsVolt, meas->lsVolt);
+		if (internalRes == MID_PWR_RESULT_SUCCESS){
+			internalRes = MID_PwrSetOutput(MID_PWR_Enable);
+		}
 	}
+	res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 
 	return res;
 }
