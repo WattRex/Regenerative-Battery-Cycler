@@ -252,15 +252,15 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 		const MID_REG_limit_s * limits){
 	APP_CTRL_result_e res = APP_CTRL_RESULT_ERROR_INT;
 	MID_PWR_result_e internalRes = MID_PWR_RESULT_SUCCESS;
-//	internalRes = MID_PwrCalculateD0(meas->hsVolt, meas->lsVolt);
 	updateCtrlTime(&ctrl_time);
 	ctrl_status = checkLimit(mode, meas, ctrl_action, ctrl_time);
 
 	if (ctrl_status == limit_not_reached && internalRes == MID_PWR_RESULT_SUCCESS){
-		//check if limit is reached
+		//check if limit is reached, if not apply control 
 		switch(mode->mode)
 		{
 			case MID_REG_MODE_WAIT:
+				// If change output to disable change also register to disable
 				internalRes = MID_PwrSetOutput(MID_PWR_Disable);
 				mode->outStatus = MID_PWR_Disable;
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
@@ -278,12 +278,14 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 				break;
 			default:
+				// If change output to disable change also register to disable
 				internalRes = MID_PwrSetOutput(MID_PWR_Disable);
 				mode->outStatus = MID_PWR_Disable;
 				res = APP_CTRL_RESULT_ERROR_INT;
 				break;
 		}
 	}else if(ctrl_status == limit_reached && internalRes == MID_PWR_RESULT_SUCCESS){
+
 		MID_REG_control_s newMode = {
 				MID_REG_DISABLED, 	// outStatus
 				MID_REG_MODE_IDLE, 	// mode
@@ -291,16 +293,18 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 				0,					// modeRef
 				0					// limRef
 		};
-
+		//First change output
+		// If change output to disable change also register to disable
 		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
 		mode->outStatus = MID_PWR_Disable;
 		res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
-
+		//Then change the mode
 		if (res == APP_CTRL_RESULT_SUCCESS){
 			res = APP_CtrlApplyNewMode(&newMode, mode, meas);
 			ctrl_status = limit_already_reached;
 		}
 	}else if(ctrl_status == limit_already_reached){
+		//If no operation needed is success
 		res = APP_CTRL_RESULT_SUCCESS;
 	}else{
 		res = APP_CTRL_RESULT_ERROR_INT;
@@ -316,6 +320,7 @@ APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_R
 	if (newMode->outStatus == MID_REG_DISABLED){
 		internalRes = MID_PwrSetOutput(MID_PWR_Disable);
 	}
+	//ctrl_action will receive if mode is charging or discharging
 	ctrl_action = calcNewAction(newMode, meas);
 	ctrl_status = limit_not_reached;
 	ctrl_time = 0;
@@ -323,10 +328,14 @@ APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_R
 	//Enable PWR output for the modes that require power transfer
 	if ((newMode->mode == MID_REG_MODE_CV || newMode->mode == MID_REG_MODE_CP || newMode->mode == MID_REG_MODE_CC) &&
 			newMode->outStatus == MID_REG_ENABLED){
+		//Update DO when new mode is applied
 		internalRes = MID_PwrCalculateD0(meas->hsVolt, meas->lsVolt);
 		if (internalRes == MID_PWR_RESULT_SUCCESS){
 			internalRes = MID_PwrSetOutput(MID_PWR_Enable);
 		}
+	}else {
+		//If not in control mode, the output is always disabled
+		mode->outStatus == MID_REG_DISABLED;
 	}
 	res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
 
