@@ -113,9 +113,9 @@ static uint16_t getEstim(uint16_t start_sensor_idx){
 ////		i = 0;
 		meas_idx = start_sensor_idx;
 		uint16_t m1 = findMedian3(_ADC2_results[meas_idx], _ADC2_results[meas_idx + stride], _ADC2_results[meas_idx + 2*stride]);
-		meas_idx = stride;
+		meas_idx += 3*stride;
 		uint16_t m2 = findMedian3(_ADC2_results[meas_idx], _ADC2_results[meas_idx + stride], _ADC2_results[meas_idx + 2*stride]);
-		meas_idx = stride;
+		meas_idx += 3*stride;
 		uint16_t m3 = findMedian4(_ADC2_results[meas_idx], _ADC2_results[meas_idx + stride],
 				_ADC2_results[meas_idx + 2*stride], _ADC2_results[meas_idx + 3*stride]);
 
@@ -163,10 +163,8 @@ HAL_ADC_result_e HAL_AdcGetValue (const HAL_ADC_port_e port, uint16_t* value)
 	HAL_ADC_result_e res = HAL_ADC_RESULT_SUCCESS;
 	if (port <= HAL_ADC_HS_VOLT){
 		uint8_t idx = port + _idx_cplt_ADC2;
-//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
 //		*value = getPwrMedian(idx);
 		*value = getEstim(idx);
-//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
 	}else if (HAL_ADC_TEMP_ANOD <= port && port <= HAL_ADC_INT_TEMP){
 		HAL_ADC_Start(&hadc1);
 		uint8_t sensor_idx = port - HAL_ADC_TEMP_ANOD + _idx_cplt_ADC1;
