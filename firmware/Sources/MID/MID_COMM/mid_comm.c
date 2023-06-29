@@ -86,7 +86,8 @@ __weak void  MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint1
 
 MID_COMM_result_e MID_CommInit(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	res |= HAL_CanAddFilters(0x120, 0x7F0);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, 0);
+	res |= HAL_CanAddFilters(tx_id, 0x7F0);
 	return res;
 }
 
