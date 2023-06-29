@@ -32,7 +32,11 @@ extern const MID_REG_periodic_s EPC_CONF_periodic_time_min; //used to check new 
 /**********************************************************************************/
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
-
+typedef enum
+{
+	msg_error = 0x0U,
+	msg_ok,
+}msg_status_e;
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
@@ -75,13 +79,103 @@ static MID_REG_control_s prevControl;
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
-
+#ifndef EPC_CONF_TESTING
 void MID_CommCallbackControlMode(MID_REG_control_s * const data){
-	*tmp_ptr_consign = *data;
+	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
+	msg_status_e status_msg = msg_error;
+	switch (data->mode){
+		case MID_REG_MODE_CC:
+			if (data->modeRef <= tmp_ptr_limits->lsCurrMax && data->modeRef >= tmp_ptr_limits->lsCurrMin){
+				status_msg = msg_ok;
+			}
+			break;
+		case MID_REG_MODE_CV:
+			if (data->modeRef <= tmp_ptr_limits->lsVoltMax && data->modeRef >= tmp_ptr_limits->lsVoltMin){
+				status_msg = msg_ok;
+			}
+			break;
+		case MID_REG_MODE_CP:
+			if (data->modeRef <= tmp_ptr_limits->lsPwrMax && data->modeRef >= tmp_ptr_limits->lsPwrMin){
+				status_msg = msg_ok;
+			}
+			break;
+		case MID_REG_MODE_WAIT:
+			if (data->outStatus == MID_REG_DISABLED){
+				status_msg = msg_ok;
+			}
+			break;
+
+		default:
+			status_msg = msg_error;
+			break;
+
+	}
+	if (status_msg != msg_error){
+		switch (data->limitType){
+			case MID_REG_LIMIT_CURR:
+				if (data->limRef > tmp_ptr_limits->lsCurrMax){
+					data->limRef = tmp_ptr_limits->lsCurrMax;
+					status_msg = msg_error;
+				}else if (data->limRef < tmp_ptr_limits->lsCurrMin){
+					data->limRef = tmp_ptr_limits->lsCurrMin;
+					status_msg = msg_error;
+				}
+				break;
+			case MID_REG_LIMIT_VOLT:
+				if (data->limRef > tmp_ptr_limits->lsVoltMax){
+					data->limRef = tmp_ptr_limits->lsVoltMax;
+					status_msg = msg_error;
+				}else if (data->limRef < tmp_ptr_limits->lsVoltMin){
+					data->limRef = tmp_ptr_limits->lsVoltMin;
+					status_msg = msg_error;
+				}
+				break;
+			case MID_REG_LIMIT_PWR:
+				if (data->limRef > tmp_ptr_limits->lsPwrMax){
+					data->limRef = tmp_ptr_limits->lsPwrMax;
+					status_msg = msg_error;
+				}else if (data->limRef < tmp_ptr_limits->lsPwrMin){
+					data->limRef = tmp_ptr_limits->lsPwrMin;
+					status_msg = msg_error;
+				}
+				break;
+			case MID_REG_LIMIT_TIME:
+				if (data->limRef > 65535){
+					data->limRef = 65535;
+					status_msg = msg_error;
+				}else if (data->limRef < 0){
+					data->limRef = 0;
+					status_msg = msg_error;
+				}
+				break;
+		}
+	}
+	if (status_msg != msg_error){
+		*tmp_ptr_consign = *data;
+	}
+	res = MID_CommSendControlMode(tmp_ptr_consign);
+	callback_res = (res == MID_COMM_RESULT_SUCCESS && status_msg == msg_ok)
+				? MID_COMM_RESULT_SUCCESS : MID_COMM_RESULT_ERROR;
+
 }
 
 void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * data){
-	periodicConfig = *data;
+	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
+	msg_status_e status_msg = msg_ok;
+	if (data->electricMsgStatus == MID_REG_ENABLED || data->tempMsgStatus == MID_REG_ENABLED || data->usrHeartBeatStatus == MID_REG_ENABLED){
+		// If enabled, check if period is above minimum
+		if (data->electricMsgPeriod < EPC_CONF_periodic_time_min.electricMsgPeriod ||
+				data->tempMsgPeriod < EPC_CONF_periodic_time_min.tempMsgPeriod ||
+				data->usrHeartBeatPeriod < EPC_CONF_periodic_time_min.usrHeartBeatPeriod){
+			status_msg = msg_error;
+		}
+	}
+	if (status_msg == msg_ok){
+		periodicConfig = *data;
+	}
+	res = MID_CommSendPeriodic(&periodicConfig);
+	callback_res = (res == MID_COMM_RESULT_SUCCESS && status_msg == msg_ok)
+	 			? MID_COMM_RESULT_SUCCESS : MID_COMM_RESULT_ERROR;
 }
 
 void MID_CommCallbackRequest(const MID_COMM_request_e req){
@@ -89,7 +183,7 @@ void MID_CommCallbackRequest(const MID_COMM_request_e req){
 		callback_res |= MID_CommSendInfo();
 	}
 	else if (req == MID_COMM_REQUEST_CONTROL){
-		callback_res |= MID_CommSendControlMode(tmp_ptr_control);
+		callback_res |= MID_CommSendControlMode((MID_REG_control_s * const ) tmp_ptr_control);
 	}
 	else if (req == MID_COMM_REQUEST_STATUS){
 		callback_res |= MID_CommSendStatus((MID_REG_error_status_s * const ) tmp_ptr_status);
@@ -109,32 +203,51 @@ void MID_CommCallbackRequest(const MID_COMM_request_e req){
 }
 
 void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valueMin, const uint16_t valueMax){
-	if(lim_type == MID_COMM_MSG_ID_LS_VOLT_LIMIT){
-		tmp_ptr_limits->lsVoltMax = valueMax;
-		tmp_ptr_limits->lsVoltMin = valueMin;
+	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
+	msg_status_e status_msg = msg_ok;
+	uint8_t offset = (MID_COMM_REQUEST_LIMITS_LS_VOLT - MID_COMM_MSG_ID_LS_VOLT_LIMIT);
+	if ((int16_t)valueMin<valueMax){
+		if(lim_type == MID_COMM_MSG_ID_LS_VOLT_LIMIT){
+			if(valueMin >= EPC_CONF_limit_range.lsVoltMin && valueMax <= EPC_CONF_limit_range.lsVoltMax){
+				tmp_ptr_limits->lsVoltMax = valueMax;
+				tmp_ptr_limits->lsVoltMin = valueMin;
+			}
+		}
+		else if(lim_type == MID_COMM_MSG_ID_LS_CURR_LIMIT){
+			if((int16_t)valueMin >= EPC_CONF_limit_range.lsCurrMin && (int16_t)valueMax <= EPC_CONF_limit_range.lsCurrMax){
+				tmp_ptr_limits->lsCurrMax = (int16_t)valueMax;
+				tmp_ptr_limits->lsCurrMin = (int16_t)valueMin;
+			}
+		}
+		else if(lim_type == MID_COMM_MSG_ID_HS_VOLT_LIMIT){
+			if(valueMin >= EPC_CONF_limit_range.hsVoltMin && valueMax <= EPC_CONF_limit_range.hsVoltMax){
+				tmp_ptr_limits->hsVoltMax = valueMax;
+				tmp_ptr_limits->hsVoltMin = valueMin;
+			}
+		}
+		else if(lim_type == MID_COMM_MSG_ID_PWR_LIMIT){
+			if((int16_t)valueMin >= EPC_CONF_limit_range.lsPwrMin && (int16_t)valueMax <= EPC_CONF_limit_range.lsPwrMax){
+				tmp_ptr_limits->lsPwrMax = (int16_t)valueMax;
+				tmp_ptr_limits->lsPwrMin = (int16_t)valueMin;
+			}
+		}
+		else if(lim_type == MID_COMM_MSG_ID_TEMP_LIMIT){
+			if((int16_t)valueMin >= EPC_CONF_limit_range.tempMin && (int16_t)valueMax <= EPC_CONF_limit_range.tempMax){
+				tmp_ptr_limits->tempMax = (int16_t)valueMax;
+				tmp_ptr_limits->tempMin = (int16_t)valueMin;
+			}
+		}
 	}
-	else if(lim_type == MID_COMM_MSG_ID_LS_CURR_LIMIT){
-		tmp_ptr_limits->lsCurrMax = valueMax;
-		tmp_ptr_limits->lsCurrMin = valueMin;
+	else {
+		status_msg = msg_error;
 	}
-	else if(lim_type == MID_COMM_MSG_ID_HS_VOLT_LIMIT){
-		tmp_ptr_limits->hsVoltMax = valueMax;
-		tmp_ptr_limits->hsVoltMin = valueMin;
-	}
-	else if(lim_type == MID_COMM_MSG_ID_PWR_LIMIT){
-		tmp_ptr_limits->lsPwrMax = valueMax;
-		tmp_ptr_limits->lsPwrMin = valueMin;
-	}
-	else if(lim_type == MID_COMM_MSG_ID_TEMP_LIMIT){
-		tmp_ptr_limits->tempMax = valueMax;
-		tmp_ptr_limits->tempMin = valueMin;
-	}
+	res = MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
+	callback_res = (res == MID_COMM_RESULT_SUCCESS && status_msg == msg_ok)
+			? MID_COMM_RESULT_SUCCESS : MID_COMM_RESULT_ERROR;
 }
+#endif
 
-/*This register has to be initialized in run because the definition of limit ranges
- * in EPC_CONF as an struct makes it impossible for the linker to understand that in
- * EPC_CONF this memory zones are signed to the defines in this module.*/
-APP_IFACE_result_e AppIfacePeriodicRegister () {
+APP_IFACE_result_e AppIfaceInit() {
 
 	/*		APP_IFACE_periodic  	*/
 	periodicConfig.usrHeartBeatPeriod = EPC_CONF_periodic_time_min.usrHeartBeatPeriod;
@@ -143,8 +256,8 @@ APP_IFACE_result_e AppIfacePeriodicRegister () {
 	periodicConfig.usrHeartBeatStatus	= MID_REG_DISABLED;
 	periodicConfig.electricMsgStatus	= MID_REG_DISABLED;
 	periodicConfig.tempMsgStatus		= MID_REG_DISABLED;
-
-	return APP_IFACE_RESULT_SUCCESS;
+	MID_COMM_result_e res = MID_CommInit();
+	return (res == MID_COMM_RESULT_SUCCESS) ? APP_IFACE_RESULT_SUCCESS : APP_IFACE_RESULT_ERROR;
 }
 	
 APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s const *  const control,
@@ -212,7 +325,7 @@ APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas
 APP_IFACE_result_e APP_IfaceNotifyModeChange (MID_REG_control_s const * const control){
 	APP_IFACE_result_e res = APP_IFACE_RESULT_SUCCESS;
 	if(memcmp(&prevControl, control, sizeof(MID_REG_control_s)) != 0){
-		res |= MID_CommSendControlMode(control);
+		res |= MID_CommSendControlMode((MID_REG_control_s * const )control);
 		prevControl = *control;
 	}
 
