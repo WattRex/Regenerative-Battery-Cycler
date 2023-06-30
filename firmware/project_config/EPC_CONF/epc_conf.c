@@ -25,8 +25,8 @@
 #define _MIN_HS_VOLT       5300  // V
 #define _MAX_LS_VOLT       5100  // V
 #define _MIN_LS_VOLT        400  // V
-#define _MAX_LS_CURR      15500  // A
-#define _MIN_LS_CURR     -15500  // A
+#define _MAX_LS_CURR      15500  // A 
+#define _MIN_LS_CURR     -15500  // A 
 #define _MAX_EPC_PWR        800  // dW
 #define _MIN_EPC_PWR       -800  // dW
 #define _TEMP_MAX           700  // dºC
@@ -34,15 +34,15 @@
 #define _MIN_PERIOD         100  // ms
 
 /*		MSGS CONF		*/
-#define _MSG_PERIODIC_DEFAULT		0	 // Disable
-#define _USR_HEART_BEAT_PERIOD_DEF 1000  // ms
-#define _ELECTRIC_MSG_PERIOD_DEF   1000  // ms
-#define _TEMP_MSG_PERIOD_DEF       1000  // ms
+#define _MSG_PERIODIC_DEFAULT		0		// Disable
+#define _USR_HEART_BEAT_PERIOD_MIN 10  		// ms
+#define _ELECTRIC_MSG_PERIOD_MIN   10  		// ms
+#define _TEMP_MSG_PERIOD_MIN       10  		// ms
 
 /*		ID CONF		*/
-#define _ID			0x01
+#define _CAN_ID		0x10
 #define _FW_VER		0x01
-#define _HW_VER		0x01 //0x01 with i2c temp, 0x02 without i2c temp
+#define _HW_VER		0x01 // 0x01 with i2c temp, 0x02 without i2c temp
 #define _S_N		0x01
 
 
@@ -67,12 +67,12 @@
 /**********************************************************************************/
 
 const MID_REG_limit_s EPC_CONF_limit_range = {
-		_MAX_HS_VOLT, 	// hsVoltMax
-		_MIN_HS_VOLT,   // hsVoltMin
 		_MAX_LS_VOLT,   // lsVoltMax
 		_MIN_LS_VOLT,   // lsVoltMin
 		_MAX_LS_CURR,   // lsCurrMax
         _MIN_LS_CURR,   // lsCurrMin
+		_MAX_HS_VOLT, 	// hsVoltMax
+		_MIN_HS_VOLT,   // hsVoltMin
 		_MAX_EPC_PWR,   // lsPwrMax
         _MIN_EPC_PWR,   // lsPwrMin
 		_TEMP_MAX,      // tempMax
@@ -81,16 +81,16 @@ const MID_REG_limit_s EPC_CONF_limit_range = {
 
 const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 		_MSG_PERIODIC_DEFAULT,		 // usrHeartBeat Disable
-		_USR_HEART_BEAT_PERIOD_DEF,	 // usrHeartBeatPeriod
+		_USR_HEART_BEAT_PERIOD_MIN,	 // usrHeartBeatPeriod
 		_MSG_PERIODIC_DEFAULT,		 // electricMsgPeriod Disable
-		_ELECTRIC_MSG_PERIOD_DEF,	 // electricMsgPeriod
+		_ELECTRIC_MSG_PERIOD_MIN,	 // electricMsgPeriod
 		_MSG_PERIODIC_DEFAULT,		 // tempMsgPeriod Disable
-		_TEMP_MSG_PERIOD_DEF	     // tempMsgPeriod
+		_TEMP_MSG_PERIOD_MIN	     // tempMsgPeriod
 };
 
 
 const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
-		_ID,		// id
+		_CAN_ID,		// id
 		_FW_VER,	// fwVer
 		_HW_VER,	// hwVer
 		_S_N		// sn
@@ -115,35 +115,30 @@ const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
 /** Tuple of factor and offset */
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
-    4095, 	// hsVolt
     4095,	//lsVolt
     4095,	//lsCurr
+	4095, 	// hsVolt
     4095,	//tempBody
     4095,	//tempAnod
     4095	//tempAmb
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
-	15000, 	// hsVolt max-min
-	5000,	//lsVolt max-min
-	33000,	//lsCurr max-min
+	6000,	//lsVolt max-min 6000	
+	33000,	//lsCurr max-min 33000	
 	// Despite the lsCurr is a int16 and max value is 32767, 
 	// internally will be done a cast to uint16 as the factor will allways be positive
+	15000, 	// hsVolt max-min
 	900,	//tempBody max-min
 	900,	//tempAnod max-min
 	900		//tempAmb max-min
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
-	0, 	// hsVolt
 	0,	//lsVolt
-	-16500,	//lsCurr
+	-16500,	//lsCurr -16500 
+	0, 	// hsVolt
 	-200,	//tempBody
 	-200,	//tempAnod
 	-200	//tempAmb
 };
-
-
-const uint16_t EPC_CONF_PWR_kp[3] = {853,3,5};
-const uint16_t EPC_CONF_PWR_ki[3] = {853,3,5};
-const uint16_t EPC_CONF_PWR_kd[3] = {853,3,5};

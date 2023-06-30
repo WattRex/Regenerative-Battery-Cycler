@@ -1,18 +1,20 @@
 /*********************************************************************************
-* @file           : hal_pwm.h
-* @brief          : HAL header file for PWM
-***********************************************************************************/
+* @file           : app_ctrl.h
+* @brief          : APP header file for CONTROL of EPC
+**********************************************************************************/
 
-#ifndef HAL_PWM_H_
-#define HAL_PWM_H_
+#ifndef APP_CTRL_H_
+#define APP_CTRL_H_
+
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
 
+#include "mid_reg.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-#include <stdint.h>
+
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
@@ -26,22 +28,20 @@
 /**********************************************************************************/
 
 /**
- * @enum HAL_PWM_result_e
- * @brief Structure for the result of the PWM operation.
+ * @enum APP_CTRL_result_e
+ * @brief Structure for the result of the APP CTRL operations.
  */
 typedef enum
 {
-	HAL_PWM_RESULT_SUCCESS = 0x0U, /**< HAL_PWM success operation result **/
-	HAL_PWM_RESULT_ERROR, 			/**< HAL_PWM error operation result **/
-	HAL_PWM_RESULT_BUSY,			/**< HAL_PWM Busy operation result **/
-	HAL_PWM_RESULT_TIMEOUT			/**< HAL_PWM timeout operation result **/
-
-}HAL_PWM_result_e;
+	APP_CTRL_RESULT_SUCCESS 	= 0x0U, 	/**< APP_CTRL success operation result **/
+	APP_CTRL_RESULT_ERROR_RAISED	= 0x01U,	/**< APP_CTRL error found**/
+	APP_CTRL_RESULT_ERROR_INT	= 0x02U		/**< APP_CTRL error in calculus **/
+} APP_CTRL_result_e;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
-extern uint32_t HAL_PWM_period;
+
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
@@ -58,42 +58,35 @@ extern uint32_t HAL_PWM_period;
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
 
-/**
- * @fn HAL_PWM_result_e HAL_PwmInit(void)
- * @brief Configures the PWM
- * @return @ref HAL_PWM_RESULT_SUCCESS if initialize correctly,
- * @ref HAL_PWM_RESULT_ERROR otherwise.
- */
-HAL_PWM_result_e HAL_PwmInit(void);
-
 
 /**
- * @fn HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty)
- * @brief Set the pwm duty, it has to be a value between 0 and 255
- *
- * @param duty Duty of the PWM.
- * @return @ref HAL_PWM_RESULT_SUCCESS if the assignment was correctly,
- * @ref HAL_PWM_RESULT_ERROR otherwise.
+ * @fn APP_CTRL_result_e APP_CtrlCheckErrors(MID_REG_error_status_s,
+ * MID_REG_meas_property_s, MID_REG_limit_s )
+ * @brief Check if there is some value in measures above or below limits and updates
+ * the error register
+ * @return @ref APP_CTRL_RESULT_SUCCESS if no errors, APP_CTRL_RESULT_ERROR_RAISED if
+ * errors found and APP_CTRL_RESULT_ERROR_INT if any error in comparison
  */
-HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty);
-
+APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_error_status_s *, const MID_REG_meas_property_s *, const MID_REG_limit_s *);
 
 /**
- * @fn HAL_PWM_result_e HAL_PwmStart (void)
- * @brief Start the pwm output
- *
- * @return @ref HAL_PWM_RESULT_SUCCESS if the pwm has started correctly,
- * @ref HAL_PWM_RESULT_ERROR otherwise.
+ * @fn APP_CTRL_result_e APP_CtrlUpdate(MID_REG_control_s,
+ * MID_REG_meas_property_s, MID_REG_limit_s )
+ * @brief Update internal PIs and apply control to PWM. If limit is reached, stop PWM
+ * @return @ref APP_CTRL_RESULT_SUCCESS if no errors, APP_CTRL_RESULT_ERROR_INT if
+ * errors in calculus or MID_PWR results
  */
-HAL_PWM_result_e HAL_PwmStart (void);
-
+APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s *, const MID_REG_meas_property_s *, const MID_REG_limit_s *);
 
 /**
- * @fn HAL_PWM_result_e HAL_PwmStop (void)
- * @brief Stop the pwm output
- *
- * @return @ref HAL_PWM_RESULT_SUCCESS if the pwm has started correctly,
- * @ref HAL_PWM_RESULT_ERROR otherwise.
+ * @fn APP_CTRL_result_e APP_CtrlApplyNewMode(MID_REG_control_s,
+ * MID_REG_control_s)
+ * @brief Reset ctrl internal variables and set the module to apply the new control mode
+ * @return @ref APP_CTRL_RESULT_SUCCESS if no errors, APP_CTRL_RESULT_ERROR_INT if
+ * any error
  */
-HAL_PWM_result_e HAL_PwmStop (void);
-#endif /* HAL_PWM_H_ */
+APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s *, MID_REG_control_s *, const MID_REG_meas_property_s *);
+
+
+
+#endif /* APP_APP_CTRL_APP_CTRL_H_ */

@@ -177,7 +177,7 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		}
 
 		HAL_GPIO_TogglePin(Led2_GPIO_Port, Led2_Pin);
-		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
+//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
 		// 1.0 Timer interrupt raised, sampling temperature measures
 		rt_int_triggered = 0;
 		pw_meas_n_ints = 0;
@@ -185,7 +185,9 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		// TODO: check return values
 
 		// 2.0 Get measures
+		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_SET);
 		res |= MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measures);
+		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
 		res |= MID_DabsUpdateMeas(MID_DABS_MEAS_TEMP, &measures);
 
 		// 3.0 Read for incoming messages
@@ -204,7 +206,9 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 
 		// 7.0 Notify user of status change
 		res |= APP_IfaceNotifyModeChange(&control);
+
 		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
+
 
 		// 8.0 Heartbeat to whatchdog
 		#ifdef EPC_CONF_WDG_ENABLED
