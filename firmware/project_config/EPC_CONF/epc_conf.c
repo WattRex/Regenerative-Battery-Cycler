@@ -25,8 +25,8 @@
 #define _MIN_HS_VOLT       5300  // V
 #define _MAX_LS_VOLT       5100  // V
 #define _MIN_LS_VOLT        400  // V
-#define _MAX_LS_CURR      10000  // A 15500  //PRUEBAS 10000
-#define _MIN_LS_CURR     -10000  // A -15500 //PRUEBAS -10000
+#define _MAX_LS_CURR      15500  // A 
+#define _MIN_LS_CURR     -15500  // A 
 #define _MAX_EPC_PWR        800  // dW
 #define _MIN_EPC_PWR       -800  // dW
 #define _TEMP_MAX           700  // dºC
@@ -124,8 +124,8 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
-	6000,	//lsVolt max-min 6000	// PRUEBAS 5000
-	33000,	//lsCurr max-min 33000	// PRUEBAS 22000
+	6000,	//lsVolt max-min 6000	
+	33000,	//lsCurr max-min 33000	
 	// Despite the lsCurr is a int16 and max value is 32767, 
 	// internally will be done a cast to uint16 as the factor will allways be positive
 	15000, 	// hsVolt max-min
@@ -136,7 +136,7 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
 	0,	//lsVolt
-	-16500,	//lsCurr -16500 //PRUEBAS -11000
+	-16500,	//lsCurr -16500 
 	0, 	// hsVolt
 	-200,	//tempBody
 	-200,	//tempAnod
