@@ -40,7 +40,7 @@ uint32_t * max_steps;
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
-
+uint32_t HAL_PWM_period;
 /**********************************************************************************/
 /*                        Definition of imported variables                        */
 /**********************************************************************************/
@@ -71,8 +71,8 @@ HAL_PWM_result_e HAL_PwmInit(void){
 	EPC_ST_ERR_COUNTER = 0;
 	MX_HRTIM1_Init();
 	if (EPC_ST_ERR_COUNTER==0){
-		//get from hrtim the max value for the PWM counter
-		max_steps = (uint32_t*) &(hhrtim1.Instance->sTimerxRegs[0].PERxR);
+		HAL_PWM_period = (hhrtim1.Instance->sTimerxRegs[0].PERxR);
+
 		res = HAL_PWM_RESULT_SUCCESS;
 	}
 	return res;
@@ -83,22 +83,20 @@ HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
 	// Get the period of the timer, as will be the maximum value to compare
 
 	uint32_t pwm_duty;
-	if (duty>=HAL_PWM_MAX_DUTY){
-		// The maximum duty to apply is the period configured
-		pwm_duty = *max_steps -1;
+	if (duty>=HAL_PWM_period){
+		// The maximum duty to apply is the period configured -1
+		pwm_duty = HAL_PWM_period -1;
+
 	}
-	//If duty is 0 no division is allow so duty has to be greater than 0
-	else if (duty>0){
-		pwm_duty = duty * (*max_steps)/HAL_PWM_MAX_DUTY - 1; //duty * max maximum result is .9215e9 (ok in uint32)
-	}
-	else{
-		// Otherwise assigned directly to the pwm
+	//If duty between max and min values
+	else if (duty>=MIN_PWM){
 		pwm_duty = duty;
 	}
-	// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
-	if (pwm_duty < MIN_PWM){
+	else{
+		// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
 		pwm_duty = MIN_PWM;
 	}
+	
 	// Write the value to compare in the register.
 	pCompareCfg.CompareValue = pwm_duty;
 //	pCompareCfg.CompareValue = 5007;

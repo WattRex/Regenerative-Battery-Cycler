@@ -29,4 +29,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Sources</name>
+			<type>2</type>
+			<location>C:/Users/Roberto_Aldea/Documents/git/PROYECTS/EPC/Issues/Regenerative-Battery-Cycler/firmware/Sources</location>
+		</link>
+	</linkedResources>
 </projectDescription>

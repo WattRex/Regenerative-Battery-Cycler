@@ -1,16 +1,14 @@
 /*********************************************************************************
-* @file           : hal_can.c
-* @brief          : Implementation of HAL CAN
+* @file           : hal_adc_test.h
+* @brief          : HAL header file for adc test
 ***********************************************************************************/
+#ifndef HAL_ADC_TEST_H_
+#define HAL_ADC_TEST_H_
 
 /**********************************************************************************/
-/*                  Include common and project definition header                  */
+/*                               Project Includes                                 */
 /**********************************************************************************/
-
-/**********************************************************************************/
-/*                        Include headers of the component                        */
-/**********************************************************************************/
-#include "hal_can_test.h"
+#include "hal_adc.h"
 
 /**********************************************************************************/
 /*                              Include other headers                             */
@@ -25,11 +23,7 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*            Definition of local types (typedef, enum, struct, union)            */
-/**********************************************************************************/
-
-/**********************************************************************************/
-/*                         Definition of local variables                          */
+/*            Definition of exported types (typedef, enum, struct, union)         */
 /**********************************************************************************/
 
 /**********************************************************************************/
@@ -37,42 +31,33 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                      Definition of exported constant data                      */
-/**********************************************************************************/
-
-/**********************************************************************************/
-/*                    Declaration of local function prototypes                    */
-/**********************************************************************************/
-
-/**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                        Definition of exported functions    					  */
+/*                        Definition of exported variables                        */
+/**********************************************************************************/
+extern volatile uint32_t n_ints_rt;
+
+/**********************************************************************************/
+/*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
-HAL_CAN_result_e HAL_CanTest(void)
-{
-	/* Start the Transmission process */
+/**********************************************************************************/
+/*                   Declaration of exported function prototypes                  */
+/**********************************************************************************/
 
-	uint8_t data= 1, i= 1, size;
-	uint8_t dataR[8]={0,0,0,0,0,0,0,0};
-	uint32_t id;
-	HAL_CAN_result_e res;
-	res = HAL_CanAddFilters(0x130, 0x7F0);
-	res = HAL_CanTransmit(0x102, &data, 1);
-	if (res == HAL_CAN_RESULT_SUCCESS){
-		while (i<5){
-			res = HAL_CanReceive(&id, dataR, &size);
-			if (res == HAL_CAN_RESULT_SUCCESS) break;
-			HAL_Delay(1000);
-			i++;
-		}
-		if (res == HAL_CAN_RESULT_SUCCESS){
-			dataR[7]++;
-			res = HAL_CanTransmit(0x102, dataR, 8);
-		}
-	}
-	return res;
-}
+
+/**
+ * @fn HAL_TMR_result_e TestRTTmr(void)
+ * @brief Start the RT and PwrMeas timer and uses the HAL_TmrGet to get multiple samples in order
+ * to check that it works correctly. It must be incremental measures or overflow.
+ * After waits 1000ms and count the generated interrupts
+ * @note: If GPIO is used, toggle pin PA9
+ * @param Delay specifies the delay time length, in milliseconds.
+ * @return @ref HAL_TMR_RESULT_SUCCESS if test is passed,
+ * @ref HAL_TMR_RESULT_ERROR otherwise.
+ */
+HAL_ADC_result_e TestAdcs(void);
+
+#endif /* HAL_ADC_TEST_H_ */

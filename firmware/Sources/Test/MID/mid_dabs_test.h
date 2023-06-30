@@ -1,17 +1,15 @@
 /*********************************************************************************
-* @file           : hal_can.c
-* @brief          : Implementation of HAL CAN
+* @file           : mid_dabs_test.h
+* @brief          : HAL header file for MID DABS TEST
 ***********************************************************************************/
 
-/**********************************************************************************/
-/*                  Include common and project definition header                  */
-/**********************************************************************************/
+#ifndef MID_DABS_TEST_H_
+#define MID_DABS_TEST_H_
 
 /**********************************************************************************/
-/*                        Include headers of the component                        */
+/*                               Project Includes                                 */
 /**********************************************************************************/
-#include "hal_can_test.h"
-
+#include "mid_dabs.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -25,11 +23,15 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*            Definition of local types (typedef, enum, struct, union)            */
+/*            Definition of exported types (typedef, enum, struct, union)         */
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                         Definition of local variables                          */
+/*                        Definition of exported variables                        */
+/**********************************************************************************/
+
+/**********************************************************************************/
+/*                       Definition of local constant data                        */
 /**********************************************************************************/
 
 /**********************************************************************************/
@@ -39,40 +41,22 @@
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
-
 /**********************************************************************************/
-/*                    Declaration of local function prototypes                    */
-/**********************************************************************************/
-
-/**********************************************************************************/
-/*                       Definition of local constant data                        */
+/*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
 
-/**********************************************************************************/
-/*                        Definition of exported functions    					  */
-/**********************************************************************************/
 
-HAL_CAN_result_e HAL_CanTest(void)
-{
-	/* Start the Transmission process */
+MID_DABS_result_e MID_DabsTestMeas(void);
 
-	uint8_t data= 1, i= 1, size;
-	uint8_t dataR[8]={0,0,0,0,0,0,0,0};
-	uint32_t id;
-	HAL_CAN_result_e res;
-	res = HAL_CanAddFilters(0x130, 0x7F0);
-	res = HAL_CanTransmit(0x102, &data, 1);
-	if (res == HAL_CAN_RESULT_SUCCESS){
-		while (i<5){
-			res = HAL_CanReceive(&id, dataR, &size);
-			if (res == HAL_CAN_RESULT_SUCCESS) break;
-			HAL_Delay(1000);
-			i++;
-		}
-		if (res == HAL_CAN_RESULT_SUCCESS){
-			dataR[7]++;
-			res = HAL_CanTransmit(0x102, dataR, 8);
-		}
-	}
-	return res;
-}
+
+/**
+ * @fn MID_DABS_result_t MID_DabsTestLeds()
+ * @brief Try the different states of the leds depending on the mode or error encounter.
+ *
+ * @return
+ * 		@ref MID_DABS_RESULT_SUCCESS if test ends correctly,
+ * 		@ref MID_DABS_RESULT_ERROR otherwise
+ */
+MID_DABS_result_e MID_DabsTestLeds(uint8_t state);
+#endif /* MID_DABS_TEST_H_ */
+ 

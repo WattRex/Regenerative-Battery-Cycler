@@ -1,20 +1,12 @@
 /*********************************************************************************
 * @file           : epc_conf.c
 * @brief          : Definition of APP_CONF
-**********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
-***********************************************************************************/
+**********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-
+#include "mid_reg.h"
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
@@ -27,6 +19,32 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
+
+/*		LIMITS RANGE		*/
+#define _MAX_HS_VOLT      14100  // V
+#define _MIN_HS_VOLT       5300  // V
+#define _MAX_LS_VOLT       5100  // V
+#define _MIN_LS_VOLT        400  // V
+#define _MAX_LS_CURR      15500  // A 
+#define _MIN_LS_CURR     -15500  // A 
+#define _MAX_EPC_PWR        800  // dW
+#define _MIN_EPC_PWR       -800  // dW
+#define _TEMP_MAX           700  // dºC
+#define _TEMP_MIN          -200  // dºC
+#define _MIN_PERIOD         100  // ms
+
+/*		MSGS CONF		*/
+#define _MSG_PERIODIC_DEFAULT		0		// Disable
+#define _USR_HEART_BEAT_PERIOD_MIN 10  		// ms
+#define _ELECTRIC_MSG_PERIOD_MIN   10  		// ms
+#define _TEMP_MSG_PERIOD_MIN       10  		// ms
+
+/*		ID CONF		*/
+#define _CAN_ID		0x10
+#define _FW_VER		0x01
+#define _HW_VER		0x01 // 0x01 with i2c temp, 0x02 without i2c temp
+#define _S_N		0x01
+
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
@@ -48,6 +66,36 @@
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
+const MID_REG_limit_s EPC_CONF_limit_range = {
+		_MAX_LS_VOLT,   // lsVoltMax
+		_MIN_LS_VOLT,   // lsVoltMin
+		_MAX_LS_CURR,   // lsCurrMax
+        _MIN_LS_CURR,   // lsCurrMin
+		_MAX_HS_VOLT, 	// hsVoltMax
+		_MIN_HS_VOLT,   // hsVoltMin
+		_MAX_EPC_PWR,   // lsPwrMax
+        _MIN_EPC_PWR,   // lsPwrMin
+		_TEMP_MAX,      // tempMax
+        _TEMP_MIN       // tempMin
+};
+
+const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
+		_MSG_PERIODIC_DEFAULT,		 // usrHeartBeat Disable
+		_USR_HEART_BEAT_PERIOD_MIN,	 // usrHeartBeatPeriod
+		_MSG_PERIODIC_DEFAULT,		 // electricMsgPeriod Disable
+		_ELECTRIC_MSG_PERIOD_MIN,	 // electricMsgPeriod
+		_MSG_PERIODIC_DEFAULT,		 // tempMsgPeriod Disable
+		_TEMP_MSG_PERIOD_MIN	     // tempMsgPeriod
+};
+
+
+const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
+		_CAN_ID,		// id
+		_FW_VER,	// fwVer
+		_HW_VER,	// hwVer
+		_S_N		// sn
+};
+
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
@@ -65,12 +113,32 @@
 /**********************************************************************************/
 
 /** Tuple of factor and offset */
-int32_t EPC_CONF_Ls_Curr[2]     = {0, 0};
-int32_t EPC_CONF_Ls_Volt[2]     = {0, 0};
-int32_t EPC_CONF_Ls_Volt_Ext[2] = {0, 0};
-int32_t EPC_CONF_Hs_Volt[2]     = {0, 0};
-int32_t EPC_CONF_Status_3v3[2]  = {0, 0};
-int32_t EPC_CONF_Status_5v0[2]  = {0, 0};
-int32_t EPC_CONF_Ext_Tmp_1[2]   = {0, 0};
-int32_t EPC_CONF_Ext_Tmp_2[2]   = {0, 0};
-int32_t EPC_CONF_Ext_Tmp_3[2]   = {0, 0};;
+
+const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
+    4095,	//lsVolt
+    4095,	//lsCurr
+	4095, 	// hsVolt
+    4095,	//tempBody
+    4095,	//tempAnod
+    4095	//tempAmb
+};
+
+const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
+	6000,	//lsVolt max-min 6000	
+	33000,	//lsCurr max-min 33000	
+	// Despite the lsCurr is a int16 and max value is 32767, 
+	// internally will be done a cast to uint16 as the factor will allways be positive
+	15000, 	// hsVolt max-min
+	900,	//tempBody max-min
+	900,	//tempAnod max-min
+	900		//tempAmb max-min
+};
+
+const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
+	0,	//lsVolt
+	-16500,	//lsCurr -16500 
+	0, 	// hsVolt
+	-200,	//tempBody
+	-200,	//tempAnod
+	-200	//tempAmb
+};

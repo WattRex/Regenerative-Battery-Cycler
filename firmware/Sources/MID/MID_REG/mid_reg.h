@@ -3,8 +3,8 @@
 * @brief          : Definition of global registers
 ***********************************************************************************/
 
-#ifndef MID_MID_REG_MID_REG_H_
-#define MID_MID_REG_MID_REG_H_
+#ifndef MID_REG_H_
+#define MID_REG_H_
 /**********************************************************************************/
 /*                               Project Includes                                 */
 /**********************************************************************************/
@@ -83,12 +83,12 @@ typedef enum
  */
 typedef struct
 {
-	uint16_t hsVoltMax;
-	uint16_t hsVoltMin;
 	uint16_t lsVoltMax;
 	uint16_t lsVoltMin;
 	int16_t lsCurrMax;
 	int16_t lsCurrMin;
+	uint16_t hsVoltMax;
+	uint16_t hsVoltMin;
 	int16_t lsPwrMax;
 	int16_t lsPwrMin;
 	int16_t tempMax;
@@ -111,37 +111,17 @@ typedef struct
 
 
 /**
- * @struct MID_REG_periodic_period_s
- * @brief Structure for the time of periodic msgs.
- */
-typedef struct
-{
-	uint16_t usrHeartBeat;
-	uint16_t electricMsg;
-	uint16_t tempMsg;
-}MID_REG_periodic_period_s;
-
-
-/**
- * @struct MID_REG_periodic_status_s
- * @brief Structure for the periodic msgs status.
- */
-typedef struct
-{
-	MID_REG_status_e usrHeartBeat;
-	MID_REG_status_e electricMsg;
-	MID_REG_status_e tempMsg;
-}MID_REG_periodic_status_s;
-
-
-/**
  * @struct MID_REG_periodic_s
- * @brief Structure for the periodic msgs conf.
+ * @brief Structure for the periodic msgs.
  */
 typedef struct
 {
-	MID_REG_periodic_period_s period;
-	MID_REG_periodic_status_s status;
+	MID_REG_status_e usrHeartBeatStatus : 1;
+	uint16_t usrHeartBeatPeriod : 15;
+	MID_REG_status_e electricMsgStatus : 1;
+	uint16_t electricMsgPeriod : 15;
+	MID_REG_status_e tempMsgStatus : 1;
+	uint16_t tempMsgPeriod : 15;
 }MID_REG_periodic_s;
 
 
@@ -159,19 +139,19 @@ typedef struct
 
 
 /**
- * @struct MID_REG_errorStatus_s
+ * @struct MID_REG_error_status_s
  * @brief Structure to track different errors.
  */
 typedef struct
 {
-	MID_REG_error_e hsVoltErr;
-	MID_REG_error_e lsVoltErr;
-	MID_REG_error_e lsCurrErr;
-	MID_REG_error_e commErr;
-	MID_REG_error_e tempErr;
-	MID_REG_error_e intErr;
+	MID_REG_error_e hsVoltErr : 1;
+	MID_REG_error_e lsVoltErr : 1;
+	MID_REG_error_e lsCurrErr : 1;
+	MID_REG_error_e commErr : 1;
+	MID_REG_error_e tempErr : 1;
+	MID_REG_error_e intErr : 1;
 	uint16_t lastErrVal;
-}MID_REG_errorStatus_s;
+}MID_REG_error_status_s;
 
 
 /**
@@ -180,13 +160,13 @@ typedef struct
  */
 typedef struct
 {
-	uint16_t hsVolt;
 	uint16_t lsVolt;
 	int16_t lsCurr;
+	uint16_t hsVolt;
 	int16_t tempBody;
 	int16_t tempAnod;
 	int16_t tempAmb;
-}MID_REG_meas_s;
+}MID_REG_meas_property_s;
 
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
@@ -209,4 +189,4 @@ typedef struct
 /**********************************************************************************/
 
 
-#endif /* MID_MID_REG_MID_REG_H_ */
+#endif /* MID_REG_H_ */

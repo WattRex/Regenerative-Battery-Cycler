@@ -12,7 +12,7 @@
 /*                        Include headers of the component                        */
 /**********************************************************************************/
 #include "hal_pwm_test.h"
-
+#include "stm32f3xx_hal.h"
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
@@ -39,6 +39,11 @@
 /**********************************************************************************/
 
 /**********************************************************************************/
+/*                        Definition of imported variables                        */
+/**********************************************************************************/
+extern uint32_t HAL_PWM_period;
+
+/**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
 
@@ -58,7 +63,7 @@
 HAL_PWM_result_e HAL_PwmTest(void)
 {
 	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
-	uint32_t duty= 50000; // Duty at 50%
+	uint32_t duty= HAL_PWM_period/2; // Duty at 50%
 	
 	if (HAL_PwmSetDuty(duty)==HAL_PWM_RESULT_SUCCESS){
 		res = HAL_PwmStart();
@@ -67,13 +72,13 @@ HAL_PWM_result_e HAL_PwmTest(void)
 			res = HAL_PwmStop();
 			if (res == HAL_PWM_RESULT_SUCCESS){
 				HAL_Delay(2500);
-				duty = 75000; // Duty 75%
+				duty =  HAL_PWM_period *3/4; // Duty 75%
 				res = HAL_PwmSetDuty(duty);
 				if (res == HAL_PWM_RESULT_SUCCESS){
 					res =HAL_PwmStart();
 					HAL_Delay(2500);
 					if (res == HAL_PWM_RESULT_SUCCESS){
-						duty = 25000; // Duty 25%
+						duty =  HAL_PWM_period /4; // Duty 25%
 						res = HAL_PwmSetDuty(duty);
 						HAL_Delay(2500);
 						if (res == HAL_PWM_RESULT_SUCCESS){

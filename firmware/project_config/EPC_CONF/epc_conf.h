@@ -1,15 +1,7 @@
 /*********************************************************************************
 * @file           : epc_conf.h
 * @brief          : Project configuration variables
-**********************************************************************************
-* @attention
-* Research Laboratory in Fluid Dynamics and Combustion Technologies (LIFTEC)
-*   Spanish National Research Council (CSIC)
-*   c/ María de Luna 10, 50018 Zaragoza, Spain
-*
-*   All rights reserved. Distribution or duplication without previous
-*   written agreement of the owner prohibited.
-***********************************************************************************/
+**********************************************************************************/
 
 #ifndef EPC_CONF_H_
 #define EPC_CONF_H_
@@ -22,11 +14,25 @@
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-
+#include "mid_reg.h"
 /**********************************************************************************/
-/*                     Definition of local symbolic constants                     */
+/*                     Definition of exported symbolic constants                     */
 /**********************************************************************************/
+/*		DEFAULT LIMITS AT INIT		*/
+#define EPC_CONF_MAX_EPC_PWR_DEF    500  // dW
+#define EPC_CONF_MIN_EPC_PWR_DEF   -500  // dW
+#define EPC_CONF_TEMP_MAX_DEF       660  // dºC
+#define EPC_CONF_TEMP_MIN_DEF      -160  // dºC
 
+
+#define EPC_CONF_FP_N_FRAC_BITS 	16	 // Number of bits for decimals
+
+#define EPC_CONF_PWR_KP_I            567        // 0.008658
+#define EPC_CONF_PWR_KI_I            655360 	// 10
+#define EPC_CONF_PWR_KP_V            115 		// 0.00175
+#define EPC_CONF_PWR_KI_V            4920 		// 0.075073
+#define EPC_CONF_PWR_KP_P            2			// 0.000030
+#define EPC_CONF_PWR_KI_P            70			// 0.001068
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -38,33 +44,38 @@
 /**********************************************************************************/
 /*                        Definition of exported symbolic constants               */
 /**********************************************************************************/
+extern const MID_REG_periodic_s EPC_CONF_periodic_time_min;
+extern const MID_REG_limit_s EPC_CONF_limit_range;
+extern const MID_REG_info_s EPC_CONF_info;
 
 /**********************************************************************************/
 /*                        				MIDDLEWARE								  */
 /**********************************************************************************/
-/**< Conversion factors and offset for analog values **/
-extern int32_t EPC_CONF_Ls_Curr[2], EPC_CONF_Ls_Volt[2], EPC_CONF_Ls_Volt_Ext[2], EPC_CONF_Hs_Volt[2], 
-    EPC_CONF_Status_3v3[2], EPC_CONF_Status_5v0[2], EPC_CONF_Ext_Tmp_1[2], EPC_CONF_Ext_Tmp_2[2], EPC_CONF_Ext_Tmp_3[2];
+extern const MID_REG_meas_property_s EPC_CONF_MEAS_max_value;
+extern const MID_REG_meas_property_s EPC_CONF_MEAS_factors;
+extern const MID_REG_meas_property_s EPC_CONF_MEAS_offset;
 
 /**********************************************************************************/
 /*                        				HAL 									  */
 /**********************************************************************************/
 /**< Run Test instead of machine status **/
-#define EPC_CONF_TESTING
+//#define EPC_CONF_TESTING
+#ifdef EPC_CONF_TESTING
+	#define EPC_CONF_DABS_TEST
+	#define EPC_CONF_PWR_TEST
+	#define EPC_CONF_COMM_TEST
+#endif
 
 /**< Decomment to enable each HAL module **/
 #define EPC_CONF_USE_CUSTOM_HAL
 
-/**< CAN sender standard identifier **/
-#define EPC_CONF_CAN_ID 0x109
-
-//#define EPC_CONF_PWM_ENABLED
+#define EPC_CONF_PWM_ENABLED
 #define EPC_CONF_GPIO_ENABLED
-//#define EPC_CONF_ADC_DMA_ENABLED
+#define EPC_CONF_ADC_DMA_ENABLED
 //#define EPC_CONF_STS_ENABLED
 #define EPC_CONF_TMR_ENABLED
 //#define EPC_CONF_WDG_ENABLED
-//#define EPC_CONF_CAN_ENABLED
+#define EPC_CONF_CAN_ENABLED
 
 
 /**< Timeout for initialization and blocking mode transfers for I2C peripheral**/

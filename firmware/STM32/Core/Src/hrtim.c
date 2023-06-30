@@ -74,10 +74,10 @@ void MX_HRTIM1_Init(void)
   pTimerCfg.StartOnSync = HRTIM_SYNCSTART_DISABLED;
   pTimerCfg.ResetOnSync = HRTIM_SYNCRESET_DISABLED;
   pTimerCfg.DACSynchro = HRTIM_DACSYNC_NONE;
-  pTimerCfg.PreloadEnable = HRTIM_PRELOAD_DISABLED;
+  pTimerCfg.PreloadEnable = HRTIM_PRELOAD_ENABLED;
   pTimerCfg.UpdateGating = HRTIM_UPDATEGATING_INDEPENDENT;
   pTimerCfg.BurstMode = HRTIM_TIMERBURSTMODE_MAINTAINCLOCK;
-  pTimerCfg.RepetitionUpdate = HRTIM_UPDATEONREPETITION_DISABLED;
+  pTimerCfg.RepetitionUpdate = HRTIM_UPDATEONREPETITION_ENABLED;
   pTimerCfg.PushPull = HRTIM_TIMPUSHPULLMODE_DISABLED;
   pTimerCfg.FaultEnable = HRTIM_TIMFAULTENABLE_NONE;
   pTimerCfg.FaultLock = HRTIM_TIMFAULTLOCK_READWRITE;
@@ -95,7 +95,7 @@ void MX_HRTIM1_Init(void)
   {
     Error_Handler();
   }
-  pOutputCfg.Polarity = HRTIM_OUTPUTPOLARITY_HIGH;
+  pOutputCfg.Polarity = HRTIM_OUTPUTPOLARITY_LOW;
   pOutputCfg.SetSource = HRTIM_OUTPUTSET_TIMCMP1;
   pOutputCfg.ResetSource = HRTIM_OUTPUTRESET_TIMPER;
   pOutputCfg.IdleMode = HRTIM_OUTPUTIDLEMODE_NONE;
