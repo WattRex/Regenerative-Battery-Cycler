@@ -23,7 +23,6 @@
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
 
-#define MIN_PWM 96
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -89,12 +88,12 @@ HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
 
 	}
 	//If duty between max and min values
-	else if (duty>=MIN_PWM){
+	else if (duty>=HAL_PWM_MIN_PWM){
 		pwm_duty = duty;
 	}
 	else{
 		// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
-		pwm_duty = MIN_PWM;
+		pwm_duty = HAL_PWM_MIN_PWM;
 	}
 	
 	// Write the value to compare in the register.
