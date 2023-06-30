@@ -194,8 +194,8 @@ static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, cons
 			fp_input = dSI_to_FP(meas);
 		}
 	}else if (mode == MID_PWR_MODE_CC){ // for i PI actions is the Duty to apply
-		upper_limit = (HAL_PWM_period -1)-d0;
-		lower_limit = -d0;
+		upper_limit = (HAL_PWM_period -1);
+		lower_limit = HAL_PWM_MIN_PWM;
 		kp= EPC_CONF_PWR_KP_I;
 		ki= EPC_CONF_PWR_KI_I;
 		fp_ref = mSI_to_FP(ref);
@@ -250,7 +250,7 @@ MID_PWR_result_e MID_PwrSetOutput(const MID_PWR_Output_e outputMode){
 		last_error[0] = 0;
 		last_error[1] = 0;
 		last_error[2] = 0;
-		integral[0] = 0;
+		integral[0] = d0 * _FP_FACTOR;
 		integral[1] = 0;
 		integral[2] = 0;
 		if (res == MID_PWR_RESULT_SUCCESS){
@@ -299,7 +299,7 @@ MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const 
 		//Ignore warning as action for current PI will be a value of duty between 0-9215
 		res = _calculatePI(curr_ref, I_LS, MID_PWR_MODE_CC, limits, &new_duty);
 		if (res == MID_PWR_RESULT_SUCCESS){
-			duty = new_duty+d0;
+			duty = new_duty;
 			res = (MID_PWR_result_e) HAL_PwmSetDuty((uint32_t)duty);
 		}
 	}
@@ -308,7 +308,7 @@ MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const 
 
 MID_PWR_result_e MID_PwrCalculateD0(const uint16_t V_HS, const uint16_t V_LS){
 	MID_PWR_result_e res = MID_PWR_RESULT_ERROR;
-	uint32_t new_d0 = V_LS * (HAL_PWM_period-1) / V_HS;
+	uint32_t new_d0 = (V_LS * ((HAL_PWM_period-1)-HAL_PWM_MIN_PWM)) / V_HS;
 	if (new_d0 <= (HAL_PWM_period-1) && new_d0 >= 0){
 		d0 = new_d0;
 		res = MID_PWR_RESULT_SUCCESS;
