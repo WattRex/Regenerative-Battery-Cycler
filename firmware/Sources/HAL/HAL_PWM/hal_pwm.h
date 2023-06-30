@@ -16,6 +16,8 @@
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
+#define HAL_PWM_MIN_PWM 96 
+/* This value depends on the prescaler of the HRTIM, go to documentation for more info */ 
 
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
