@@ -124,7 +124,7 @@ HAL_TMR_result_e HAL_TmrGet (const HAL_TMR_clock_e clock, uint16_t *value){
 
 HAL_TMR_result_e HAL_TmrDelay(const HAL_TMR_clock_e clock, const uint16_t delay){
 	HAL_TMR_result_e res = HAL_TMR_RESULT_SUCCESS;
-	if(clock == HAL_TMR_CLOCK_COUNT){
+	if(clock < HAL_TMR_CLOCK_COUNT){
 		uint16_t tickStart, tickNow, diff, wait;
 		res |= HAL_TmrGet(clock, &tickStart);
 		if(res == HAL_TMR_RESULT_SUCCESS){

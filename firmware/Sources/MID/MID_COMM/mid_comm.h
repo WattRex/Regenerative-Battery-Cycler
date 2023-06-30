@@ -63,21 +63,24 @@ typedef enum
 /**
  * @enum MID_COMM_result_e
  * @brief Structure for the result of the CAN operation.
+ * TODO: @roberto eliminar el MID_COMM_REQUEST y cambiar por este
  */
 typedef enum
 {
-	MID_COMM_MSG_ID_MODE				= 0x00U,			/**< **/
-	MID_COMM_MSG_ID_REQ					= 0x01U,			/**< **/
-	MID_COMM_MSG_ID_LS_VOLT_LIMIT		= 0x02U,			/**< **/
-	MID_COMM_MSG_ID_LS_CURR_LIMIT		= 0x03U,			/**< **/
-	MID_COMM_MSG_ID_HS_VOLT_LIMIT		= 0x04U,			/**< **/
-	MID_COMM_MSG_ID_PWR_LIMIT			= 0x05U,			/**< **/
-	MID_COMM_MSG_ID_TEMP_LIMIT			= 0x06U,			/**< **/
-	MID_COMM_MSG_ID_PERIODIC			= 0x07U,			/**< **/
-	MID_COMM_MSG_ID_INFO 				= 0x0AU,			/**< **/
-	MID_COMM_MSG_ID_STATUS				= 0x0BU,			/**< **/
-	MID_COMM_MSG_ID_ELECT_MEAS			= 0x0CU,			/**< **/
-	MID_COMM_MSG_ID_TEMP_MEAS			= 0x0DU,			/**< **/
+
+	MID_COMM_MSG_ID_MODE				= 0x00U,			/**< MID_COMM Message ID to send control mode register **/
+	MID_COMM_MSG_ID_REQ					= 0x01U,			/**< MID_COMM Message ID to send info register **/
+	MID_COMM_MSG_ID_LS_VOLT_LIMIT		= 0x02U,			/**< MID_COMM Message ID to send actual LS VOLT limits **/
+	MID_COMM_MSG_ID_LS_CURR_LIMIT		= 0x03U,			/**< MID_COMM Message ID to send actual LS CURR limits **/
+	MID_COMM_MSG_ID_HS_VOLT_LIMIT		= 0x04U,			/**< MID_COMM Message ID to send actual HS VOLT limits **/
+	MID_COMM_MSG_ID_PWR_LIMIT			= 0x05U,			/**< MID_COMM Message ID to send actual LS PWR limits **/
+	MID_COMM_MSG_ID_TEMP_LIMIT			= 0x06U,			/**< MID_COMM Message ID to send actual TEMP limits **/
+	MID_COMM_MSG_ID_PERIODIC			= 0x07U,			/**< MID_COMM Message ID to send info register **/
+	MID_COMM_MSG_ID_INFO 				= 0x0AU,			/**< MID_COMM Message ID to send info register **/
+	MID_COMM_MSG_ID_STATUS				= 0x0BU,			/**< MID_COMM Message ID to send error status register **/
+	MID_COMM_MSG_ID_ELECT_MEAS			= 0x0CU,			/**< MID_COMM Message ID to send electrical measurements register **/
+	MID_COMM_MSG_ID_TEMP_MEAS			= 0x0DU,			/**< MID_COMM Message ID to send temperatures measurements register **/
+
 } MID_COMM_msg_id_e;
 
 
@@ -106,7 +109,7 @@ typedef enum
  *
  * @param data Pointer to the data received
  */
-void MID_CommCallbackControlMode(MID_REG_control_s * const data);
+void MID_CommCallbackControlMode(MID_REG_control_s const * const data);
 
 /**
  * @fn void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * data)
@@ -114,7 +117,7 @@ void MID_CommCallbackControlMode(MID_REG_control_s * const data);
  *
  * @param data Pointer to the data received
  */
-void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * data);
+void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s const * const data);
 
 /**
  * @fn void MID_CommCallbackRequest(const MID_COMM_request_e req)
@@ -168,7 +171,7 @@ MID_COMM_result_e MID_CommProcessIncommingData(void);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_limit_s * const limits);
+MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_limit_s const * const limits);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendInfo(void)
@@ -193,7 +196,7 @@ MID_COMM_result_e MID_CommSendInfo(void);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s * const meas);
+MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s const * const meas);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas)
@@ -207,7 +210,7 @@ MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s * const meas);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas);
+MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s const * const meas);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendStatus ( MID_REG_errorStatus_s * const status)
@@ -223,7 +226,7 @@ MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status);
+MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s const * const status);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const status)
@@ -237,7 +240,7 @@ MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const status);
+MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s const * const status);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic)
@@ -250,6 +253,6 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const status);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendPeriodic (MID_REG_periodic_s * periodic);
+MID_COMM_result_e MID_CommSendPeriodic (MID_REG_periodic_s const * const periodic);
 
 #endif /* MID_COMM_H_ */ 

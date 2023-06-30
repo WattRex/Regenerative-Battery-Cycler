@@ -206,7 +206,9 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 
 		// 7.0 Notify user of status change
 		res |= APP_IfaceNotifyModeChange(&control);
-//		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
+
+		HAL_GPIO_WritePin(Led3_GPIO_Port, Led3_Pin, GPIO_PIN_RESET);
+
 
 		// 8.0 Heartbeat to whatchdog
 		#ifdef EPC_CONF_WDG_ENABLED

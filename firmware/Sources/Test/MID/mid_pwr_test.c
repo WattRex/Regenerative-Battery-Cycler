@@ -1,23 +1,24 @@
 /*********************************************************************************
-* @file           : hal_pwm.c
-* @brief          : Implementation of HAL PWM
+* @file           : mid_pwr_test.c
+* @brief          : Implementation of MID PWR TEST
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "stm32f3xx_hal.h"
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
 /**********************************************************************************/
+#include "mid_pwr_test.h"
+#include "mid_dabs_test.h"
+#include "hal_tmr.h"
 #include "hal_pwm.h"
-#include "hrtim.h"
-#include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
+#include "stm32f3xx_hal.h"
+
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-#include <stdint.h>
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
@@ -34,17 +35,12 @@
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-static HRTIM_CompareCfgTypeDef pCompareCfg = {0};
-uint32_t * max_steps;
+static int16_t I_ref = 1000;
+static MID_REG_meas_property_s measreg = {0,0,0,0,0,0};
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
-uint32_t HAL_PWM_period;
-/**********************************************************************************/
-/*                        Definition of imported variables                        */
-/**********************************************************************************/
-extern HRTIM_HandleTypeDef hhrtim1;
-extern uint8_t EPC_ST_ERR_COUNTER;
+
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
 /**********************************************************************************/
@@ -64,57 +60,30 @@ extern uint8_t EPC_ST_ERR_COUNTER;
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
-
-HAL_PWM_result_e HAL_PwmInit(void){
-	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
-	EPC_ST_ERR_COUNTER = 0;
-	MX_HRTIM1_Init();
-	if (EPC_ST_ERR_COUNTER==0){
-		HAL_PWM_period = (hhrtim1.Instance->sTimerxRegs[0].PERxR);
-
-		res = HAL_PWM_RESULT_SUCCESS;
+MID_PWR_result_e MID_PwrTest(void){
+	MID_PWR_result_e res = MID_PWR_RESULT_SUCCESS;
+	HAL_PwmStop();
+	//Set up limits HS_Volt 8V-5.3V LS_Volt 5.1V-0.4V LS_Curr +-2A
+	//				Power +-510DW  Temp 660 , -160
+	MID_REG_limit_s limits = {8000,5300,5100,400,2000,-2000,510,-510,660,-160};
+	res = MID_PwrSetOutput(MID_PWR_Disable);
+	HAL_TmrStart(HAL_TMR_CLOCK_PWR_MEAS);
+	HAL_TmrStart(HAL_TMR_CLOCK_RT);
+	//Delay of 5ms in order to be able to measure correctly
+	HAL_Delay(5);
+	res = (MID_PWR_result_e) MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measreg);
+	res |= MID_PwrCalculateD0(measreg.hsVolt,measreg.lsVolt);
+	res |= MID_PwrSetOutput(MID_PWR_Enable);
+	while (res == MID_PWR_RESULT_SUCCESS){
+		res = (MID_PWR_result_e) MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measreg);
+		if (res == MID_PWR_RESULT_SUCCESS){
+			res |= MID_PwrCalculateD0(measreg.hsVolt, measreg.lsVolt);
+			if(res == MID_PWR_RESULT_SUCCESS){
+				res |= MID_PwrApplyCtrl(I_ref, measreg.lsVolt, measreg.lsCurr, MID_PWR_MODE_CC, limits);
+			}
+		}
+		HAL_Delay(1);
 	}
-	return res;
-}
-
-
-HAL_PWM_result_e HAL_PwmSetDuty(const uint32_t duty){
-	// Get the period of the timer, as will be the maximum value to compare
-
-	uint32_t pwm_duty;
-	if (duty>=HAL_PWM_period){
-		// The maximum duty to apply is the period configured -1
-		pwm_duty = HAL_PWM_period -1;
-
-	}
-	//If duty between max and min values
-	else if (duty>=HAL_PWM_MIN_PWM){
-		pwm_duty = duty;
-	}
-	else{
-		// Minimum duty to apply to the pwm is 96 by hardware with the actual configuration.
-		pwm_duty = HAL_PWM_MIN_PWM;
-	}
-	
-	// Write the value to compare in the register.
-	pCompareCfg.CompareValue = pwm_duty;
-//	pCompareCfg.CompareValue = 5007;
-	// Apply the compare configuration to the dessire timer unit in this case HRTIM-A1
-	HAL_PWM_result_e res = HAL_HRTIM_WaveformCompareConfig(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_1, &pCompareCfg);;
-	return res;
-}
-
-HAL_PWM_result_e HAL_PwmStart (void){
-
-	HAL_PWM_result_e res = HAL_PWM_RESULT_ERROR;
-	res = HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_A);
-	if (res == HAL_PWM_RESULT_SUCCESS){
-		res = HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TA1);
-	}
-	return res;
-}
-
-HAL_PWM_result_e HAL_PwmStop (void){
-	HAL_PWM_result_e res = HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TA1);
+	HAL_PwmStop();
 	return res;
 }
