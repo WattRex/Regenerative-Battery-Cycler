@@ -167,7 +167,9 @@ MID_COMM_result_e recvData(void){
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 #ifdef EPC_CONF_COMM_TEST
+
 void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
+
 	recvCtrl += 1;
 	rx_ctrl = *data;
 	MID_CommSendControlMode(&rx_ctrl);
@@ -228,6 +230,7 @@ void  MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s const * const  dat
 	MID_CommSendPeriodic(&rx_periodic);
 }
 #endif
+
 MID_COMM_result_e MID_CommTest(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	MID_CommInit();

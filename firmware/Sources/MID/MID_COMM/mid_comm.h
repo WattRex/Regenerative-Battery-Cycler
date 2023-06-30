@@ -63,9 +63,11 @@ typedef enum
 /**
  * @enum MID_COMM_result_e
  * @brief Structure for the result of the CAN operation.
+ * TODO: @roberto eliminar el MID_COMM_REQUEST y cambiar por este
  */
 typedef enum
 {
+
 	MID_COMM_MSG_ID_MODE				= 0x00U,			/**< MID_COMM Message ID to send control mode register **/
 	MID_COMM_MSG_ID_REQ					= 0x01U,			/**< MID_COMM Message ID to send info register **/
 	MID_COMM_MSG_ID_LS_VOLT_LIMIT		= 0x02U,			/**< MID_COMM Message ID to send actual LS VOLT limits **/
@@ -78,6 +80,7 @@ typedef enum
 	MID_COMM_MSG_ID_STATUS				= 0x0BU,			/**< MID_COMM Message ID to send error status register **/
 	MID_COMM_MSG_ID_ELECT_MEAS			= 0x0CU,			/**< MID_COMM Message ID to send electrical measurements register **/
 	MID_COMM_MSG_ID_TEMP_MEAS			= 0x0DU,			/**< MID_COMM Message ID to send temperatures measurements register **/
+
 } MID_COMM_msg_id_e;
 
 
