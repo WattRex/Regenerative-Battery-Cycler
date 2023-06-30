@@ -63,10 +63,11 @@ typedef enum
 /**
  * @enum MID_COMM_result_e
  * @brief Structure for the result of the CAN operation.
+ * TODO: @roberto eliminar el MID_COMM_REQUEST y cambiar por este
  */
 typedef enum
 {
-	MID_COMM_MSG_ID_MODE				= 0x00U,			/**< **/
+	MID_COMM_MSG_ID_MODE				= 0x00U,			/**< @roberto comentar esto **/
 	MID_COMM_MSG_ID_REQ					= 0x01U,			/**< **/
 	MID_COMM_MSG_ID_LS_VOLT_LIMIT		= 0x02U,			/**< **/
 	MID_COMM_MSG_ID_LS_CURR_LIMIT		= 0x03U,			/**< **/
@@ -237,7 +238,7 @@ MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const status);
+MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s const * const status);
 
 /**
  * @fn MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic)
@@ -250,6 +251,6 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const status);
  * MID_COMM_RESULT_TIMEOUT if the CAN_TIMEOUT timeout has expired and
  * MID_COMM_RESULT_ERROR otherwise
  */
-MID_COMM_result_e MID_CommSendPeriodic (MID_REG_periodic_s * periodic);
+MID_COMM_result_e MID_CommSendPeriodic (MID_REG_periodic_s const * const periodic);
 
 #endif /* MID_COMM_H_ */ 
