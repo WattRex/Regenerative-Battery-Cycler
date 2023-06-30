@@ -80,102 +80,80 @@ static MID_REG_control_s prevControl;
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
 #ifndef EPC_CONF_TESTING
-void MID_CommCallbackControlMode(MID_REG_control_s * const data){
-	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	msg_status_e status_msg = msg_error;
+void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
+//	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
+//	msg_status_e status_msg = msg_error;
 	switch (data->mode){
 		case MID_REG_MODE_CC:
-			if (data->modeRef <= tmp_ptr_limits->lsCurrMax && data->modeRef >= tmp_ptr_limits->lsCurrMin){
-				status_msg = msg_ok;
+			if (data->modeRef > tmp_ptr_limits->lsCurrMax || data->modeRef < tmp_ptr_limits->lsCurrMin){
+				callback_res = MID_COMM_RESULT_ERROR;
 			}
 			break;
 		case MID_REG_MODE_CV:
-			if (data->modeRef <= tmp_ptr_limits->lsVoltMax && data->modeRef >= tmp_ptr_limits->lsVoltMin){
-				status_msg = msg_ok;
+			if (data->modeRef > tmp_ptr_limits->lsVoltMax || data->modeRef < tmp_ptr_limits->lsVoltMin){
+				callback_res = MID_COMM_RESULT_ERROR;
 			}
 			break;
 		case MID_REG_MODE_CP:
-			if (data->modeRef <= tmp_ptr_limits->lsPwrMax && data->modeRef >= tmp_ptr_limits->lsPwrMin){
-				status_msg = msg_ok;
+			if (data->modeRef > tmp_ptr_limits->lsPwrMax || data->modeRef < tmp_ptr_limits->lsPwrMin){
+				callback_res = MID_COMM_RESULT_ERROR;
 			}
 			break;
 		case MID_REG_MODE_WAIT:
-			if (data->outStatus == MID_REG_DISABLED){
-				status_msg = msg_ok;
+			if (data->outStatus != MID_REG_DISABLED){
+				callback_res = MID_COMM_RESULT_ERROR;
 			}
 			break;
 
 		default:
-			status_msg = msg_error;
+			callback_res = MID_COMM_RESULT_ERROR;
 			break;
 
 	}
-	if (status_msg != msg_error){
+	if (callback_res == MID_COMM_RESULT_ERROR){
 		switch (data->limitType){
 			case MID_REG_LIMIT_CURR:
-				if (data->limRef > tmp_ptr_limits->lsCurrMax){
-					data->limRef = tmp_ptr_limits->lsCurrMax;
-					status_msg = msg_error;
-				}else if (data->limRef < tmp_ptr_limits->lsCurrMin){
-					data->limRef = tmp_ptr_limits->lsCurrMin;
-					status_msg = msg_error;
+				if (data->limRef > tmp_ptr_limits->lsCurrMax || data->limRef < tmp_ptr_limits->lsCurrMin){
+					callback_res = MID_COMM_RESULT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_VOLT:
-				if (data->limRef > tmp_ptr_limits->lsVoltMax){
-					data->limRef = tmp_ptr_limits->lsVoltMax;
-					status_msg = msg_error;
-				}else if (data->limRef < tmp_ptr_limits->lsVoltMin){
-					data->limRef = tmp_ptr_limits->lsVoltMin;
-					status_msg = msg_error;
+				if (data->limRef > tmp_ptr_limits->lsVoltMax || data->limRef < tmp_ptr_limits->lsVoltMin){
+					callback_res = MID_COMM_RESULT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_PWR:
-				if (data->limRef > tmp_ptr_limits->lsPwrMax){
-					data->limRef = tmp_ptr_limits->lsPwrMax;
-					status_msg = msg_error;
-				}else if (data->limRef < tmp_ptr_limits->lsPwrMin){
-					data->limRef = tmp_ptr_limits->lsPwrMin;
-					status_msg = msg_error;
+				if (data->limRef > tmp_ptr_limits->lsPwrMax || data->limRef < tmp_ptr_limits->lsPwrMin){
+					callback_res = MID_COMM_RESULT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_TIME:
-				if (data->limRef > 65535){
-					data->limRef = 65535;
-					status_msg = msg_error;
-				}else if (data->limRef < 0){
-					data->limRef = 0;
-					status_msg = msg_error;
+				if (data->limRef > 65535 || data->limRef < 0){
+					callback_res = MID_COMM_RESULT_ERROR;
 				}
 				break;
 		}
 	}
-	if (status_msg != msg_error){
+	if (callback_res != MID_COMM_RESULT_ERROR){
 		*tmp_ptr_consign = *data;
 	}
-	res = MID_CommSendControlMode(tmp_ptr_consign);
-	callback_res = (res == MID_COMM_RESULT_SUCCESS && status_msg == msg_ok)
-				? MID_COMM_RESULT_SUCCESS : MID_COMM_RESULT_ERROR;
+	callback_res |= MID_CommSendControlMode(tmp_ptr_consign);
 
 }
 
-void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * data){
-	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	msg_status_e status_msg = msg_ok;
+void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s const * const data){
 	if (data->electricMsgStatus == MID_REG_ENABLED || data->tempMsgStatus == MID_REG_ENABLED || data->usrHeartBeatStatus == MID_REG_ENABLED){
 		// If enabled, check if period is above minimum
 		if (data->electricMsgPeriod < EPC_CONF_periodic_time_min.electricMsgPeriod ||
 				data->tempMsgPeriod < EPC_CONF_periodic_time_min.tempMsgPeriod ||
 				data->usrHeartBeatPeriod < EPC_CONF_periodic_time_min.usrHeartBeatPeriod){
-			status_msg = msg_error;
+			callback_res = MID_COMM_RESULT_ERROR;
 		}
 	}
-	if (status_msg == msg_ok){
+	if (callback_res != MID_COMM_RESULT_ERROR){
 		periodicConfig = *data;
 	}
-	res = MID_CommSendPeriodic(&periodicConfig);
-	callback_res = (res == MID_COMM_RESULT_SUCCESS && status_msg == msg_ok)
-	 			? MID_COMM_RESULT_SUCCESS : MID_COMM_RESULT_ERROR;
+	callback_res |= MID_CommSendPeriodic(&periodicConfig);
 }
 
 void MID_CommCallbackRequest(const MID_COMM_request_e req){
@@ -203,8 +181,6 @@ void MID_CommCallbackRequest(const MID_COMM_request_e req){
 }
 
 void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valueMin, const uint16_t valueMax){
-	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	msg_status_e status_msg = msg_ok;
 	uint8_t offset = (MID_COMM_REQUEST_LIMITS_LS_VOLT - MID_COMM_MSG_ID_LS_VOLT_LIMIT);
 	if ((int16_t)valueMin<valueMax){
 		if(lim_type == MID_COMM_MSG_ID_LS_VOLT_LIMIT){
@@ -239,11 +215,9 @@ void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valu
 		}
 	}
 	else {
-		status_msg = msg_error;
+		callback_res = MID_COMM_RESULT_ERROR;
 	}
-	res = MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
-	callback_res = (res == MID_COMM_RESULT_SUCCESS && status_msg == msg_ok)
-			? MID_COMM_RESULT_SUCCESS : MID_COMM_RESULT_ERROR;
+	callback_res |= MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
 }
 #endif
 
