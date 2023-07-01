@@ -157,7 +157,7 @@ extern uint32_t HAL_PWM_period;
 
 static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s limits){
 	SOA_e res = SOA_ok;
-	int16_t power = (int16_t)(((int32_t)I * (int32_t)V) /100000); // 10^-3(mW) *10^-3 (mW) / 10^-5 -> dW
+	int16_t power = (int16_t)(((int32_t)I * (int32_t)V) /MID_PWR_TO_dW); // 10^-3(mW) *10^-3 (mW) / 10^-5 -> dW
 	if (power > limits.lsPwrMax)
 		res = SOA_over_pwr;
 	else if (power < limits.lsPwrMin)
@@ -270,7 +270,7 @@ MID_PWR_result_e MID_PwrApplyCtrl(const int16_t ref, const uint16_t V_LS, const 
 	int16_t new_duty;
 	switch (control_mode) { //first PI, if needed (in Pwr and V refs)
 		case MID_PWR_MODE_CP:
-			actual_power = (int16_t)(((int32_t)I_LS * (int32_t)V_LS)  /100000); // dW
+			actual_power = (int16_t)(((int32_t)I_LS * (int32_t)V_LS)  /MID_PWR_TO_dW); // dW
 			res = _calculatePI(ref, actual_power, MID_PWR_MODE_CP, limits, &curr_ref);
 			break;
 		case MID_PWR_MODE_CV:
