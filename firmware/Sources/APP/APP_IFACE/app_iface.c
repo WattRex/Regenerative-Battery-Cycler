@@ -256,7 +256,7 @@ APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s const *  const contro
 	MID_REG_meas_property_s const * const meas, MID_REG_error_status_s * const status,
 	MID_REG_limit_s * limits, MID_REG_control_s *consign){
 	APP_IFACE_result_e res = APP_IFACE_RESULT_SUCCESS;
-	MID_COMM_result_e mid_res;
+	MID_COMM_result_e mid_res = MID_COMM_RESULT_SUCCESS;
 
 	// Set global variables
 	tmp_ptr_control = control; tmp_ptr_meas = meas; tmp_ptr_status = status;
