@@ -115,17 +115,22 @@ void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
 				}
 				break;
 			case MID_REG_LIMIT_VOLT:
-				if (data->limRef > tmp_ptr_limits->lsVoltMax || data->limRef < tmp_ptr_limits->lsVoltMin){
+				if (data->limRef > tmp_ptr_limits->lsVoltMax || data->limRef < tmp_ptr_limits->lsVoltMin||
+						data->mode == MID_REG_MODE_CV ){
 					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_PWR:
-				if (data->limRef > tmp_ptr_limits->lsPwrMax || data->limRef < tmp_ptr_limits->lsPwrMin){
+				if (data->limRef > tmp_ptr_limits->lsPwrMax || data->limRef < tmp_ptr_limits->lsPwrMin||
+						data->mode == MID_REG_MODE_CP ){
 					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_TIME:
 				//NOP
+//				if (data->limRef >= ){
+//					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
+//				}
 				break;
 			default:
 				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
