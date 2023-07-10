@@ -101,32 +101,32 @@ const blink_conf_s ccDchgMode = {
 							0x08 			//0b00001000
 							}
 };
-const blink_conf_s cvChgMode = {
-	blink_mode_cv_chg, 5, 	{0x0F,			//0b00001111
+const blink_conf_s cvDchgMode = {
+	blink_mode_cv_dchg, 5, 	{0x0F,			//0b00001111
 							0x0E,			//0b00001110
 							0x0D,			//0b00001101
 							0x0B,			//0b00001011
 							0x07 			//0b00000111
 							}
 };
-const blink_conf_s cvDchgMode = {
-	blink_mode_cv_dchg, 5,	{0x0F,			//0b00001111
+const blink_conf_s cvChgMode = {
+	blink_mode_cv_chg, 5,	{0x0F,			//0b00001111
 							0x07,			//0b00000111
 							0x0B,			//0b00001011
 							0x0D,			//0b00001101
 							0x0E 			//0b00001110
 							}
 };
-const blink_conf_s cpChgMode = {
-	blink_mode_cp_chg, 5,	{0x00,			//0b00000000
+const blink_conf_s cpDchgMode = {
+	blink_mode_cp_dchg, 5,	{0x00,			//0b00000000
 							0x01,			//0b00000001
 							0x03,			//0b00000011
 							0x07,			//0b00000111
 							0x0F 			//0b00001111
 							}
 };
-const blink_conf_s cpDchgMode = {
-	blink_mode_cp_dchg, 5,	{0x00,			//0b00000000
+const blink_conf_s cpChgMode = {
+	blink_mode_cp_chg, 5,	{0x00,			//0b00000000
 							0x08,			//0b00001000
 							0x0C,			//0b00001100
 							0x0E,			//0b00001110
@@ -274,11 +274,10 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
 	uint8_t state = ledsMode.mode.ledsStep[step];
 	uint8_t mask= 0x1;
-	// TODO: uncomment it
-//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
-//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
-//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
-//	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led0, state & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led1, (state>>1) & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led2, (state>>2) & mask);
+	res |= (MID_DABS_result_e) HAL_GpioSet(HAL_GPIO_OUT_Led3, (state>>3) & mask);
 	return res;
 }
 
@@ -338,17 +337,21 @@ MID_DABS_result_e MID_DabsUpdateLeds(MID_REG_mode_e ctrlMode,
 	res = CheckBlinkStatus(ctrlMode, curr, errors, &inputMode);
 	if (res == MID_DABS_RESULT_SUCCESS){
 		if (ledsMode.prevMode.mode == inputMode.mode){
-			ledsMode.step++;
-			ledsMode.step = ledsMode.step % ledsMode.mode.steps;
+			if(ledsMode.mode.steps != 1){
+				ledsMode.step++;
+				ledsMode.step = ledsMode.step % ledsMode.mode.steps;
+			}
 		}
 		else{
 			ledsMode.mode = inputMode;
 			ledsMode.step = 0;
-		}
-		if(ledsMode.mode.steps != 1){
 			res = SetLeds(ledsMode.step);
 			ledsMode.prevMode = ledsMode.mode;
-		}		
+		}
+		if (ledsMode.mode.steps != 1){
+			res = SetLeds(ledsMode.step);
+			ledsMode.prevMode = ledsMode.mode;
+		}
 	}
 	return res;
 }
