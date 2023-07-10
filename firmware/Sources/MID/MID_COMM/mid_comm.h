@@ -36,8 +36,9 @@ typedef enum
 	MID_COMM_RESULT_SUCCESS 			= 0x00U,	/**< MID_COMM success operation result **/
 	MID_COMM_RESULT_ERROR   			= 0x01U,	/**< MID_COMM error operation result **/
 	MID_COMM_RESULT_BUSY				= 0x02U,	/**< MID_COMM busy operation result **/
-	MID_COMM_RESULT_TIMEOUT				= 0x03U,	/**< MID_COMM timeout operation result **/
-	MID_COMM_RESULT_NO_MESSAGES			= 0x04U		/**< MID_COMM no messages to read from can **/
+	MID_COMM_RESULT_NO_MESSAGES			= 0x03U,	/**< MID_COMM no messages to read from can **/
+	MID_COMM_RESULT_TIMEOUT				= 0x04U,	/**< MID_COMM timeout operation result **/
+	MID_COMM_RESULT_FORMAT_ERROR		= 0x05U,	/**< MID_COMM error format message **/
 }MID_COMM_result_e;
 
 /**
