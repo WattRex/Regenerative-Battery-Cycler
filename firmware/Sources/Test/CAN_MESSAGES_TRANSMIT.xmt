@@ -1,4 +1,4 @@
-; C:\Users\Roberto_Aldea\Documents\git\PROYECTS\EPC\TEST\Regenerative-Battery-Cycler\firmware\Sources\Test\CAN_MESSAGES_TRANSMIT.xmt
+; C:\Users\Roberto_Aldea\Documents\git\PROYECTS\EPC\Issues\Regenerative-Battery-Cycler\firmware\Sources\Test\CAN_MESSAGES_TRANSMIT.xmt
 ;   CAN messages saved by PCAN-View v5.0.5.871
 ;
 ; Columns descriptions:
@@ -11,12 +11,12 @@
 ; |            |  |  |  |
 001h           0  1  D 01h ; Not received
 002h           0  8  D 00h 01h 02h 03h 04h 05h 06h 07h ; Not received
-100h           0  8  D 25h 00h E8h 03h B8h 0Bh 00h 00h ; Mode configuration ok enable mode cc 1A limCur 3A
+100h           0  8  D 13h 00h A0h 0Fh 88h 13h 00h 00h ; Mode configuration error mode same as limit
 100h           0  8  D 20h 00h E8h 03h B8h 0Bh 00h 00h ; Mode configuration ok disable mode wait 1A limCur 3A
-100h           0  8  D 13h 00h A0h 0Fh 88h 13h 00h 00h ; Mode configuration ok enable mode CV 4V  limV 5V
-100h           0  8  D 37h 00h 38h FFh D4h FEh FFh FFh ; Mode configuration ok enable mode CP -2W limPWR -3W
-100h           0  8  D 33h 00h A0h 0Fh 38h FFh FFh FFh ; Mode configuration ok enable mode CV 4V  limPWR -20W
+100h           0  8  D 15h 00h E8h 03h E0h 13h 00h 00h ; Mode configuration ok enable mode cc 1A limV 5.1V
 100h           0  8  D 2Eh 00h E8h 03h A0h 0Fh 00h 00h ; Mode Configuration error in mode>3
+100h           0  8  D 33h 00h A0h 0Fh 38h FFh FFh FFh ; Mode configuration ok enable mode CV 4V  limPWR -20W
+100h           0  8  D 27h 00h 3Ch FFh F0h D8h FFh FFh ; Mode configuration ok enable mode CP -20W limCur -10A
 101h           0  1  D 00h ; Request info ok
 101h           0  1  D FFh ; Request error
 102h           0  4  D 07h D0h 13h 88h ; error changing limits ls_volt min>max
