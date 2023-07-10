@@ -174,15 +174,6 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 	//Reset number of cycles
 	rt_n_ints = 0;
 	led_rt_n_ints = 0;
-//	while(1){
-//		while(rt_int_triggered == 0);
-//		rt_int_triggered = 0;
-//		rt_n_ints = rt_n_ints % HYPERPERIOD;
-//		if (rt_n_ints == 3){
-////			HAL_GPIO_TogglePin(Led3_GPIO_Port, Led3_Pin);
-//			res = MID_DabsUpdateLeds(control.mode, measures.lsCurr, &errorStatus);
-//		}
-//	}
 
 	while(1){
 
