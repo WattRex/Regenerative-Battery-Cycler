@@ -128,7 +128,7 @@ void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
 				break;
 			case MID_REG_LIMIT_TIME:
 				//NOP
-//				if (data->limRef >= ){
+//				if (data->limRef >= 1){
 //					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 //				}
 				break;
@@ -302,7 +302,7 @@ APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas
 			mid_res |= MID_CommSendElectMeas(meas);
 		}
 	}
-	else if(periodicConfig.tempMsgStatus){
+	if(periodicConfig.tempMsgStatus){
 		periodicCounter.tempMsgPeriod += 1;
 		if(periodicCounter.tempMsgPeriod >= periodicConfig.tempMsgPeriod){
 			periodicCounter.tempMsgPeriod = 0;
