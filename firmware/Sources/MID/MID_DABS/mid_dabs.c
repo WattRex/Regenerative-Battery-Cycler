@@ -79,10 +79,11 @@ const blink_conf_s idleMode = {
 						}
 };
 const blink_conf_s waitMode = {
-	blink_mode_wait, 3,	{0x00,				//0b00000000
+	blink_mode_wait, 3,	{0x0A, 				//0b00001010
 						0x0A, 				//0b00001010
 						0x05, 				//0b00000101
-						0x00,0x00			//0b00000000
+						0x05, 				//0b00000101
+						0x00				//0b00000000
 						}
 };
 const blink_conf_s ccChgMode = {
