@@ -28,8 +28,9 @@ extern const MID_REG_limit_s EPC_CONF_limit_range;
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
 /**********************************************************************************/
-#define HYPERPERIOD 10
-#define HYPERLEDS 1500
+#define HYPERPERIOD 100 // 10ms
+#define HYPERLEDS 1500	// 150ms
+#define HYPERTEMP 10000	// 1s
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
