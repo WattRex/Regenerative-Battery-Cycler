@@ -130,15 +130,15 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 	// internally will be done a cast to uint16 as the factor will allways be positive
 	15000, 	// hsVolt max-min
 	900,	//tempBody max-min (Range -20ºC to +70ºC)
-	900,	//tempAnod max-min (Range -20ºC to +70ºC)
-	900		//tempAmb max-min  (Range -20ºC to +70ºC)
+	-900,	//tempAnod max-min (Range -20ºC(3.3V) to +70ºC(0V))
+	-900	//tempAmb max-min  (Range -20ºC(3.3V) to +70ºC(0V))
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
 	0,		//lsVolt
-	-16000,	//lsCurr -16500
+	-16000,	//lsCurr 
 	0, 		// hsVolt
 	-200,	//tempBody
-	-200,	//tempAnod
-	-200	//tempAmb
+	700,	//tempAnod
+	700	//tempAmb
 };

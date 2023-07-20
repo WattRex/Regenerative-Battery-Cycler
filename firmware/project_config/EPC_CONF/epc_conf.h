@@ -72,9 +72,9 @@ extern const MID_REG_meas_property_s EPC_CONF_MEAS_offset;
 #define EPC_CONF_PWM_ENABLED
 #define EPC_CONF_GPIO_ENABLED
 #define EPC_CONF_ADC_DMA_ENABLED
-//#define EPC_CONF_STS_ENABLED
+#define EPC_CONF_STS_ENABLED
 #define EPC_CONF_TMR_ENABLED
-//#define EPC_CONF_WDG_ENABLED
+#define EPC_CONF_WDG_ENABLED
 #define EPC_CONF_CAN_ENABLED
 
 
