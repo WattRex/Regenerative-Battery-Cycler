@@ -79,11 +79,11 @@ const blink_conf_s idleMode = {
 						}
 };
 const blink_conf_s waitMode = {
-	blink_mode_wait, 3,	{0x0A, 				//0b00001010
+	blink_mode_wait, 4,	{0x0A,				//0b00001010
 						0x0A, 				//0b00001010
 						0x05, 				//0b00000101
 						0x05, 				//0b00000101
-						0x00				//0b00000000
+						0x00			//0b00000000
 						}
 };
 const blink_conf_s ccChgMode = {
@@ -134,15 +134,15 @@ const blink_conf_s cpChgMode = {
 							0x0F 			//0b00001111
 							}
 };
-const blink_conf_s errHsvoltMode = {
-	blink_mode_err_hsvolt, 1,	{0x01,		//0b00000001
+const blink_conf_s errlsvoltMode = {
+	blink_mode_err_lsvolt, 1,	{0x01,		//0b00000001
 								0x00,		//0b00000000
 								0x00,		//0b00000000
 								0x00,		//0b00000000
 								0x00}
 };
-const blink_conf_s errlsvoltMode = {
-	blink_mode_err_lsvolt, 1,	{0x08,		//0b00001000
+const blink_conf_s errhsvoltMode = {
+	blink_mode_err_hsvolt, 1,	{0x08,		//0b00001000
 								0x00,0x00,	//0b00000000
 								0x00,0x00	//0b00000000
 								}
@@ -212,7 +212,7 @@ static MID_DABS_result_e CheckBlinkStatus(MID_REG_mode_e epcmode, int16_t lscurr
 			*mode = errIntMode;
 		}
 		else if (errors->hsVoltErr !=MID_REG_ERROR_NONE){
-			*mode = errHsvoltMode;
+			*mode = errhsvoltMode;
 		}
 		else if (errors->commErr !=MID_REG_ERROR_NONE){
 			*mode = errCommMode;
