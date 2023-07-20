@@ -42,7 +42,7 @@ extern const MID_REG_limit_s EPC_CONF_limit_range;
 /*                         Definition of local variables                          */
 /**********************************************************************************/
 volatile uint8_t rt_n_ints = 0, rt_int_triggered = 0, pw_meas_n_ints = 0;
-volatile uint16_t led_rt_n_ints = 0;
+volatile uint16_t led_rt_n_ints = 0, temp_rt_n_ints = 0;
 
 MID_REG_limit_s limit = { 0 };
 MID_REG_control_s consign = {
@@ -113,6 +113,7 @@ void HAL_TMR_RT_Callback(){
 //	HAL_SysResume();
 	rt_n_ints += 1;
 	led_rt_n_ints +=1;
+	temp_rt_n_ints +=1;
 	rt_int_triggered = 1;
 }
 
@@ -174,7 +175,6 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 	//Reset number of cycles
 	rt_n_ints = 0;
 	led_rt_n_ints = 0;
-
 	while(1){
 
 
@@ -189,6 +189,7 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		// 1.0 Timer interrupt raised, sampling temperature measures
 		rt_n_ints = rt_n_ints % HYPERPERIOD;
 		led_rt_n_ints = led_rt_n_ints % HYPERLEDS;
+		temp_rt_n_ints = temp_rt_n_ints % HYPERTEMP;
 		rt_int_triggered = 0;
 		pw_meas_n_ints = 0;
 
@@ -196,7 +197,10 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 
 		// 2.0 Get measures
 		res = MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measures);
-		res = MID_DabsUpdateMeas(MID_DABS_MEAS_TEMP, &measures);
+		// Update temperature measurements every 1s
+		if (temp_rt_n_ints == 0){
+			res = MID_DabsUpdateMeas(MID_DABS_MEAS_TEMP, &measures);
+		}
 		//If Measurements go wrong
 		// 3.0 Apply control actions
 		ctrl_res = APP_CtrlCheckErrors (&errorStatus, &measures, &limit);
