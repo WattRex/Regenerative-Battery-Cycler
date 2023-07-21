@@ -32,11 +32,7 @@ extern const MID_REG_periodic_s EPC_CONF_periodic_time_min; //used to check new 
 /**********************************************************************************/
 /*            Definition of local types (typedef, enum, struct, union)            */
 /**********************************************************************************/
-typedef enum
-{
-	msg_error = 0x0U,
-	msg_ok,
-}msg_status_e;
+
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
@@ -81,60 +77,67 @@ static MID_REG_control_s prevControl;
 /**********************************************************************************/
 #ifndef EPC_CONF_TESTING
 void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
-//	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-//	msg_status_e status_msg = msg_error;
 	switch (data->mode){
 		case MID_REG_MODE_CC:
 			if (data->modeRef > tmp_ptr_limits->lsCurrMax || data->modeRef < tmp_ptr_limits->lsCurrMin){
-				callback_res = MID_COMM_RESULT_ERROR;
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			}
 			break;
 		case MID_REG_MODE_CV:
 			if (data->modeRef > tmp_ptr_limits->lsVoltMax || data->modeRef < tmp_ptr_limits->lsVoltMin){
-				callback_res = MID_COMM_RESULT_ERROR;
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			}
 			break;
 		case MID_REG_MODE_CP:
 			if (data->modeRef > tmp_ptr_limits->lsPwrMax || data->modeRef < tmp_ptr_limits->lsPwrMin){
-				callback_res = MID_COMM_RESULT_ERROR;
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			}
 			break;
 		case MID_REG_MODE_WAIT:
 			if (data->outStatus != MID_REG_DISABLED){
-				callback_res = MID_COMM_RESULT_ERROR;
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			}
 			break;
-
+		case MID_REG_MODE_IDLE:
+			//NOP
+			break;
 		default:
-			callback_res = MID_COMM_RESULT_ERROR;
+			callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			break;
 
 	}
-	if (callback_res == MID_COMM_RESULT_ERROR){
+	if (callback_res == MID_COMM_RESULT_SUCCESS){
 		switch (data->limitType){
 			case MID_REG_LIMIT_CURR:
-				if (data->limRef > tmp_ptr_limits->lsCurrMax || data->limRef < tmp_ptr_limits->lsCurrMin){
-					callback_res = MID_COMM_RESULT_ERROR;
+				if (data->limRef > tmp_ptr_limits->lsCurrMax || data->limRef < tmp_ptr_limits->lsCurrMin ||
+						data->mode == MID_REG_MODE_CC ){ //|| tmp_ptr_meas->lsVolt
+					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_VOLT:
-				if (data->limRef > tmp_ptr_limits->lsVoltMax || data->limRef < tmp_ptr_limits->lsVoltMin){
-					callback_res = MID_COMM_RESULT_ERROR;
+				if (data->limRef > tmp_ptr_limits->lsVoltMax || data->limRef < tmp_ptr_limits->lsVoltMin||
+						data->mode == MID_REG_MODE_CV ){
+					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_PWR:
-				if (data->limRef > tmp_ptr_limits->lsPwrMax || data->limRef < tmp_ptr_limits->lsPwrMin){
-					callback_res = MID_COMM_RESULT_ERROR;
+				if (data->limRef > tmp_ptr_limits->lsPwrMax || data->limRef < tmp_ptr_limits->lsPwrMin||
+						data->mode == MID_REG_MODE_CP ){
+					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 				}
 				break;
 			case MID_REG_LIMIT_TIME:
-				if (data->limRef > 65535 || data->limRef < 0){
-					callback_res = MID_COMM_RESULT_ERROR;
-				}
+				//NOP
+//				if (data->limRef >= 1){
+//					callback_res = MID_COMM_RESULT_FORMAT_ERROR;
+//				}
+				break;
+			default:
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 				break;
 		}
 	}
-	if (callback_res != MID_COMM_RESULT_ERROR){
+	if (callback_res == MID_COMM_RESULT_SUCCESS){
 		*tmp_ptr_consign = *data;
 	}
 	callback_res |= MID_CommSendControlMode(tmp_ptr_consign);
@@ -150,33 +153,33 @@ void MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s const * const data)
 			callback_res = MID_COMM_RESULT_ERROR;
 		}
 	}
-	if (callback_res != MID_COMM_RESULT_ERROR){
+	if (callback_res == MID_COMM_RESULT_SUCCESS){
 		periodicConfig = *data;
 	}
-	callback_res |= MID_CommSendPeriodic(&periodicConfig);
+	callback_res = MID_CommSendPeriodic(&periodicConfig);
 }
 
 void MID_CommCallbackRequest(const MID_COMM_request_e req){
 	if(req == MID_COMM_REQUEST_INFO){
-		callback_res |= MID_CommSendInfo();
+		callback_res = MID_CommSendInfo();
 	}
 	else if (req == MID_COMM_REQUEST_CONTROL){
-		callback_res |= MID_CommSendControlMode((MID_REG_control_s * const ) tmp_ptr_control);
+		callback_res = MID_CommSendControlMode((MID_REG_control_s * const ) tmp_ptr_control);
 	}
 	else if (req == MID_COMM_REQUEST_STATUS){
-		callback_res |= MID_CommSendStatus((MID_REG_error_status_s * const ) tmp_ptr_status);
+		callback_res = MID_CommSendStatus((MID_REG_error_status_s * const ) tmp_ptr_status);
 	}
 	else if (req == MID_COMM_REQUEST_ELECT_MEAS){
-		callback_res |= MID_CommSendElectMeas((MID_REG_meas_property_s * const ) tmp_ptr_meas);
+		callback_res = MID_CommSendElectMeas((MID_REG_meas_property_s * const ) tmp_ptr_meas);
 	}
 	else if (req == MID_COMM_REQUEST_TEMP_MEAS){
-		callback_res |= MID_CommSendTempMeas((MID_REG_meas_property_s * const ) tmp_ptr_meas);
+		callback_res = MID_CommSendTempMeas((MID_REG_meas_property_s * const ) tmp_ptr_meas);
 	}
 	else if (req == MID_COMM_REQUEST_HEARTBEAT){
 		periodicCounter.usrHeartBeatPeriod = 0;
 	}
 	else{
-		callback_res = MID_COMM_RESULT_ERROR;
+		callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 	}
 }
 
@@ -188,11 +191,17 @@ void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valu
 				tmp_ptr_limits->lsVoltMax = valueMax;
 				tmp_ptr_limits->lsVoltMin = valueMin;
 			}
+			else{
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
+			}
 		}
 		else if(lim_type == MID_COMM_MSG_ID_LS_CURR_LIMIT){
 			if((int16_t)valueMin >= EPC_CONF_limit_range.lsCurrMin && (int16_t)valueMax <= EPC_CONF_limit_range.lsCurrMax){
 				tmp_ptr_limits->lsCurrMax = (int16_t)valueMax;
 				tmp_ptr_limits->lsCurrMin = (int16_t)valueMin;
+			}
+			else{
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			}
 		}
 		else if(lim_type == MID_COMM_MSG_ID_HS_VOLT_LIMIT){
@@ -200,11 +209,17 @@ void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valu
 				tmp_ptr_limits->hsVoltMax = valueMax;
 				tmp_ptr_limits->hsVoltMin = valueMin;
 			}
+			else{
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
+			}
 		}
 		else if(lim_type == MID_COMM_MSG_ID_PWR_LIMIT){
 			if((int16_t)valueMin >= EPC_CONF_limit_range.lsPwrMin && (int16_t)valueMax <= EPC_CONF_limit_range.lsPwrMax){
 				tmp_ptr_limits->lsPwrMax = (int16_t)valueMax;
 				tmp_ptr_limits->lsPwrMin = (int16_t)valueMin;
+			}
+			else{
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 			}
 		}
 		else if(lim_type == MID_COMM_MSG_ID_TEMP_LIMIT){
@@ -212,12 +227,15 @@ void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valu
 				tmp_ptr_limits->tempMax = (int16_t)valueMax;
 				tmp_ptr_limits->tempMin = (int16_t)valueMin;
 			}
+			else{
+				callback_res = MID_COMM_RESULT_FORMAT_ERROR;
+			}
 		}
 	}
 	else {
-		callback_res = MID_COMM_RESULT_ERROR;
+		callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 	}
-	callback_res |= MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
+	callback_res = MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
 }
 #endif
 
@@ -238,28 +256,37 @@ APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s const *  const contro
 	MID_REG_meas_property_s const * const meas, MID_REG_error_status_s * const status,
 	MID_REG_limit_s * limits, MID_REG_control_s *consign){
 	APP_IFACE_result_e res = APP_IFACE_RESULT_SUCCESS;
-	MID_COMM_result_e mid_res;
+	MID_COMM_result_e mid_res = MID_COMM_RESULT_SUCCESS;
 
 	// Set global variables
 	tmp_ptr_control = control; tmp_ptr_meas = meas; tmp_ptr_status = status;
 	tmp_ptr_limits = limits; tmp_ptr_consign = consign;
 	callback_res = MID_COMM_RESULT_SUCCESS;
 	periodicCounter.usrHeartBeatPeriod += 1;
-
-	mid_res = MID_CommProcessIncommingData();
-	mid_res |= callback_res;
-	if (mid_res == MID_COMM_RESULT_NO_MESSAGES || mid_res == MID_COMM_RESULT_SUCCESS){
-		res = APP_IFACE_RESULT_SUCCESS;
-	}else {
-		status->commErr = MID_REG_ERROR_RAISED;
-		status->lastErrVal = mid_res;
-		res = APP_IFACE_RESULT_ERROR;
+	if (tmp_ptr_status->hsVoltErr == MID_REG_ERROR_NONE &&
+			tmp_ptr_status->lsCurrErr == MID_REG_ERROR_NONE &&
+			tmp_ptr_status->lsVoltErr == MID_REG_ERROR_NONE &&
+			tmp_ptr_status->tempErr == MID_REG_ERROR_NONE){
+		mid_res = MID_CommProcessIncommingData();
+		mid_res |= callback_res;
+		if (mid_res == MID_COMM_RESULT_NO_MESSAGES || mid_res == MID_COMM_RESULT_SUCCESS){
+			res = APP_IFACE_RESULT_SUCCESS;
+			if (status->commErr == MID_REG_ERROR_RAISED && mid_res == MID_COMM_RESULT_SUCCESS){
+				status->commErr = MID_REG_ERROR_NONE;
+			}
+		}else if (mid_res == MID_COMM_RESULT_FORMAT_ERROR){
+			res = APP_IFACE_RESULT_SUCCESS;
+		}else{
+			status->commErr = MID_REG_ERROR_RAISED;
+			status->lastErrVal = mid_res;
+			res = APP_IFACE_RESULT_ERROR;
+		}
 	}
 	if(periodicConfig.usrHeartBeatStatus == MID_REG_ENABLED && periodicCounter.usrHeartBeatPeriod >= periodicConfig.usrHeartBeatPeriod){
 		status->commErr = MID_REG_ERROR_RAISED;
 		status->lastErrVal = periodicCounter.usrHeartBeatPeriod;
+		res = APP_IFACE_RESULT_ERROR;
 	}
-
 	return res;
 }
 
@@ -275,7 +302,7 @@ APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas
 			mid_res |= MID_CommSendElectMeas(meas);
 		}
 	}
-	else if(periodicConfig.tempMsgStatus){
+	if(periodicConfig.tempMsgStatus){
 		periodicCounter.tempMsgPeriod += 1;
 		if(periodicCounter.tempMsgPeriod >= periodicConfig.tempMsgPeriod){
 			periodicCounter.tempMsgPeriod = 0;
@@ -291,6 +318,8 @@ APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas
 
 	if (mid_res == MID_COMM_RESULT_NO_MESSAGES || mid_res == MID_COMM_RESULT_SUCCESS){
 		res = APP_IFACE_RESULT_SUCCESS;
+	}else{
+		status->commErr = MID_REG_ERROR_RAISED;
 	}
 	return res;
 }
@@ -302,6 +331,5 @@ APP_IFACE_result_e APP_IfaceNotifyModeChange (MID_REG_control_s const * const co
 		res |= MID_CommSendControlMode((MID_REG_control_s * const )control);
 		prevControl = *control;
 	}
-
 	return res;
 }
