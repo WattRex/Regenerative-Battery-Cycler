@@ -185,7 +185,7 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_error_status_s * errors,
 	//Inverse priority check to set lastErrVal to error with the biggest priority
 
 	// Check body temp
-	if ((EPC_CONF_info.hwVer%2 == 0) && // TODO: Use function to know if there is sensor present
+	if ((EPC_CONF_info.hwVer.tBody == MID_REG_HW_STS_SENS) && 
 			((meas->tempBody > limits->tempMax) || (meas->tempBody < limits->tempMin))){
 			errors->tempErr = MID_REG_ERROR_RAISED;
 			errors->lastErrVal =  (uint16_t)meas->tempBody;
@@ -195,7 +195,7 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_error_status_s * errors,
 	}
 
 	// Check anode temp
-	if ((EPC_CONF_info.hwVer%2 == 0) && // TODO: Use function to know if there is sensor present
+	if ((EPC_CONF_info.hwVer.tAnodType != MID_REG_HW_TANOD_NO_ANODE) && 
 			((meas->tempAnod > limits->tempMax) || (meas->tempAnod < limits->tempMin))){
 			errors->tempErr = MID_REG_ERROR_RAISED;
 			errors->lastErrVal =  (uint16_t)meas->tempBody;
@@ -205,7 +205,7 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_error_status_s * errors,
 	}
 
 	// Check amb temp
-	if ((EPC_CONF_info.hwVer%2 == 0) && // TODO: Use function to know if there is sensor present
+	if ((EPC_CONF_info.hwVer.tAmb == MID_REG_HW_PLASTIC_NTC) && 
 			((meas->tempBody > limits->tempMax) || (meas->tempBody < limits->tempMin))){
 			errors->tempErr = MID_REG_ERROR_RAISED;
 			errors->lastErrVal =  (uint16_t)meas->tempBody;
