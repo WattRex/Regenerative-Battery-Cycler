@@ -76,6 +76,67 @@ typedef enum
 	MID_REG_ERROR_RAISED
 }MID_REG_error_e;
 
+/**
+ * @enum MID_REG_hw_rev_e
+ * @brief Hardware versions review.
+ */
+typedef enum
+{
+	MID_REG_HW_REV_A = 0X0U,
+	MID_REG_HW_REV_B,
+	MID_REG_HW_REV_C
+}MID_REG_hw_rev_e;
+
+/**
+ * @enum MID_REG_hw_vent_e
+ * @brief Hardware vent types.
+ */
+typedef enum
+{
+	MID_REG_HW_NO_VENT = 0X0U,
+	MID_REG_HW_VENT
+}MID_REG_hw_vent_e;
+
+/**
+ * @enum MID_REG_hw_connector_e
+ * @brief Hardware connector type.
+ */
+typedef enum
+{
+	MID_REG_HW_CON_18650 = 0X0U,
+	MID_REG_HW_CON_BANANA
+}MID_REG_hw_connector_e;
+
+/**
+ * @enum MID_REG_hw_tanod_type_e
+ * @brief Hardware type of Temp anode.
+ */
+typedef enum
+{
+	MID_REG_HW_TANOD_NO_ANODE = 0X0U,
+	MID_REG_HW_TANOD_RING_NTC,
+	MID_REG_HW_TANOD_PLASTIC_NTC
+}MID_REG_hw_tanod_type_e;
+
+/**
+ * @enum MID_REG_hw_temp_body_e
+ * @brief Hardware temp body type.
+ */
+typedef enum
+{
+	MID_REG_HW_NO_STS = 0X0U,
+	MID_REG_HW_STS_SENS
+}MID_REG_hw_temp_body_e;
+
+/**
+ * @enum MID_REG_hw_temp_e
+ * @brief Hardware temp type.
+ */
+typedef enum
+{
+	MID_REG_HW_NO_SENSOR = 0X0U,
+	MID_REG_HW_PLASTIC_NTC
+}MID_REG_hw_temp_e;
 
 /**
  * @struct MID_REG_limit_s
@@ -124,6 +185,20 @@ typedef struct
 	uint16_t tempMsgPeriod : 15;
 }MID_REG_periodic_s;
 
+/**
+ * @struct MID_REG_hw_version_s
+ * @brief Structure for the equip ID and fw, sw versions.
+ */
+typedef struct
+{
+	MID_REG_hw_rev_e hwRev: 3;
+	MID_REG_hw_vent_e vent : 1;
+	MID_REG_hw_connector_e connector : 3;
+	MID_REG_hw_tanod_type_e tAnodType: 2;
+	MID_REG_hw_temp_body_e tBody: 1;
+	MID_REG_hw_temp_e tAmb: 1;
+	uint8_t reserved: 2;
+}MID_REG_hw_version_s;
 
 /**
  * @struct MID_REG_info_s
@@ -133,10 +208,9 @@ typedef struct
 {
 	uint32_t id : 6;
 	uint32_t fwVer : 5;
-	uint32_t hwVer : 5;
-	uint32_t sn : 16;
+	MID_REG_hw_version_s hwVer;
+	uint32_t sn : 8;
 }MID_REG_info_s;
-
 
 /**
  * @struct MID_REG_error_status_s
