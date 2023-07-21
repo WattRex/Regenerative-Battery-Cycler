@@ -307,22 +307,30 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			break;
 		case MID_DABS_MEAS_TEMP:
 			// Check if the hardware version has I2C
-			if ((EPC_CONF_info.hwVer %2)!=0){ // Even will have i2c Odd won´t
+			if (EPC_CONF_info.hwVer.tBody == MID_REG_HW_STS_SENS){ // Even will have i2c Odd won´t
 				res = (MID_DABS_result_e) HAL_StsReadTemperature(&temp_sensor);
 				if (res == MID_DABS_RESULT_SUCCESS){
 					measreg->tempBody = temp_sensor;
 				}
 			}else{
 				// If not I2C the register will always have a 0
-				measreg->tempBody=0;
+				measreg->tempBody = 0;
 			}
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &data_adc);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->tempAnod = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAnod)/EPC_CONF_MEAS_max_value.tempAnod)+EPC_CONF_MEAS_offset.tempAnod);
+			if(EPC_CONF_info.hwVer.tAnodType != MID_REG_HW_TANOD_NO_ANODE){
+				res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &data_adc);
+				if (res == MID_DABS_RESULT_SUCCESS){
+					measreg->tempAnod = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAnod)/EPC_CONF_MEAS_max_value.tempAnod)+EPC_CONF_MEAS_offset.tempAnod);
+				}
+			}else{
+				measreg->tempAnod = 0;
 			}
-			res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &data_adc);
-			if (res == MID_DABS_RESULT_SUCCESS){
-				measreg->tempAmb = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAmb)/EPC_CONF_MEAS_max_value.tempAmb)+EPC_CONF_MEAS_offset.tempAmb);
+			if (EPC_CONF_info.hwVer.tAmb != MID_REG_HW_NO_SENSOR){
+				res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &data_adc);
+				if (res == MID_DABS_RESULT_SUCCESS){
+					measreg->tempAmb = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAmb)/EPC_CONF_MEAS_max_value.tempAmb)+EPC_CONF_MEAS_offset.tempAmb);
+				}
+			}else{
+				measreg->tempAmb = 0;
 			}
 			break;
 	}
