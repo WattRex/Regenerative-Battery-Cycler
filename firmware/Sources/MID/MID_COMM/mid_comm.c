@@ -73,10 +73,10 @@ extern const MID_REG_info_s EPC_REG_info;
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
-__weak void MID_CommCallbackControlMode(MID_REG_control_s * const data);
+__weak void MID_CommCallbackControlMode(MID_REG_control_s const * const data);
 
 
-__weak void  MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s * const  data);
+__weak void  MID_CommCallbackConfigPeriodicConfig(MID_REG_periodic_s const * const  data);
 
 
 __weak void  MID_CommCallbackRequest(const MID_COMM_request_e req);
@@ -86,7 +86,8 @@ __weak void  MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint1
 
 MID_COMM_result_e MID_CommInit(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
-	res |= HAL_CanAddFilters(0x120, 0x7F0);
+	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, 0);
+	res |= HAL_CanAddFilters(tx_id, 0x7F0);
 	return res;
 }
 
@@ -95,6 +96,7 @@ MID_COMM_result_e MID_CommProcessIncommingData(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	uint8_t size = 0;
 	HAL_CAN_result_e res_can = HAL_CanReceive(&rx_id, rx_data, &size);
+	res = res_can;
 	while(res_can != HAL_CAN_RESULT_NO_MESSAGE && res == MID_COMM_RESULT_SUCCESS){
 		if (__CMP_MSG_ID(rx_id, MID_COMM_MSG_ID_MODE) && size == 8){
 				memcpy((uint8_t *)&ctrl, rx_data, size);
@@ -131,7 +133,7 @@ MID_COMM_result_e MID_CommSendInfo (void){
 	return res;
 }
 
-MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status ){
+MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s const * const status ){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_STATUS);
 	size_t size = sizeof(*status);
@@ -140,7 +142,7 @@ MID_COMM_result_e MID_CommSendStatus ( MID_REG_error_status_s * const status ){
 	return res;
 }
 
-MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_limit_s * const limits ){
+MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_limit_s const * const limits ){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	uint8_t offset = (req - MID_COMM_REQUEST_LIMITS_LS_VOLT);
 	uint8_t* ptr_data = (uint8_t *) limits;
@@ -158,7 +160,7 @@ MID_COMM_result_e MID_CommSendReqLimits (const MID_COMM_request_e req, MID_REG_l
 
 
 
-MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s * const meas){
+MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s const * const meas){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_ELECT_MEAS);
 	size_t size = 6;
@@ -168,7 +170,7 @@ MID_COMM_result_e MID_CommSendElectMeas (MID_REG_meas_property_s * const meas){
 }
 
 
-MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas){
+MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s const * const meas){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_TEMP_MEAS);
 	size_t size = 6;
@@ -180,7 +182,7 @@ MID_COMM_result_e MID_CommSendTempMeas (MID_REG_meas_property_s * const meas){
 }
 
 
-MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
+MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s const * const mode){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_MODE);
 	size_t size = sizeof(*mode);
@@ -190,7 +192,9 @@ MID_COMM_result_e MID_CommSendControlMode (MID_REG_control_s * const mode){
 }
 
 
-MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s * periodic){
+
+MID_COMM_result_e MID_CommSendPeriodic ( MID_REG_periodic_s const * const periodic){
+
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	tx_id = __PACK_CAN_ID(EPC_CONF_info.id, MID_COMM_MSG_ID_PERIODIC);
 	size_t size = sizeof(*periodic);

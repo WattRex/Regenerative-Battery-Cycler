@@ -27,12 +27,12 @@
 
 #define EPC_CONF_FP_N_FRAC_BITS 	16	 // Number of bits for decimals
 
-#define EPC_CONF_PWR_KP_I			567		// 0.008658
-#define EPC_CONF_PWR_KI_I			3001549 // 45.8 3001549 // 22.89  1500774
-#define EPC_CONF_PWR_KP_V			115 //0.00175 //114688 1.75
-#define EPC_CONF_PWR_KI_V			492 //0.0075 //491520 7.5 //491520000 7500
-#define EPC_CONF_PWR_KP_P			2//0.00002 //1311 0.02
-#define EPC_CONF_PWR_KI_P			7//0.0001 //6553600 100
+#define EPC_CONF_PWR_KP_I            567        // 0.008658
+#define EPC_CONF_PWR_KI_I            655360 	// 10
+#define EPC_CONF_PWR_KP_V            115 		// 0.00175
+#define EPC_CONF_PWR_KI_V            4920 		// 0.075073
+#define EPC_CONF_PWR_KP_P            2			// 0.000030
+#define EPC_CONF_PWR_KI_P            70			// 0.001068
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -69,15 +69,12 @@ extern const MID_REG_meas_property_s EPC_CONF_MEAS_offset;
 /**< Decomment to enable each HAL module **/
 #define EPC_CONF_USE_CUSTOM_HAL
 
-/**< CAN sender standard identifier **/
-#define EPC_CONF_CAN_ID 0x109
-
 #define EPC_CONF_PWM_ENABLED
 #define EPC_CONF_GPIO_ENABLED
 #define EPC_CONF_ADC_DMA_ENABLED
-//#define EPC_CONF_STS_ENABLED
+#define EPC_CONF_STS_ENABLED
 #define EPC_CONF_TMR_ENABLED
-//#define EPC_CONF_WDG_ENABLED
+#define EPC_CONF_WDG_ENABLED
 #define EPC_CONF_CAN_ENABLED
 
 

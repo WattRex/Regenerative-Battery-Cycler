@@ -133,9 +133,12 @@ HAL_SYS_result_e HAL_SysInit(void){
 #endif
 
 #ifdef EPC_CONF_STS_ENABLED
-			if (HAL_StsInit () != HAL_STS_RESULT_SUCCESS){
-				res |= HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
-			} else{
+			if ((EPC_CONF_info.hwVer %2)!=0){
+					if (HAL_StsInit () != HAL_STS_RESULT_SUCCESS){
+							res |= HAL_SYS_RESULT_ERROR_CRIT_PERIPH;
+					}
+			}else{
+
 #endif
 
 #ifdef EPC_CONF_WDG_ENABLED
