@@ -88,7 +88,7 @@ void updateCtrlTime(uint32_t * ctrl_time){
 	steps +=1;
 	if (steps >= steps_to_ms){
 		steps = 0;
-		ctrl_time +=1;
+		*ctrl_time +=1;
 	}
 }
 
@@ -98,68 +98,77 @@ action_e calcNewAction(const MID_REG_control_s * mode, const MID_REG_meas_proper
 		{
 			case MID_REG_MODE_IDLE:
 				res = action_wait;
+				break;
 			case MID_REG_MODE_WAIT:
 				res = action_wait;
+				break;
 			case MID_REG_MODE_CC:
 				res = (mode->modeRef >= 0) ? action_charge : action_discharge;
+				break;
 			case MID_REG_MODE_CV:
 				res = (mode->modeRef >= meas->lsVolt) ? action_charge : action_discharge;
+				break;
 			case MID_REG_MODE_CP:
 				res = (mode->modeRef >= 0) ? action_charge : action_discharge;
+				break;
 			default:
 				res = action_wait;
+				break;
 		}
 	return res;
 }
 
-limit_status_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_s * meas, action_e ctrl_action, uint32_t ctrl_time){
-	limit_status_e res = limit_not_reached;
+limit_status_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_s * meas, action_e ctrl_action,
+		uint32_t ctrl_time, limit_status_e * res){
+//	limit_status_e res = limit_not_reached;
 	//check mode
 
 		// voltage limit, charge
-	if (mode->limitType == MID_REG_LIMIT_VOLT && ctrl_action == action_charge){
-		if (meas->lsVolt >= (uint16_t)mode->limRef){
-			res = limit_reached;
+	if (*res != limit_already_reached){
+		if (mode->limitType == MID_REG_LIMIT_VOLT && ctrl_action == action_charge){
+			if (meas->lsVolt >= (uint16_t)mode->limRef){
+				*res = limit_reached;
+			}
+		}	// voltage limit, discharge
+		else if(mode->limitType == MID_REG_LIMIT_VOLT && ctrl_action == action_discharge){
+			if (meas->lsVolt <= (uint16_t)mode->limRef){
+				*res = limit_reached;
+			}
+		}	// current limit, charge
+		else if(mode->limitType == MID_REG_LIMIT_CURR && ctrl_action == action_charge){
+			if (meas->lsCurr >= (int16_t)mode->limRef){
+				*res = limit_reached;
+					}
+		}	// current limit, discharge
+		else if(mode->limitType == MID_REG_LIMIT_CURR && ctrl_action == action_discharge){
+			if (meas->lsCurr <= (int16_t)mode->limRef){
+				*res = limit_reached;
+			}
+		}	// power, charge
+		else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_charge){
+			int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
+			if (power >= (int16_t)mode->limRef){
+				*res = limit_reached;
+			}
+		}	// power, discharge
+		else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_discharge){
+			int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
+			if (power <= (int16_t)mode->limRef){
+				*res = limit_reached;
+			}
+		}	// time
+		else if(mode->limitType == MID_REG_LIMIT_TIME){
+			if (ctrl_time >= (uint32_t)mode->limRef){
+				*res = limit_reached;
+			}
+		}else if (ctrl_action==action_wait){
+			*res = limit_not_reached;
+		}else{
+			*res = limit_error;
 		}
-	}	// voltage limit, discharge
-	else if(mode->limitType == MID_REG_LIMIT_VOLT && ctrl_action == action_discharge){
-		if (meas->lsVolt <= (uint16_t)mode->limRef){
-			res = limit_reached;
-		}
-	}	// current limit, charge
-	else if(mode->limitType == MID_REG_LIMIT_CURR && ctrl_action == action_charge){
-		if (meas->lsCurr <= (int16_t)mode->limRef){
-			res = limit_reached;
-				}
-	}	// current limit, discharge
-	else if(mode->limitType == MID_REG_LIMIT_CURR && ctrl_action == action_discharge){
-		if (meas->lsCurr >= (int16_t)mode->limRef){
-			res = limit_reached;
-		}
-	}	// power, charge
-	else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_charge){
-		int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-		if (power <= (int16_t)mode->limRef){
-			res = limit_reached;
-		}
-	}	// power, discharge
-	else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_discharge){
-		int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-		if (power >= (int16_t)mode->limRef){
-			res = limit_reached;
-		}
-	}	// time
-	else if(mode->limitType == MID_REG_LIMIT_TIME){
-		if (ctrl_time >= mode->limRef){
-			res = limit_reached;
-		}
-	}else if (ctrl_action==action_wait){
-		res = limit_not_reached;
-	}else{
-		res = limit_error;
 	}
 
-	return res;
+//	return res;
 }
 
 
@@ -253,7 +262,7 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 	APP_CTRL_result_e res = APP_CTRL_RESULT_ERROR_INT;
 	MID_PWR_result_e internalRes = MID_PWR_RESULT_SUCCESS;
 	updateCtrlTime(&ctrl_time);
-	ctrl_status = checkLimit(mode, meas, ctrl_action, ctrl_time);
+	checkLimit(mode, meas, ctrl_action, ctrl_time, &ctrl_status);
 
 	if (ctrl_status == limit_not_reached && internalRes == MID_PWR_RESULT_SUCCESS){
 		//check if limit is reached, if not apply control 
@@ -276,6 +285,11 @@ APP_CTRL_result_e APP_CtrlUpdate (MID_REG_control_s * mode, const MID_REG_meas_p
 			case MID_REG_MODE_CP:
 				internalRes = MID_PwrApplyCtrl(mode->modeRef, meas->lsVolt, meas->lsCurr, MID_PWR_MODE_CP, *limits);
 				res = (internalRes == MID_PWR_RESULT_SUCCESS) ? APP_CTRL_RESULT_SUCCESS : APP_CTRL_RESULT_ERROR_INT;
+				break;
+			case MID_REG_MODE_IDLE:
+				//NOP
+				//If no operation needed is success
+				res = APP_CTRL_RESULT_SUCCESS;
 				break;
 			default:
 				// If change output to disable change also register to disable
@@ -322,7 +336,11 @@ APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_R
 	}
 	//ctrl_action will receive if mode is charging or discharging
 	ctrl_action = calcNewAction(newMode, meas);
-	ctrl_status = limit_not_reached;
+	if (newMode->mode == MID_REG_MODE_ERROR || newMode->mode == MID_REG_MODE_IDLE){
+		ctrl_status = limit_already_reached;
+	}else{
+		ctrl_status = limit_not_reached;
+	}
 	ctrl_time = 0;
 	memcpy(mode, newMode, sizeof(MID_REG_control_s));
 	//Enable PWR output for the modes that require power transfer
