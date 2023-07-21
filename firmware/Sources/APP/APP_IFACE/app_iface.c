@@ -259,8 +259,8 @@ APP_IFACE_result_e AppIfaceInit() {
 	periodicConfig.electricMsgPeriod  = EPC_CONF_periodic_time_min.electricMsgPeriod;
 	periodicConfig.tempMsgPeriod      = EPC_CONF_periodic_time_min.tempMsgPeriod;
 	periodicConfig.usrHeartBeatStatus	= MID_REG_DISABLED;
-	periodicConfig.electricMsgStatus	= MID_REG_ENABLED;
-	periodicConfig.tempMsgStatus		= MID_REG_ENABLED;
+	periodicConfig.electricMsgStatus	= MID_REG_DISABLED;
+	periodicConfig.tempMsgStatus		= MID_REG_DISABLED;
 	MID_COMM_result_e res = MID_CommInit();
 	return (res == MID_COMM_RESULT_SUCCESS) ? APP_IFACE_RESULT_SUCCESS : APP_IFACE_RESULT_ERROR;
 }
