@@ -1,4 +1,4 @@
-; C:\Users\Roberto_Aldea\Documents\git\PROYECTS\EPC\CAN_MESSAGES_TRANSMIT.xmt
+; C:\Users\Roberto_Aldea\Documents\git\PROYECTS\EPC\Issues\Regenerative-Battery-Cycler\firmware\Sources\Test\CAN_MESSAGES_TRANSMIT.xmt
 ;   CAN messages saved by PCAN-View v5.0.5.871
 ;
 ; Columns descriptions:
@@ -11,19 +11,23 @@
 ; |            |  |  |  |
 001h           0  1  D 01h ; Not received
 002h           0  8  D 00h 01h 02h 03h 04h 05h 06h 07h ; Not received
-100h           0  8  D 24h 00h E8h 03h A0h 0Fh 00h 00h ; Mode configuration ok
+100h           0  8  D 13h 00h A0h 0Fh 88h 13h 00h 00h ; Mode configuration error mode same as limit
+100h           0  8  D 20h 00h E8h 03h B8h 0Bh 00h 00h ; Mode configuration ok disable mode wait 1A limCur 3A
+100h           0  8  D 15h 00h E8h 03h E0h 13h 00h 00h ; Mode configuration ok enable mode cc 1A limV 5.1V
 100h           0  8  D 2Eh 00h E8h 03h A0h 0Fh 00h 00h ; Mode Configuration error in mode>3
-101h           0  1  D 01h ; Request info ok
+100h           0  8  D 33h 00h A0h 0Fh 38h FFh FFh FFh ; Mode configuration ok enable mode CV 4V  limPWR -20W
+100h           0  8  D 27h 00h 3Ch FFh F0h D8h FFh FFh ; Mode configuration ok enable mode CP -20W limCur -10A
+101h           0  1  D 00h ; Request info ok
 101h           0  1  D FFh ; Request error
-102h           0  4  D 12h 5Ch 03h E8h ;  Change ls_volt limits ok 4.7V/1V
 102h           0  4  D 07h D0h 13h 88h ; error changing limits ls_volt min>max
+102h           0  4  D 12h 5Ch 03h E8h ; Change ls_volt limits ok 4.7V/1V
 103h           0  4  D 11h 94h E2h B4h ; Chaning ls_curr limit 4.5A/-7.5A
 103h           0  4  D D8h F0h B1h E0h ; error Chaning ls_curr limit, min=-20A
 104h           0  4  D 27h 10h 16h 44h ; Change limit hs_volt ok 10V/5.7V
 104h           0  4  D 3Ah 98h 00h 00h ; error changing hs_volt limit, max>14.1V
 105h           0  4  D 01h 90h FCh E0h ; Change limit ls_pwr ok 40W/-80W
 105h           0  4  D 03h E8h 00h 00h ; error Change ls_pwr max>800
-106h           0  4  D 01h C2h FFh 9Ch ; Change temp limit ok 45º/-10º
 106h           0  4  D 00h C8h FDh A8h ; error change temp min<-200
+106h           0  4  D 01h C2h FFh 9Ch ; Change temp limit ok 45º/-10º
 107h           0  6  D 00h 00h 9Ch 66h 8Dh 54h ; error PeriodicConfig period<10
 107h           0  6  D E8h 03h A0h 0Fh 80h 3Eh ; PeriodicConf ok all Dis P= 500/2000/8000

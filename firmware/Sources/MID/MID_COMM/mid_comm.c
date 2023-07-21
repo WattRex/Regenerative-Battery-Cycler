@@ -96,6 +96,7 @@ MID_COMM_result_e MID_CommProcessIncommingData(void){
 	MID_COMM_result_e res = MID_COMM_RESULT_SUCCESS;
 	uint8_t size = 0;
 	HAL_CAN_result_e res_can = HAL_CanReceive(&rx_id, rx_data, &size);
+	res = res_can;
 	while(res_can != HAL_CAN_RESULT_NO_MESSAGE && res == MID_COMM_RESULT_SUCCESS){
 		if (__CMP_MSG_ID(rx_id, MID_COMM_MSG_ID_MODE) && size == 8){
 				memcpy((uint8_t *)&ctrl, rx_data, size);
