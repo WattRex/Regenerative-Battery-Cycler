@@ -40,9 +40,8 @@
 #define _TEMP_MSG_PERIOD_MIN       10  		// ms
 
 /*		ID CONF		*/
-#define _CAN_ID		0x10
+#define _CAN_ID		0x03
 #define _FW_VER		0x01
-#define _HW_VER		0x01 // 0x01 with i2c temp, 0x02 without i2c temp
 #define _S_N		0x01
 
 
@@ -88,11 +87,19 @@ const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 		_TEMP_MSG_PERIOD_MIN	     // tempMsgPeriod
 };
 
+const MID_REG_hw_version_s EPC_CONF_hw_version = { //TODO: assign this from EPC_CONF
+		MID_REG_HW_REV_A,					// Review
+		MID_REG_HW_NO_VENT,					//  Vent
+		MID_REG_HW_CON_18650,				// Connector
+		MID_REG_HW_TANOD_RING_NTC,		// T anode type
+		MID_REG_HW_STS_SENS,				// T body
+		MID_REG_HW_PLASTIC_NTC				// T amb
+};
 
 const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
 		_CAN_ID,		// id
 		_FW_VER,	// fwVer
-		_HW_VER,	// hwVer
+		EPC_CONF_hw_version,	// hwVer
 		_S_N		// sn
 };
 
@@ -130,13 +137,13 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 	// internally will be done a cast to uint16 as the factor will allways be positive
 	15000, 	// hsVolt max-min
 	900,	//tempBody max-min (Range -20ºC to +70ºC)
-	-900,	//tempAnod max-min (Range -20ºC(3.3V) to +70ºC(0V))
-	-900	//tempAmb max-min  (Range -20ºC(3.3V) to +70ºC(0V))
+	-900,	//tempAnod max-min (Range -20ºC to +70ºC)
+	-900		//tempAmb max-min  (Range -20ºC to +70ºC)
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
 	0,		//lsVolt
-	-16000,	//lsCurr 
+	-16000,	//lsCurr -16500
 	0, 		// hsVolt
 	-200,	//tempBody
 	700,	//tempAnod
