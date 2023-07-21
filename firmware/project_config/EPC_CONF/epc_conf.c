@@ -124,21 +124,21 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
-	6000,	//lsVolt max-min 6000	
-	33000,	//lsCurr max-min 33000	
+	6000,	//lsVolt max-min (Low side Voltage range 0-6V)
+	32500,	//lsCurr max-min (Low side Current range +16.5 -16A)
 	// Despite the lsCurr is a int16 and max value is 32767, 
 	// internally will be done a cast to uint16 as the factor will allways be positive
 	15000, 	// hsVolt max-min
-	900,	//tempBody max-min
-	900,	//tempAnod max-min
-	900		//tempAmb max-min
+	900,	//tempBody max-min (Range -20ºC to +70ºC)
+	-900,	//tempAnod max-min (Range -20ºC(3.3V) to +70ºC(0V))
+	-900	//tempAmb max-min  (Range -20ºC(3.3V) to +70ºC(0V))
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
-	0,	//lsVolt
-	-16500,	//lsCurr -16500 
-	0, 	// hsVolt
+	0,		//lsVolt
+	-16000,	//lsCurr 
+	0, 		// hsVolt
 	-200,	//tempBody
-	-200,	//tempAnod
-	-200	//tempAmb
+	700,	//tempAnod
+	700	//tempAmb
 };
