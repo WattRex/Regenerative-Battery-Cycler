@@ -1,4 +1,4 @@
-Preamble
+# Preamble
 
 This project contains both hardware designs and embedded software to 
 control the overall system. The following considerations are made: The
