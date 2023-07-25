@@ -8,15 +8,16 @@ definition or mechanical CAD is licenced under the CERN Open Hardware
 Licence Version 2 - Strongly Reciprocal.
 
 # Software license
-                    GNU AFFERO GENERAL PUBLIC LICENSE
-                       Version 3, 19 November 2007
 
+<div align='center'>GNU AFFERO GENERAL PUBLIC LICENSE</div>
+<div align='center'>Version 3, 19 November 2007</div>
+<br></br>
  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
-                            Preamble
-
+<div align='center'>Preamble</div>
+<br></br>
   The GNU Affero General Public License is a free, copyleft license for
 software and other kinds of works, specifically designed to ensure
 cooperation with the community in the case of network server software.
@@ -66,7 +67,8 @@ this license.
   The precise terms and conditions for copying, distribution and
 modification follow.
 
-                       TERMS AND CONDITIONS
+<div align='center'>TERMS AND CONDITIONS</div>
+<br></br>
 
   0. Definitions.
 
@@ -209,15 +211,15 @@ and you may offer support or warranty protection for a fee.
 produce it from the Program, in the form of source code under the
 terms of section 4, provided that you also meet all of these conditions:
 
-    a) The work must carry prominent notices stating that you modified
+  a) The work must carry prominent notices stating that you modified
     it, and giving a relevant date.
 
-    b) The work must carry prominent notices stating that it is
+  b) The work must carry prominent notices stating that it is
     released under this License and any conditions added under section
     7.  This requirement modifies the requirement in section 4 to
     "keep intact all notices".
 
-    c) You must license the entire work, as a whole, under this
+  c) You must license the entire work, as a whole, under this
     License to anyone who comes into possession of a copy.  This
     License will therefore apply, along with any applicable section 7
     additional terms, to the whole of the work, and all its parts,
@@ -225,7 +227,7 @@ terms of section 4, provided that you also meet all of these conditions:
     permission to license the work in any other way, but it does not
     invalidate such permission if you have separately received it.
 
-    d) If the work has interactive user interfaces, each must display
+  d) If the work has interactive user interfaces, each must display
     Appropriate Legal Notices; however, if the Program has interactive
     interfaces that do not display Appropriate Legal Notices, your
     work need not make them do so.
@@ -247,12 +249,12 @@ of sections 4 and 5, provided that you also convey the
 machine-readable Corresponding Source under the terms of this License,
 in one of these ways:
 
-    a) Convey the object code in, or embodied in, a physical product
+  a) Convey the object code in, or embodied in, a physical product
     (including a physical distribution medium), accompanied by the
     Corresponding Source fixed on a durable physical medium
     customarily used for software interchange.
 
-    b) Convey the object code in, or embodied in, a physical product
+  b) Convey the object code in, or embodied in, a physical product
     (including a physical distribution medium), accompanied by a
     written offer, valid for at least three years and valid for as
     long as you offer spare parts or customer support for that product
@@ -264,13 +266,13 @@ in one of these ways:
     conveying of source, or (2) access to copy the
     Corresponding Source from a network server at no charge.
 
-    c) Convey individual copies of the object code with a copy of the
+  c) Convey individual copies of the object code with a copy of the
     written offer to provide the Corresponding Source.  This
     alternative is allowed only occasionally and noncommercially, and
     only if you received the object code with such an offer, in accord
     with subsection 6b.
 
-    d) Convey the object code by offering access from a designated
+  d) Convey the object code by offering access from a designated
     place (gratis or for a charge), and offer equivalent access to the
     Corresponding Source in the same way through the same place at no
     further charge.  You need not require recipients to copy the
@@ -283,7 +285,7 @@ in one of these ways:
     Corresponding Source, you remain obligated to ensure that it is
     available for as long as needed to satisfy these requirements.
 
-    e) Convey the object code using peer-to-peer transmission, provided
+  e) Convey the object code using peer-to-peer transmission, provided
     you inform other peers where the object code and Corresponding
     Source of the work are being offered to the general public at no
     charge under subsection 6d.
@@ -360,24 +362,24 @@ for which you have or can give appropriate copyright permission.
 add to a covered work, you may (if authorized by the copyright holders of
 that material) supplement the terms of this License with terms:
 
-    a) Disclaiming warranty or limiting liability differently from the
+  a) Disclaiming warranty or limiting liability differently from the
     terms of sections 15 and 16 of this License; or
 
-    b) Requiring preservation of specified reasonable legal notices or
+  b) Requiring preservation of specified reasonable legal notices or
     author attributions in that material or in the Appropriate Legal
     Notices displayed by works containing it; or
 
-    c) Prohibiting misrepresentation of the origin of that material, or
+  c) Prohibiting misrepresentation of the origin of that material, or
     requiring that modified versions of such material be marked in
     reasonable ways as different from the original version; or
 
-    d) Limiting the use for publicity purposes of names of licensors or
+  d) Limiting the use for publicity purposes of names of licensors or
     authors of the material; or
 
-    e) Declining to grant rights under trademark law for use of some
+  e) Declining to grant rights under trademark law for use of some
     trade names, trademarks, or service marks; or
 
-    f) Requiring indemnification of licensors and authors of that
+  f) Requiring indemnification of licensors and authors of that
     material by anyone who conveys the material (or modified versions of
     it) with contractual assumptions of liability to the recipient, for
     any liability that these contractual assumptions directly impose on
@@ -626,12 +628,14 @@ an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 
-                     END OF TERMS AND CONDITIONS
+<div align='center'>END OF TERMS AND CONDITIONS</div>
+<br></br>
 
 
 # Hardware license
 
-CERN Open Hardware Licence Version 2 - Strongly Reciprocal
+<div align='center'>CERN Open Hardware Licence Version 2 - Strongly Reciprocal</div>
+<br></br>
 
 AUTHORS: 
   - Pablo Pastor, pastorpflores at gmail dot com
@@ -640,9 +644,8 @@ AUTHORS:
   - Francisco Pérez, fperez at unizar dot es
   - Carlos Bernal, cbernal at unizar dot es
 
-
-Preamble
-
+<div align='center'>Preamble</div>
+<br></br>
 CERN has developed this licence to promote collaboration among hardware
 designers and to provide a legal tool which supports the freedom to use,
 study, modify, share and distribute hardware designs and products based on
@@ -662,11 +665,11 @@ their designs nor does it imply any involvement by CERN in their development.
   1.1 'Licence' means this CERN-OHL-S.
 
   1.2 'Compatible Licence' means
-
-       a) any earlier version of the CERN Open Hardware licence, or
-
+  <br>
+      a) any earlier version of the CERN Open Hardware licence, or
+  <br>
        b) any version of the CERN-OHL-S, or
-
+  <br>
        c) any licence which permits You to treat the Source to which it
           applies as licensed under CERN-OHL-S provided that on Conveyance of
           any such Source, or any associated Product You treat the Source in
@@ -690,12 +693,12 @@ their designs nor does it imply any involvement by CERN in their development.
 
   1.7 'Available Component' means any part, sub-assembly, library or code
       which:
-
+<br>
        a) is licensed to You as Complete Source under a Compatible Licence; or
-
+<br>
        b) is available, at the time a Product or the Source containing it is
           first Conveyed, to You and any other prospective licensees
-
+<br>
             i) as a physical part with sufficient rights and information
                (including any configuration and programming files and
                information about its characteristics and interfaces) to enable
@@ -763,7 +766,7 @@ their designs nor does it imply any involvement by CERN in their development.
       from a Source Location should You Convey a Product in circumstances
       where the recipient does not otherwise receive a copy of the modified
       Covered Source. In each case subsection 3.3 shall apply.
-
+<br>
       You may only delete Notices if they are no longer applicable to the
       corresponding Covered Source as modified by You and You may add
       additional Notices applicable to Your modifications.  Including Covered
@@ -772,17 +775,17 @@ their designs nor does it imply any involvement by CERN in their development.
 
   3.3 You may Convey modified Covered Source (with the effect that You shall
       also become a Licensor) provided that You:
-
+<br>
        a) retain Notices as required in subsection 3.2;
-
+<br>
        b) add a Notice to the modified Covered Source stating that You have
           modified it, with the date and brief description of how You have
           modified it;
-
+<br>
        c) add a Source Location Notice for the modified Covered Source if You
           Convey in circumstances where the recipient does not otherwise
           receive a copy of the modified Covered Source; and
-
+<br>
        d) license the modified Covered Source under the terms and conditions
           of this Licence (or, as set out in subsection 8.3, a later version,
           if permitted by the licence of the original Covered Source). Such
