@@ -63,7 +63,7 @@ static MID_REG_control_s prevControl;
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
-static char _checkErrors();
+
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
@@ -71,12 +71,6 @@ static char _checkErrors();
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
-/**
- * @fn static char _checkErrors()
- * @brief Check if there is a electric or temperature error
- *
- * @return 0 if there is an error, 1 if there are no errors
- */
 static char _checkErrors(){
 	char res= 0;
 	if (tmp_ptr_status->hsVoltErr == MID_REG_ERROR_NONE &&
@@ -92,7 +86,7 @@ static char _checkErrors(){
 /**********************************************************************************/
 #ifndef EPC_CONF_TESTING
 void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
-	if (!_checkErrors()){
+	if (_checkErrors()){
 		switch (data->mode){
 			case MID_REG_MODE_CC:
 				if (data->modeRef > tmp_ptr_limits->lsCurrMax || data->modeRef < tmp_ptr_limits->lsCurrMin){
@@ -186,6 +180,9 @@ void MID_CommCallbackRequest(const MID_COMM_request_e req){
 	else if (req == MID_COMM_REQUEST_TEMP_MEAS){
 		callback_res = MID_CommSendTempMeas((MID_REG_meas_property_s * const ) tmp_ptr_meas);
 	}
+	else if ((req >= MID_COMM_REQUEST_LIMITS_LS_VOLT) && (req <=MID_COMM_REQUEST_LIMITS_TEMP) ){
+		callback_res = MID_CommSendReqLimits(req, tmp_ptr_limits);
+	}
 	else if (req == MID_COMM_REQUEST_HEARTBEAT){
 		periodicCounter.usrHeartBeatPeriod = 0;
 	}
@@ -195,8 +192,8 @@ void MID_CommCallbackRequest(const MID_COMM_request_e req){
 }
 
 void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valueMin, const uint16_t valueMax){
-	if (!_checkErrors()){
-		uint8_t offset = (MID_COMM_REQUEST_LIMITS_LS_VOLT - MID_COMM_MSG_ID_LS_VOLT_LIMIT);
+	uint8_t offset = (MID_COMM_REQUEST_LIMITS_LS_VOLT - MID_COMM_MSG_ID_LS_VOLT_LIMIT);
+	if (_checkErrors()){
 		if ((int16_t)valueMin<valueMax){
 			if(lim_type == MID_COMM_MSG_ID_LS_VOLT_LIMIT){
 				if(valueMin >= EPC_CONF_limit_range.lsVoltMin && valueMax <= EPC_CONF_limit_range.lsVoltMax){
@@ -247,8 +244,8 @@ void MID_CommCallbackLimit(const MID_COMM_msg_id_e lim_type, const uint16_t valu
 		else {
 			callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 		}
-		callback_res = MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
 	}
+	callback_res = MID_CommSendReqLimits(lim_type+offset, tmp_ptr_limits);
 }
 #endif
 
