@@ -63,7 +63,7 @@ static MID_REG_control_s prevControl;
 /**********************************************************************************/
 /*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
-
+static char _checkErrors();
 /**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
@@ -71,6 +71,12 @@ static MID_REG_control_s prevControl;
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
+/**
+ * @fn static char _checkErrors()
+ * @brief Check if there is a electric or temperature error
+ *
+ * @return 0 if there is an error, 1 if there are no errors
+ */
 static char _checkErrors(){
 	char res= 0;
 	if (tmp_ptr_status->hsVoltErr == MID_REG_ERROR_NONE &&
