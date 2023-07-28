@@ -54,6 +54,7 @@ extern const MID_REG_info_s EPC_CONF_info;
 extern const MID_REG_meas_property_s EPC_CONF_MEAS_max_value;
 extern const MID_REG_meas_property_s EPC_CONF_MEAS_factors;
 extern const MID_REG_meas_property_s EPC_CONF_MEAS_offset;
+extern const int16_t EPC_CONF_temp_lut[410];
 
 /**********************************************************************************/
 /*                        				HAL 									  */
