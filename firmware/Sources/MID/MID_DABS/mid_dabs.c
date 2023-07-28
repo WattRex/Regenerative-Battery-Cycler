@@ -171,6 +171,7 @@ const blink_conf_s errIntMode = {
 							0x00,0x00		//0b00000000
 							}
 };
+
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
@@ -319,7 +320,8 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			if(EPC_CONF_info.hwVer.tAnodType != MID_REG_HW_TANOD_NO_ANODE){
 				res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_ANOD, &data_adc);
 				if (res == MID_DABS_RESULT_SUCCESS){
-					measreg->tempAnod = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAnod)/EPC_CONF_MEAS_max_value.tempAnod)+EPC_CONF_MEAS_offset.tempAnod);
+//					measreg->tempAnod = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAnod)/EPC_CONF_MEAS_max_value.tempAnod)+EPC_CONF_MEAS_offset.tempAnod);
+					measreg->tempAnod = EPC_CONF_temp_lut[data_adc/10];
 				}
 			}else{
 				measreg->tempAnod = 0;
@@ -327,7 +329,8 @@ MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_pr
 			if (EPC_CONF_info.hwVer.tAmb != MID_REG_HW_NO_SENSOR){
 				res = (MID_DABS_result_e) HAL_AdcGetValue(HAL_ADC_TEMP_AMB, &data_adc);
 				if (res == MID_DABS_RESULT_SUCCESS){
-					measreg->tempAmb = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAmb)/EPC_CONF_MEAS_max_value.tempAmb)+EPC_CONF_MEAS_offset.tempAmb);
+//					measreg->tempAmb = (int16_t) (((uint32_t)(data_adc*EPC_CONF_MEAS_factors.tempAmb)/EPC_CONF_MEAS_max_value.tempAmb)+EPC_CONF_MEAS_offset.tempAmb);
+					measreg->tempAmb = EPC_CONF_temp_lut[data_adc/10];
 				}
 			}else{
 				measreg->tempAmb = 0;
