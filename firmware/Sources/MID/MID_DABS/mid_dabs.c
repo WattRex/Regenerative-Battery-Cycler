@@ -175,9 +175,7 @@ const blink_conf_s errIntMode = {
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-blink_s ledsMode = {
-		idleMode, 0, idleMode 				//Initialice in idle mode
-};
+blink_s ledsMode;
 /**********************************************************************************/
 /*                        Definition of exported variables                        */
 /**********************************************************************************/
@@ -286,6 +284,12 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 /**********************************************************************************/
 /*                        Definition of exported functions                        */
 /**********************************************************************************/
+MID_DABS_result_e MID_DabsInit(){
+	ledsMode = {
+		idleMode, 0, idleMode 				//Initialice in idle mode
+	};
+	return MID_DABS_RESULT_SUCCESS
+}
 
 MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type, MID_REG_meas_property_s * measreg){
 	MID_DABS_result_e res = MID_DABS_RESULT_SUCCESS;
