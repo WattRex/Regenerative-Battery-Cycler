@@ -1,10 +1,12 @@
 /*********************************************************************************
 * @file           : mid_comm.h
-* @brief          : MID header file for communication module
+* @brief          : Header file for Middleware (MID) Communication (COMM) module.
+* It handles  communication through CAN bus and defines functions for sending and
+* receiving messages, managing control   modes, periodic  configurations, request
+* limits, and various measurements defined in the comm protocol.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef MID_COMM_H_

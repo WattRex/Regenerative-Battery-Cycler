@@ -1,10 +1,11 @@
 /*********************************************************************************
 * @file           : mid_dabs.c
-* @brief          : Implementation of MID_DABS
+* @brief          : Implementation of Middleware (MID) Device Abstraction (DABS)
+* module. Provides functions to collect and abstract measures from the hardware.
+* It also handles LED patterns based on the device mode through GPIOs.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +21,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 /**********************************************************************************/

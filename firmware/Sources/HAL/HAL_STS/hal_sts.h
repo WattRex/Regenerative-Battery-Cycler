@@ -1,10 +1,13 @@
 /*********************************************************************************
 * @file           : hal_sts.h
-* @brief          : HAL header file for STS
+* @brief          : Header file for Hardware Abstraction Layer (HAL) of the STS
+* (Temperature Sensor).  Provides functions   for initializing  the temperature
+* sensor   and  reading the   temperature   data   from  the  sensor  using I2C
+* communication.  The sensor is configured to  measure  temperature with  a low
+* repeatability of deci degrees Celsius.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +23,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef HAL_STS_H_

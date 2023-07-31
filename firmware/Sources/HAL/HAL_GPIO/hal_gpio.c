@@ -1,13 +1,12 @@
 /*********************************************************************************
 * @file           : hal_gpio.c
-* @brief          : Implementation of Hardware Abstraction Layer (HAL) for GPIO 
-*	(General Purpose Input/Output). Provides functions for GPIO initialization, 
-*	setting output pins, and reading input pins. Includes configurations for 
-*	available input and output GPIO pins.
+* @brief          : Implementation of Hardware Abstraction Layer (HAL) of the
+* GPIO  (General  Purpose   Input/Output).    Provides  functions    for GPIO
+* initialization,  setting  output  pins,  and  reading input  pins. Includes
+* configurations for available input and output GPIO pins.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -23,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 /**********************************************************************************/

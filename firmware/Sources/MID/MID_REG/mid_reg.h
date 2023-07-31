@@ -1,10 +1,12 @@
 /*********************************************************************************
-* @file           : mid_reg.h
-* @brief          : Definition of global registers
+* @file              : mid_reg.h
+* @brief             : Header file for Middleware (MID) Registers (REG) module.
+* Defines global registers and structures for the control and monitoring of the
+* system. It includes typedefs for status, mode, error, hardware  versions, and
+* calibrations fot the measurement perfierals.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef MID_REG_H_

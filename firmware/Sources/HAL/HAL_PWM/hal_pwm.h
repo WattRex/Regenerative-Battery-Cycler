@@ -1,10 +1,12 @@
 /*********************************************************************************
-* @file           : hal_pwm.h
-* @brief          : HAL header file for PWM
+* @file            : hal_pwm.h
+* @brief           : Header file for Hardware Abstraction Layer (HAL) of the PWM
+* (Pulse Width Modulation). Provides functions for initializing the PWM, setting
+* PWM  duty cycle, starting, and stopping   the  PWM  waveform  using  the HRTIM
+* (High-Resolution Timer).
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef HAL_PWM_H_

@@ -1,10 +1,12 @@
 /*********************************************************************************
-* @file           : epc_conf.h
-* @brief          : Project configuration variables
+* @file                   : epc_conf.h
+* @brief                  : Header  file for   Electronic  Power Converter (EPC)
+* Configuration  (CONF)  module. It contains the definition and configuration of
+* APP_CONF, including limits, message periods, hardware version, and measurement
+* properties.
 **********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef EPC_CONF_H_

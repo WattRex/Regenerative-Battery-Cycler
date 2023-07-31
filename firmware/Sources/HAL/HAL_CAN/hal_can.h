@@ -1,13 +1,12 @@
 /*********************************************************************************
-* @file           : hal_can.h
-* @brief          : Header file for Hardware Abstraction Layer (HAL) for CAN 
-*	(Controller Area Network). Provides functions for initializing CAN communication,
-*	adding and deleting filters for message acceptance, transmitting data, and 
-*	receiving data through CAN.
+* @file             : hal_can.h
+* @brief            : Header file for Hardware Abstraction Layer (HAL) of the CAN
+* (Controller   Area  Network).    Provides    functions  for    initializing CAN
+* communication, adding and deleting filters for message acceptance, transmitting
+* data, and receiving data through CAN.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -23,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef HAL_CAN_H_

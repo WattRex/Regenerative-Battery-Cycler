@@ -1,14 +1,13 @@
 /*********************************************************************************
 * @file           : hal_adc.h
-* @brief          : Header file for Hardware Abstraction Layer (HAL) of the ADC 
-*	(Analog-to-Digital Converter). Defines ADC result codes and ADC channel 
-*	enumerations. Provides functions for ADC initialization and retrieving 
-*	measurements from specific ADC channels using DMA (Direct Memory Access) 
-*	in circular mode.
+* @brief          : Header file for Hardware Abstraction Layer (HAL) of the ADC
+* (Analog-to-Digital Converter).  Defines ADC  result   codes  and  ADC channel
+* enumerations.   Provides functions    for ADC initialization   and retrieving
+* measurements from  specific ADC channels  using DMA (Direct Memory Access) in
+* circular mode.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -24,9 +23,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef HAL_ADC_H_

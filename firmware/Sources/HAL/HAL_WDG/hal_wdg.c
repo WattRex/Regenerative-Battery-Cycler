@@ -1,10 +1,11 @@
 /*********************************************************************************
 * @file           : hal_wdg.c
-* @brief          : Implementation of HAL WDG
+* @brief          : Implementation of Hardware Abstraction Layer (HAL) of the
+* Watchdog (WDG).  Initializes and  controls  the independent watchdog timer.
+* Provides a function to refresh the watchdog timer to prevent  system reset.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +21,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 /**********************************************************************************/

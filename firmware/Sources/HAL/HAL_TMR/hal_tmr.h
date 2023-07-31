@@ -1,10 +1,11 @@
 /*********************************************************************************
 * @file           : hal_tmr.h
-* @brief          : HAL header file for timers
+* @brief          : Header file for Hardware Abstraction Layer (HAL) of the Timer
+* (TMR) module.  Initializes and controls  hardware timers. Handles real-time and
+* power measurement clocks. Provides delay and callback functionalities.
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +21,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef HAL_TMR_H_

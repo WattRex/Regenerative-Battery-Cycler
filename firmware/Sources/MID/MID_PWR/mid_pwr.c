@@ -1,10 +1,12 @@
 /*********************************************************************************
 * @file           : mid_pwr.c
-* @brief          : Implementation of MID_PWR
+* @brief          : Implementation of Middleware (MID) Power (PWR) Control module
+* with Proportional-Integral  (PI) control for    voltage  (CV), power  (CP), and
+* current   (CC)  modes.  Utilizes   fixed-point arithmetic and checks   for Safe
+* Operating Area (SOA).
 ***********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +22,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 /**********************************************************************************/

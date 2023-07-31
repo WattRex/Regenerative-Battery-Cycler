@@ -1,10 +1,15 @@
 /*********************************************************************************
-* @file           : hal_sys.h
-* @brief          : HAL header file for SYS
+* @file             : hal_sys.h
+* @brief            :  Header file for Hardware Abstraction Layer  (HAL) of the
+* System (SYS) Initialization. This module  provides functions for initializing
+* various   peripherals and controlling   the  power mode  of  the  system. The
+* initialization  process  includes configuring  GPIOs,   PWM,  ADC,   CAN, STS
+* (Temperature Sensor), TMR (Timers), and WDG (Watchdog). The system can be put
+* into sleep mode or normal mode  based on the input. The file  also contains a
+* function for system reset (TODO).
 **********************************************************************************/
 
 /*********************************************************************************
-*	
 *	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
 *
 *	This program  is free software: you  can redistribute it and/or modify it under
@@ -20,9 +25,9 @@
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
-*@author           : WattRex <https://github.com/WattRex/>
-*@date			   : 2023-07-04
-*@version		   : v1.0.0
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef HAL_SYS_H_
