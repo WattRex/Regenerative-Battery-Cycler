@@ -287,7 +287,7 @@ static MID_DABS_result_e SetLeds(uint8_t step){
 MID_DABS_result_e MID_DabsInit(){
 	ledsMode.mode = idleMode;
 	ledsMode.prevMode = idleMode;
-	ledsMode.steps = 0; 				//Initialice in idle mode
+	ledsMode.step = 0; 				//Initialice in idle mode
 	return MID_DABS_RESULT_SUCCESS;
 }
 
