@@ -40,7 +40,7 @@
 #define _TEMP_MSG_PERIOD_MIN       10  		// ms
 
 /*		ID CONF		*/
-#define _CAN_ID		0x03
+#define _CAN_ID		0x00
 #define _FW_VER		0x01
 #define _S_N		0x01
 
@@ -87,19 +87,17 @@ const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 		_TEMP_MSG_PERIOD_MIN	     // tempMsgPeriod
 };
 
-const MID_REG_hw_version_s EPC_CONF_hw_version = { //TODO: assign this from EPC_CONF
-		MID_REG_HW_REV_A,					// Review
-		MID_REG_HW_NO_VENT,					//  Vent
-		MID_REG_HW_CON_18650,				// Connector
-		MID_REG_HW_TANOD_PLASTIC_NTC,		// T anode type
-		MID_REG_HW_STS_SENS,				// T body
-		MID_REG_HW_PLASTIC_NTC				// T amb
-};
-
-const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
+ const MID_REG_info_s EPC_CONF_info = {
 		_CAN_ID,		// id
 		_FW_VER,	// fwVer
-		EPC_CONF_hw_version,	// hwVer
+		(MID_REG_hw_version_s) {
+				MID_REG_HW_REV_A,					// Review
+				MID_REG_HW_NO_VENT,					//  Vent
+				MID_REG_HW_CON_18650,				// Connector
+				MID_REG_HW_TANOD_PLASTIC_NTC,		// T anode type
+				MID_REG_HW_STS_SENS,				// T body
+				MID_REG_HW_PLASTIC_NTC				// T amb
+		},	// hwVer
 		_S_N		// sn
 };
 
