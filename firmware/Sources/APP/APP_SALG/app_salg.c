@@ -10,7 +10,7 @@
 
 #include "app_salg.h"
 #include "app_iface.h"
-#include "app_ctrl.h" // TODO: uncomment it
+#include "app_ctrl.h"
 
 #include "mid_reg.h"
 #include "mid_dabs.h"
@@ -128,6 +128,7 @@ APP_SALG_result_e APP_SalgInit(){
 	/* Initialize HAL */
 	APP_SALG_result_e res= APP_SALG_RESULT_ERROR;
 	HAL_SYS_result_e sysRes = HAL_SysInit();
+	MID_DabsInit();
 	if(sysRes == HAL_SYS_RESULT_SUCCESS){
 		res = APP_SALG_RESULT_SUCCESS;
 	} else{
@@ -193,8 +194,6 @@ APP_SALG_result_e APP_SalgStatusMachine(){
 		temp_rt_n_ints = temp_rt_n_ints % HYPERTEMP;
 		rt_int_triggered = 0;
 		pw_meas_n_ints = 0;
-
-		// TODO: check return values
 
 		// 2.0 Get measures
 		res = MID_DabsUpdateMeas(MID_DABS_MEAS_ELECTRIC, &measures);
