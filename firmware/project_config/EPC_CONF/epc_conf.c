@@ -40,11 +40,17 @@
 #define _TEMP_MSG_PERIOD_MIN       10  		// ms
 
 /*		ID CONF		*/
-#define _CAN_ID		0x00
-#define _FW_VER		0x01
-#define _S_N		0x01
+#define _CAN_ID		0x00		// ID
+#define _FW_VER		0x01		// FW VERSION
+#define _S_N		0x01		// Serial Number
 
-
+/*		HW CONF		*/
+#define _HW_REVIEW 		MID_REG_HW_REV_A			// Review
+#define _HW_VENT		MID_REG_HW_NO_VENT			//  Vent
+#define _HW_CONNECTOR	MID_REG_HW_CON_18650		// Connector
+#define _HW_ANODE		MID_REG_HW_TANOD_NO_ANODE	// T anode type
+#define _HW_STS			MID_REG_HW_NO_STS			// T body
+#define _HW_AMB			MID_REG_HW_NO_SENSOR		// T amb
 /**********************************************************************************/
 /*                    Definition of local function like macros                    */
 /**********************************************************************************/
@@ -91,12 +97,12 @@ const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 		_CAN_ID,		// id
 		_FW_VER,	// fwVer
 		(MID_REG_hw_version_s) {
-				MID_REG_HW_REV_A,					// Review
-				MID_REG_HW_NO_VENT,					//  Vent
-				MID_REG_HW_CON_18650,				// Connector
-				MID_REG_HW_TANOD_PLASTIC_NTC,		// T anode type
-				MID_REG_HW_STS_SENS,				// T body
-				MID_REG_HW_PLASTIC_NTC				// T amb
+			_HW_REVIEW,		// Review
+			_HW_VENT,		// Vent
+			_HW_CONNECTOR,	// Connector
+			_HW_ANODE,		// T anode type
+			_HW_STS,		// T body
+			_HW_AMB			// T amb
 		},	// hwVer
 		_S_N		// sn
 };
