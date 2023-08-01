@@ -71,6 +71,13 @@ typedef enum
 /**********************************************************************************/
 /*                   Declaration of exported function prototypes                  */
 /**********************************************************************************/
+/**
+ * @fn MID_DABS_result_e MID_DabsiNIT()
+ * @brief Start the ledsMode register
+ *
+ * @return @ref MID_DABS_RESULT_SUCCESS 
+ */
+MID_DABS_result_e MID_DabsInit();
 
 /**
  * @fn MID_DABS_result_e MID_DabsUpdateMeas(const MID_DABS_meas_e type,
