@@ -36,7 +36,6 @@ extern const MID_REG_periodic_s EPC_CONF_periodic_time_min; //used to check new 
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-static uint8_t error_period = 0;
 static MID_REG_periodic_s periodicConfig = {};
 
 // Callback global variables
