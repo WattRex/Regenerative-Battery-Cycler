@@ -148,7 +148,7 @@ const blink_conf_s errhsvoltMode = {
 								}
 };
 const blink_conf_s errlscurrMode = {
-	blink_mode_err_lscurr, 1, {0xC,			//0b00001100
+	blink_mode_err_lscurr, 1, {0x3,			//0b00000011
 							0x00,0x00,		//0b00000000
 							0x00,0x00 		//0b00000000
 							}
@@ -160,7 +160,7 @@ const blink_conf_s errCommMode = {
 							}
 };
 const blink_conf_s errTempMode = {
-	blink_mode_err_temp, 1,	{0x03,			//0b00000011
+	blink_mode_err_temp, 1,	{0x06,			//0b00000110
 							0x00,0x00,		//0b00000000
 							0x00,0x00		//0b00000000
 							}
