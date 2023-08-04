@@ -230,9 +230,9 @@ APP_CTRL_result_e APP_CtrlCheckErrors (MID_REG_error_status_s * errors,
 
 	// Check amb temp
 	if ((EPC_CONF_info.hwVer.tAmb == MID_REG_HW_PLASTIC_NTC) && 
-			((meas->tempBody > limits->tempMax) || (meas->tempBody < limits->tempMin))){
+			((meas->tempAmb > limits->tempMax) || (meas->tempAmb < limits->tempMin))){
 			errors->tempErr = MID_REG_ERROR_RAISED;
-			errors->lastErrVal =  (uint16_t)meas->tempBody;
+			errors->lastErrVal =  (uint16_t)meas->tempAmb;
 			res = APP_CTRL_RESULT_ERROR_RAISED;
 	}else{
 		errors->tempErr  = MID_REG_ERROR_NONE;

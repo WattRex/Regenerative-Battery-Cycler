@@ -61,7 +61,6 @@ extern const MID_REG_periodic_s EPC_CONF_periodic_time_min; //used to check new 
 /**********************************************************************************/
 /*                         Definition of local variables                          */
 /**********************************************************************************/
-
 static MID_REG_periodic_s periodicConfig = {};
 
 // Callback global variables
@@ -83,6 +82,10 @@ static MID_REG_control_s prevControl;
 
 /**********************************************************************************/
 /*                      Definition of exported constant data                      */
+/**********************************************************************************/
+
+/**********************************************************************************/
+/*                    Declaration of local function prototypes                    */
 /**********************************************************************************/
 
 /**********************************************************************************/
@@ -348,12 +351,11 @@ APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas
 		}
 	}
 
-	if(memcmp(&prevStatus, status, sizeof(MID_REG_error_status_s)) != 0){
+	if(memcmp(&prevStatus, status, 2) != 0){
 		// Send status if changed
 		mid_res |= MID_CommSendStatus(status);
 		prevStatus = *status;
 	}
-
 	if (mid_res == MID_COMM_RESULT_NO_MESSAGES || mid_res == MID_COMM_RESULT_SUCCESS){
 		res = APP_IFACE_RESULT_SUCCESS;
 	}else{
