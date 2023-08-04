@@ -343,7 +343,7 @@ APP_IFACE_result_e APP_IfaceProcessPeriodic(MID_REG_meas_property_s * const meas
 			mid_res |= MID_CommSendElectMeas(meas);
 		}
 	}
-	else if(periodicConfig.tempMsgStatus){
+	if(periodicConfig.tempMsgStatus){
 		periodicCounter.tempMsgPeriod += 1;
 		if(periodicCounter.tempMsgPeriod >= periodicConfig.tempMsgPeriod){
 			periodicCounter.tempMsgPeriod = 0;
