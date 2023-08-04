@@ -152,7 +152,7 @@ const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
     4095,	//lsVolt
     4095,	//lsCurr
-    4095, 	// hsVolt
+    4095, 	//hsVolt
     4095,	//tempBody
     4095,	//tempAnod
     4095	//tempAmb
@@ -163,7 +163,7 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 	33000,	//lsCurr max-min (Low side Current range +17 -16A)
 	// Despite the lsCurr is a int16 and max value is 32767, 
 	// internally will be done a cast to uint16 as the factor will allways be positive
-	15000, 	// hsVolt max-min
+	15000, 	//hsVolt max-min
 	0,	//tempBody max-min (Range -20ºC to +70ºC) NOT USED, digital sensor
 	0,	//tempAnod max-min (Range -20ºC to +70ºC) NOT USED, look-up table
 	0	//tempAmb max-min  (Range -20ºC to +70ºC) NOT USED, look-up table
@@ -172,7 +172,7 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
 	0,		//lsVolt
 	-16000,		//lsCurr
-	0, 		// hsVolt
+	0, 		//hsVolt
 	0,	//tempBody NOT USED, digital sensor
 	0,	//tempAnod NOT USED, look-up table
 	0	//tempAmb  NOT USED, look-up table
