@@ -1,9 +1,29 @@
 /*********************************************************************************
-* @file           : mid_dabs.h
-* @brief          : Middleware header file for Device ABStraction
-  This module will be in charge of updating the register with the measured 
-  data without actually knowing how it is gathered. 
-  Also it has the aim of updating the leds status according to the working mode and errors.
+* @file             : mid_dabs.h
+* @brief            : Header file for Middleware (MID) Device Abstraction (DABS)
+* module. Provides functions to collect and abstract measures from the hardware.
+* It also handles LED patterns based on the device mode through GPIOs.
+***********************************************************************************/
+
+/*********************************************************************************
+*	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
+*
+*	This program  is free software: you  can redistribute it and/or modify it under
+*	the terms of the GNU Affero General  Public  License  as published  by the Free
+*	Software  Foundation, either version 3 of the License, or (at  your option) any
+*	later  version.  This program  is   distributed  in  the hope that  it  will be
+*	useful,but   WITHOUT  ANY  WARRANTY;   without  even  the implied   warranty of
+*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General
+*	Public License for more details. You should   have  received a copy  of the GNU
+*	Affero   General  Public License  along   with  this  program.     If  not, see
+*	<https://www.gnu.org/licenses/>.
+*	
+*	This file is part of PowerTower, Regenerative Battery Cycler in
+*	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
+*
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
 ***********************************************************************************/
 
 #ifndef MID_DABS_H_

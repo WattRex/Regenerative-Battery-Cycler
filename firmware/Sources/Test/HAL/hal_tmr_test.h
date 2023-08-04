@@ -2,6 +2,28 @@
 * @file           : hal_tmr_test.h
 * @brief          : HAL header file for timers test
 ***********************************************************************************/
+
+/*********************************************************************************
+*	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
+*
+*	This program  is free software: you  can redistribute it and/or modify it under
+*	the terms of the GNU Affero General  Public  License  as published  by the Free
+*	Software  Foundation, either version 3 of the License, or (at  your option) any
+*	later  version.  This program  is   distributed  in  the hope that  it  will be
+*	useful,but   WITHOUT  ANY  WARRANTY;   without  even  the implied   warranty of
+*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General
+*	Public License for more details. You should   have  received a copy  of the GNU
+*	Affero   General  Public License  along   with  this  program.     If  not, see
+*	<https://www.gnu.org/licenses/>.
+*	
+*	This file is part of PowerTower, Regenerative Battery Cycler in
+*	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
+*
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
+***********************************************************************************/
+
 #ifndef HAL_TMR_TEST_H_
 #define HAL_TMR_TEST_H_
 

@@ -1,7 +1,32 @@
 /*********************************************************************************
-* @file           : app_iface.h
-* @brief          : APP header file for IFACE
+* @file             : app_iface.h
+* @brief            : Header file for Application (APP) Communications Interface
+* (IFACE) module. Implements the interface between the main management logic and
+* the communication module. It handles  incoming messages, periodic updates, and
+* callbacks for control mode, configuration, and limit changes.  It communicates
+* with the communication module to exchange data with external users.
 **********************************************************************************/
+
+/*********************************************************************************
+*	Copyright (C) 2023  WattRex <https://github.com/WattRex/>
+*
+*	This program  is free software: you  can redistribute it and/or modify it under
+*	the terms of the GNU Affero General  Public  License  as published  by the Free
+*	Software  Foundation, either version 3 of the License, or (at  your option) any
+*	later  version.  This program  is   distributed  in  the hope that  it  will be
+*	useful,but   WITHOUT  ANY  WARRANTY;   without  even  the implied   warranty of
+*	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General
+*	Public License for more details. You should   have  received a copy  of the GNU
+*	Affero   General  Public License  along   with  this  program.     If  not, see
+*	<https://www.gnu.org/licenses/>.
+*	
+*	This file is part of PowerTower, Regenerative Battery Cycler in
+*	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
+*
+* @author          : WattRex <https://github.com/WattRex/>
+* @date			   : 2023-07-04
+* @version		   : v1.0.0
+***********************************************************************************/
 
 #ifndef APP_IFACE_H_
 #define APP_IFACE_H_
