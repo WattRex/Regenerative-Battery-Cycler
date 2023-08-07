@@ -210,21 +210,6 @@ typedef struct
 }MID_REG_periodic_s;
 
 /**
- * @struct MID_REG_hw_version_s
- * @brief Structure for the equip ID and fw, sw versions.
- */
-typedef struct
-{
-	MID_REG_hw_rev_e hwRev: 3;
-	MID_REG_hw_vent_e vent : 1;
-	MID_REG_hw_connector_e connector : 3;
-	MID_REG_hw_tanod_type_e tAnodType: 2;
-	MID_REG_hw_temp_body_e tBody: 1;
-	MID_REG_hw_temp_e tAmb: 1;
-	uint8_t reserved: 2;
-}MID_REG_hw_version_s;
-
-/**
  * @struct MID_REG_info_s
  * @brief Structure for the equip ID and fw, sw versions.
  */
@@ -232,7 +217,13 @@ typedef struct
 {
 	uint32_t id : 6;
 	uint32_t fwVer : 5;
-	MID_REG_hw_version_s hwVer;
+	MID_REG_hw_rev_e hwRev: 3;
+	MID_REG_hw_vent_e vent : 1;
+	MID_REG_hw_connector_e connector : 3;
+	MID_REG_hw_tanod_type_e tAnodType: 2;
+	MID_REG_hw_temp_body_e tBody: 1;
+	MID_REG_hw_temp_e tAmb: 1;
+	uint32_t reserved: 2;
 	uint32_t sn : 8;
 }MID_REG_info_s;
 
