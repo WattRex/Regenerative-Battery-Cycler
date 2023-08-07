@@ -117,7 +117,7 @@ const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 		_TEMP_MSG_PERIOD_MIN	     // tempMsgPeriod
 };
 
-const MID_REG_info_s EPC_CONF_info = { //TODO: assign this from EPC_CONF
+const MID_REG_info_s EPC_CONF_info = {
 		_CAN_ID,		// id
 		_FW_VER,		// fwVer
 		_HW_REVIEW,		// Review
