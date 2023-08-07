@@ -117,18 +117,17 @@ const MID_REG_periodic_s EPC_CONF_periodic_time_min = {
 		_TEMP_MSG_PERIOD_MIN	     // tempMsgPeriod
 };
 
- const MID_REG_info_s EPC_CONF_info = {
+const MID_REG_info_s EPC_CONF_info = {
 		_CAN_ID,		// id
-		_FW_VER,	// fwVer
-		(MID_REG_hw_version_s) {
-			_HW_REVIEW,		// Review
-			_HW_VENT,		// Vent
-			_HW_CONNECTOR,	// Connector
-			_HW_ANODE,		// T anode type
-			_HW_STS,		// T body
-			_HW_AMB			// T amb
-		},	// hwVer
-		_S_N		// sn
+		_FW_VER,		// fwVer
+		_HW_REVIEW,		// Review
+		_HW_VENT,		// Vent
+		_HW_CONNECTOR,	// Connector
+		_HW_ANODE,		// T anode type
+		_HW_STS,		// T body
+		_HW_AMB,		// T amb
+		0,				// reserved
+		_S_N			// sn
 };
 
 /**********************************************************************************/
@@ -153,9 +152,9 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_max_value = {
     4095,	//lsVolt
     4095,	//lsCurr
     4095, 	//hsVolt
-    4095,	//tempBody
-    4095,	//tempAnod
-    4095	//tempAmb
+	0,	//tempBody NOT USED, digital sensor
+	0,	//tempAnod NOT USED, look-up table
+	0	//tempAmb  NOT USED, look-up table
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
@@ -164,9 +163,9 @@ const MID_REG_meas_property_s EPC_CONF_MEAS_factors = {
 	// Despite the lsCurr is a int16 and max value is 32767, 
 	// internally will be done a cast to uint16 as the factor will allways be positive
 	15000, 	//hsVolt max-min
-	0,	//tempBody max-min (Range -20ºC to +70ºC) NOT USED, digital sensor
-	0,	//tempAnod max-min (Range -20ºC to +70ºC) NOT USED, look-up table
-	0	//tempAmb max-min  (Range -20ºC to +70ºC) NOT USED, look-up table
+	0,	//tempBody NOT USED, digital sensor
+	0,	//tempAnod NOT USED, look-up table
+	0	//tempAmb  NOT USED, look-up table
 };
 
 const MID_REG_meas_property_s EPC_CONF_MEAS_offset = {
