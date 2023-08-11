@@ -189,7 +189,8 @@ typedef struct __attribute__((__packed__))
 {
 	MID_REG_status_e outStatus : 1;
 	MID_REG_mode_e mode            : 3;
-	MID_REG_limit_type_e limitType : 4;
+	MID_REG_limit_type_e limitType : 3;
+	uint16_t reserved : 9;
 	int16_t modeRef;
 	int32_t limRef;
 }MID_REG_control_s;
