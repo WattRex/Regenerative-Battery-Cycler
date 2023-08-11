@@ -320,13 +320,15 @@ APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s const *  const contro
 	}else{
 		status->commErr = MID_REG_ERROR_RAISED;
 		status->lastErrVal = mid_res;
+		// iface error as there has been an internal error with can
 		res = APP_IFACE_RESULT_ERROR;
 	}
 
 	if(periodicConfig.usrHeartBeatStatus == MID_REG_ENABLED && periodicCounter.usrHeartBeatPeriod >= periodicConfig.usrHeartBeatPeriod){
 		status->commErr = MID_REG_ERROR_RAISED;
 		status->lastErrVal = periodicCounter.usrHeartBeatPeriod;
-		res = APP_IFACE_RESULT_ERROR;
+		// iface success as from this error can be a recovery
+		res = APP_IFACE_RESULT_SUCCESS;
 	}
 	return res;
 }
