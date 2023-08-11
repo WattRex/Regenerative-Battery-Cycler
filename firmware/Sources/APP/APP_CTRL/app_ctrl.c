@@ -18,7 +18,7 @@
 *	Public License for more details. You should   have  received a copy  of the GNU
 *	Affero   General  Public License  along   with  this  program.     If  not, see
 *	<https://www.gnu.org/licenses/>.
-*	
+*
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
@@ -145,9 +145,12 @@ action_e calcNewAction(const MID_REG_control_s * mode, const MID_REG_meas_proper
 APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_s * meas, action_e ctrl_action,
 		uint32_t ctrl_time, limit_status_e * res){
 	// time limit (same for all modes)
-	if(mode->limitType == MID_REG_LIMIT_TIME){
+	if((mode->mode != MID_REG_MODE_IDLE || mode->mode != MID_REG_MODE_ERROR)
+			&& mode->limitType == MID_REG_LIMIT_TIME){
 		if (ctrl_time >= (uint32_t)mode->limRef){
 			*res = limit_reached;
+		}else{
+			*res = limit_not_reached;
 		}
 	}
 	//constant voltage mode
