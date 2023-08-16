@@ -18,7 +18,7 @@
 *	Public License for more details. You should   have  received a copy  of the GNU
 *	Affero   General  Public License  along   with  this  program.     If  not, see
 *	<https://www.gnu.org/licenses/>.
-*	
+*
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
@@ -142,57 +142,131 @@ action_e calcNewAction(const MID_REG_control_s * mode, const MID_REG_meas_proper
 	return res;
 }
 
-limit_status_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_s * meas, action_e ctrl_action,
+APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_property_s * meas, action_e ctrl_action,
 		uint32_t ctrl_time, limit_status_e * res){
-//	limit_status_e res = limit_not_reached;
-	//check mode
-
-		// voltage limit, charge
-	if (*res != limit_already_reached){
-		if (mode->limitType == MID_REG_LIMIT_VOLT && ctrl_action == action_charge){
-			if (meas->lsVolt >= (uint16_t)mode->limRef){
-				*res = limit_reached;
-			}
-		}	// voltage limit, discharge
-		else if(mode->limitType == MID_REG_LIMIT_VOLT && ctrl_action == action_discharge){
-			if (meas->lsVolt <= (uint16_t)mode->limRef){
-				*res = limit_reached;
-			}
-		}	// current limit, charge
-		else if(mode->limitType == MID_REG_LIMIT_CURR && ctrl_action == action_charge){
-			if (meas->lsCurr >= (int16_t)mode->limRef){
-				*res = limit_reached;
-					}
-		}	// current limit, discharge
-		else if(mode->limitType == MID_REG_LIMIT_CURR && ctrl_action == action_discharge){
-			if (meas->lsCurr <= (int16_t)mode->limRef){
-				*res = limit_reached;
-			}
-		}	// power, charge
-		else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_charge){
-			int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-			if (power >= (int16_t)mode->limRef){
-				*res = limit_reached;
-			}
-		}	// power, discharge
-		else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_action == action_discharge){
-			int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-			if (power <= (int16_t)mode->limRef){
-				*res = limit_reached;
-			}
-		}	// time
-		else if(mode->limitType == MID_REG_LIMIT_TIME){
-			if (ctrl_time >= (uint32_t)mode->limRef){
-				*res = limit_reached;
-			}
-		}else if (ctrl_action==action_wait){
-			*res = limit_not_reached;
+	// time limit (same for all modes)
+	if((mode->mode != MID_REG_MODE_IDLE || mode->mode != MID_REG_MODE_ERROR)
+			&& mode->limitType == MID_REG_LIMIT_TIME){
+		if (ctrl_time >= (uint32_t)mode->limRef){
+			*res = limit_reached;
 		}else{
-			*res = limit_error;
+			*res = limit_not_reached;
 		}
 	}
-
-//	return res;
+	//constant voltage mode
+	else if(mode->mode == MID_REG_MODE_CV){
+		//charge
+		if (ctrl_action == action_charge){
+			//limit current
+			if (mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (int16_t)mode->limRef &&
+					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				*res = limit_reached;
+			}
+			//limit power
+			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
+				if (power <= (int16_t)mode->limRef){
+					*res = limit_reached;
+				}else{
+					*res = limit_not_reached;
+				}
+			}else{
+				*res = limit_not_reached;
+			}
+		//discharge
+		}else{
+			//limit current
+			if (mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr >= (int16_t)mode->limRef &&
+					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				*res = limit_reached;
+			}
+			//limit power
+			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
+				if (power >= (int16_t)mode->limRef){
+					*res = limit_reached;
+				}else{
+					*res = limit_not_reached;
+				}
+			}else{
+				*res = limit_not_reached;
+			}
+		}
+	}
+	//constant current mode
+	else if(mode->mode == MID_REG_MODE_CC){
+		//charge
+		if (ctrl_action == action_charge){
+			//limit voltage
+			if (mode->limitType == MID_REG_LIMIT_VOLT && meas->lsVolt >= (uint16_t)mode->limRef){
+				*res = limit_reached;
+			}
+			//limit power
+			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
+				if (power >= (int16_t)mode->limRef){
+					*res = limit_reached;
+				}else{
+					*res = limit_not_reached;
+				}
+			}else{
+				*res = limit_not_reached;
+			}
+		//discharge
+		}else{
+			//limit voltage
+			if (mode->limitType == MID_REG_LIMIT_VOLT && meas->lsVolt <= (uint16_t)mode->limRef){
+				*res = limit_reached;
+			}
+			//limit power
+			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
+				if (power >= (int16_t)mode->limRef){
+					*res = limit_reached;
+				}else{
+					*res = limit_not_reached;
+				}
+			}else{
+				*res = limit_not_reached;
+			}
+		}
+	}
+	//constant power mode
+	else if(mode->mode == MID_REG_MODE_CP){
+		//charge
+		if (ctrl_action == action_charge){
+			//limit voltage
+			if (mode->limitType == MID_REG_LIMIT_VOLT && meas->lsVolt >= (uint16_t)mode->limRef){
+				*res = limit_reached;
+			}
+			//limit current
+			else if(mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (int16_t)mode->limRef &&
+					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				*res = limit_reached;
+			}else{
+				*res = limit_not_reached;
+			}
+		//discharge
+		}else{
+			//limit voltage
+			if (mode->limitType == MID_REG_LIMIT_VOLT && meas->lsVolt <= (uint16_t)mode->limRef){
+				*res = limit_reached;
+			}
+			//limit current
+			else if(mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (int16_t)mode->limRef &&
+					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
+				*res = limit_reached;
+			}else{
+				*res = limit_not_reached;
+			}
+		}
+	}
+	else if (ctrl_action==action_wait){
+		*res = limit_not_reached;
+	}else{
+		*res = limit_error;
+	}
+	return APP_CTRL_RESULT_SUCCESS;
 }
 
 
