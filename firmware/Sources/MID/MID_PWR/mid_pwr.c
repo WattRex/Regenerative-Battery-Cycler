@@ -197,20 +197,18 @@ static SOA_e _checkSOA(const int16_t I, const uint16_t V, const MID_REG_limit_s 
 	return res;
 }
 
-static int16_t _divide_dec(const int16_t dP, const uint16_t mV)
-{
-	int16_t mP = dP * 100;
-	int16_t mA = (int32_t)(mP / mV) * 1000;
-	int16_t remainder = (int32_t)(mP % mV);
+static int16_t _divide_dec(const int16_t dP, const uint16_t mV){
+	int32_t mP = dP*MID_PWR_TO_dW;
+	int32_t mA = (int32_t) (mP / (int32_t) mV);
+	int32_t remainder = (int32_t) (mP % mV);
 	int8_t i;
-	for (i = 2; i >= 0; i = i - 1)
-	{
-		remainder *= 10;
-		int16_t res = (remainder / mV) * pow(10, i);
-		mA += res;
-		remainder = (int32_t)(remainder % mV);
+	for (i=2;i>=0;i=i-1) {
+	        remainder *= 10;
+	        int32_t res = (remainder / (int32_t) mV)*pow(10,i);
+	        mA += res;
+	        remainder = (int32_t) (remainder % mV);
 	}
-	return mA;
+	return (int16_t)mA;
 }
 
 static MID_PWR_result_e _calculatePI(const int16_t ref, const int16_t meas, const MID_PWR_Mode_e mode,
