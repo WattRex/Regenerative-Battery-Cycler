@@ -64,11 +64,11 @@ extern const MID_REG_periodic_s EPC_CONF_periodic_time_min; //used to check new 
 static MID_REG_periodic_s periodicConfig = {};
 
 // Callback global variables
-static MID_REG_control_s const * tmp_ptr_control;
-static MID_REG_meas_property_s const * tmp_ptr_meas;
-static MID_REG_error_status_s * tmp_ptr_status;
-static MID_REG_limit_s * tmp_ptr_limits;
-static MID_REG_control_s * tmp_ptr_consign;
+static MID_REG_control_s const *tmp_ptr_control;
+static MID_REG_meas_property_s const *tmp_ptr_meas;
+static MID_REG_error_status_s *tmp_ptr_status;
+static MID_REG_limit_s *tmp_ptr_limits;
+static MID_REG_control_s *tmp_ptr_consign;
 static MID_COMM_result_e callback_res;
 
 // Periodic variables
@@ -89,22 +89,12 @@ static MID_REG_control_s prevControl;
 /**********************************************************************************/
 
 /**********************************************************************************/
-/*                    Declaration of local function prototypes                    */
-/**********************************************************************************/
-static char _checkErrors();
-/**********************************************************************************/
 /*                       Definition of local constant data                        */
 /**********************************************************************************/
 
 /**********************************************************************************/
 /*                         Definition of local functions                          */
 /**********************************************************************************/
-/**
- * @fn static char _checkErrors()
- * @brief Check if there is a electric or temperature error
- *
- * @return 0 if there is an error, 1 if there are no errors
- */
 static char _checkErrors(){
 	char res= 0;
 	if (tmp_ptr_status->hsVoltErr == MID_REG_ERROR_NONE &&
@@ -314,6 +304,7 @@ APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s const *  const contro
 		res = APP_IFACE_RESULT_SUCCESS;
 		if (status->commErr == MID_REG_ERROR_RAISED && mid_res == MID_COMM_RESULT_SUCCESS){
 			status->commErr = MID_REG_ERROR_NONE;
+			periodicCounter.usrHeartBeatPeriod = 0;
 		}
 	}else if (mid_res == MID_COMM_RESULT_FORMAT_ERROR){
 		res = APP_IFACE_RESULT_SUCCESS;
@@ -322,12 +313,12 @@ APP_IFACE_result_e APP_IfaceIncommingMsg(MID_REG_control_s const *  const contro
 		status->lastErrVal = mid_res;
 		res = APP_IFACE_RESULT_ERROR;
 	}
-
 	if(periodicConfig.usrHeartBeatStatus == MID_REG_ENABLED && periodicCounter.usrHeartBeatPeriod >= periodicConfig.usrHeartBeatPeriod){
 		status->commErr = MID_REG_ERROR_RAISED;
 		status->lastErrVal = periodicCounter.usrHeartBeatPeriod;
-		res = APP_IFACE_RESULT_ERROR;
+		res = APP_IFACE_RESULT_SUCCESS;
 	}
+
 	return res;
 }
 
