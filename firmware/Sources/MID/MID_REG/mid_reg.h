@@ -18,7 +18,7 @@
 *	Public License for more details. You should   have  received a copy  of the GNU
 *	Affero   General  Public License  along   with  this  program.     If  not, see
 *	<https://www.gnu.org/licenses/>.
-*	
+*
 *	This file is part of PowerTower, Regenerative Battery Cycler in
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
@@ -185,11 +185,12 @@ typedef struct
  * @struct MID_REG_control_s
  * @brief Structure for the control the value of output, ref and mode.
  */
-typedef struct
+typedef struct __attribute__((__packed__))
 {
 	MID_REG_status_e outStatus : 1;
 	MID_REG_mode_e mode            : 3;
-	MID_REG_limit_type_e limitType : 2;
+	MID_REG_limit_type_e limitType : 3;
+	uint16_t reserved : 9;
 	int16_t modeRef;
 	int32_t limRef;
 }MID_REG_control_s;
@@ -199,7 +200,7 @@ typedef struct
  * @struct MID_REG_periodic_s
  * @brief Structure for the periodic msgs.
  */
-typedef struct
+typedef struct __attribute__((__packed__))
 {
 	MID_REG_status_e usrHeartBeatStatus : 1;
 	uint16_t usrHeartBeatPeriod : 15;
@@ -211,20 +212,20 @@ typedef struct
 
 /**
  * @struct MID_REG_info_s
- * @brief Structure for the equip ID and fw, sw versions.
+ * @brief Structure for the equip ID and fw, hw versions.
  */
-typedef struct
+typedef struct __attribute__((__packed__))
 {
-	uint32_t id : 6;
-	uint32_t fwVer : 5;
-	MID_REG_hw_rev_e hwRev: 3;
-	MID_REG_hw_vent_e vent : 1;
-	MID_REG_hw_connector_e connector : 3;
-	MID_REG_hw_tanod_type_e tAnodType: 2;
-	MID_REG_hw_temp_body_e tBody: 1;
-	MID_REG_hw_temp_e tAmb: 1;
-	uint32_t reserved: 2;
-	uint32_t sn : 8;
+		uint32_t id : 6;
+		uint32_t fwVer : 5;
+		MID_REG_hw_rev_e hwRev: 3;
+		MID_REG_hw_vent_e vent : 1;
+		MID_REG_hw_connector_e connector : 3;
+		MID_REG_hw_tanod_type_e tAnodType: 2;
+		MID_REG_hw_temp_body_e tBody: 1;
+		MID_REG_hw_temp_e tAmb: 1;
+		uint32_t reserved: 2;
+		uint32_t sn : 8;
 }MID_REG_info_s;
 
 /**
