@@ -51,6 +51,7 @@
 
 #define EPC_CONF_FP_N_FRAC_BITS 	16	 // Number of bits for decimals
 
+#define EPC_CONF_CTRL_TRANS_TIME     100   	//ms to consider the control stable
 #define EPC_CONF_PWR_KP_I            567        // 0.008658
 #define EPC_CONF_PWR_KI_I            655360 	// 10
 #define EPC_CONF_PWR_KP_V            115 		// 0.00175
