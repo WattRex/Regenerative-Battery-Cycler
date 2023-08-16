@@ -158,22 +158,14 @@ APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_proper
 		//charge
 		if (ctrl_action == action_charge){
 			//limit current
-<<<<<<< Updated upstream
-			if (mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (uint16_t)mode->limRef &&
-=======
 			if (mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (int16_t)mode->limRef &&
->>>>>>> Stashed changes
 					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				*res = limit_reached;
 			}
 			//limit power
 			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-<<<<<<< Updated upstream
-				if (power <= (uint16_t)mode->limRef){
-=======
 				if (power <= (int16_t)mode->limRef){
->>>>>>> Stashed changes
 					*res = limit_reached;
 				}else{
 					*res = limit_not_reached;
@@ -184,22 +176,14 @@ APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_proper
 		//discharge
 		}else{
 			//limit current
-<<<<<<< Updated upstream
-			if (mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr >= (uint16_t)mode->limRef &&
-=======
 			if (mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr >= (int16_t)mode->limRef &&
->>>>>>> Stashed changes
 					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				*res = limit_reached;
 			}
 			//limit power
 			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-<<<<<<< Updated upstream
-				if (power >= (uint16_t)mode->limRef){
-=======
 				if (power >= (int16_t)mode->limRef){
->>>>>>> Stashed changes
 					*res = limit_reached;
 				}else{
 					*res = limit_not_reached;
@@ -220,11 +204,7 @@ APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_proper
 			//limit power
 			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-<<<<<<< Updated upstream
-				if (power >= (uint16_t)mode->limRef){
-=======
 				if (power >= (int16_t)mode->limRef){
->>>>>>> Stashed changes
 					*res = limit_reached;
 				}else{
 					*res = limit_not_reached;
@@ -241,11 +221,7 @@ APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_proper
 			//limit power
 			else if(mode->limitType == MID_REG_LIMIT_PWR && ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				int16_t power = (int16_t)((int32_t)(meas->lsCurr * (int16_t)meas->lsVolt) / MID_PWR_TO_dW);
-<<<<<<< Updated upstream
-				if (power >= (uint16_t)mode->limRef){
-=======
 				if (power >= (int16_t)mode->limRef){
->>>>>>> Stashed changes
 					*res = limit_reached;
 				}else{
 					*res = limit_not_reached;
@@ -264,11 +240,7 @@ APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_proper
 				*res = limit_reached;
 			}
 			//limit current
-<<<<<<< Updated upstream
-			else if(mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (uint16_t)mode->limRef &&
-=======
 			else if(mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (int16_t)mode->limRef &&
->>>>>>> Stashed changes
 					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				*res = limit_reached;
 			}else{
@@ -277,19 +249,11 @@ APP_CTRL_result_e checkLimit(MID_REG_control_s * mode, const MID_REG_meas_proper
 		//discharge
 		}else{
 			//limit voltage
-<<<<<<< Updated upstream
 			if (mode->limitType == MID_REG_LIMIT_VOLT && meas->lsVolt <= (uint16_t)mode->limRef){
 				*res = limit_reached;
 			}
 			//limit current
-			else if(mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (uint16_t)mode->limRef &&
-=======
-			if (mode->limitType == MID_REG_LIMIT_VOLT && meas->lsVolt <= (int16_t)mode->limRef){
-				*res = limit_reached;
-			}
-			//limit current
 			else if(mode->limitType == MID_REG_LIMIT_CURR && meas->lsCurr <= (int16_t)mode->limRef &&
->>>>>>> Stashed changes
 					ctrl_time >= EPC_CONF_CTRL_TRANS_TIME){
 				*res = limit_reached;
 			}else{
@@ -493,3 +457,4 @@ APP_CTRL_result_e APP_CtrlApplyNewMode (const MID_REG_control_s * newMode, MID_R
 
 	return res;
 }
+
