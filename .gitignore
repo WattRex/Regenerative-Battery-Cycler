@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,c
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,c
 
+### Github specific
+wiki/
+
 ### Software IDEAS ###
 *.simp.bak
 *.simp.user
