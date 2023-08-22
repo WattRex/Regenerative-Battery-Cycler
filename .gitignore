@@ -1,6 +1,15 @@
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse,c
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,c
 
+### STM32 CUBE IDE project ###
+*Release/
+*Debug/
+*.mxproject
+*.ioc
+*.metadata
+*.project
+firmware/Sources/EPC_CONF/*
+
 ### Software IDEAS ###
 *.simp.bak
 *.simp.user
