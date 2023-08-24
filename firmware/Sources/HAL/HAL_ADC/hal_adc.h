@@ -25,7 +25,7 @@
 *
 * @author          : WattRex <https://github.com/WattRex/>
 * @date			   : 2023-07-04
-* @version		   : v1.0.0
+* @version		   : v1.0.1
 ***********************************************************************************/
 
 #ifndef HAL_ADC_H_
