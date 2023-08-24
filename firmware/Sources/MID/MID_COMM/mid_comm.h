@@ -23,8 +23,8 @@
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
 * @author          : WattRex <https://github.com/WattRex/>
-* @date			   : 2023-07-04
-* @version		   : v1.0.0
+* @date			   : 2023-08-24
+* @version		   : v1.0.1
 ***********************************************************************************/
 
 #ifndef MID_COMM_H_
@@ -38,7 +38,7 @@
 /**********************************************************************************/
 /*                              Include other headers                             */
 /**********************************************************************************/
-#include "stdint.h"
+#include <stdint.h>
 
 /**********************************************************************************/
 /*                     Definition of local symbolic constants                     */
