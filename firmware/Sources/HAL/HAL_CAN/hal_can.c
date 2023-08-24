@@ -23,14 +23,13 @@
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
 * @author          : WattRex <https://github.com/WattRex/>
-* @date			   : 2023-07-04
-* @version		   : v1.0.0
+* @date			   : 2023-08-24
+* @version		   : v1.0.1
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
-#include "stm32f3xx_hal.h"
 #include "epc_st_err.h" //Import EPC_ST_ERR_COUNTER
 /**********************************************************************************/
 /*                        Include headers of the component                        */
