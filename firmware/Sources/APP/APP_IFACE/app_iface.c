@@ -24,8 +24,8 @@
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
 * @author          : WattRex <https://github.com/WattRex/>
-* @date			   : 2023-07-04
-* @version		   : v1.0.0
+* @date			   : 2023-08-24
+* @version		   : v1.0.1
 ***********************************************************************************/
 
 /**********************************************************************************/
@@ -144,19 +144,19 @@ void MID_CommCallbackControlMode(MID_REG_control_s const * const data){
 			switch (data->limitType){
 				case MID_REG_LIMIT_CURR:
 					if (data->limRef > tmp_ptr_limits->lsCurrMax || data->limRef < tmp_ptr_limits->lsCurrMin ||
-							data->mode == MID_REG_MODE_CC ){
+							data->mode == MID_REG_MODE_CC || data->mode == MID_REG_MODE_WAIT){
 						callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 					}
 					break;
 				case MID_REG_LIMIT_VOLT:
 					if (data->limRef > tmp_ptr_limits->lsVoltMax || data->limRef < tmp_ptr_limits->lsVoltMin||
-							data->mode == MID_REG_MODE_CV ){
+							data->mode == MID_REG_MODE_CV || data->mode == MID_REG_MODE_WAIT){
 						callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 					}
 					break;
 				case MID_REG_LIMIT_PWR:
 					if (data->limRef > tmp_ptr_limits->lsPwrMax || data->limRef < tmp_ptr_limits->lsPwrMin||
-							data->mode == MID_REG_MODE_CP ){
+							data->mode == MID_REG_MODE_CP || data->mode == MID_REG_MODE_WAIT){
 						callback_res = MID_COMM_RESULT_FORMAT_ERROR;
 					}
 					break;
