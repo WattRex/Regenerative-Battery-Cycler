@@ -24,15 +24,15 @@
 *	<https://github.com/WattRex/Regenerative-Battery-Cycler/>
 *
 * @author          : WattRex <https://github.com/WattRex/>
-* @date			   : 2023-07-04
-* @version		   : v1.0.0
+* @date			   : 2023-08-24
+* @version		   : v1.0.1
 ***********************************************************************************/
 
 /**********************************************************************************/
 /*                  Include common and project definition header                  */
 /**********************************************************************************/
 #include "dma.h"
-#include "stdlib.h"
+#include <stdlib.h>
 
 /**********************************************************************************/
 /*                        Include headers of the component                        */
