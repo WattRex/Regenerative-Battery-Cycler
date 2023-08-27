@@ -7,8 +7,6 @@ wiki/
 ### Software IDEAS ###
 *.simp.bak
 *.simp.user
-*.svg
-*.png
 
 ### C ###
 # Prerequisites
